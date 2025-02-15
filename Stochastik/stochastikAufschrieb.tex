@@ -1,0 +1,554 @@
+\documentclass{scrartcl}
+\usepackage{placeins}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{titlesec}
+
+% zusätzliche mathematische Symbole, AMS=American Mathematical Society 
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+% fürs Einbinden von Graphiken
+\usepackage{graphicx}
+
+% für Namen etc. in Kopf- oder Fußzeile
+\usepackage{fancyhdr}
+
+% erlaubt benutzerdefinierte Kopfzeilen 
+\pagestyle{fancy}
+\usepackage{bbold}
+
+% Definition der Kopfzeile
+\lhead{
+\begin{tabular}{ll}
+Emma Bach\\
+\end{tabular}
+}
+\chead{}
+\rhead{\today{}}
+\lfoot{}
+\cfoot{Seite \thepage}
+\rfoot{} 
+
+\newcommand{\borel}{\mc{B}(\mathbb{R}^d)}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\integer}{\mathbb{Z}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\var}{\text{Var}}
+\newcommand{\cov}{\text{Cov}}
+\newcommand{\cor}{\text{Cor}}
+
+\titleformat{\section}[block]{\Huge\bfseries\filcenter}{}{}{}
+\titleformat{\subsection}[block]{\bfseries\Large\filcenter}{}{}{}
+\titleformat{\subsubsection}[block]{\bfseries}{}{}{}
+\begin{document}
+\section*{Stochastik für Informatiker}
+\subsection*{I - Wahrscheinlichkeiten}
+\subsubsection*{$\sigma$-Algebren}
+\begin{itemize}
+    \item Eine $\sigma$-Algebra $\mc{F}$ ist eine Menge von Teilmengen einer Menge $\Omega$, sodass:
+    \begin{itemize}
+        \item $\Omega \in \mc{F}$
+        \item Falls $A \in \mc{F}$, dann auch $\Omega \backslash A \in \mc{F}$
+        \item Falls $A_1, A_2, \hdots \in \mc{F}$, dann auch $A_1 \cup A_2 \cup \hdots \in \mc{F}$. Sind also die Mengen $\{1\}$ und $\{2\}$ enthalten, so auch $\{1,2\}$, was dem Ereignis "1 oder 2" entspricht.
+    \end{itemize}
+    \item Bei vielen Anwendungen ist eine sinnvolle Wahl für $\mc{F}$ die Potenzmenge $\mc{P}(A)$.
+\end{itemize}
+\subsubsection*{Wahrscheinlichkeitsmaße}
+\begin{itemize}
+    \item Ein Wahrscheinlichkeitsmaß ist eine Funktion $P$, welche die in $\mc{F}$ enthaltenen Teilmengen (genannt \textbf{Ereignisse}) auf den Intervall $[0,1]$ abbildet (Also ihnen eine Wahrscheinlichkeit zuweist), sodass folgende Eigenschaften erfüllt sind:
+    \begin{itemize}
+        \item $P(\Omega$) = 1
+        \item Für $A_1, A_2, \hdots \in \mc{F}$ mit $A_i \cap A_j = \emptyset$ gilt:
+        \begin{align*}
+            P(A_1 \cup A_2 \cup \hdots) = P(A_1) + P(A_2) + \hdots
+        \end{align*}
+        Diese Eigenschaft nennt man die \textbf{$\sigma$-Additivität} von $P$. 
+        
+        Die Wahrscheinlichkeit des Ereignisses $\{1,2\}$ ("1 oder 2") ist also einfach $P(1) + P(2)$.
+    \end{itemize}
+    \item Das folgende Wahrscheinlichkeitsmaß auf einem endlichen Raum $\Omega$ ist bekannt als \textbf{diskrete Gleichverteilung} oder \textbf{Laplace-Wahrscheinlichkeitsmaß}:
+    \begin{align*}
+        P(A) = \frac{|A|}{|\Omega|} = \frac{\text{Anzahl der günstigen Ereignisse}}{\text{Anzahl der möglichen Ereignisse}}
+    \end{align*}
+    \item Ein Wahrscheinlichkeitsmaß $P$ heißt \textbf{diskret auf den Träger $\Omega'$}, falls es eine Menge $\Omega' \in \Omega$ gibt, sodass
+    \begin{align*}
+        \sum_{\omega \in \Omega'} P(\omega) = 1
+    \end{align*}
+    Die Ereignisse $\omega$ nennen wir dann \textbf{Elementarereignisse}.
+    \item Hieraus folgt, dass alle Ereignisse, welche keine Obermengen von Elementarereignissen sind, die Wahrscheinlichkeit $0$ haben. Es gilt also
+    \begin{align}
+        P(A) = \sum_{a \in A \cap \Omega'} P(a)
+        \label{LemmaElementarereignisse}
+    \end{align}
+    \item Sei $P$ ein diskretes Wahrscheinlichkeitsmaß mit Träger $\Omega'$. Wir nennen das Wahrscheinlichkeitsmaß
+    \begin{align*}
+        p: \Omega' \to [0,1] p(\omega) = P(\omega)
+    \end{align*}
+    die Zähldichte von $p$. Nach Lemma \ref{LemmaElementarereignisse} wird $P$ eindeutig von $p$ bestimmt. 
+    \item Wichtige diskrete Verteilungen:
+    \begin{itemize}
+        \item \textbf{Bernoulli-Verteilung} (Parameter $p \in (0,1)$)
+        \begin{align*}
+            \Omega' = \{0,1\},\quad P(1) = p
+        \end{align*}
+        \item \textbf{Binomialverteilung} (Parameter $N \in \mathbb{N}$ und $p \in (0,1)$)
+        \begin{align*}
+            \Omega' = \{0,1,\hdots,N\},\quad P(k) = \begin{pmatrix}N\\k\end{pmatrix}p^k(1-p)^{n-k}
+        \end{align*}
+        \item \textbf{Geometrische Verteilung} ($p \in (0,1)$)
+        \begin{align*}
+            \Omega' = \mathbb{N}_1,\quad P(k) = p(1-p)^{k-1}
+        \end{align*}
+        \item \textbf{Poisson-Verteilung} (Parameter $\lambda > 0$)
+        \begin{align*}
+            \Omega' = \mathbb{N}_0,\quad P(k) = \frac{\lambda^k}{k!}e^{-\lambda}
+        \end{align*}
+    \end{itemize}
+    \item Einige weitere wichtige Eigenschaften:
+    \begin{itemize}
+        \item $P(\emptyset) = 0$
+        \item $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+        \item $P(\Omega \backslash A) = 1 - P(A)$
+        \item $P(A \cap \neg B) = P(A) - P(A \cap B)$
+        \item $A \subseteq B \implies P(A) \leq P(B)$
+        \item $P(\bigcup A_i) = \sum P(A_i) - \sum_{i < j}P(A_i \cap A_j) + \sum_{i < j < k}P(A_i \cap A_j \cap A_k) - \hdots$\\
+        (Also immer plus die ANDs mit ungerader Länge und minus die ANDs gerader Länge). Diese Formel ist bekannt als die \textbf{Inklusions-Exklusions-Formel}.
+    \end{itemize}
+    \item Jedes Wahrscheinlichkeitsmaß ist \textbf{Stetig von Unten}, d.h. für eine Folge $A_n \subset A_{n+1}$ von Ereignissen gilt
+    \begin{align*}
+        \lim_{n \to \infty} P(A_n) = P\left(\bigcup A_i\right)
+    \end{align*}
+    \item Jedes Wahrscheinlichkeitsmaß ist \textbf{Stetig von Oben}, d.h. für eine Folge $A_{n+1} \subset A_{n}$ von Ereignissen gilt
+    \begin{align*}
+        \lim_{n \to \infty} P(A_n) = P\left(\bigcap A_i\right)
+    \end{align*}
+\end{itemize}
+\subsubsection*{Wahrscheinlichkeitsräume}
+\begin{itemize}
+    \item Ein Wahrscheinlichkeitsraum ist definiert als das Tupel $(\Omega, \mc{F}, P)$, bestehend aus:
+    \begin{itemize}
+        \item Einer beliebigen Menge $\Omega$, gennant der \textbf{Grundraum},
+        \item Einer $\sigma$-Algebra $\mc{F}$,
+        \item Einem Wahrscheinlichkeitsmaß $P$.
+    \end{itemize}
+    \item Das $N$-fache Werfen eines fairen sechsseitigen Würfels sieht dementsprechend folgendermaßen aus:
+    \begin{itemize}
+        \item $\Omega = \{1,2,3,4,5,6\}^N$
+        \item $\mc{F} = \mc{P}(\Omega)$
+        \item $P$ ist die Gleichverteilung.
+        \item Werfen wir einen unfairen Würfel, so bleibt $\Omega$ gleich, nur $P$ verändert sich.
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Borel $\sigma$-Algebra}
+\begin{itemize}
+    \item Falls $\Omega$ ein überabzählbarer Intervall $[a,b]$ ist, so ist eine geeignete $\sigma$-Algebra die \textbf{Borel $\sigma$-Algebra} $\mc{B}([a,b])$:
+    \begin{align*}
+        \mc{B}([a,b]) = \bigcap \left\{\mc{A}: \mc{A} \text{ ist $\sigma$-Algebra auf $$[a,b]$$, die alle Teilintervalle $[c,d]$ enthält}\right\}
+    \end{align*}
+    Analog kann $\mc{B}(\mathbb{R})$ definiert werden. Es gilt
+    \begin{align*}
+        \mc{B}([a,b]) = \mc{B}(\mathbb{R}) \cap [a,b]
+    \end{align*}
+    \item \textbf{Satz 1.12:} Seien $P$ und $Q$ Wahrscheinlichkeitsmaße auf $(\mathbb{R},\mc{B}(\mathbb{R})$. So gilt:
+    \begin{align*}
+        &P([a,b]) = Q([a,b]) \forall a,b \in \mathbb{Q}\\
+        \Longrightarrow{} &P(A) = Q(A) \forall A \in \mc{B}(\mathbb{R})
+    \end{align*}
+    \item Die stetige Gleichverteilung auf $[a,b] \in \mathbb{R}$ ist gegeben durch
+    \begin{align*}
+        P([c,d]) = \frac{d-c}{b-a}
+    \end{align*}
+\end{itemize}
+\subsubsection*{Dichtefunktionen}
+\begin{itemize}
+    \item Eine \textbf{Dichtefunktion} ist eine integrierbare Funktion $f: \mathbb{R} \to \mathbb{R}$ mit folgenden Eigenschaften:
+    \begin{itemize}
+        \item $f \geq 0$
+        \item $\int_{-\infty}^{\infty}f(x)dx = 1$
+    \end{itemize}
+    \item Ein Wahrscheinlichkeitsmaß $P$ wird \textbf{stetiges Maß $P$ mit Dichtefunktion $f$} genannt, falls:
+    \begin{align*}
+        P([a,b]) = \int_a^b f(x) dx
+    \end{align*}
+    Für jede Dichtefunktion $f$ ist dieses Maß eindeutig.
+    \item Wichtige stetige Verteilungen:
+    \begin{itemize}
+        \item \textbf{Normalverteilung} (Parameter $\mu \in \mathbb{R}, \sigma^2 > 0$:
+        \begin{align*}
+            f(x) = \frac{1}{2\sqrt{2 \pi \sigma^2}}e^{-\frac{1}{2\sigma^2}(x-\mu)^2}
+        \end{align*}
+        \item \textbf{Exponentialverteilung} (Parameter $\lambda > 0$):
+        \begin{align*}
+            f(x) = \frac{1}{\lambda}e^{-\lambda x}\mathbb{1}_{\{x \geq 0\}}
+        \end{align*}
+    \end{itemize}
+\end{itemize}
+\subsection*{II - Rechnen mit Wahrscheinlichkeiten}
+\subsubsection*{I - Ziehen mit Zurücklegen und mit Ordnung}
+\begin{itemize}
+    \item Zieht man aus einer Urne \textbf{$N$ Kugeln} mit \textbf{$m$ Farben} mit Zurücklegen. Die Reihenfolge zählt, die gezogenen Kugel werden also als Tupel statt als Menge kodiert. 
+    \item Dann gibt es 
+    \begin{align*}
+        m^N
+    \end{align*}
+    mögliche Tupel.
+\end{itemize}
+\subsubsection*{II - Ziehen ohne Zurücklegen mit Ordnung}
+\begin{itemize}
+    \item Wir nehmen an dass jede Farbe nur einmal vertreten ist.
+    \item Dann gibt es für eine Menge $N$ gezogene Kugeln mit $m$ Farben
+    \begin{align*}
+        \frac{m!}{(m-N)!}
+    \end{align*}
+    Möglichkeiten.
+\end{itemize}
+\subsubsection*{III - Ziehen ohne Zurücklegen ohne Ordnung}
+\begin{itemize}
+    \item Hier gibt es
+    \begin{align*}
+        \binom{m}{N}
+    \end{align*}
+    Möglichkeiten. Die Intuition dahinter ist folgende: Es gibt \begin{align*}
+        \frac{m!}{(m-N)!}
+    \end{align*}
+    geordnete Tupel. Jedes dieser Tupel hat $N!$ Permutationen. Nach ignorieren der Ordnung werden also je $N!$ Tupel auf die gleiche Menge abgebildet, also wird die Anzahl der Möglichkeiten durch $N!$ dividiert. Wir erhalten also
+    \begin{align*}
+        \frac{m!}{N!(m-N)!} = \binom{m}{N}
+    \end{align*}
+\end{itemize}
+\subsubsection*{IV - Permutationen von $m$ Kugeln in $r$ Gruppen}
+\begin{itemize}
+    \item Es gibt $m_n$ Kugeln der Gruppe $n$. Wenn alle Kugeln unterscheidbar wären gäbe es $m!$ Permutationen. Innerhalb von jeder Gruppe $n$ gibt es $m_n!$ nicht unterscheidbare Teilpermutationen, die jeweils die Anzahl der Möglichkeiten reduzieren, genau wie im letzten Beispiel. Letzendlich gibt es also
+    \begin{align*}
+        \frac{m!}{m_1! m_2! \hdots m_r!}
+    \end{align*}
+    Möglichkeiten
+\end{itemize}
+\subsubsection*{V - Ziehen mit Zurücklegen ohne Ordnung}
+\begin{itemize}
+    \item Dies lässt sich auf das letzte Beispiel reduzieren, indem wir die gezogenen Kugeln folgendermaßen kodieren: Wir schreiben eine $0$ für jede gezogene Kugel von Farbe $1$, dann eine $1$, dann eine $0$ für jede gezogene Kugel von Farbe $2$, dann wieder eine $0$, etc. Nun entspricht das Beispiel $IV$, mit $N$ $0$ern und $m-1$ $1$ern. Die Anzahl der Möglichkeiten ist also
+    \begin{align*}
+        \frac{(N+m-1)}{N!(m-1)!} = \binom{N+m+1}{N}
+    \end{align*}
+\end{itemize}
+\subsubsection*{Beispiel}
+\begin{itemize}
+    \item Wie viele Möglichkeiten gibt es, bei 6 Würfen eines Sechsseitigen Würfels drei Paare zu würfeln?
+    \item Es gibt nach III $\binom{6}{3} = 20$ Möglichkeiten, drei Zahlen Auszuwählen.
+    \item Es gibt nach IV $\frac{6!}{2!2!2!}$ Möglichkeiten, diese Menge aus drei Paaren zu permutieren.
+    \item Letztendlich gibt es also $20 \cdot \frac{6!}{2!2!2!} = 20 \cdot 90 = 1800$ Möglichkeiten, also eine Wahrscheinlichkeit von $\frac{1800}{6^6} = \frac{1800}{46.656}$
+\end{itemize}
+\subsection*{II.1 - Zufallsvariablen und Verteilungen}
+\subsubsection*{Zufallsvariablen}
+\begin{itemize}
+    \item Eine Abbildung $X: \Omega \to \mathbb{R}^d$ heißt \textbf{Zufallsvariable} oder \textbf{Zufallsvektor}, falls
+    \begin{align*}
+        \forall A \in \borel (\{X(\omega) \in A\} \in \mc{F})
+    \end{align*}
+    \item Wenn $\Omega$ abzählbar ist ist jede Abbildung $\Omega \to \mathbb{R}^d$ eine Zufallsvariable.
+    \item Dies gilt ebenfalls für alle stetigen $X$ mit $\Omega \in \borel$.
+    \item Seien $X,Y$ und $g$ Zufallsvektoren. Dann ist $g(X,Y)$ ein Zufallsvektor. Insbesondere ist für $a,b \in \real$ die Abbildung $aX + bY$ ein Zufallsvektor.
+    \item Die Wahrscheinlichkeit $P(X \in A)$ wird auch $P^X(A)$ geschrieben. Wir nennen sie die \textbf{Verteilung} von $X$
+    \item Wir nennen die Funktion $F_X: x \to P(X \leq x)$ \textbf{\textit{die} Verteilungsfunktion} von $X$.
+    \item Für eine diskrete Zufallsvariable $X$ mit Zähldichte $p$ ist dies
+    \begin{align*}
+        F_X(x) = \sum_{k \leq x} p(k)
+    \end{align*}
+    \item Für eine stetige Zufallsvariable $X$ mit Dichtefunktion $P$ ist es
+    \begin{align*}
+        F_X(x) = \int_{-\infty}^{x}f(t)dt
+    \end{align*}
+    \item \textbf{Satz 2.12:} Eine Funktion $F: \mathbb{R} \to \mathbb{R}$ ist genau dann eine Verteilungsfunktion, wenn sie folgende Eigenschaften erfüllt:
+    \begin{itemize}
+        \item $F$ ist monoton wachsend
+        \item $F$ ist rechtsseitig stetig
+        \item $\lim_{x \to \infty}F(x) = 1$, $\lim_{x \to -\infty}F(x) = 0$
+    \end{itemize}
+    \item \textbf{Proposition 2.13:} Verteilungsfunktionen haben ebenfalls folgende Eigenschaften:
+    \begin{itemize}
+        \item $P(X \geq x) = 1 - F_X(x)$
+        \item $P(x < X \leq y) = F_X(y) - F_X(x)$
+    \end{itemize}
+    \item \textbf{Quantiltransformation:} Zu jeder Verteilungsfunktion $F$ existiert eine Zufallsvariable $X$ auf dem Wahrscheinlichkeitsraum
+    \begin{align*}
+    (\Omega = (0,1), \mc{F} = \mc{B}((0,1)), P = \text{Uni}((0,1))),    
+    \end{align*} 
+    so dass $F = F_X$, nämlich die \textbf{Quantiltransformation} oder \textbf{Linksinverse}:
+    \begin{align*}
+        X(u) := \inf{\{y \in \real: F(y) \geq u\}}, u \in (0,1)
+    \end{align*}
+\end{itemize}
+\subsection*{II.2 - Gemeinsame Verteilungen}
+\begin{itemize}
+    \item Ein Wahrscheinlichkeitsmaß $P$ heißt stetig, falls es eine Funktion $f: \real^d \to \real_+$ gibt, sodass
+    \begin{align*}
+        P([a_1,b_1] \times \hdots \times [a_d,b_d]) = \int_{a_1}^{b_1} dx_1 \hdots \int_{a_d}^{b_d} dx_d f(x_1, \hdots, x_d) 
+    \end{align*}
+    für alle $a_n < b_n$
+    \item Ein Zufallsvektor $X = (X_1, \hdots, X_d)$ heißt stetig, falls seine Verteilung $F_X$ stetig ist. Die Dichtefunktion $f_X$ heißt dann auch \textbf{gemeinsame Dichtefunktion} von $X_1, \hdots, X_d$.
+    \item Es gilt 
+    \begin{align*}
+        F_{X_k}(x_k) = F_X(\infty, \hdots, \infty, x_k, \infty, \hdots, \infty)
+    \end{align*}
+    \item Falls $X$ eine Stetige Verteilung $F_x$ (Und somit eine Dichtefunktion $f_x$ hat, so auch jedes $X_k$, wobei gilt:
+    \begin{align*}
+        f_{X_k}(x_k) = \int_{-\infty}^\infty dx_1 \hdots \int_{-\infty}^\infty dx_{k-1} \hdots \int_{-\infty}^\infty dx_{k+1} \hdots \int_{-\infty}^\infty dx_d f_X(x_1, \hdots, x_d) 
+    \end{align*}
+    Diese Dichtefunktionen nennt man \textbf{Randdichten} oder \textbf{Marginaldichten}
+    \item Analog gilt für Zähldichten $p_X$
+    \begin{align*}
+    p_{X_k}(x_k) = \sum_{x_1}\hdots\sum_{x_{k-1}}\sum_{x_{k+1}}\hdots\sum_{x_d}p_X(x_1, \hdots, x_d),
+    \end{align*}
+    genannt \textbf{Randzähldichten} oder \textbf{Marginalzähldichten}.
+    \item $X = (X_1,X_2)$ ist nicht umbedingt stetig nur weil $X_1$ und $X_2$ stetig sind, z.B. ist $X = (Y,Y)$ nicht stetig (da es sich effektiv um eine unendlich dünne Kurve handelt)
+\end{itemize}
+\subsection*{II.3 - Bedingte Wahrscheinlichkeiten}
+\begin{itemize}
+    \item Die Bedingte Wahrscheinlichkeit $P(A|B)$ ($A$, angenommen dass $B$ gilt) ist
+    \begin{align*}
+        P(A|B) = \frac{P(A \cap B)}{P(B)}
+    \end{align*}
+    \item \textbf{Gesetz der Totalen Wahrscheinlichkeit:}
+    Angenommen $\Omega = \bigcup B_i$ für paarweise disjunkte $B_i$. Dann gilt
+    \begin{align*}
+        P(A) = \sum P(B_i)P(A_{B_i})
+    \end{align*}
+    \item \textbf{Formel von Bayes:}
+    \begin{align*}
+        P(B|A) = \frac{P(A|B)P(B)}{P(A)} 
+    \end{align*}
+\end{itemize}
+\subsection*{II.4 - Unabhängigkeit von Ereignissen}
+\begin{itemize}
+    \item $A$ ist unabhängig von $B$, wenn
+    \begin{align*}
+        P(A|B) = P(A).
+    \end{align*}
+    \item Dies ist genau der Fall wenn
+    \begin{align*}
+        P(A \cap B) = P(A)P(B)
+    \end{align*}
+    \item Analog für größere Mengen von Ereignissen - Die Familie $A_i$ ist unabhängig, falls
+    \begin{align*}
+        P\left(\bigcap A_i\right) = \prod P(A_i)
+    \end{align*}
+    für jede endliche Teilfamilie.
+    \item Eine Menge von Ereignissen $A_i$ heißt paarweise unabhängig, falls je zwei Ereignisse voneinander unabhängig sind. Alle unabhängigen Familien sind paarweise unabhängig, aber nicht alle paarweise unabhängigen Familien sind unabhängig.
+\end{itemize}
+\subsection*{II.5 - Unabhängigkeit von Zufallsvariablen}
+\begin{itemize}
+    \item Sei für $i \in I$ $X_i$ ein $d$-dimensionaler Zufallsvektor. Die Familie $\{X_i\}_{i \in I}$ ist unabhängig gdw. für jede Teilmenge $J \subset I$ und alle $A_i \in \borel$ gilt
+    \begin{align*}
+        P\left(\bigcap_{j \in J}\{X_j \in A_i\}\right) = \prod_{j \in J}P\left(\{X_j \in A_i\}\right)
+    \end{align*}
+    \item Diese Formel ist in der Praxis meistens zu aufwändig. Praktischere Kriterien:
+    \begin{itemize}
+        \item Eine Familie $X = (X_1, \hdots, X_n)$ von \textbf{diskreten Zufallsvariablen} mit gemeinsamer Zähldichte $p^X$ ist unabhängig gdw. 
+        \begin{align*}
+            p^X(x_1, \hdots, x_n) = \prod_{k = 1}^n p^{X_k}(x_k)
+        \end{align*}
+        \item Eine Familie $X = (X_1, \hdots, X_n)$ von \textbf{stetigen Zufallsvariablen} ist genau dann unabhängig, wenn
+        \begin{align*}
+            \prod_{k = 1}^n f^{X_k}(x_k)
+        \end{align*}
+        eine Dichtefunktion von $X$ ist.
+    \end{itemize}
+\end{itemize}
+\subsection*{II.6.1 - Erwartungswert}
+\begin{itemize}
+    \item Sei $g$ eine Zufallsvariable und $X$ eine \textbf{Zufallsvariable}. Der \textbf{Erwartungswert} $E[g(X)]$ ist:
+    \begin{itemize}
+        \item Falls $X$ diskret ist:
+        \begin{align*}
+            E[g(X)] = \sum_x g(x)p^X(x)   
+        \end{align*}
+        \item Falls $X$ stetig ist:
+        \begin{align*}
+        E[g(X)] = \int_{-\infty}^\infty dx_1 \hdots \int_{-\infty}^\infty dx_d\ g(x_1, \hdots, x_d) f_X(x_1, \hdots, x_d) 
+    \end{align*}
+    \end{itemize}
+    \item Sei $X$ ein Zufallsvektor. Für eine Menge $A \in \borel$ gilt:
+    \begin{align*}
+        P(X \in A) = E[\mathbb{1}_A(X)]
+    \end{align*}
+    \item $g(X)$ ist diskret, falls $X$ diskret ist, aber für stetiges $X$ ist $g(X)$ nicht umbedingt stetig.
+    \item \textbf{Recheneigenschaften des Erwartungswerts}:
+    \begin{itemize}
+        \item Falls $X$ und $Y$ gleiche Verteilungen haben gilt $E[X] = E[Y]$
+        \item $E[cX+Y] = cE[X] + E[Y]$
+        \item $|E[X]| \leq E[|X|]$
+        \item $P(X \leq Y) = 1 \implies E[X] \leq E[Y]$
+        \item $P(X_n \geq 0) = 1 \implies E[\sum X_n] = \sum E[X_n]$
+        \item Falls $X_n \to X$, dann $E[X_n] \to E[X]$
+    \end{itemize}
+    \item \textbf{Markovs Ungleichung}:
+    \begin{align*}
+        \forall \epsilon > 0 \left(P\left(|X| \geq \epsilon\right) \leq \frac{E[|X|]}{\epsilon}\right)
+    \end{align*}
+    \item Seien $X,Y$ Zufallsvariablen. Dann gilt:
+    \begin{itemize}
+        \item $P(X \geq 0) = 1, E[X] = 0 \implies P(X = 0) = 1$
+        \item Wenn $P(X \leq Y) = 1$ dann $E[X] = E[Y]$ gdw. $P(X = Y) = 1$
+    \end{itemize}
+    \item Sei $X$ eine Zufallsvariable mit nichtnegativen Wertebereich. Dann gilt:
+    \begin{align*}
+        E[X] = \int_{0}^{\infty}(1-F^X(x))dx
+    \end{align*}
+\end{itemize}
+\subsection*{II.6.2 - Varianz}
+\begin{itemize}
+    \item Sei $X$ eine Zufallsvariable mit $|E[X]| < \infty$. Die \textbf{Varianz von $X$} ist definiert als
+    \begin{align*}
+        \text{Var}[X] := E[(X- E[X])^2]
+    \end{align*}
+    \item Es gilt:
+    \begin{align*}
+        \text{Var}[X] = E[X^2]-E[X]^2
+    \end{align*}
+    \item Einige Eigenschaften der Varianz:
+    \begin{itemize}
+        \item $\var[X] \geq 0$
+        \item $\var[X] = 0 \Longleftrightarrow P(X = E[X]) = 1$
+        \item Sei $f(x) = E[(X-x)^2]$. Die se Funktion hat ihr Minimum bei $x_0 = E[X]$, dieser Minimalwert ist genau die Varianz von $X$.
+    \end{itemize}
+\end{itemize}
+\subsection*{II.6.3 - Kovarianz}
+\begin{itemize}
+    \item Seien $X_1,\hdots,X_N$ unabhängig mit wohldefiniertem Erwartungswert. Dann gilt
+    \begin{align*}
+        E\left[\prod_{k=1}^N X_k\right] = \prod_{k=1}^N E[X_k]
+    \end{align*}
+    \item Seien $X$ und $Y$ Zufallsvariablen. Die \textbf{Kovarianz} ist definiert als
+    \begin{align*}
+        \text{Cov}[X,Y] := E[(X - E[X])(Y - E[Y])]
+    \end{align*}
+    \item Die Kovarianz ist symmetrisch und bilinear, d.h.:
+    \begin{itemize}
+        \item $\cov[X,Y] = \cov[Y,X]$
+        \item $\cov[aX + bY, cZ + dV] = ac\cov[X,Z] + ad\cov[X,V] + bc\cov[Y,Z] + bd\cov[Y,V]$
+    \end{itemize}
+    \item Es gilt:
+    \begin{align*}
+        \var\left[\sum X_k\right] = \sum \var[X_k] + \sum \cov[X_i,X_j]
+    \end{align*}
+    \item Es gilt:
+    \begin{align*}
+        \cov[X,Y] = E[XY] - E[X]E[Y]
+    \end{align*}
+    Daraus folgt:
+    \begin{align*}
+        \cov[X,X] = \var[X]
+        \cov[X,c] = 0
+    \end{align*}
+    für konstantes $c \in \real$
+    \item Seien $X$ und $Y$ unabhängig. Dann gilt
+    \begin{align*}
+        \cov[X,Y] = 0
+    \end{align*}
+    \item Es gilt
+    \begin{align*}
+        (\cov[X,Y])^2 \leq \var[X]\var[Y]
+    \end{align*}
+    \item Zwei Variablen $X,Y$ heißen \textbf{unkorreliert}, falls 
+    \begin{align*}
+        \cov[X,Y] = 0
+    \end{align*}
+    Unabhängige Variablen sind immer unkorreliert, aber unkorrelierte Variablen sind nicht immer unabhängig. Informell zeigt die Kovarianz nur "lineare" Abhängigkeit.
+    \item $\cov[X,Y]^2 = \var[X]\var[Y]$ gdw. es Konstanten $a,b \in \real$ gibt, sodass $P(Y = aX + b) = 1$
+    \item Die \textbf{Korrelation} zweier Zufallsvariablen $X,Y$ ist definiert als:
+    \begin{align*}
+        \cor[X,Y] = \frac{\cov[X,Y]}{\sqrt{\var[X]}\sqrt{\var[Y]}}
+    \end{align*}
+\end{itemize}
+\subsection*{2.7 - Bedingte Verteilungen und Erwartungswerte}
+\begin{itemize}
+    \item Die \textbf{bedingte Verteilung} von $Y$ gegeben $X = x$ ist definiert als
+    \begin{align*}
+        A \to P(Y \in A | X = x)
+    \end{align*}
+    \item Der \textbf{bedingte Erwartungswert} von $Y$ gegeben $X = x$ ist definiert als
+    \begin{align*}
+        E[g(Y) | X = x] = \sum_y g(y) P(Y = y|X = x)
+    \end{align*}
+    \item Beide dieser Objekte sind Zufallsvariablen, da sie von $x$ abhängen.
+    \item \textbf{Turmeigenschaft}: Seien $X,Y$ diskrete Zufallsvariablen und $g$ eine Zufallsvariable. Dann gilt
+    \begin{align*}
+        E[E[g(Y) | X]] = E[g(Y)]
+    \end{align*}
+    \item Die \textbf{Bedingte Dichte} von $Y$ gegeben $X$ ist
+    \begin{align*}
+        f^{Y|X}(x,y) = \frac{f^{(X,Y)(x,y)}}{f^X(x)}
+    \end{align*}
+    \item Die \textbf{Bedingte Erwartung} von $g(Y)$ gegeben $X$ ist
+    \begin{align*}
+        E[g(Y) | X](x) = \int g(y)f^{Y|X}(x,y)dy
+    \end{align*}
+    \item $X$ und $Y$ sind unabhängig gdw.
+    \begin{align*}
+        P(Y \in A | X) = P(Y \in A) \forall A \in \borel
+    \end{align*}
+    \item
+\end{itemize}
+\subsection*{4 - Grenzwertsätze}
+\subsubsection*{4.1 - Das Gesetz der Großen Zahlen}
+\begin{itemize}
+    \item \textbf{Schwaches Gesetz der Großen Zahlen:} Seien $X_1, X_2, \hdots, X_n$ paarweise unkorrelliert und identisch verteilt. Sei
+    \begin{align*}
+        S_n = \sum_{k=1}^n X_k
+    \end{align*}
+    das artithmetische Mittel. Dann gilt $\forall \epsilon > 0$:
+    \begin{align*}
+        \lim_{n \to \infty}P(|\frac{S_n}{n} - E[X_1]| \geq \epsilon) = 0 
+    \end{align*}
+    d.h. der Durchschnitt einer großen Zahl an Zufallsexperimenten konvergiert gegen den Erwartungswert.
+    \item \textbf{Chebyshev's Ungleichung}:
+    \begin{align*}
+        P(|X - E[X]| \geq \epsilon) \leq \frac{Var[X]}{\epsilon^2}
+    \end{align*}
+    \item Wir sagen, eine Folge $Y_1, Y_2, \hdots$ \textbf{konvergiert Stochastisch gegen eine Zufallsvariable $Y$}, falls
+    \begin{align*}
+        \forall \epsilon > 0 \lim_{n \to \infty} P(|Y_n - Y| \geq \epsilon) = 0
+    \end{align*}
+    \item Wir sagen, die Folge konvergiert \textbf{fast sicher} gegen $Y$, falls:
+    \begin{align*}
+        P(\lim_{n \to \infty} Y_n = Y) = 1
+    \end{align*}
+    Dies ist eine stärkere Bedingung als die stochastische Konvergenz von davor.
+    \item $Y_n \to Y$ fast sicher gdw. es eine Menge $N \in \mc{F}$ gibt, sodass $P(N) = 0$ und
+    \begin{align*}
+        \lim_{n \to \inf} Y_n(\omega) = Y(\omega)\quad \forall \omega \neq N
+    \end{align*}
+    \item \textbf{Starkes Gesetz der großen Zahlen:}
+    \begin{align*}
+        \frac{S_n}{n} \to E[X_1] \text{ konvergiert fast sicher.}
+    \end{align*}
+    \item \textbf{Monte Carlo Integration}: Sei $f: [0,1] \to \real$ stetig und $U$ auf $[0,1]$ gleichverteilt. Dann gilt:
+    \begin{align*}
+        \int_0^1 f(x)dx = E[f(U)]
+    \end{align*}
+    Aus dem starken Gesetz der großen Zahlen folgt
+    \begin{align*}
+        \frac{1}{n}\sum_{k=1}^n f(U_k) \to E[f(U_1)] = \int_0^1 f(x)dx
+    \end{align*}
+\end{itemize}
+\subsubsection*{4.2 - Der Zentrale Grenzwertsatz}
+\begin{itemize}
+    \item $Y_n$ \textbf{konvergiert gegen $Y$ in Verteilung}, falls für die Verteilungsfunktionen $F_n$ und $F$ gilt:
+    \begin{align*}
+        F_n(x) \to F(x)
+    \end{align*}
+    Für alle Stetigkeitsstellen von $F$ (alle $x$, sodass $F(x) = F(x-)$)
+    \item \textbf{Zentraler Grenzwertsatz:} Seien $X_1, X_2, \hdots$ IID (unabhängig und identisch verteilt). Dann gilt 
+    \begin{align*}
+        \frac{(\sum_{k=1}^n X_k) - nE[X_1]}{\sqrt{n\var[X_1]^2}} \to N(0,1) \text{ in Verteilung} 
+    \end{align*}
+\end{itemize}
+\subsection*{5 - Statistik}
+\begin{itemize}
+    \item Ein \textbf{Schätzer} ist eine Zufallsvariable, welche einen Statistischen Prozess beschreiben soll.
+    \item Eine Folge von Schätzern $T_n$ heißt konsistent
+\end{itemize}
+\end{document}
