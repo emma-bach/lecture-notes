@@ -2,7 +2,7 @@
 Various Lecture Notes I have made over the years, mostly written in LaTeX for exam preparation.
 
 In English:
-- <a href="https://github.com/emma-bach/lecture-notes/blob/main/Computer%20Graphics%20and%20Image%20Processing/main.pdf">Computer Graphics and Image Processing, SS24</a>
+- <a href="https://github.com/emma-bach/lecture-notes/blob/main/Computer%20Graphics%20and%20Image%20Processing/main.pdf">Computer Graphics and Image Processing, SS24</a> (Image Processing Part is incomplete)
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Embedded%20Systems/main.pdf">Introduction to Embedded Systems, WS24/25</a>
 
 In German:
