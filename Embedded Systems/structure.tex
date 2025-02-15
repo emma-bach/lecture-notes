@@ -1,0 +1,23 @@
+
+\begin{tikzpicture}[scale=1,-stealth]
+\draw[fill=white!90!black] (0,0) node[fill](SE) {Sensors};
+
+\draw[fill=white!95!black] (3,0) node[fill](AD) {A/D Converter};
+
+\draw[fill=white!90!black] (6,0) node[fill](PR) {Processor(s)};
+\draw[fill=white!90!black] (6,2) node[fill](ME) {Memory};
+\draw[fill=white!90!black] (6,4) node[fill](SO) {Software};
+
+\draw[fill=white!95!black] (9,0) node[fill](DA) {D/A Converter};
+
+\draw[fill=white!90!black] (12,0) node[fill](AC) {Actuators};
+
+\draw (SE) to (AD);
+\draw (AD) to (PR);
+\draw (SO) to (ME);
+\draw (PR) to[bend left=10] (ME);
+\draw (ME) to[bend left=10] (PR);
+\draw (PR) to (DA);
+\draw (DA) to (AC);
+
+\end{tikzpicture}

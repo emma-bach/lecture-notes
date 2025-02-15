@@ -1,0 +1,17 @@
+\contentsline {chapter}{\numberline {1}Introduction}{2}{}%
+\contentsline {section}{\numberline {1.1}Definition}{2}{}%
+\contentsline {section}{\numberline {1.2}Design}{3}{}%
+\contentsline {chapter}{\numberline {2}Specification}{4}{}%
+\contentsline {section}{\numberline {2.1}VHDL}{4}{}%
+\contentsline {subsection}{\numberline {2.1.1}Testbenches}{5}{}%
+\contentsline {subsection}{\numberline {2.1.2}A Full Adder in VHDL}{5}{}%
+\contentsline {subsection}{\numberline {2.1.3}Data Types in VHDL}{6}{}%
+\contentsline {subsubsection}{std\_logic}{7}{}%
+\contentsline {subsubsection}{Arrays and Vectors}{7}{}%
+\contentsline {subsection}{\numberline {2.1.4}Operators}{7}{}%
+\contentsline {subsection}{\numberline {2.1.5}Constants and Signals}{7}{}%
+\contentsline {subsection}{\numberline {2.1.6}Variables}{8}{}%
+\contentsline {subsection}{\numberline {2.1.7}Processes}{9}{}%
+\contentsline {subsection}{\numberline {2.1.8}Statements}{10}{}%
+\contentsline {chapter}{\numberline {3}Hardware}{11}{}%
+\contentsline {chapter}{\numberline {4}Software}{12}{}%

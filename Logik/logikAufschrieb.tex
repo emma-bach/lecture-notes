@@ -1,0 +1,667 @@
+\documentclass{scrartcl}
+\usepackage{placeins}
+\usepackage{longtable}
+\usepackage{titlesec}
+
+% zusätzliche mathematische Symbole, AMS=American Mathematical Society 
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+% fürs Einbinden von Graphiken
+\usepackage{graphicx}
+
+% für Namen etc. in Kopf- oder Fußzeile
+\usepackage{fancyhdr}
+
+% erlaubt benutzerdefinierte Kopfzeilen 
+\pagestyle{fancy}
+
+% Definition der Kopfzeile
+\lhead{
+\begin{tabular}{ll}
+\textbf{Emma Bach | Logik für Informatiker | WS 23/24}\\
+\end{tabular}
+}
+\chead{}
+\rhead{\today{}}
+\lfoot{}
+\cfoot{Seite \thepage}
+\rfoot{} 
+
+\titleformat{\section}[block]{\Large\bfseries}{}{}{}
+\titleformat{\subsection}[block]{\large\bfseries}{}{}{}
+\titleformat{\subsubsection}[block]{}{}{}{}
+
+\newcommand{\dotminus}[0]{\overset{\centerdot}{-}}
+\newcommand{\goedel}[1]{\langle#1\rangle}
+\newcommand{\goedelnr}[1]{\ulcorner#1\urcorner}
+\newcommand{\proves}[0]{\vdash}
+\newcommand{\nproves}[0]{\nvdash}
+\renewcommand{\models}[0]{\vDash}
+\newcommand{\nmodels}[0]{\nvDash}
+\def\rddots#1{\cdot^{\cdot^{\cdot^{#1}}}}
+
+\begin{document}
+\section*{1 - Aussagenlogik}
+\begin{itemize}
+    \item \textbf{Definition 1.1:} Die Klasse der Aussagenlogischen Formeln enthält alle \textbf{Aussagenlogischen Variablen} und zusätzlich für alle Aussagenlogische Formeln $P_n$:
+    \begin{itemize}
+        \item Die Negation $\neg P_n$ (\texttt{\$\textbackslash neg P\_n\$} in LaTeX)
+        \item Die Disjunktion $(P_i \vee P_j)$ (\textit{"Oder"}, \texttt{\$P\_i \textbackslash vee P\_j\$} in LaTeX)
+    \end{itemize}
+    \item Variablen haben \textbf{Stufe} 0. Für Formeln $F_1$ mit Stufe $n$ und $F_2$ mit Stufe $m$ hat $\neg F_1$ die Stufe $n + 1$ und $(F_1 \vee F_2)$ hat die Stufe $max(m,n)+1$.
+    \item \textbf{Bemerkung 1.2:} Dies ermöglicht Beweise per \textbf{Induktion über den Aufbau}:
+    \begin{itemize}
+        \item \textbf{Induktionsanfang:} Die Eigenschaft gilt für alle aussagenlogischen Variablen $A_n$
+        \item \textbf{Induktionsvorraussetzung:} Die Eigenschaft gilt für bestimmte Formeln $F_1, \hdots, F_n$
+        \item \textbf{Induktionsschritt:} Dann gilt sie auch für $\neg F_1$ und $(F_i \vee F_j)$
+    \end{itemize}
+    \item \textbf{Notation / Definitionen}:
+    \begin{itemize}
+        \item $(P \wedge Q) = \neg(\neg P \vee \neg Q)$ (\textit{Konjunktion "Und"}, \texttt{\$P \textbackslash wedge Q\$} in LaTeX)
+        \item $(P \rightarrow Q) = (\neg P \vee Q)$ (\textit{Implikation}, \texttt{\$P \textbackslash rightarrow Q\$} in LaTeX)
+        \item $(P \leftrightarrow Q) = ((P \to Q) \wedge (Q \to P))$ (\textit{Äquivalenz}, \texttt{\$P \textbackslash leftrightarrow Q\$} in LaTeX)
+    \end{itemize}
+    Aufpassen: Es wird zwischen $\longrightarrow$ und $\implies$ unterschieden!
+    \item \textbf{Definition 1.3:} Eine \textbf{Belegung} $\beta$ ist eine Abbildung, welche jeder Aussagenlogischen Variable einen Wert $0$ oder $1$ zuordnet. Diese Definition wird folgendermaßen induktiv auf alle Aussagenlogischen Formeln fortgesetzt:
+    \begin{itemize}
+        \item $\beta(\neg P) = 1 - \beta (P)$
+        \item $\beta(P \wedge Q) = \max\{\beta (P), \beta(Q)\}$
+    \end{itemize}
+    \item \textbf{Definition 1.6:} Eine aussagenlogische Formel $P$ ist eine \textbf{Tautologie}, falls $\beta(P) = 1$ für alle Belegungen $\beta$. Zwei aussagenlogische Formeln $P, Q$ sind logisch Äquivalent, falls $(P \leftrightarrow Q)$ eine Tautologie ist. Man schreibt dann $P \sim Q$ (\texttt{\$P \textbackslash sim Q\$}). Dies ist genau dann der Fall, wenn $\beta(P) = \beta(Q)$ für alle $\beta$.
+    \item \textbf{Bemerkung 1.8:} Bei logischer Äquivalenz handelt es sich um eine Äquivalenzrelation. $\top$ (\texttt{\$\textbackslash top\$}) bezeichnet die Äquivalenzklasse aller Tautologien, $\bot$ (\texttt{\$\textbackslash bot\$}) bezeichnet die Äquivalenzklasse aller Aussagen, deren Negationen Tautologien sind.
+    \pagebreak
+    \item \textbf{Bemerkung 1.9:} Es gelten Folgende Äquivalenzen (Hier im Vergleich zum Skript deutlich verkürzt):
+    \begin{itemize}
+        \item $(P \wedge (Q \vee R)) \sim ((P \wedge Q) \vee (P \wedge R))$ (\textit{Distributivität der Konjunktion})
+        \item $(P \vee (Q \wedge R)) \sim ((P \vee Q) \wedge (P \vee R))$ (\textit{Distributivität der Disjunktion})
+        \item $(((P \to Q) \wedge (Q \to R))) \to (P \to R)) \sim \top$ (\textit{Inferenz})
+        \item $((P \wedge (P \to Q)) \implies Q) \sim \top$
+    \end{itemize}
+    \item \textbf{Definition 1.10} 
+    \begin{itemize}
+        \item Eine aussagenlogische Formel ist ein \textbf{Literal}, falls sie eine aussagenlogische Variable oder eine Negation einer aussagenlogischen Variable ist. 
+        \item Eine aussagenlogische Formel ist in \textbf{Konjunktiver Normalform (KNF)}, falls sie eine endliche Konjunktion von Disjunktionen von Literalen ist, z.B.:
+        \begin{align*}
+            (A \vee \neg B) \wedge (\neg C \vee \neg D \vee E)
+        \end{align*}
+        \item Eine aussagenlogische Formel ist in \textbf{Disjunktiver Normalform (DNF)}, falls sie eine endliche Disjunktion von Konjunktionen von Literalen ist, z.B.:
+        \begin{align*}
+            (\neg A \wedge B) \vee \neg C \vee (D \wedge \neg E)
+        \end{align*}
+        \item Hierbei darauf achten, dass auch "leere Disjunktionen" bzw. "leere Konjunkionen" vorkommen dürfen. Die Formel "$A$" ist bereits sowohl in KNF als auch in DNF; ebenso die Formel "$(A \vee B)$" 
+    \end{itemize}
+    \item \textbf{Lemma 1.11} Jede Formel ist äquivalent zu einer Formel in KNF und einer Formel in DNF. Beweis Induktiv durch Nutzung der Distributivgesetze. Wenn man vorraussetzt, dass jedes Literal in jeder Konjunktion nur einmal vorkommt, erhalten wir die \textbf{kanonische DNF}, welche bis auf Permutation eindeutig ist.
+    \item \textbf{Tableau-Methode:} Man beweist, dass eine Formel eine Tautologie ist, indem man Annimmt, es gäbe eine Belegung, für die Formel $0$ ist (Schreibe $F:0$) und diese Annahme zum Widerspruch führt. Dies wiederum tut man, indem man die Formel nach folgenden Regeln in jeweils einen oder zwei Fälle auflöst:
+    \begin{center}
+    $
+    \begin{array}{|c|c|}
+        \hline
+        \neg F : 1 \to F : 0 
+        &
+        \neg F : 0 \to F : 1
+        
+        \\
+        \hline
+        
+        (F \wedge G) : 1 
+        \to
+        \begin{array}{l}
+            F : 1\\
+            G : 1\\
+        \end{array}
+        &
+        (F \wedge G) : 0 
+  
+        \begin{array}{l}
+            \to F : 0\\
+            \to G : 0\\
+        \end{array}
+
+        \\
+        \hline
+        
+        (F \vee G) : 1 
+        \begin{array}{l}
+            \to F : 1\\
+            \to G : 1\\
+        \end{array}  
+        &
+        (F \vee G) : 0 
+        \to 
+        \begin{array}{l}
+            F : 0\\
+            G : 0\\
+        \end{array}
+        \\
+        \hline
+    \end{array}
+    $
+     \end{center}
+
+et cetera. Die Reihenfolge der Auflösung ist egal, geschickt ist es zuerst die Fälle zu betrachten, welche zu keiner weiteren Verzweigung führen. Ein Pfad des Baums "schließt", falls er widersprüchliche Informationen enthält. Falls alle Pfade schließen handelt es sich um eine Tautologie. Falls ein Pfad nicht schließt existiert die am Anfang gefragte Belegung, also handelt es sich um keine Tautologie.
+\end{itemize}
+\section*{2.1 - Sprachen und Strukturen}
+\begin{itemize}
+    \item \textbf{Definition 2.1} Eine \textbf{Sprache} $\mathcal{L}$ (\texttt{\$\textbackslash mathcal\{L\}\$}) besteht aus Konstantenzeichen, Funktionszeichen und Relationszeichen. Eine \textbf{Struktur} besteht aus einer nichtleeren Menge und aus \textbf{Interpretationen} der Zeichen bezüglich dieser Menge. Jede nichtleere Menge ist eine Struktur in der leeren Sprache.
+    \item \textbf{Definition 2.3} Eine \textbf{Einbettung} $F$ aus der Struktur $\mathcal{A}$ in die Struktur $\mathcal{B}$ ist eine injektive Abbildung $A \to B$, welche die Interpretationen der Zeichen berücksichtigt, d.h:
+    \begin{itemize}
+        \item $F(c^\mathcal{A}) = c^\mathcal{B}$
+        \item $F(f^\mathcal{A}(a_1,\hdots,a_n) = f^\mathcal{B}(F(a_1), \hdots , F(a_n)$
+        \item $(a_1, \hdots, a_n) \in R^\mathcal{A} \leftrightarrow (F(a_1),\hdots, F(a_n)) \in R^\mathcal{B}$
+    \end{itemize}
+    Ein \textbf{Isomorphismus} ist eine surjektive Einbettung. Sind $\mathcal{A}$ und $\mathcal{B}$ Isomorph schreibt man $\mathcal{A} \simeq \mathcal{B}$.
+    \item \textbf{Definition 2.5} $\mathcal{A}$ ist eine \textbf{Unterstruktur} von $\mathcal{B}$, falls $A \subset B$ und die Identitätsfunktion eine Einbettung ist.
+    \item \textbf {Bemerkung 2.6.1} Die von $C$ in $\mathcal{A}$ \textbf{erzeugte Unterstruktur} $\langle C \rangle_{\mathcal{A}}$ ist die kleinste Unterstruktur von $\mathcal{A}$, welche $C$ enthält.
+    \item \textbf {Bemerkung 2.6.2} Eine Unterstruktur $\mathcal{D} \subset \mathcal{A}$ ist \textbf{endlich erzeugt}, falls es eine endliche Menge $C$ gibt sd. $\mathcal{D} = \langle C \rangle_{\mathcal{A}}$. \item \textbf {Bemerkung 2.6.3} Jede nichtleere Teilmenge $C$ des Universums $A$, welche alle Konstantenzeichen enthält und welche unter Anwendung der Funktionenzeichen abgeschlossen ist, ist das Universum einer Unterstruktur $\mathcal{C} \subset \mathcal{A}$
+    \item \textbf{Definition 2.7} Die Menge der \textbf{Terme} einer Sprache $\mathcal{L}$ ist die kleinste Menge, welche alle Variablen und Konstantenzeichen enthält, sowie für beliebige Terme $t_1, \hdots, t_n$ und Funktionszeichen $f_i$ den Ausdruck $f_i(t_1, \hdots, t_n)$
+    \item \textbf{Definition 2.8.1} Ebenso wie bei den Aussagenlogischen Formeln können wir auch Terme einstufen und \textbf{Induktion über den Aufbau} nutzen. 
+    \item \textbf{Definition 2.8.2} Wir schreiben $t = t[x_1, \hdots, x_m]$, wenn die Variablen, welche in $t$ vorkommen, eine Teilmenge von $\{x_1, \hdots, x_m\}$ sind. Es muss also nicht jede der Variablen tatsächlich in $t$ vorkommen.
+    \item \textbf{Definition 2.8.3} Jeder Term $t$ definiert in jeder Struktur $\mathcal{A}$ trivial eine Funktion $t^\mathcal{A}[x_1, \hdots x_m]$. Verschiedene Terme können die gleiche Funktion definieren, z.B. sind in einer Sprache $(1,\cdot)$ die Terme $t_1 = (1 \cdot x)$ und $t_2 = x$ verschieden, definieren jedoch die gleiche Funktion.
+    
+    \pagebreak
+    
+    \item \textbf{Definition 2.10.1} \textbf{Atomare Formeln} in $\mathcal{L}$ sind Ausdrücke der Form $(t_1 \doteq t_2)$ oder $R(t_1, \hdots, t_n$ für ein Relationszeichen $R \in \mathcal{L}$.
+    \item \textbf{Definition 2.10.2} Die Menge der \textbf{Formeln} ist die kleinste Menge, welche alle Atomaren Formeln enthält, sowie für beliebige Formeln $\phi$ und $\psi$:
+    \begin{itemize}
+        \item Die Formel $\neg \phi$
+        \item Die Formel $(\phi \vee \psi)$
+        \item Die Formel $\exists x (\phi)$ (\texttt{\$\textbackslash exists x (\textbackslash phi)\$})
+    \end{itemize}
+    Auch Formeln kann man wie gehabt einstufen und über sie induzieren.
+    \item \textbf{Definition / Notation 2.11.1} Wir verwenden $\to$ und $\leftrightarrow$ genau wie in der Aussagenlogik und definieren zusätzlich:
+    \begin{itemize}
+        \item $\forall x (\phi) = \neg \exists x (\neg \phi)$ (\texttt{\$\textbackslash forall x (\textbackslash phi)\$})
+    \end{itemize}
+    \item \textbf{Definition  2.11.2} Eine Variable $x$ kommt in einer Formel $\phi$ \textbf{frei vor}, falls sie in der Formel vorkommt und nicht in einem der Quantoren vorkommt. Eine nicht freie Variable nennt man \textbf{gebunden}.
+    \item \textbf{Definition 2.12} Ein Tupel $(a_1, \hdots, a_n)$ aus dem Universum einer Struktur $\mathcal{A}$ \textbf{erfüllt} (\texttt{\$\textbackslash models\$}) eine Formel $\phi[x_1,\dots, x_m]$ - schreibe 
+    \begin{align*}
+        \mathcal{A} \models \phi[a_1,\hdots,a_n]
+    \end{align*}
+    - falls:
+    \begin{itemize}
+        \item $\phi = (t_1 \doteq t_2)$ und $t_1^\mathcal{A}[a_1, \hdots, a_n] = t_2^\mathcal{A}[a_1,\hdots, a_n]$
+        \item $\phi = R(t_1, \hdots, t_n)$ und $(t_1^\mathcal{A}[a_1, \hdots, a_n], \hdots, t_1^\mathcal{A}[a_1, \hdots, a_n]) \in R^\mathcal{A}$
+        \item $\phi = \neg \psi$ und $\mathcal{A} \nvDash \psi[a_1, \hdots, a_n]$
+        \item $\phi = (\psi \vee \theta)$ und $\mathcal{A} \nvDash \psi[a_1, \hdots, a_n]$ oder $\mathcal{A} \nvDash \theta[a_1, \hdots, a_n]$
+        \item $\phi = (\exists x(\psi))$ und es gibt ein $a \in A$ sd. $\mathcal{A} \nvDash \psi[a_1, \hdots, {a_{n-1}}, a]$
+    \end{itemize}
+    \item \textbf{Bemerkung 2.13} Aus dieser Definition folgt, dass in einer Struktur $\mathcal{A}$ gilt immer entweder $\mathcal{A} \models \chi$ oder $\mathcal{A} \nvDash \chi$ gilt! Das scheint momentan offensichtlich, wird aber später schnell vergessen wenn es um vollständige Theorien geht!
+    \item \textbf{Definition 2.14} Eine \textbf{Aussage} ist eine Formel $\chi$ ohne freie Variablen. Da Aussagen keine freien Variablen enthalten kann man einfach $\mathcal{A} \models \chi$ schreiben.
+    \item \textbf{Definition 2.15} Zwei Strukturen $\mathcal{A}$ und $\mathcal{B}$ sind \textbf{elementar Äquivalent}, wenn sie die gleichen Aussagen erfüllen.
+    \item \textbf{Definition 2.18.1} Sei $C \subset A$ und $D \subset B$. Eine Abbildung $F: C \to D$ ist eine \textbf{elementare Abbildung}, falls
+    \begin{align*}
+        \mathcal{A} \models \psi[c_1, \hdots, c_n] \Leftrightarrow \mathcal{B} \models \psi[F(c_1), \hdots, F(c_n)]
+    \end{align*}
+    Für alle $c_1, \hdots, c_n \in C$ und jede Formel $\psi[x_1, \hdots, x_n]$.
+    \item \textbf{Definition 2.18.2} Eine Unterstruktur $\mathcal{A} \subset \mathcal{B}$ ist eine \textbf{Elementare Unterstruktur}, falls die Identitätsabbildung elementar ist. Man schreibt dann
+    \begin{align*}
+        \mathcal{A} \preceq \mathcal{B}
+    \end{align*}
+    Und nennt $\mathcal{B}$ eine \textbf{elementare Erweiterung} von $\mathcal{A}$
+    \item \textbf{Korollar 2.19} Strukturen, zwischen denen ein nicht leeres Back-and-Forth-System existiert sind elementar äquivalent. Isomorphe Strukturen sind elementar äquivalent.
+\end{itemize}
+\section*{2.2 - Theorien, Modelle und Beweise}
+\begin{itemize}
+    \item \textbf{Definition 2.22.1} Eine \textbf{$\mathcal{L}$-Theorie} $T$ ist eine Kollektion von $\mathcal{L}$-\textbf{Aussagen} (Nicht von Formeln!)
+    \item \textbf{Definition 2.22.2} Eine Struktur $\mathcal{A}$ ist ein \textbf{Modell} von $T$, falls $\mathcal{A} \models \chi$ für alle $\chi \in T$. Man schreibt dann 
+    \begin{align*}
+        \mathcal{A} \models T
+    \end{align*}
+    \item \textbf{Definition 2.22.3} Eine Aussage $\theta$ \textbf{folgt aus einer Theorie} $T$, falls $\mathcal{A} \models \theta$ für alle Modelle $\mathcal A \models T$. Man schreibt dann $T \models \theta$
+    \item \textbf{Definition 2.22.4} Eine Theorie ist \textbf{konsistent}, falls sie Modelle besitzt.
+    \item \textbf{Bemerkung 2.23.1} Jede Struktur ist ein Modell der leeren Theorie.
+    \item \textbf{Bemerkung 2.23.2} Aus einer Inkonsistenten Theorie folgt jede Aussage,
+    also $T \models \chi$ für alle Aussagen $\chi$
+    \item \textbf{Bemerkung 2.23.3} Falls je zwei Modelle einer konsistenten $\mathcal{L}$-Theorie $T$ elementar Äquivalent sind gilt für jede $\mathcal{L}$-Aussage $\chi$
+    \begin{align*}
+        T \models \chi \text{ oder (exklusiv) } T \models \neg \chi
+    \end{align*}
+    \item \textbf{Definition 2.24} Eine Klasse $C$ von $\mathcal{L}$-Strukturen heißt \textbf{axiomatisierbar}, falls es eine $\mathcal{L}$-Theorie gibt, deren Modelle genau die Strukturen aus $C$ sind.
+    \item \textbf{Definition 2.25.1} Eine $\mathcal{L}$-\textbf{Aussage} $\chi$ ist \textbf{allgemeingültig}, falls sie aus der leeren Theorie folgt. Dies ist genau dann der Fall, \textbf{wenn sie in allen $\mathcal{L}$-Strukturen gilt}. Man schreibt dann
+    \begin{align*}
+        \models \chi
+    \end{align*}
+    \item \textbf{Definition 2.25.2} Eine \textbf{Formel} $\psi[x_1, \hdots, x_n]$ ist allgemeingültig, falls die Aussage $\forall x_1 \hdots \forall x_n \psi$ allgemeingültig ist. 
+    \item \textbf{Bemerkung 2.26} Sei $P$ eine aussagenlogische Tautologie. Die Formeln, die wir gewinnen, indem wir jede aussagenlogische Variable in $P$ durch eine $\mathcal{L}$-Formel $\psi_i$ ersetzten, ist allgemeingültig. Wir bezeichnen solche Formeln immer noch als Tautologien.
+    \item \textbf{Definition 2.27} Die \textbf{Gleichheitsaxiome} sind folgende Liste an allgemeingültigen Aussagen:
+    \begin{itemize}
+        \item $\forall x (x \doteq x)$ \textit{(Reflexivität)}
+        \item $\forall x \forall y ((x \doteq y) \to (y \doteq x))$ \textit{(Symmetrie)}
+        \item $\forall x \forall y \forall z (((x \doteq y) \wedge (y \doteq z)) \to (x \doteq z))$ \textit{(Transitivität)}
+        \item Für jedes Funktionszeichen $f$:\\ $\forall x_1 \hdots \forall x_n \forall y_1 \hdots \forall y_n (\bigwedge (x_i \doteq y_i) \to f(x_1, \hdots, x_n) \doteq f(y_1, \hdots, y_n))$\\
+        \textit{(Funktionen respektieren Gleichheit)}
+        \item Für jedes Relationszeichen $R$:\\ $\forall x_1 \hdots \forall x_n \forall y_1 \hdots \forall y_n (\bigwedge (x_i \doteq y_i) \to R(x_1, \hdots, x_n) \leftrightarrow R(y_1, \hdots, y_n))$\\
+        \textit{(Relationen respektieren Gleichheit)}
+    \end{itemize}
+    \item \textbf{Definitionen 2.29 - Beispiel 2.33} Formelle Hilfslemmas und Definitionen zu Ersetzung von Variablen
+    \item \textbf{Definition 2.34} \textbf{($\exists$-Quantorenaxiom)} 
+    \begin{align*}
+        \models (\phi \rightarrow \exists x \phi)
+    \end{align*}
+    Formell ist das eine Folgerung aus:
+    \begin{align*}
+        \models (\phi_{s/x} \rightarrow \exists x \phi)
+    \end{align*}
+    Für $s$ frei in $\phi$.
+    \item \textbf{Definition 2.35} Eine Formel ist in \textbf{pränexer Normalform}, wenn alle Quantoren am Anfang stehen.
+    \item \textbf{Lemma 2.36} Jede Formel ist logisch äquivalent zu einer Formel in pränexer Normalform durch Anwendung der Folgenden Umformungen:
+    \begin{itemize}
+        \item $\neg \exists x (\phi) \sim \forall x (\neg \phi)$
+        \item $\neg \forall x (\phi) \sim \exists x (\neg \phi)$
+        \item $(\phi \wedge \exists x \psi) \sim \exists y (\phi \wedge \psi_{y/x})$, solange $y$ nicht in $\phi$ vorkommt, ebenso für $\forall$ und mit umgekehrter Reihenfolge der Formeln. Die Pränexe Normalform ist nicht eindeutig, aber alle pränexen Normalformen der gleichen Formel sind logisch äquivalent.
+    \end{itemize}
+    \item \textbf{Lemma 2.37} \textbf{(Modus Ponens)} Falls $\models \phi$ und $\models (\phi \to \psi)$, dann $\models \psi$
+    \item \textbf{Lemma 2.38} \textbf{($\exists$-Einführung)} Falls $\models (\phi \to \psi)$, dann $\models (\exists x (\phi) \to \psi)$
+    \item \textbf{Definition 2.39} Eine Formel $\phi$ ist \textbf{aus einer Theorie $T$ beweisbar}, falls eine Folge $(\phi_1, \hdots, \phi_n)$ mit $\phi_n = \phi$ existiert, sodass für jedes $i \leq n$:
+    \begin{itemize}
+        \item Die Formel $\phi_i$ eine Tautologie ist, oder
+        \item Die Formel $\phi_i$ ein Gleichheitsaxiom ist, oder
+        \item Die Formel $\phi_i$ eine Instanz des $\exists$-Quantorenaxioms $\psi \to \exists x \psi$ (2.34) ist, oder
+        \item Die Formel $\phi_i$ in $T$ liegt, oder
+        \item Die Formel $\phi_i$ aus zwei vorherigen Formeln $\phi_j$ und $\phi_k = (\phi_j \to \phi_i)$ durch Modus Ponens (2.37) entsteht, oder
+        \item Die Formel $\phi_i = (\exists x (\psi_1) \to \psi_2)$ aus einer vorherigen Formel $\phi_k = (\psi_1 \to \psi-2)$ durch $\exists$-Einführung (2.38) entsteht
+    \end{itemize}
+    Eine solche Folge ist dann ein Beweis von $\phi$. Man schreibt
+    \begin{align*}
+        T \vdash \phi
+    \end{align*}
+    \item \textbf{Lemma 2.41} Eine Formel ist \textbf{beweisbar}, falls sie aus der leeren Theorie Beweisbar ist. Man schreibt
+    \begin{align*}
+        \vdash \phi
+    \end{align*}
+    Die Menge aller aus der leeren Theorie beweisbaren Formeln nennt man das \textbf{Hilbert-Kalkül}
+    \item \textbf{Lemma 2.42.1} \textbf{($\forall$-Quantorenaxiom)}
+    \begin{align*}
+        \vdash (\forall x\phi \to \phi)
+    \end{align*}
+    \item \textbf{Lemma 2.42.2} \textbf{($\forall$-Einführung)}
+    \begin{align*}
+        \vdash (\phi \to \psi) &\implies \vdash (\phi \to \forall x \psi)\\
+        \vdash \psi &\implies \vdash \forall x \psi
+    \end{align*}
+    \item \textbf{Lemma 2.43} Seien $c_1, \hdots, c_n \in C \notin \mathcal{L}$ Konstantenzeichen. Dann
+    \begin{align*}
+        \vdash \phi[x_1, \hdots, x_n] \Longleftrightarrow\ \vdash \phi[c_1, \hdots, c_n]
+    \end{align*}
+    \item \textbf{Bemerkung 2.44} Eine Aussage ist genau dann Beweisbar, wenn es endlich viele Aussagen $\chi_1, \hdots, \chi_k \in T$ gibt, sodass
+    \begin{align*}
+        \vdash ((\bigwedge \chi_i) \to \phi)
+    \end{align*}
+    \item \textbf{Korollar 2.45}
+    \begin{align*}
+        T \vdash (\psi \to \phi) \Longleftrightarrow T \cup \{\psi\} \vdash \phi
+    \end{align*}
+    \item \textbf{Korollar 2.46}
+    Beweisbare Formeln sind allgemeingültig, also
+    \begin{align*}
+        T \vdash \phi \implies T \models \phi 
+    \end{align*}
+    Intuitiv folgt das, da wir bei der Definition für Beweisbarkeit nur die Nutzung allgemeingültiger Formeln erlaubt haben (Modus Ponens, Tautologien, Gleichheitsaxiome etc.)
+\end{itemize}
+\section*{2.3 - Vollständigkeit und Kompaktheit}
+\begin{itemize}
+    \item \textbf{Definition 2.47.1} Eine Theorie $T$ ist \textbf{widerspruchsfrei}, falls es keine Aussage $\chi$ gibt, sodass $T \vdash \chi$ und $T \vdash \neg \chi$.
+    \item \textbf{Definition 2.47.2} Eine widerspruchsfreie $\mathcal{L}$-Theorie $T$ ist vollständig, falls für jede $\mathcal{L}$-Aussage $\chi$ entweder $T \vdash \chi$ oder $T \vdash \neg \chi$
+    \item \textbf{Bemerkung 2.48.1} Jede konsistente Theorie ist widerspruchsfrei (also jede Theorie, welche ein Modell besitzt)
+    \item \textbf{Bemerkung 2.48.2} Alle Modelle einer vollständigen Theorie sind elementar Äquivalent\\
+    Beweis:
+    \begin{itemize}
+        \item 
+        \begin{align*}
+                     \mathcal{A} \vDash \phi
+            \implies \mathcal{A} \nvDash \neg \phi
+            \implies T \nvdash \neg \phi*\\
+            \overset{\text{$T$ vollständig}}{\implies} T \vdash \phi
+            \implies T \vDash \phi
+            \implies \mathcal{B} \vDash \phi 
+        \end{align*}
+        * sonst $T \vdash \neg \phi \implies T \vDash \neg \phi \implies \mathcal{A} \vDash \neg \phi$
+    \end{itemize}
+    \item \textbf{Bemerkung, nicht im Skript}
+        In jedem Modell $\mathcal{A}$ gilt für jede Aussage $\chi$ entweder $\mathcal{A} \models \chi$ oder $\mathcal{A} \nvDash \chi$. Wenn alle Modelle elementar äquivalent sind gilt $\mathcal{A} \models \chi \Rightarrow T \models \chi$ bzw. $\mathcal{A} \models \neg\chi \Rightarrow T \models \neg \chi$, also $T \models \chi$ oder $T \nvDash \chi$ für jedes $\chi$. Durch den Vollständigkeitssatz folgt dann später auch die Rückrichtung dieser Aussage (Korollar 2.62)
+    \item \textbf{Bemerkung 2.49} Eine Theorie $T$ ist genau dann widerspruchsfrei, wenn für keine endlich Kollektion $\phi_1, \hdots, \phi_n \in T$ gilt, dass $\vdash \neg(\bigwedge \phi_i)$ 
+    \item \textbf{Lemma 2.50} Eine Theorie $T$ ist genau dann widersprüchlich, wenn jede Aussage aus $T$ beweisbar ist.
+    \item \textbf{Korollar 2.51} Die Theorie $T \cup \{\chi\}$ ist genau dann widersprüchlich, wenn $T \vdash \chi$.
+    \item \textbf{Satz 2.52} Der Gödelsche Vollständigkeitssatz ist äquivalent zur Aussage "Eine Theorie ist genau dann Widerspruchsfrei, wenn sie ein Modell besitzt"
+    \item \textbf{Lemma 2.53} Sei $T$ eine widerspruchsfreie Theorie und $\chi$ eine beliebige Aussage. Dann ist mindestens eine der Theorien $T \cup \{\chi\}$ und $T \cup \{\neg \chi\}$ ebenfalls widerspruchsfrei.
+    \item \textbf{Lemma 2.54} Jeder widerspruchsfreie Theorie ist Teilmenge einer vollständigen Theorie.
+    \item \textbf{Korollar 2.61 - der Gödelsche Vollständigkeitssatz}
+    \begin{align*}
+        T \models \chi \Leftrightarrow T \vdash \chi
+    \end{align*}
+    \item \textbf{Korollar 2.62} Eine Theorie ist genau dann vollständig, wenn alle Modelle elementar äquivalent sind. Siehe (2.48).
+    \item \textbf{Korollar 2.63 - Kompaktheitssatz} Eine Theorie ist genau dann konsistent, wenn jede endliche Teiltheorie konsistent ist.
+    \item \textbf{Korollar 2.64.1 - Löwenheim-Skolem abwärts} Jede konsistente Theorie in einer abzählbaren Sprache besitzt ein endliches Modell.
+    \item \textbf{Korollar 2.64.1 - Löwenheim-Skolem aufwärts} Falls eine Theorie beliebig große endliche Modelle besitzt besitzt sie ein Modell der Größe des Kontinuums.
+    \item \textbf{Korollar 2.65} Sei $C$ eine Klasse endlicher Strukturen, welche für jedes $n \in \mathbb{N}$ eine Struktur mit mächtigkeit $\geq n$ besitzt. Diese Klasse ist nicht axiomatisierbar, da nach dem Kompaktheitssatz jede Theorie, welche versucht, $C$ zu axiomatisieren, auch eine unendliche Struktur modelliert.
+\end{itemize}
+\section*{3 - Rekursivität}
+\begin{itemize}
+    \item \textbf{Definition 3.1} Die Kollektion der \textbf{primitiv rekursiven Funktionen} ist die kleinste Kollektion PREK an Funktionen $\mathbb{N}^n \to \mathbb{N}$, welche die Grundfunktionen:
+    \begin{itemize}
+        \item Nachfolgerfunktion
+        \item Projektion
+        \item Konstante Nullfunktion
+    \end{itemize}
+    enthalten, und unter folgenden Operationen abgeschlossen sind:
+    \begin{itemize}
+        \item Komposition
+        \item \textbf{Primitive Rekursion}: sind $h,g_1,\hdots,g_n$ in PREK, so auch:
+        \begin{align*}
+        \begin{array}{cccc}
+           f:  & \mathbb{N}^{n+1} &\to& \mathbb{N}  \\
+             & (x_1, \hdots, x_n,y) &\to& 
+             \begin{cases}
+             g(x_1, \hdots, x_n) \text{ für y = 0}\\
+             h(x_1, \hdots, x_n, z, f(x_1,\hdots, x_n,z)) \text{ für y = z+1}
+             \end{cases}
+        \end{array}
+        \end{align*}
+    \end{itemize}
+    \item \textbf{Beispiel 3.2} Einige Beispiele für primitiv rekursive Funktionen:
+    \begin{itemize}
+        \item \begin{align*}
+        \begin{array}{cccc}
+           +:  & \mathbb{N}^{2} &\to& \mathbb{N}  \\
+             & (a,b) &\to& 
+             \begin{cases}
+             a \text{ für b = 0}\\
+             S(+(a,c)) \text{ für b = c+1}
+             \end{cases}
+        \end{array}
+        \end{align*}
+        \item \begin{align*}
+        \begin{array}{cccc}
+           \cdot:  & \mathbb{N}^{2} &\to& \mathbb{N}  \\
+             & (a,b) &\to& 
+             \begin{cases}
+             0 \text{ für b = 0}\\
+             +(a, \cdot(a,c)) \text{ für b = c+1}
+             \end{cases}
+        \end{array}
+        \end{align*}
+        \item \begin{align*}
+        \begin{array}{cccc}
+           x \dotminus 1:  & \mathbb{N} &\to& \mathbb{N}  \\
+             & (n) &\to& 
+             \begin{cases}
+             0 \text{ für n = 0}\\
+             k \text{ für n = k+1}
+             \end{cases}
+        \end{array}
+        \end{align*}
+        \item \begin{align*}
+        \begin{array}{cccc}
+           \dotminus:  & \mathbb{N}^{2} &\to& \mathbb{N}  \\
+             & (a,b) &\to& 
+             \begin{cases}
+             a \text{ für b = 0}\\
+             (a \dotminus b) \dotminus 1 \text{ für b = c+1}
+             \end{cases}
+        \end{array}
+        \end{align*}
+        \item \begin{align*}
+        \begin{array}{cccc}
+           !& \mathbb{N} &\to& \mathbb{N}  \\
+             & (n) &\to& 
+             \begin{cases}
+             S(0) \text{ für n = 0}\\
+             S(k) \cdot k! \text{ für n = k+1}
+             \end{cases}
+        \end{array}
+        \end{align*}
+    \end{itemize}
+    \item{\textbf{Definition 3.3}} Die Klasse der Rekursiven Funktionen ist die kleinste Klasse, welche unter den eben genannten Operationen abgeschlossen ist und zusätzlich unter der \textbf{$\mu$-Rekursion} abgeschlossen ist:
+    \begin{itemize}
+        \item Falls $g$ rekursiv ist und für alle $(x_1, \hdots, x_n)$ ein $y \in \mathbb{N}$ existiert, sodass $g(x_1, \hdots, x_n, y) = 0$, so ist die Funktion
+        \begin{align*}
+        \begin{array}{cccc}
+            \mu y\ g(x_1, \hdots, x_n, y) = 0: &\mathbb{N}^n &\to& \mathbb{N}\\
+            &(x_1, \hdots, x_n) &\to& \text{kleinstes $z$ mit $g(x_1, \hdots, x_n, z) = 0$}
+        \end{array}
+        \end{align*}
+        ebenfalls rekursiv.
+    \end{itemize}
+    \item{\textbf{Definition 3.3}} Eine Menge $A \subset \mathbb{N}^n$ ist (primitiv) rekursiv, falls ihre \textbf{Charakteristische Funktion} $\chi_A$ (primitiv) rekursiv ist:
+    \begin{align*}
+        \begin{array}{cccc}
+             \chi_A: & \mathbb{N}^k & \to & \mathbb{N}  \\
+             & (x_1, \hdots, x_k) & \to & 
+             \begin{cases}
+             1, \text{ falls } (x_1, \hdots, x_k) \in A\\
+             0, \text{ sonst}
+             \end{cases}
+        \end{array}
+    \end{align*}
+    \item{\textbf{Beispiel 3.5.1}} Die Relation $\neq 0$ ist primitiv rekursiv:
+    \begin{align*}
+        \chi_{\neq 0}(n) = 
+        \begin{cases}
+             0, \text{ falls } n = 0\\
+             1, \text{ falls } n = k + 1
+        \end{cases}
+    \end{align*}
+    \item{\textbf{Beispiel 3.5.2}} Die Relation $<$ ist primitiv rekursiv:
+    \begin{align*}
+        a < b \Leftrightarrow  b \dotminus a \neq 0
+    \end{align*}
+    \item{\textbf{Lemma 3.6}} Falls $A$ und $B$ primitiv rekursiv sind, so auch:
+    \begin{itemize}
+        \item $A \cup B$, durch $\chi = \chi_{\neq 0}(\chi_A + \chi_B)$
+        \item $A \cap B$, durch $\chi = \chi_A \cdot \chi_B$
+        \item $A\ \backslash\ B$, durch $\chi = \chi_A \dotminus \chi_B$
+        \item $\{(x_1, \hdots, x_n \ |\ (f_1(x_1, \hdots, x_n), \hdots, f_k(x_1, \hdots, x_n)) \in A\}$ für Beliebige primitiv Rekursive Funktionen $f_i$, durch $\chi = \chi_A(f_1, \hdots, f_k)$
+    \end{itemize}
+    \item{\textbf{Lemma 3.7}} Gegeben disjunkte rekursive Mengen $A_1, \hdots, A_n$ und rekursive Funktionen $f_i$ ist die Fallunterscheidung 
+    \begin{align*}
+        \begin{cases}
+            f_1, \text{ falls } x \in A_1\\
+            \hdots\\
+            f_n, \text{ falls } x\in A_n\\
+            f_k \text{ sonst}
+        \end{cases}
+    \end{align*}
+    primitiv Rekursiv, indem man die einzelnen Funktionen mit der Charakteristischen Funktion des jeweiligen Falls multipliziert und die Ergebnisse aufsummiert
+    \item{\textbf{Lemma 3.8}} Sei $A \subset B \subset \mathbb{N}$. Falls $B \backslash A$ endlich ist und $A$ (primitiv) rekursiv ist, so auch $B$.
+    \item{\textbf{Lemma 3.9.1}} Sei $A$ (primitiv) rekursiv. Dann auch
+    \begin{align*}
+        B = \{(x_1, \hdots, x_n,y)\in \mathbb{N}^{k+1}\ |\ \forall z < y ((x_1, \hdots, x_n, z) \in A)\}
+    \end{align*}
+    \item{\textbf{Lemma 3.9.2}} Sei $A$ (primitiv) rekursiv. Dann auch
+    \begin{align*}
+        C = \{(x_1, \hdots, x_n,y)\in \mathbb{N}^{k+1}\ |\ \exists z < y ((x_1, \hdots, x_n, z) \in A)\}
+    \end{align*}
+    \item{\textbf{Lemma 3.10}} Seien $A$ und $f$ primitiv rekursiv, sodass es für alle $(x_1, \hdots, x_n) \in \mathbb{N}^n$ ein $y \in \mathbb{N}$ gibt mit $y \leq f(x_1, \hdots, x_n)$ und $(x_1, \hdots, x_n,y) \in A$. So ist die folgende Funktion primitiv rekursiv:
+    \begin{align*}
+        g(x_1, \hdots, x_k) = \mu y\ (x_1,\hdots, x_k, y) \in A
+    \end{align*}
+    \item{\textbf{Lemma 3.11.1}} Die Funktion $Rest(a,b) = a\mod b$ ist primitiv rekursiv:
+    \begin{align*}
+        Rest: (a,b) \to 
+        \begin{cases}
+        0, \text{ falls } b = 0\\
+        \begin{cases}
+            Rest(a,c+1), \text{ falls } Rest(a,c+1) < x\\
+            0, \text{ sonst }
+        \end{cases},
+        \text{ falls b = c+1}
+        \end{cases}
+    \end{align*}
+    \item{\textbf{Lemma 3.11.2}} Das Prädikat $a | b$ ($a$ teilt $b$) ist primitiv rekursiv:
+    \begin{align*}
+        a\ |\ b \Leftrightarrow Rest(a,b) = 0
+    \end{align*}
+    \item{\textbf{Lemma 3.11.3}} Die Menge $P$ der Primzahlen ist primitiv rekursiv: $p \in P$ gdw. $p-1 \neq 0$ und $\forall n < p(n-1 = 0 \vee \neg(n\ |\ p))$ (Siehe Lemma 3.9.1)
+    \item{\textbf{Lemma 3.11.4}} Die $n$-te Primzahl ist durch $2^{2^n}$ beschränkt
+    \item{\textbf{Lemma 3.11.5}} Die Funktion $p(n)$, welche $n$ auf die $n+1$-te Primzahl abbildet, ist rekursiv:
+    \begin{align*}
+        p(n) = 
+        \begin{cases}
+        S(S(0)), \text{ falls } n = 0\\
+        \mu i (i \in P \wedge p(k) < i), \text{ falls } n = k+1
+        \end{cases}
+    \end{align*}
+    Nach Lemma 3.11.4 ist $i$ durch eine primitiv rekursive Funktion beschränkt, also ist nach Lemma 3.10 die Funktion $p(n)$ sogar primitiv rekursiv.
+    \item{\textbf{Definition 3.12}} Sei $\mathcal{F}$ die kleinste Klasse an Funktionen, welche $+, \cdot$ und $\chi_{<}$ enthält und unter Komposition und $\mu$-Rekursion abgeschlossen ist.
+    \item{\textbf{Lemma 3.14}} $\mathcal{F} = Rek$
+\end{itemize}
+\section*{3.2 - Gödelisierung und Rekursiv aufzählbare Mengen}
+\begin{itemize}
+    \item{\textbf{Gödelisierung}} Wir definieren folgende Bijektive Funktion zwischen der Kollektion $\mathcal{S}$ aller endlichen Folgen in $\mathbb{N}$ und der Menge $\mathbb{N}$ selbst:
+    \begin{align*}
+        \goedel{s} \to 
+        \begin{cases}
+        0, \text{ falls $s$ die leere Folge ist}\\
+        p(0)^{x_0} \cdot \hdots \cdot p(n-2)^{x_{n-2}} \cdot p(n-1)^{x_{n-1}+1} - 1, \text{ falls } s = (x_0, \hdots, x_{n-1})
+        \end{cases}
+    \end{align*}
+    \item{\textbf{Lemma 3.15.1}} Die Funktion 
+    \begin{align*}
+    lg(m) = 
+    \begin{cases}
+    n, \text{ falls } m = \goedel{x_0, \hdots, x_{n-1}}\\
+    0, \text{ sonst}
+    \end{cases}    
+    \end{align*} ist primitiv rekursiv durch:
+    \begin{align*}
+        lg(m) = \mu z (\forall y < m ((z < y) \rightarrow (\neg (p(y)\ |\ m+1))))
+    \end{align*}
+    Siehe wieder Lemma 3.9 und 3.10. ($z < m+1$)
+    \item{\textbf{Lemma 3.15.2}} Die Funktion $K(k,m) = 
+    \begin{cases}
+    x_k, \text{ falls $m = \goedel{x_0, \hdots, x_{n-1}}$ und $k < lg(m)$}\\
+    0, \text{ sonst }
+    \end{cases}$
+    ist primitiv rekursiv durch:
+    \begin{align*}
+        (k,m) 
+        \to 
+        \begin{cases}
+        \mu y(p(k)^{y+1} \nmid m+1), \text{ falls } k < lg(m) - 1\\
+        \mu y(p(k)^{y+2} \nmid m+1), \text{ falls } k = lg(m) - 1\\
+        0, \text{ sonst}
+        \end{cases}
+    \end{align*}
+    Siehe wieder Lemma 3.10. ($y < lg(m)$)
+    
+    \item{\textbf{Korollar 3.16}} Die Menge $\{m \ |\ lg(m) = n\}$ für ein gegebenes $n \in \mathbb{N}$ ist primitiv rekursiv. Wir sagen deshalb, dass $\mathcal{S}_n$ (Die Kollektion der Folgen der Länge $n$ in $\mathbb{N}$) primitiv rekursiv ist.
+    
+    \item{\textbf{Verkürzende Notation}} Im Sinne der Übersichtlichkeit werde ich ab sofort manchmal Tupel $(x_1, \hdots, x_n)$ verkürzt als $\overline{x}$ schreiben.
+    
+    \item{\textbf{Korollar 3.17}} Mehrfachrekursion zweier primitiv rekursiver Funktionen $g_1: \mathbb{N}^{k-1} \to \mathbb{N}$ und $g_2: \mathbb{N}^{k+1} \to \mathbb{N}$ ist primitiv rekursiv, d.h. die folgende Funktion $f: \mathbb{N}^k \to \mathbb{N}$ ist primitiv rekursiv:
+    \begin{align*}
+        &f(\overline{x},0) = g_1(\overline{x})\\
+        &f(\overline{x},n+1) = g_2(\overline{x},n,\goedel{f(\overline{x},0), \hdots, f(\overline{x},n)})
+    \end{align*}
+
+    \item{\textbf{Definition 3.18}} Eine Menge $A \subset \mathbb{N}^n$ ist \textbf{rekursiv aufzählbar}, falls $A$ die Projektion einer rekursiven Menge $B \subset \mathbb{N}^{n+1}$ auf die ersten $n$ Koordinaten ist.
+    \item{\textbf{Bemerkung 3.19}} Jede rekursive Menge ist rekursiv aufzählbar, aber nicht jede rekursiv aufzählbare Menge ist rekursiv.
+    \item{\textbf{Lemma 3.20.1}} Projektionen rekursiv aufzählbarer Mengen sind rekursiv aufzählbar
+    \item{\textbf{Lemma 3.20.2}} Rekursiv aufzählbare Mengen sind unter endlichen Durchschnitten und Vereinigungen abgeschlossen
+    \item{\textbf{Lemma 3.20.3}} Wenn $A \subset \mathbb{N}^{n+1}$ rekursiv aufzählbar ist, dann auch
+    \begin{align*}
+        C = \{(\overline{x},w) \in \mathbb{N}^{n+1}\ |\ \forall z < w ((\overline{x},z) \in A)\}
+    \end{align*}
+    \item{\textbf{Lemma 3.21}}
+    Eine Menge $A$ ist genau dann rekursiv, wenn $A$ und $\mathbb{N}^n\backslash A$ rekursiv aufzählbar sind.
+    \item{\textbf{Lemma 3.22}} Eine nichtleere Menge ist genau dann rekursiv aufzählbar, wenn sie das Bild einer rekursiven Funktion $f: \mathbb{N} \to \mathbb{N}$ ist.
+\end{itemize}
+
+\section*{3.3 - Definierbarkeit}
+\begin{itemize}
+    \item{\textbf{Definition 3.23.1}} Eine Menge $M$ ist in einer $\mathcal{L}$ - Struktur $\mathcal{A}$ \textbf{definierbar}, wenn eine $\mathcal{L}$-Formel $\phi_M$ existiert, sodass
+    \begin{align*}
+        (m_1, \hdots, m_n) \in M \Leftrightarrow \mathcal{A} \models \phi_M[m_1, \hdots, m_n]
+    \end{align*}
+    \item{\textbf{Bemerkung}} Dies entspricht genau der üblichen Schreibweise
+    \begin{align*}
+        M = \{m \in A \ |\ m \text{ erfüllt eine Eigenschaft } E\}  
+    \end{align*}
+    \item{\textbf{Definition 3.23.2}} Der \textbf{Graph} einer Funktion $f$ ist die Menge aller Tupel $(n, f(n))$ für $n \in \mathbb{N}$. Eine Funktion ist definierbar, wenn ihr Graph definierbar ist.
+    \item{\textbf{Definition 3.23.3}} Eine Menge $A$ ist \textbf{arithmetisch}, falls sie in der Struktur $\mathcal{N}_0 = \{\mathbb{N},0,S,+,\cdot,<\}$ definierbar ist.
+    \item{\textbf{Proposition 3.24}} Rekursive Funktionen und Mengen sind arithmetisch.
+    \item{\textbf{Proposition 3.25}} Rekursiv aufzählbare Funktionen sind arithmetisch.
+\end{itemize}
+
+\section*{4.1 - Gödelisierung und Entscheidbarkeit} 
+\begin{itemize}
+    \item{\textbf{Definition 3.26}} Wir \textbf{Gödelisieren} eine Sprache, indem wir jedem Zeichen $\lambda$ eine natürliche Zahl $\goedelnr{\lambda}$ zuordnen, z.B. durch $\goedelnr{\doteq} = \goedel{0,0}$, $\goedelnr{\vee} = \goedel{0,1}$ etc.
+    \item{\textbf{Lemma 3.28.1}} Die Menge $\{\goedelnr{t}\ |\ t \text{ Term}\}$ ist primitiv rekursiv
+    \item{\textbf{Lemma 3.28.2}} Die Menge $\{\goedelnr{\phi}\ |\ \phi \text{ Formel}\}$  ist primitiv rekursiv
+    \item{\textbf{Lemma 3.28.3}} Die Menge $\{\goedelnr{\phi}\ |\ \phi[x] \text{ Formel mit höchstens einer freien Variable}\}$
+    ist primitiv rekursiv
+    \item{\textbf{Lemma 3.28.4}} Die Menge $\{\goedelnr{\chi}\ |\ \chi[x] \text{ Aussage}\}$
+    ist primitiv rekursiv
+    \item{\textbf{Lemma 3.29.1}} Eine Theorie $T$ in einer endlichen Sprache $\mathcal{L}$ ist \textbf{rekursiv axiomatisierbar}, falls $\{\goedelnr{\chi}\ |\ \chi \in T\}$ rekursiv aufzählbar ist.
+    \item{\textbf{Lemma 3.29.2}} Eine Theorie $T$ in einer endlichen Sprache $\mathcal{L}$ ist \textbf{entscheidbar}, falls $\{\goedelnr{\chi}\ |\ T \vdash \chi\}$ rekursiv ist.
+    \item{\textbf{Lemma 3.30}} Die leere Theorie (Das Hilbertkalkül) und jede endliche Theorie sind rekursiv axiomatisierbar.
+    \item{\textbf{Lemma 3.31}} Die Menge der Gödelnummern der Tautologien ist primitiv rekursiv.
+    \item{\textbf{Lemma 3.32}} Wenn $T$ rekursiv axiomatisierbar ist ist die Menge $\{\chi\ |\ T \proves \chi\}$ rekursiv aufzählbar.
+    \item{\textbf{Lemma 3.33}} Jede Theorie $T$, welche vollständig und rekursiv axiomatisierbar ist, ist entscheidbar
+    \item{\textbf{Satz 3.34}} Die Menge der Aussagen, welche in $\mathcal{N}_0$ (Siehe 3.23.3) gilt, ist unetscheidbar.
+    \item{\textbf{Satz 3.35 - Einfacher Unnvolständigkeitssatz}} Jede rekursiv axiomatisierbare Theorie $T$ in der Sprache $(0,+,\cdot,<)$, welche $\mathcal{N}_0$ als Modell besitzt, ist unvollständig.
+\end{itemize}
+\pagebreak
+\section*{4.2 - Der Unvollständigkeitssatz}
+\begin{itemize}
+    \item{\textbf{Definition 3.36}} Das Axiomsystem $Q$ ist die Folgende endliche Menge von Aussagen, welche $\mathcal{N}_0$ axiomatisiert:
+    \begin{itemize}
+        \item $\forall x(x + 0 \doteq x)$
+        \item $\forall x \forall y (x + S(y) = S(x+y))$
+        \item $\forall x (x \cdot 0 \doteq 0)$
+        \item $\forall x \forall y(x \cdot S(y) \doteq x \cdot y + x)$
+        \item $\forall x \neg (x < 0)$
+        \item $\forall x \forall y(x < S(y) \leftrightarrow ((x < y) \vee (x \doteq y)))$
+    \end{itemize}
+    \item{\textbf{Definition 3.37.1}}
+    \begin{align*}
+        \underline{n} := S(S(\hdots S(0))) \text{ sd. } \underline{n} = n
+    \end{align*}
+    \item{\textbf{Lemma 3.37.2}}
+    Die Theorie $Q^{*}$ besteht aus folgenden Aussagen, welche Folgerungen aus $Q$ sind:
+    \begin{itemize}
+        \item $Q^{*}_{1}(n,m) - (\underline{n} + \underline{m} = \underline{m+n})$
+        \item $Q^{*}_{2}(n,m) - (\underline{n} \cdot \underline{m} = \underline{m \cdot n})$
+        \item $Q^{*}_{3}(n,m) - ((x < \underline{n}) \leftrightarrow \bigvee_{k < n} (x \doteq \underline{k}))$ 
+    \end{itemize}
+    Es gibt eine Aussage für jedes Tupel $(n,m) \in \mathbb{N}$, also ist $Q^{*}$ nicht mehr endlich. Die Theorie ist jedoch trotzdem rekursiv axiomatisierbar, sonst könnten wir sie nicht so einfach aufschreiben.
+     \item\textbf{Satz 3.48 - Fixpunktsatz} Für jede Formel $\psi[x]$ gibt es eine Aussage, sodass $Q^* \proves (\chi \Leftrightarrow \psi[x])$
+    \item\textbf{Satz 3.47.1 - Der erste Unvollständigkeitssatz} Jede Teiltheorie $T \subset Th(\mathcal{N}_0)$ ist unentscheidbar.
+    \item\textbf{Korollar 3.47.2} Es gibt Mengen, welche rekursiv aufzählbar, aber nicht rekursiv sind. 
+\end{itemize}
+\pagebreak
+\section*{5 - Einige zusätzliche Sätze und Lemmas aus Übungsblättern}
+\begin{itemize}
+    \item{\textbf{Blatt 7, 2 d) - Sehr wichtig für Beweise per Kompaktheitssatz!}} Sei $\mathcal{L}$ eine beliebige Sprache und sei $\mathcal{L}' = \mathcal{L} \cup \{c\}$ für ein Konstantenzeichen $c$. Dann ist die $\mathcal{L}$-Formel $\phi[x]$ genau dann allgemeingültig, wenn die $\mathcal{L}'$-Aussage $\phi[c]$ allgemeingültig ist. 
+    \item{\textbf{Blatt 8, 3 a)}} Die Abstandsfunktion $|x-y|$ ist primitiv rekursiv.
+    \item{\textbf{Blatt 8, 3 b)}} Die Funktionen $x^y$ und $x^{x^{\rddots x}}$ ($y$ mal) sind primitiv rekursiv.
+    \item{\textbf{Blatt 8, 3 c)}} Für $f$ primitiv rekursiv ist
+    \begin{align*}
+        g(\overline{x},y) = \sum_{z < y} f(\overline{x},z) 
+    \end{align*}
+    ebenfalls primitiv rekursiv
+    \item{\textbf{Blatt 9, 3 a)}} Die Menge der Zweierpotenzen ist primitiv rekursiv.
+    \item{\textbf{Blatt 9, 3 b)}} Die Funktion $f(x)$, welche die Anzahl der Zweierpotenzen $< x$ zählt, ist primitiv rekursiv.
+    \item{\textbf{Blatt 9, 4 a)}} Jede endliche Teilmenge von $\mathbb{N}^n$ ist primitiv rekursiv.
+    \item{\textbf{Blatt 9, 4 b)}}  Für $f$ primitiv rekursiv ist
+    \begin{align*}
+        g(\overline{x},y) = \prod_{z < y} f(\overline{x},z) 
+    \end{align*}
+    ebenfalls primitiv rekursiv
+    \item{\textbf{Blatt 9, 4 b)}} Sei $n = \goedel{\overline{x}}$. Dann ist die Funktion
+    \begin{align*}
+        (k,n) \to \goedel{k,\overline{x}}
+    \end{align*}
+    primitiv rekursiv.
+    \item{\textbf{Blatt 10, 1 a)}} Sei $f$ rekursiv und streng monoton steigend. Dann ist die Bildmenge von $f$ rekursiv. (vgl. Lemma 3.22 - Eine Menge ist genau dann rekursiv Aufzählbar, wenn sie das Bild einer rekursiven Funktion ist)
+    \item{\textbf{Blatt 10, 1 c)}} Jede unendliche rekursiv aufzählbare Teilmenge besitzt eine unendliche rekursive Teilmenge.
+    \item{\textbf{Blatt 10, 2}} Seien $A$ und $B$ rekursiv aufzählbar und $A \cup B$ und $A \cap B$ rekursiv. Dann sind $A$ und $B$ rekursiv.
+    \item{\textbf{Blatt 11, 2 a)}} Seien $g(\overline{x},z)$ und $f(\overline{x}$ (primitiv) rekursiv. Dann ist die Funktion
+    \begin{align*}
+        h(\overline{x}) = \prod_{i < f(\overline{x})} g(\overline{x},i)
+    \end{align*}
+    ebenfalls (primitiv) rekursiv.
+\end{itemize}
+\end{document}
