@@ -7,6 +7,10 @@
 \usepackage{multicol}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{pdfpages}
+
+%hyperref should be last apparently
+\usepackage{hyperref}
 
 \renewcommand\cftsecdotsep{\cftdot}
 \renewcommand\cftsubsecdotsep{\cftdot}
@@ -22,7 +26,7 @@
 
 \renewcommand*\contentsname{Table of contents}
 
-\usepackage{pdfpages}
+
 \begin{document}
 \include{title}
 \tableofcontents
@@ -141,6 +145,29 @@ begin
 end;
 \end{verbatim}
 after which the compiler will assign the ports based on the order of the signals in the port map. It is however good practice to always use explicit association.
+\newpar
+There are three concepts used in  testing:
+\begin{itemize}
+ \item \texttt{report}, for print-like outputs
+ \item \texttt{assert}, for specifying conditions
+ \item \texttt{severity}, for specifying how the statement should affect the run of a simulation
+\end{itemize}
+If needed, combinations of the three can be used within a single line:
+\begin{verbatim}
+report <message_string>
+report <message_string> severity <severity_level>;
+
+assert <condition>;
+assert <condition> severity <severity_level>;
+assert <condition> report <message_string>;
+assert <condition> report <message_string> severity <severity_level>;
+\end{verbatim}
+If all three are used, the following happens: If the assertion is violated, the program sends a message \texttt{"message"}, and the whole thing is treated as an 'incident' with a predefined \texttt{severity\_level}. If an \texttt{assert} doesn't have a \texttt{severity\_level}, then the severity level will be \texttt{error}. If no \texttt{message\_string} is specified, the message will be \texttt{"Assertion Violation"}.
+ If a \texttt{report} without an assertion does not have a \texttt{severity\_level}, the severity level is implicitly defined to be \texttt{note}.
+ \newpar
+ \texttt{report} statements are inherently sequential, meaning they can occur inside processes, but not (by themselves) in architectures. However, \texttt{assert}ions can be either sequential or concurrent.
+
+
 \subsection{A Full Adder in VHDL}
 \begin{verbatim}
 entity fullAdder is
@@ -194,14 +221,15 @@ begin
 end STRUCT;
 \end{verbatim}
 \subsection{Data Types in VHDL}
-Standard data types:
+\subsubsection{Standard data types}
+The standard data types provided by VHDL are:
 \newpar
 \begin{tabular}{|c|c|}
     \hline
     bit & 0,1\\\hline
     boolean & true,false\\\hline
     character & most ASCII characters\\\hline
-    integer & $-2^31 - 1, \ldots, 2^31-1$\\\hline
+    integer & $-2^{31} - 1, \ldots, 2^{31}-1$\\\hline
     real & $-1.7e38, \ldots, 1.7e48$\\\hline
     time & 1fs, \ldots, 1hr\\\hline
 \end{tabular}
@@ -223,6 +251,13 @@ type state is (idle,start,stop);
 type hexDigits is (’0’, {…} , ’9’, ’A’, ’B’, ’C’, ’D’, ’E’, ’F’)
 \end{verbatim}
 \newpar
+It is important not to get confused between statements like the following:
+\begin{itemize}
+ \item \texttt{signal S : integer range 0 to 3;}, meaning a number between 0 and 3
+ \item \texttt{signal S : unsigned(3 downto 0);}, meaning an unsigned 3-bit integer (i.e. a number between 0 and 7)
+\end{itemize}
+Also note that for most datatypes, \texttt{downto} corresponds to little endian (i.e. most significant bit first), while \texttt{to} corresponds to big endian.
+
 \subsubsection{std\_logic}
 In realistic circuits, voltages may come in many forms not accurately described as simple boolean variables / bits. To model these, the datatype \texttt{std\_logic} is used, which contains signal types such as:
 \newpar
@@ -232,13 +267,13 @@ In realistic circuits, voltages may come in many forms not accurately described 
     U & uninitialized\\\hline
     X & unknown, impossible to determine (generally a short circuit)\\\hline
     Z & high impedance (circuit connected to neither ground nor voltage)\\\hline
-    H & weak drive, logic one (i.e. voltage behind resistor)\\
+    H & weak drive, logic one (i.e. voltage behind resistor)\\\hline
     L & weak drive, logic zero\\\hline
     W & weak drive, undefined logic value\\\hline 
     - & don't care\\\hline
 \end{tabular}
 \newpar
-Priority-wise, in logical operations, we have $X > 0 || 1 > W > L || H > Z$.
+These values take priority over each other in the following order: $X > (0 \sim 1) > W > (L \sim H) > Z$.
 \newpar
 \subsubsection{Arrays and Vectors}
 \begin{verbatim}
@@ -321,7 +356,6 @@ end;
 \end{verbatim}
 \subsection{Variables}
 Variables work like variables in other programming languages. They store temporary values and are only usable in processes, procedures and functions. \tbf{Usage of them is not recommended in VHDL for synthesis.} Unlike signal assignments, variables assignments are performed sequentially as they are encountered in the code.
-\clearpage
 \subsection{Processes}
 We've already seen two styles of modelling using VHDL: A Dataflow architecture uses concurrent signal assignment statements, while a structural architecture uses only component instantiation statements. We will now learn a third style: \tbf{Behavioural architecture}, which uses  \tbf{process statements}. A process is simply a set of statements that are executed sequentially-ish:
 \begin{verbatim}
@@ -394,13 +428,266 @@ when "01" =>
 when "10" =>
 …
 when others =>
-…
+null
 end case;    
-\end{verbatim}    
+\end{verbatim}
 \end{multicols}
+\newpar
+As seen here, a case where nothing happens can be specified using the \texttt{null} Statement.
+\newpar
+VHDL also supports \texttt{loop}s. Here are two variants of a clock that counts up to 10, incrementing once every 5ns, using a \texttt{while} loop and a \texttt{for} loop:
+\begin{multicols}{2}
+\begin{verbatim}
+constant MAX_SIM_TIME : time := 50 ns;
+constant PERIOD : time := 10 ns;
+...
+clk_gen: process (clk)
+begin
+ while NOW < MAX_SIM_TIME loop --!
+  clk <= not clk ;
+  wait for PERIOD/2;
+ end loop;
+ wait;
+end process clk_gen;
+\end{verbatim}
+\begin{verbatim}
+constant MAX_CYCLES : integer := 10;
+constant PERIOD : time := 10 ns;
+...
+clk_gen: process (clk)
+variable cnt: integer := 0
+begin
+ for cnt in 1 to MAX_CYCLES loop --!
+  clk <= not clk ;
+  wait for PERIOD/2;
+ end loop;
+ wait;
+end process clk_gen;
+\end{verbatim}
+\end{multicols}
+\newpar
+And a third variant using the \texttt{exit when}-Statement:
+\begin{verbatim}
+constant MAX_CYCLES : integer := 10;
+...
+clk_gen: process (clk)
+variable cnt: integer := 0;
+begin
+ L1: loop
+  clk <= not clk;
+  cnt := cnt + 1;
+  wait for 5ns;
+ exit when cnt > 2*MAX_CYCLES; --!
+end loop;
+wait;
+end process clk_gen;
+\end{verbatim}
+\newpar
+During synthesis, all loops have to be unrolled, meaning that loops with a non-static range are non-synthesisable. It is generally good practice to only use loops in testbenches.
+\subsection{Functions and procedures}
+Apart from entities and architectures, VHDL also supports functions and procedures, similar to traditional programming languages. A \tbf{Function} has a return value and can be used in statements:
+\begin{verbatim}
+architecture rtl of example is
+ signal test : integer := 0;
+ ...
 
+begin
+ function b2i(b : bit) return integer is
+ begin
+  if b = '1' then
+   return 1;
+  else
+   return 0;
+  end if;
+ end b2i;
+
+ test <= b2i(’0’);
+end;
+\end{verbatim}
+Functions can be overloaded, meaning that there can be Functions with the same name but different type signatures. By default, functions have to be \tbf{pure}, meaning they are free of side effects - formally $f(a)$ always returns the same value if $a$ is the same. An impure function can be declared by prepending the function with \texttt{impure}. This will let the function gain access to all variables and signals outside of its scope.
+\newpar
+A \tbf{Procedure} can be seen as a function without a return value. Instead, it has \texttt{in, out} or \texttt{inout}-signals, similar to an entity:
+\begin{verbatim}
+architecture behave of ex_procedure_simple is
+ signal r_TEST : std_logic_vector(7 downto 0) := X"42";
+
+-- Purpose: Increments a std_logic_vector by 1
+ procedure INCREMENT_SLV (
+  signal r_IN : in std_logic_vector(7 downto 0);
+  signal r_OUT : out std_logic_vector(7 downto 0)
+  ) is
+  begin
+   r_OUT <= std_logic_vector(unsigned(r_IN) + 1);
+  end INCREMENT_SLV;
+...
+ signal test : std_logic_vector(7 downto 0) := (others => '0');
+...
+ test_p: process
+ begin
+  INCREMENT_SLV(test, test);
+ end test_p;
+\end{verbatim}
+Because Procedures do not return anything, they can't be used in statements. They can still be used inside of processes, or, if \texttt{out} and \texttt{inout} parameters are signals, as their own processes.
+\subsection{Synthesisable vs Non-Synthesisable Code}
+Only a subset of VHDL statements is \tbf{synthesisable} (i.e. compilable with the output being hardware). Non-synthesisable statements include time statements, asserts, and dynamic loops.
+\newpar
+You can work around many of these restrictions. For example, the following code is non-synthesisable, because it uses a \texttt{wait}-Statement:
+\begin{verbatim}
+architecture behavior of testbench is
+begin
+ enable <= '0';
+ wait for 100 ns; -- !
+ enable <= '1'
+end behavior;
+\end{verbatim}
+However, the following code is synthesisable:
+\begin{verbatim}
+architecture behavior of realCircuit is
+signal cnt : unsigned(3 downto 0) := (others => '0');
+begin
+ process ( clk )
+ begin
+  if rising_edge( clk ) then
+   if cnt < 10 then -- assume clk  period is 10 ns
+    cnt <= cnt + 1;
+    enable <= '0';
+   else
+    cnt <= (others => '0');
+    enable <= '1';
+   end if;
+  end if;
+ end process;
+end behavior;
+\end{verbatim}
+\newpar
+Many statements in VHDL are technically synthesisable, but are best avoided, generally because they quickly lead to significant, often unexpected, increases in hardware complexity. These include:
+\begin{itemize}
+ \item division or multiplication with numbers that aren't powers of 2
+ \item \texttt{if rising\_edge (clk)} with \texttt{else}
+ \item latches
+\end{itemize}
+\newpar
+a \tbf{latch} is a memory element that is triggered by a changes immediately whenever the input changes:
+\begin{verbatim}
+architecture rtl of latch is
+…
+begin
+ process (E, D) begin
+  if E = ’1’ then
+   Q <= D;
+  end if;
+ end process;
+end;
+\end{verbatim}
+The big problem with latches is that they leaf to uncertainty in a circuit's timing behavior. You can avoid latches by including a clock and triggering things only on rising edges, and by stating all possibilities in if statements.
+\subsection{Simulation}
+A simulation works in the following way:
+\begin{itemize}
+\item Initialization:
+\begin{itemize}
+ \item Initialize all signals
+ \item Set simulation time to 0
+ \item Execute all processes once
+ \item Start simulaton cycles
+\end{itemize}
+\item Simulation cycles:
+\begin{itemize}
+ \item update signals
+ \item execute processes
+ \item repeat
+\end{itemize}
+\item Simulation ends when:
+\begin{itemize}
+ \item No more signal changes are possible
+ \item A maximum simlulation time has been reached
+ \item An explicit \texttt{wait} is encountered
+\end{itemize}
+\end{itemize}
+\newpar
+Values are assigned to signals using a \tbf{transaction list}. The list contains entries of the form $(s,v,t)$, meaning ``signal $s$ is set to value $v$ at time $t$''. Processes are similarly reactivated using a \tbf{process activation list}, with entries of the form $(p,t)$ (``process $p$ resumes at time $t$'').
+\subsection{Delay Modeling}
+Real components always work on a delay. \tbf{Delay of components} can be modeled in VHDL using the \texttt{inertial} Keyword:
+\begin{verbatim}
+output <= not input after 10 ns;
+-- with inertial delay:
+output <= reject 5 ns inertial not input after 10 ns;
+\end{verbatim}
+If a signal assignment happens for an amount of time shorter than the signals inertial delay, then the signal doesn't change at all.
+\newpar
+There is also the Keyword \texttt{transport} to model the \tbf{delay of wires}:
+\begin{verbatim}
+output <= not input after 10 ns;
+-- with transport delay:
+output <= transport not input after 10 ns;
+\end{verbatim}
+A signal that uses \texttt{transport} delay always gets changed after the specified time.
+\clearpage
+\chapter{Design Space Evaluation}
+Design Space Evaluation is the process of considering different possible ways to realize a given plan and comparing them based on criteria such as:
+\begin{multicols}{2}
+\begin{itemize}
+ \item Cost
+ \item Performance
+ \item Power consumption
+ \item Quality
+\end{itemize}
+\end{multicols}
+\newpar
+'Cost' can be further split into factors such as:
+\begin{multicols}{2}
+ \begin{itemize}
+  \item Manufacturing cost
+  \item Design cost
+  \item Field support
+  \item Administration
+  \item Design time
+  \item[\vspace{\fill}]
+ \end{itemize}
+\end{multicols}
+While 'Performance' comes down to factors like:
+\begin{multicols}{2}
+\begin{itemize}
+ \item Clock Frequency / Operations per Second
+ \item Bandwidth
+ \item Quality of service
+ \item[\vspace{\fill}]
+\end{itemize}
+\end{multicols}
+\newpar
+Note that especially in safety-critical systems, it is preferable to accept a worse average runtime if it leads to a better worst case runtime and more predictability. For example, caching is usually avoided because of its inherent unpredictability.
+\newpar
+Within the context of Embedded Systems, common decision points include choosing between:
+\begin{multicols}{3}
+\begin{itemize}
+ \item ASICs (Application specific integrated circuits)
+ \item Field Programmable Gate Arrays (FPGAs)
+ \item Microprocessors
+ \item Microcontrollers
+ \item Different Memory Architectures
+ \item Different Interfaces (I$^2$C, SPI, CAN, \ldots)
+ \item Different possible Sensors \& Actuators
+ \item Different possible AD and DA converters
+ \item etc.
+\end{itemize}
+\end{multicols}
+\newpar
+Formally, this comes down to a \tbf{multiobjective optimisation problem}.
+\newpar
+Generally, \tbf{power} is the most important constraint in Embedded Systems, and thus minimizing power consumption is one of the primary concerns during the design process.
+%
 \chapter{Hardware}
 \thispagestyle{fancy}
+%
 \chapter{Software}
 \thispagestyle{fancy}
+A big software chapter was teased all throughout the lecture but besides a non-exam-relevant chapter on the very very basic basics of embedded AI it was basically skipped :\textsuperscript{$\wedge$})
+%
+\appendix
+\chapter{Sources}
+\thispagestyle{fancy}
+The content of these notes primarily comes from the slides provided by Prof. Amft and Lars Häusler.
+\newpar
+Additional sources include \href{http://www.en.wikipedia.org}{Wikipedia} for theoretical topics and \href{http://www.vhdlwhiz.com}{vhdlwhiz.com}, \href{http://www.vhdl-online.de}{vhdl-online.de} and \href{https://www.sigasi.com/tech/}{sigasi.com} for VHDL.
+\newpar
+A tool of dubious quality that was nevertheless used frequently throughout the lecture for playing around with VHDL was \href{https://www.edaplayground.com}{edaplayground.com}.
 \end{document}
