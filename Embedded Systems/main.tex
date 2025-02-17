@@ -108,7 +108,9 @@ It is helpful to model a system as a flow of states (\tbf{State-Oriented Behavio
 \end{itemize}
 In order to qualify as a formal specification in the first place, naturally the specification needs to also have unambiguous semantics that support formal verification.
 %
-\section{State Machines}
+\section{Automaton Models}
+%
+\subsection{State Machines}
 As a reminder: a \tbf{finite state machine (FSM)}, also known as a \tbf{deterministic finite automaton (DFA)}, is a tuple $M = (I, S, s_0, \delta, F)$, such that:
 \begin{itemize}
  \item $I$ is a finite, non-empty set, called the set of input \tbf{symbols}
@@ -126,7 +128,7 @@ Moore Machines are a subset of Mealy Machines, in the sense that a Moore Machine
 \newpar
 When implemented as circuits, Moore Machines are safer to use than Mealy Machines, since the output always change exactly during the next clock cycle after the input has changed. Mealy Machines don't have to wait for a clock, making them faster to react to an input, but this may lead to undesired asynchronous feedback.
 %
-\section{State Charts}
+\subsection{State Charts}
 Classical Automata are generally not suited for the description of complex systems, because they very quickly become unmanageable when trying to model concurrency or complex processes not suited to non-hierarchical descriptions. This is the primary use case of \tbf{state charts}.
 \newpar
 Statecharts were first described by David Harel in 1987. They have since become industry standard in many applications, describing hardware, software (UML!) , and communication protocols.
@@ -189,8 +191,8 @@ By default, each automaton within a superstate contains a default starting state
 \newpar
 In \ref{fig:history}, the state $H$ is the history state (the notation for history states seems frustratingly opaque and inconsistent - it seems like in most state charts, history states really aren't drawn in a special way, instead the historyness is only shown through them being called $H$.) This means that, whenever $H$ is entered, the subautomaton that $H$ is a part of instead enters the state it was in when it was last active. If the state has never been active, it enters the starting state $A$, signified here through an arrow and a black circle. If the state chart uses a \tbf{Deep History Mechanism}, that includes remembering what substates were last active, if the state the history state is pointing to is not a basic state.
 %
-\section{Petri Nets}
-This section has been significantly shortened because of time pressure and general sleepyness and also because the topic isn't hard to figure out if you know automata theory basics =w=
+\subsection{Petri Nets}
+This section has been significantly shortened because of time pressure and general sleepyness, and also because the lecture spends ages on the trivial parts while completely rushing through the harder parts =w=
 \newpage
 A \tbf{place/transition net}, or petri net, is a tuple $N = (P, T, F, M_0$, such that:
 \begin{itemize}
@@ -213,7 +215,7 @@ A \tbf{condition/event net} is a petri net such that:
 A C/E net is called \tbf{cyclic} if any two markings are reachable from each other. C/E fulfills \tbf{liveness} if for each Marking $M$ and event $e$ there exists a Marking $M'$ reachable from $M$ that can fire $e$. A live petri net is always deadlock-free.
 \newpar
 A petri net can be specified by a matrix $M$ where the rows represent places and the columns represent events, with the value of each entry corresponding to the amount of tokes moved to (positive value) or from (negative value) the corresponding place by the corresponding transition. A petri net is called \tbf{contact-free} if capacities of places never prevent firing of the net. A petri net is called \tbf{pure} if it doesn't contain any self-loops.
-\clearpage
+%
 \section{VHDL}
 VHDL is a \tbf{Hardware Description Language}, meaning that it describes digital circuits (instead of abstract algorithms).
 \newpar

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.2.15)  18 FEB 2025 00:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.2.15)  18 FEB 2025 00:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -867,62 +867,56 @@ l.37 \chapter
 
 
 
-]
+] [2]
 Chapter 1.
 \openout2 = `structure.aux'.
 
-(./structure.tex) [2
+(./structure.tex) [3
 
 
 
 
-] [3]
+] [4]
 Chapter 2.
-[4
+[5
 
-] [5]
-<figures/superstates.png, id=260, 836.12375pt x 711.65875pt>
+] [6]
+<figures/superstates.png, id=270, 836.12375pt x 711.65875pt>
 File: figures/superstates.png Graphic file (type png)
 <use figures/superstates.png>
-Package pdftex.def Info: figures/superstates.png  used on input line 167.
+Package pdftex.def Info: figures/superstates.png  used on input line 169.
 (pdftex.def)             Requested size: 250.83905pt x 213.49927pt.
-<figures/statechartpriorities.png, id=263, 1188.44pt x 466.74374pt>
+<figures/statechartpriorities.png, id=273, 1188.44pt x 466.74374pt>
 File: figures/statechartpriorities.png Graphic file (type png)
 <use figures/statechartpriorities.png>
 Package pdftex.def Info: figures/statechartpriorities.png  used on input line 1
-77.
+79.
 (pdftex.def)             Requested size: 356.53476pt x 140.0242pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<figures/history.png, id=264, 480.79625pt x 196.735pt>
+<figures/history.png, id=274, 480.79625pt x 196.735pt>
 File: figures/history.png Graphic file (type png)
 <use figures/history.png>
-Package pdftex.def Info: figures/history.png  used on input line 185.
+Package pdftex.def Info: figures/history.png  used on input line 187.
 (pdftex.def)             Requested size: 384.63751pt x 157.38818pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[6 <./figures/superstates.png>] [7 <./figures/statechartpriorities.png> <./figu
-res/history.png>] [8] [9
-
-] [10] [11] [12] [13]
-Overfull \vbox (3.94446pt too high) has occurred while \output is active []
-
-
-[14] [15] [16] [17] [18]
+[7 <./figures/superstates.png>] [8 <./figures/statechartpriorities.png> <./figu
+res/history.png>] [9] [10] [11] [12] [13] [14] [15] [16] [17] [18] [19]
 Chapter 3.
-[19
+[20
 
-] [20] [21]
+] [21] [22]
 Chapter 4.
-<figures/memorywall.png, id=350, 910.40125pt x 867.24pt>
+<figures/memorywall.png, id=359, 910.40125pt x 867.24pt>
 File: figures/memorywall.png Graphic file (type png)
 <use figures/memorywall.png>
-Package pdftex.def Info: figures/memorywall.png  used on input line 854.
+Package pdftex.def Info: figures/memorywall.png  used on input line 856.
 (pdftex.def)             Requested size: 273.12248pt x 260.17401pt.
-[22
+[23
 
  <./figures/memorywall.png>]
 \openout2 = `memoryhierarchy.aux'.
@@ -931,94 +925,94 @@ Package pdftex.def Info: figures/memorywall.png  used on input line 854.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[23]
-<figures/3StatePWM.png, id=365, 1284.8pt x 888.31876pt>
+[24]
+<figures/3StatePWM.png, id=375, 1284.8pt x 888.31876pt>
 File: figures/3StatePWM.png Graphic file (type png)
 <use figures/3StatePWM.png>
-Package pdftex.def Info: figures/3StatePWM.png  used on input line 924.
+Package pdftex.def Info: figures/3StatePWM.png  used on input line 926.
 (pdftex.def)             Requested size: 192.71169pt x 133.24207pt.
-<figures/DeltaPWM.png, id=368, 501.875pt x 301.125pt>
+<figures/DeltaPWM.png, id=378, 501.875pt x 301.125pt>
 File: figures/DeltaPWM.png Graphic file (type png)
 <use figures/DeltaPWM.png>
-Package pdftex.def Info: figures/DeltaPWM.png  used on input line 930.
+Package pdftex.def Info: figures/DeltaPWM.png  used on input line 932.
 (pdftex.def)             Requested size: 250.93687pt x 150.56212pt.
- [24
+ [25
 
 
 
-] [25 <./figures/3StatePWM.png> <./figures/DeltaPWM.png>]
-<figures/I2C.png, id=391, 451.6875pt x 217.81375pt>
+] [26 <./figures/3StatePWM.png> <./figures/DeltaPWM.png>]
+<figures/I2C.png, id=400, 451.6875pt x 217.81375pt>
 File: figures/I2C.png Graphic file (type png)
 <use figures/I2C.png>
-Package pdftex.def Info: figures/I2C.png  used on input line 953.
+Package pdftex.def Info: figures/I2C.png  used on input line 955.
 (pdftex.def)             Requested size: 225.84319pt x 108.9066pt.
-<figures/SPI.png, id=392, 114.1866pt x 90.5784pt>
+<figures/SPI.png, id=401, 114.1866pt x 90.5784pt>
 File: figures/SPI.png Graphic file (type png)
 <use figures/SPI.png>
-Package pdftex.def Info: figures/SPI.png  used on input line 966.
+Package pdftex.def Info: figures/SPI.png  used on input line 968.
 (pdftex.def)             Requested size: 171.27946pt x 135.86725pt.
- [26 <./figures/I2C.png> <./figures/SPI.png>]
-<figures/JTAG.png, id=405, 656.4525pt x 249.93375pt>
+ [27 <./figures/I2C.png> <./figures/SPI.png>]
+<figures/JTAG.png, id=414, 656.4525pt x 249.93375pt>
 File: figures/JTAG.png Graphic file (type png)
 <use figures/JTAG.png>
-Package pdftex.def Info: figures/JTAG.png  used on input line 1000.
+Package pdftex.def Info: figures/JTAG.png  used on input line 1002.
 (pdftex.def)             Requested size: 328.22545pt x 124.96657pt.
-<figures/ADC.jpg, id=407, 101.4189pt x 111.7776pt>
+<figures/ADC.jpg, id=416, 101.4189pt x 111.7776pt>
 File: figures/ADC.jpg Graphic file (type jpg)
 <use figures/ADC.jpg>
-Package pdftex.def Info: figures/ADC.jpg  used on input line 1011.
+Package pdftex.def Info: figures/ADC.jpg  used on input line 1013.
 (pdftex.def)             Requested size: 202.83728pt x 223.55463pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<figures/DAC.png, id=410, 651.43375pt x 163.61125pt>
+<figures/DAC.png, id=419, 651.43375pt x 163.61125pt>
 File: figures/DAC.png Graphic file (type png)
 <use figures/DAC.png>
-Package pdftex.def Info: figures/DAC.png  used on input line 1018.
+Package pdftex.def Info: figures/DAC.png  used on input line 1020.
 (pdftex.def)             Requested size: 325.71606pt x 81.80542pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[27 <./figures/JTAG.png>]
-<figures/SH.png, id=423, 1284.8pt x 514.92375pt>
+[28 <./figures/JTAG.png>]
+<figures/SH.png, id=433, 1284.8pt x 514.92375pt>
 File: figures/SH.png Graphic file (type png)
 <use figures/SH.png>
-Package pdftex.def Info: figures/SH.png  used on input line 1036.
+Package pdftex.def Info: figures/SH.png  used on input line 1038.
 (pdftex.def)             Requested size: 321.19922pt x 128.73062pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[28 <./figures/ADC.jpg> <./figures/DAC.png (PNG copy)>] [29 <./figures/SH.png>]
-[30
+[29 <./figures/ADC.jpg> <./figures/DAC.png (PNG copy)>] [30 <./figures/SH.png>]
+[31
 
 ]
 Chapter 5.
-[31
+[32
 
 ]
 Appendix A.
 
-Overfull \hbox (9.00526pt too wide) in paragraph at lines 1060--1062
+Overfull \hbox (9.00526pt too wide) in paragraph at lines 1062--1064
 \OT1/cmr/m/n/10 Additional sources in-clude []Wikipedia[] for the-o-ret-i-cal t
 op-ics and []vhdl-whiz.com[], []vhdl-online.de[] and []sigasi.com[]
  []
 
-[32
+[33
 
 ] (./main.aux (./title.aux) (./structure.aux) (./memoryhierarchy.aux))
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: E24DA523D5344D7A22D4616F77C7C9AA;5441.
+(rerunfilecheck)             Checksum: 052B716CBF4F193D5734C2A7B6185220;5600.
  ) 
 Here is how much of TeX's memory you used:
- 22292 strings out of 480247
- 410909 string characters out of 5896151
- 678678 words of memory out of 5000000
- 39711 multiletter control sequences out of 15000+600000
+ 22295 strings out of 480247
+ 410970 string characters out of 5896151
+ 678683 words of memory out of 5000000
+ 39712 multiletter control sequences out of 15000+600000
  478938 words of font info for 64 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  100i,14n,104p,860b,798s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1046,10 +1040,10 @@ type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmti8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
 ts/symbols/msbm10.pfb>
-Output written on main.pdf (33 pages, 821336 bytes).
+Output written on main.pdf (34 pages, 821952 bytes).
 PDF statistics:
- 586 PDF objects out of 1000 (max. 8388607)
- 485 compressed objects within 5 object streams
- 115 named destinations out of 1000 (max. 500000)
- 409 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 595 PDF objects out of 1000 (max. 8388607)
+ 493 compressed objects within 5 object streams
+ 117 named destinations out of 1000 (max. 500000)
+ 417 words of extra memory for PDF output out of 10000 (max. 10000000)
 
