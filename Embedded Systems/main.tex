@@ -3,6 +3,7 @@
 \usepackage{fancyhdr}
 \usepackage[titles]{tocloft}
 \usepackage{tikz}
+\usepackage{xcolor}
 
 \usepackage{multicol}
 \usepackage{amsmath}
@@ -56,7 +57,7 @@ An embedded system generally consists of physical components such as sensors and
 
 \newpar
 Embedded systems have extremely widespread applications, especially in fields such as automotive and aerospace engineering and in medical technology.
-
+%
 \section{Design}
 Embedded systems must be \tbf{dependable}:
 \begin{itemize}
@@ -82,9 +83,10 @@ Embedded systems also generally need to be efficient enough to meet constraints 
 \end{multicols}
 \newpar
 Lastly, Embedded systems are typically \tbf{reactive systems}, meaning that they work through interacting with their environment at a pace dictated by that environment. This often also makes them \tbf{real-time systems}, meaning they need to meet real-time constraints - If a right answer arrives too late, it is just as bad as a wrong answer. If failure to meet a deadline results in catastrophe, that constrained is called a \tbf{hard constraint}. This means that worse average runtimes are acceptable, or even necessary, if it leads to a better worst case runtime. 
+%
 \chapter{Specification}
 \thispagestyle{fancy}
-Design by Contract (\tbf{DbC}), also known as contract programming or simply as internal testing, is the idea that software designers should define precise, formal, verifiable specifications for the desired behaviour of their systems. These often extend the ordinary usage of abstract data types with the description of desired preconditions, postconditions and invariants. Testing can prove the presence of errors, but in order to prove the absence of errors, more complicated methods of Program and Hardware Verification are needed, which are not covered in this course.
+Design by Contract (\tbf{DbC}), also known as contract programming or simply as internal testing, is the idea that software designers should define precise, formal, verifiable specifications for the desired behaviour of their systems. These often extend the ordinary usage of abstract data types with the description of desired preconditions, postconditions and invariants. The first steps of designing a system thus come down to translating the requirements of the project from natural language into a formal specification that verifiably meets the desired goals.
 \newpar
 Such specifications generally involve the \tbf{abstraction} of a given system in order to simplify its description, and hierarchical separation of the description, in order to make a description more easily digestible. We distinguish between two kinds of hierarchy:
 \begin{itemize}
@@ -93,7 +95,125 @@ Such specifications generally involve the \tbf{abstraction} of a given system in
 \end{itemize}
 Specifications generally need to describe a systems \tbf{Timing Behavior}, especially in the case of real-time systems. This involves specifying the elapsed time during execution of a given task, the delay between processes, Timeouts (maximum waiting times for a given event), and Deadlines.
 \newpar
-It is helpful to model a system as a flow of states (\tbf{State-Oriented Behavior}). However, classical automata are often insufficient, since they don't model timing and don't support hierarchical description.
+It is helpful to model a system as a flow of states (\tbf{State-Oriented Behavior}). However, classical automata are often insufficient, since they don't model timing and don't support hierarchical description. Common traits that a specification has to be able to model are:
+\begin{itemize}
+ \item Event-handling for both internal and external events (preferably supporting exception-oriented behavior)
+ \item Modeling of concurrency
+ \item Modeling of communication between different systems. Different models include:
+ \begin{itemize}
+  \item Synchronous communication ($A$ sends information directly to $B$)
+  \item Asynchronous communication ($A$ writes to a buffer, the information is later sent to $B$)
+  \item $A$ and $B$ write to and read from shared memory
+ \end{itemize}
+\end{itemize}
+In order to qualify as a formal specification in the first place, naturally the specification needs to also have unambiguous semantics that support formal verification.
+%
+\section{State Machines}
+As a reminder: a \tbf{finite state machine (FSM)}, also known as a \tbf{deterministic finite automaton (DFA)}, is a tuple $M = (I, S, s_0, \delta, F)$, such that:
+\begin{itemize}
+ \item $I$ is a finite, non-empty set, called the set of input \tbf{symbols}
+ \item $S$ is a finite, non-empty set, called the set of \tbf{states}
+ \item $s_0 \in S$ is called the \tbf{initial state}
+ \item $\delta$ is a function $S \times I \to S$, called the \tbf{\colorbox{cyan}{\strut t}\colorbox{pink}{\strut r}\colorbox{white}{\strut a}\colorbox{pink}{\strut n}\colorbox{cyan}{\strut s}ition function}
+ \item $F \subseteq S$ is called the set of \tbf{final states} or \tbf{accepting states}
+\end{itemize}
+As a computer science student, I myself was already very comfortable working with DFAs before this lecture, and I will thus skip the basic explanations of the topic.
+\newpar
+One major limitation of classical DFAs is that they don't model outputs of a system in any way. The two basic ways of adding outputs to DFAs are \tbf{Moore machines}, which specify an output symbol for each state (i.e. in addition to the set $O$ of output symbols, we add a map $S \to O$ to our specification), and mealy machines, which specify an output symbol for each \tbf{transition} (i.e. we change $\delta$ to be a map $S \times I \to S \times O$). The process by which Moore and Mealy Machines turn an input sequence into an output sequence is also known as \tbf{\colorbox{cyan}{\strut t}\colorbox{pink}{\strut r}\colorbox{white}{\strut a}\colorbox{pink}{\strut n}\colorbox{cyan}{\strut s}ducing}.
+%\colorbox{black}{\tbf{{\color{cyan}t}{\color{pink}r}{\color{white}a}{\color{pink}n}{\color{cyan}s}}}ducing.
+\newpar
+Moore Machines are a subset of Mealy Machines, in the sense that a Moore Machine can be seen as a Mealy Machine where every transition to the same state $s \in S$ produces the same output symbol. Nevertheless, the majority of Mealy Machines have an equivalent Moore Machine, and the ones that don't still have a semi-equivalent Moore Machine, meaning that if a Mealy Machine $M$ produces any output $o_1, \hdots, o_n$ from a input $i_1, \hdots, i_n$, the semi-equivalent Mealy Machine will output $x, o_1, \hdots, o_n$ (i.e. the output contains a new starting symbol, and everything afterwards is correct but comes one ``iteration'' later than expected).
+\newpar
+When implemented as circuits, Moore Machines are safer to use than Mealy Machines, since the output always change exactly during the next clock cycle after the input has changed. Mealy Machines don't have to wait for a clock, making them faster to react to an input, but this may lead to undesired asynchronous feedback.
+%
+\section{State Charts}
+Classical Automata are generally not suited for the description of complex systems, because they very quickly become unmanageable when trying to model concurrency or complex processes not suited to non-hierarchical descriptions. This is the primary use case of \tbf{state charts}.
+\newpar
+Statecharts were first described by David Harel in 1987. They have since become industry standard in many applications, describing hardware, software (UML!) , and communication protocols.
+\newpar
+Transitions within a statechart work the same way they do within a mealy machine, although the input and output symbols tend to be referred to as ``events''. Instead of ``on recieving input $a$, the machine produces output $b$'', one generally says ``if event $f$ is present, produce event $g$''.
+\newpar
+Since multiple events can happen at any given time, state charts may be non-deterministic. In \ref{fig:nsc}, it is undefined what should happen if $f$ and $h$ happen at the same time.
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1,-stealth]
+\draw (0,-2) node[circle,fill=white,draw,minimum size = 8mm](A) {$A$};
+\draw (2,-1) node[circle,fill=white,draw,minimum size = 8mm](B) {$B$};
+\draw (2,-3) node[circle,fill=white,draw,minimum size = 8mm](C) {$C$};
+\draw (A) --  node[left=1pt,above] {$f/g$} (B);
+\draw (A) -- node[left=1pt,below] {$h/i$} (C);
+\end{tikzpicture}
+\caption{A statechart that may display unwanted non-deterministic behavior}
+\label{fig:nsc}
+\end{figure}
+\newpar
+This problem can be avoided by explicitly stating which transition should be prioritized. This is generally done by having all transition events be disjunct. \ref{fig:dsc} shows how this may be applied to the state chart from \ref{fig:nsc}. If both $f$ and $h$ are encountered at the same time, the chart now knows to always prioritize the transition to $B$, while transition to $C$ only happens if $h$ is present while $f$ is not.
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=1,-stealth]
+\draw (0,-2) node[circle,fill=white,draw,minimum size = 8mm](A) {$A$};
+\draw (2,-1) node[circle,fill=white,draw,minimum size = 8mm](B) {$B$};
+\draw (2,-3) node[circle,fill=white,draw,minimum size = 8mm](C) {$C$};
+\draw (A) --  node[left=1pt,above] {$f/g$} (B);
+\draw (A) -- node[left=1pt,below left] {$h \wedge \neg f/i$} (C);
+\end{tikzpicture}
+\label{fig:dsc}
+\caption{A fix to the chart's nondeterminism}
+\end{figure}
+\newpar
+The big advantage of state charts compared to regular state machines is that they allow \tbf{superstates}, where an entire state machine may be contained within a single state of a ``higher level'' machine.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.3]{figures/superstates}
+\caption{Using superstates, this automaton can be drawn in a much tidier way.}
+\label{fig:superstates}
+\end{figure}
+\newpar
+As shown in \ref{fig:superstates}, this can make state charts significantly more readable than equivalent state machines. The basic type of superstate is the \tbf{OR-Superstate}, where an automaton may only be in one substate of a given superstate at any time. Later on, we will also introduce \tbf{AND-Superstates}, where an automaton is in \underline{all} of the substates of a given state at the same time.
+\newpar
+States within a state chart that don't contain substates are known as \tbf{basic states}. The set of superstates containing a given state are called the \tbf{ancestor states} of that state. When a basic state is active, all of its ancestor states are also considered active. If an active basic state and its ancestor state would both undergo a transition at the same time, the ``higher level'' transition of the ancestor state takes priority. See \ref{fig:priorities} for an example.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.3]{figures/statechartpriorities}
+\caption{A state chart using OR-Superstates and an equivalent state chart without hierarchy}
+\label{fig:priorities}
+\end{figure}
+\newpar
+By default, each automaton within a superstate contains a default starting state, and whenever the superstate is left, the automaton ``forgets'' what state it was in at that point and simply enters the starting state again if the ancestor state becomes active. This can be changed using \tbf{History States}.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.8]{figures/history}
+\caption{A state chart that uses history states}
+\label{fig:history}
+\end{figure}
+\newpar
+In \ref{fig:history}, the state $H$ is the history state (the notation for history states seems frustratingly opaque and inconsistent - it seems like in most state charts, history states really aren't drawn in a special way, instead the historyness is only shown through them being called $H$.) This means that, whenever $H$ is entered, the subautomaton that $H$ is a part of instead enters the state it was in when it was last active. If the state has never been active, it enters the starting state $A$, signified here through an arrow and a black circle. If the state chart uses a \tbf{Deep History Mechanism}, that includes remembering what substates were last active, if the state the history state is pointing to is not a basic state.
+%
+\section{Petri Nets}
+This section has been significantly shortened because of time pressure and general sleepyness and also because the topic isn't hard to figure out if you know automata theory basics =w=
+\newpage
+A \tbf{place/transition net}, or petri net, is a tuple $N = (P, T, F, M_0$, such that:
+\begin{itemize}
+ \item $P$ is a set of \textit{places} (equivalent to an automatons states)
+ \item $T$ is a set of \textit{events} (transition conditions)
+ \item $F$ is a set called the \textit{flow relation}, connecting each place to an arbitrary amount of events and each event to an arbitrary amount of places using directional edges
+ \item $K: P \to (\mathbb{N}_1 \cup \omega)$ assigns a capacity to each place (assumed to be $\omega$ if not explicitly stated)
+ \item $W: F \to (\mathbb{N}_1)$ assigns a weight (= capacity) to each edge (assumed to be $1$ if not explicitly stated)
+ \item $M_0: P \to \mathbb{N}_0$ is the initial marking, which specifies the amount of tokens each place starts with.
+\end{itemize}
+\newpar
+A \tbf{condition/event net} is a petri net such that:
+\begin{itemize}
+ \item the net is \tbf{simple}, meaning that there can't be two seperate events directly connecting two places while going in the same direction (cycles are allowed)
+ \item the net has no isolated elements
+ \item the set of markings is closed with regards to firing and inverse firing (i.e. any marking can be turned into any other marking by the right sequence of firing and inverse firing)
+ \item the net is \tbf{deadlock-free}, meaning that each reachable marking $M$ has at least one event $e$ that can be fired from $M$. This condition is also known as \tbf{weak liveness}.
+ \item every place has a capacity of $1$ and intuitively represents a boolean condition.
+\end{itemize}
+A C/E net is called \tbf{cyclic} if any two markings are reachable from each other. C/E fulfills \tbf{liveness} if for each Marking $M$ and event $e$ there exists a Marking $M'$ reachable from $M$ that can fire $e$. A live petri net is always deadlock-free.
+\newpar
+A petri net can be specified by a matrix $M$ where the rows represent places and the columns represent events, with the value of each entry corresponding to the amount of tokes moved to (positive value) or from (negative value) the corresponding place by the corresponding transition. A petri net is called \tbf{contact-free} if capacities of places never prevent firing of the net. A petri net is called \tbf{pure} if it doesn't contain any self-loops.
+\clearpage
 \section{VHDL}
 VHDL is a \tbf{Hardware Description Language}, meaning that it describes digital circuits (instead of abstract algorithms).
 \newpar
@@ -763,7 +883,6 @@ A \tbf{direct mapping cache} is a cache where the adress of any item in cache is
 \end{itemize}
 Interestingly, random selection is provably optimal in cases where the order that items are needed in is provided by an \textit{oblivious adversary} (See lecture ``Algorithm Theory'' for more details). However, for real-time embedded systems, predictability is key, which means that non-deterministic cache algorithms are used. For a worst case execution time analysis, one has to assume that almost every access to the cache leads to a cache miss.
 %
-\clearpage
 \subsection{Scratch Pad Memory}
 A scratch pad memory architecture maps small physical memories directly into the CPU's address space. Frequently used variables and instructions can thus be allocated to the scratch pad memory \tbf{at compile time}. This leads to \tbf{fast and predictable behavior and lower energy consumption}, especially compared to associative cache architectures. Some architectures contain both caches and SPM, leading to a hierachical memory structure:
 \begin{figure}[h!]
@@ -785,6 +904,7 @@ Usage of DMAs brings with it the problem of \tbf{cache coherency}. Imagine the f
  \item Whenever an outside device now tries to access X, that device will \tbf{recieve the old value of X.} Similary, if a device updates X in main memory, then \tbf{the CPU will be working with an outdated version of X.}
 \end{itemize}
 A simple cache consistency protocol consists of having both the CPU and outside devices broadcast an ``invalidate'' flag on every write to memory, signaling to each other that a value has become outdated. Alternatives include having a \tbf{write-through} or \tbf{write-around} cache instead of a write-back cache, meaning that everything that is written to cache is copied to main memory immediately. This sacrifices speed on writes (but still leaves the benefits caches have for reads).
+%
 \subsection{Interrupts}
 Interrupts allow the CPU to be notified about important events. An interrupt generally gets processed as follows:
 \begin{enumerate}
@@ -796,7 +916,139 @@ Interrupts allow the CPU to be notified about important events. An interrupt gen
 Modern CPUs feature at least one programmable interrupt controller (PIC) that manages interrups along several lines (to allow several devices to send interrupts) by assigning priorities and delaying or outright ignoring low-important interrupts.
 %
 \section{Communication}
-In order to communicate with each other, digital devices need to send \tbf{modulated signals}.
+In order to communicate with each other, digital devices need to send \tbf{modulated signals}. Signal modulation can be split into analog (i.e. continuous) methods and digital (i.e. discrete) methods.
+\subsection{Pulse Width Modulation}
+Pulse Width Modulation \tbf{(PWM)} is a digital modulation method that is very common in sensor and actuator interfaces. It represents a signal as a rectangular wave, where each rate corresponds to a certain linear speed at which the resulting analog symbol should change.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.15]{figures/3StatePWM.png}
+\caption{A digital signal representing a sine-like curve using 3-Level PWM. (Source: \href{https://en.wikipedia.org/wiki/File:PWM,_3-level.svg}{Wikipedia})}
+\label{fig:3StatePWM}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{figures/DeltaPWM.png}
+\caption{A similar curve represented using 2-Level Delta PWM. (Source: \href{https://en.wikipedia.org/wiki/File:Delta_PWM.svg}{Wikipedia})}
+\label{fig:DeltaPWM}
+\end{figure}
+\newpar
+The \tbf{Duty Cycle D} of a 2-Level PWN Signal describes the proportion of ``on'' time during a given interval.
+\newpar
+The most common way of realizing 2-Level PWM is \tbf{intersective PWM}, where the PWM output is switched every time a sawtooth wave with the desired growth rate intersects with the input waveform. Another method is \tbf{Delta PWM}, where '0' level represents a negative slope and the output is switched every time the output signal exceeds a given upper or lower bound around the input signal (see \ref{fig:DeltaPWM}).
+%
+\subsection{Bus Standards}
+A large number of different bus standards exist, all with their own capabilities, benefits and drawbacks. Protocols where data is transferred based on a common clock are called \tbf{synchronous}, while ones without a clock are called \tbf{asynchronous}. An example of an asynchronous protocol would be UART (universal asynchronous receiver-transmitter), which wasn't covered in detail by the lecture. The protocols covered by the lecture are:
+\newpar
+\tbf{I$^2$C}:
+\begin{itemize}
+ \item stands for ``inter-integrated circuit'', sometimes alternatively abbreviated to I2C or IIC
+ \item main-sub architecture\footnote{
+ Many places, including the original slides presented by Prof. Amft, still use the terminology ``master-slave''. Since many people, myself included, find this terminology inappropriate, I will be using ``main-sub'', which has established itself as a common alternative that still works with any relevant acronyms.}
+ - a controller ('main') generates a clock signal an sends out requests for data, which are then replied to by the targets ('sub').
+ \item one single data line (\texttt{SDA}) and clock line (\texttt{SCL}) shared by all connected devices
+ \item slow and high-power but cheap
+\end{itemize}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{figures/I2C.png}
+\caption{The I2C bus architecture}
+\label{fig:DeltaPWM}
+\end{figure}
+\tbf{SPI}:
+\begin{itemize}
+ \item main-sub architecture. unlike I2C, SPI only supports a single controller.
+ \item two seperate data buses: \texttt{MOSI} (main out sub in) and \texttt{MISO} (main in sub out). This has the major advantage of allowing data to be transmitted and recieved simulataneously (making SPI a \tbf{full duplex protocol}).
+ \item additional lines $\overline{\text{SS}}$ (sub select)
+ \item fast and low-power at the cost of more required space and more complex logic
+\end{itemize}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1.5]{figures/SPI.png}
+\caption{The SPI bus architecture (controller on the left, targets on the right)}
+\label{fig:DeltaPWM}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\begin{tabular}[h!]{|c|cccccc|}
+\hline
+Name & synchronicity & main-sub? & full duplex? & speed & power & cost\\\hline
+I2C & synchronous & yes & no & low & high & low\\
+SPI & synchronous & yes & yes & high & medium & high\\
+UART & asynchronous & no & yes & lowest & lowest & lowest\\
+\hline
+\end{tabular}
+\caption{Comparison of common bus architectures}
+\end{figure}
+UART is often considered somewhat outdated and is being gradually replaced by more modern architectures like I2C, SPI, or USB.
+%
+\section{Debugging}
+The general methods of debugging an embedded system, ordered by increasing realism and increasing effort, are:
+\begin{enumerate}
+ \item Emulation (Imitate behavior of the target without necessarily imitating the internal state of the target)
+ \item Simulation (Evaluate with an accurate model of the target system)
+ \item On-Targets (Evaluate on actual target hardware within a lab or simulation environment)
+ \item On-Field (Evaluate on actual target hardware within in the targeted application environment)
+\end{enumerate}
+Testing can prove the presence of errors, but in order to prove the absence of errors, more complicated methods of Program and Hardware Verification are needed, which are not covered in this course.
+%
+\subsection{JTAG}
+JTAG is a standard for testing and debugging integrated circuits, introduced in 1985. It introduces a \tbf{Test Access Port (TAP)} to integrated circuits, which allow easy access to internal logic of ICs and PCBs via connection of TAPs to an external testing device.
+\newpar
+JTAG specifies a serial protocol with four to five lines: TDI (Test Data In), TDO (Test Data Out), TCK (Test Clock), TMS (Test Mode Select), TRST (Test Reset, Optional). It has no maximum speed, but is typically used with a speed of 10-100 MHz.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{figures/JTAG.png}
+\caption{The structure of a daisychained JTAG interface. (Source: \href{https://en.wikipedia.org/wiki/File:Jtag_chain.svg}{Wikipedia})}
+\label{fig:DeltaPWM}
+\end{figure}
+Using JTAG, one can recover ``dead'' boards where a microcontroller doesn't boot. No specific software needs to be installed on the target. The TAP controller itself implements a stateful protocol to access the test registers. JTAG is available on most modern embedded devices. It is also a common way of hacking devices such as video game consoles, if no sufficient encryption is present.
+%
+\section{Signal Processing}
+Signals are differentiated by whether they are \tbf{time-continuous or time discrete} (i.e. whether a signal is always present or whether a set of seperate short pulses is sent with some delay inbetween) and by whether the possible amplitues of a signal are a limited set of discrete (digital) values or a continuous (analog) range ofvalues. ADC (Analog-Digital-Conversion) always includes discretization in both time and amplitude.
+\subsection{Direct Conversion}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=2]{figures/ADC}
+\caption{A basic ADC (Source: \href{https://www.electronics-tutorials.ws/combination/analogue-to-digital-converter.html}{electronics-tutorials.ws})}
+\label{fig:ADC}
+\end{figure}
+\ref{fig:ADC} shows a realization of a basic ADC that encodes an $n$-bit output using $2^n - 1$ comparators and $2^n$ resistors. A simple realization like this inherently allows for very high conversion frequencies ($> 1$GHz).
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{figures/DAC}
+\caption{A basic DAC (Source: \href{https://en.wikipedia.org/wiki/File:R2r-ladder.png}{Wikipedia}}
+\label{fig:DAC}
+\end{figure}
+\newpar
+\ref{fig:DAC} shows that a DAC can be realized in an even simpler way. The given resistor ladder  encodes an $n$-bit input using $2n$ resistors. $a_0$ represents the least significant bit while $a_{n-1}$ represents the most significant bit.
+\newpar
+Basic ADC or DAC designs like the ones just presented have the disadvantage of requiring the resistances of all of the present resistors to be sufficiently accurate.
+\subsection{Sequential Conversion}
+An $n$-bit succesive approximation converter is an ADC that works as follows:
+\begin{enumerate}
+ \item Start by assuming the digital voltage is $0$.
+ \item Flip the most significant bit, and generate the associated voltage using an $n$-bit DAC. If this voltage is higher than the input voltage, flip the bit back. If not, keep it.
+ \item Repeat by proceeding the same way with the nextmost significant bit.
+\end{enumerate}
+Intuitively, using such a circuit is equivalent to using binary search to find the closest possible digital voltage.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.25]{figures/SH}
+\caption{A simplified schematic of an S\&H circuit (Source: \href{https://en.wikipedia.org/wiki/File:Sample-hold-circuit.svg}{Wikipedia})}
+\label{fig:SH}
+\end{figure}
+\newpar
+A common way of stabilizing the in- and outputs of many of these converters is to use a \tbf{Sample \& Hold Circuit}, which uses a capacitor to charge up to an input voltage as fast as possible, and then maintain that voltage for a specified amount of time. A simplified schematic of such a circuit can be seen in \ref{fig:SH}
+%
+\clearpage
+\subsection{Signal Theory}
+\tbf{Aliasing} is a process where high-frequency information in an image is mistakenly interpreted as a lower frequency. For a given sampling rate $f_s$, two frequencies $f$ and $f'$ are aliases of each other, meaning that $f'$ will be mistaken for $f$, if $f' = f + k \cdot f_s$ for some integer $k$.
+\newpar
+The \tbf{Nyquist–Shannon sampling theorem} \footnote{Actually first discovered by by E. T. Whittaker in 1915, and thus also known as the \textit{Whittaker–Shannon sampling theorem, Whittaker–Shannon theorem}, or \textit{Whittaker–Nyquist–Shannon theorem}. It is sometimes also simply called the \textit{cardinal theorem of interpolation}.} states that aliasing occurs when the sampling frequency $f_s$ is lower than the maximum input frequency $f_b$ multiplied by $2$, and therefore a signal must be sampled at $f_s \geq 2f_b$ to get an accurate result\footnote{Shannon's original version only stated \textit{``If a function $x(t)$ contains no frequencies higher than $B$ hertz, then it can be completely determined from its ordinates at a sequence of points spaced less than $\frac{1} {2B}$ seconds apart.''}}.
+\newpar
+\tbf{Baseband sampling} occurs when all signals of interest lie within the \tbf{Nyquist Bandwidth}, i.e. they are all smaller than $\frac{1}{2}f_s$. In this case, we need to filter out aliases at higher frequencies.
+\newpar
+\tbf{Undersampling} occurs when images between $\frac{1}{2}f_s$ and $f_s$ are sampled. In the case of undersampling, the first Nyquist zone (the interval $[0, \frac{1}{2}f_s]$) contains aliases of the same signals in frequency-reversed order. This means that, if there is also a known lower bound $f_a$ on the input frequencies, then we can clearly identify the high-frequency signals through their aliases in the first Nyquist zone, meaning that \tbf{if we want to measure a signal of bandwidth $\Delta f$, then it is enough to sample at $f_s \geq 2 \Delta f$}. An equivalent statement is that \tbf{if we want to sample a signal whose frequencies are known to lie between $f_a$ and $f_b$, then it is enough to sample at $f_s \geq 2(f_b - f_a)$}.
 \chapter{Software}
 \thispagestyle{fancy}
 A big software chapter was teased all throughout the lecture but besides a non-exam-relevant chapter on the very very basic basics of embedded AI it was basically skipped :\textsuperscript{$\wedge$})
@@ -809,4 +1061,6 @@ The content of these notes primarily comes from the slides provided by Prof. Amf
 Additional sources include \href{http://www.en.wikipedia.org}{Wikipedia} for theoretical topics and \href{http://www.vhdlwhiz.com}{vhdlwhiz.com}, \href{http://www.vhdl-online.de}{vhdl-online.de} and \href{https://www.sigasi.com/tech/}{sigasi.com} for VHDL.
 \newpar
 A tool of dubious quality that was nevertheless used frequently throughout the lecture for playing around with VHDL was \href{https://www.edaplayground.com}{edaplayground.com}.
+\newpar
+Most of the explanations of petri nets (and state charts) given by the lecture was pretty awful, I found \href{https://www7.in.tum.de/~esparza/fcbook-middle.pdf}{\textit{``Free Choice Petri Nets''} by Jörg Desel and Javier Esparza} to be a helpful resource in properly explaining properties like liveness or deadlock-freeness. Most of the other content of the lecture was very badly presented too, but at least for those it was easier to deduce correct definitions from the unclear/informal/wrong definitions given on the slides :\textsuperscript{$\wedge$})
 \end{document}

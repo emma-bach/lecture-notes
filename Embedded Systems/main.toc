@@ -2,33 +2,44 @@
 \contentsline {section}{\numberline {1.1}Definition}{2}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Design}{3}{section.1.2}%
 \contentsline {chapter}{\numberline {2}Specification}{4}{chapter.2}%
-\contentsline {section}{\numberline {2.1}VHDL}{4}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Testbenches}{5}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}A Full Adder in VHDL}{6}{subsection.2.1.2}%
-\contentsline {subsection}{\numberline {2.1.3}Data Types in VHDL}{7}{subsection.2.1.3}%
-\contentsline {subsubsection}{Standard data types}{7}{section*.2}%
-\contentsline {subsubsection}{std\_logic}{7}{section*.3}%
-\contentsline {subsubsection}{Arrays and Vectors}{8}{section*.4}%
-\contentsline {subsection}{\numberline {2.1.4}Operators}{8}{subsection.2.1.4}%
-\contentsline {subsection}{\numberline {2.1.5}Constants and Signals}{8}{subsection.2.1.5}%
-\contentsline {subsection}{\numberline {2.1.6}Variables}{9}{subsection.2.1.6}%
-\contentsline {subsection}{\numberline {2.1.7}Processes}{9}{subsection.2.1.7}%
-\contentsline {subsection}{\numberline {2.1.8}Statements}{10}{subsection.2.1.8}%
-\contentsline {subsection}{\numberline {2.1.9}Functions and procedures}{11}{subsection.2.1.9}%
-\contentsline {subsection}{\numberline {2.1.10}Synthesisable vs Non-Synthesisable Code}{12}{subsection.2.1.10}%
-\contentsline {subsection}{\numberline {2.1.11}Simulation}{13}{subsection.2.1.11}%
-\contentsline {subsection}{\numberline {2.1.12}Delay Modeling}{13}{subsection.2.1.12}%
-\contentsline {chapter}{\numberline {3}Design Space Evaluation}{15}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Power Consumption}{15}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Quality Testing}{16}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Pareto Frontier}{17}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Hardware}{18}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Microprocessors vs Microcontrollers}{18}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Memory}{18}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Cache Design}{19}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Scratch Pad Memory}{20}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}I/O Access}{20}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Interrupts}{20}{subsection.4.2.4}%
-\contentsline {section}{\numberline {4.3}Communication}{21}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Software}{22}{chapter.5}%
-\contentsline {chapter}{\numberline {A}Sources}{23}{appendix.A}%
+\contentsline {section}{\numberline {2.1}State Machines}{4}{section.2.1}%
+\contentsline {section}{\numberline {2.2}State Charts}{5}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Petri Nets}{7}{section.2.3}%
+\contentsline {section}{\numberline {2.4}VHDL}{9}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Testbenches}{9}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}A Full Adder in VHDL}{10}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Data Types in VHDL}{11}{subsection.2.4.3}%
+\contentsline {subsubsection}{Standard data types}{11}{section*.2}%
+\contentsline {subsubsection}{std\_logic}{12}{section*.3}%
+\contentsline {subsubsection}{Arrays and Vectors}{12}{section*.4}%
+\contentsline {subsection}{\numberline {2.4.4}Operators}{12}{subsection.2.4.4}%
+\contentsline {subsection}{\numberline {2.4.5}Constants and Signals}{12}{subsection.2.4.5}%
+\contentsline {subsection}{\numberline {2.4.6}Variables}{13}{subsection.2.4.6}%
+\contentsline {subsection}{\numberline {2.4.7}Processes}{13}{subsection.2.4.7}%
+\contentsline {subsection}{\numberline {2.4.8}Statements}{14}{subsection.2.4.8}%
+\contentsline {subsection}{\numberline {2.4.9}Functions and procedures}{15}{subsection.2.4.9}%
+\contentsline {subsection}{\numberline {2.4.10}Synthesisable vs Non-Synthesisable Code}{16}{subsection.2.4.10}%
+\contentsline {subsection}{\numberline {2.4.11}Simulation}{17}{subsection.2.4.11}%
+\contentsline {subsection}{\numberline {2.4.12}Delay Modeling}{18}{subsection.2.4.12}%
+\contentsline {chapter}{\numberline {3}Design Space Evaluation}{19}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Power Consumption}{19}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Quality Testing}{20}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Pareto Frontier}{21}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Hardware}{22}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Microprocessors vs Microcontrollers}{22}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Memory}{22}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Cache Design}{23}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Scratch Pad Memory}{23}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}I/O Access}{24}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Interrupts}{24}{subsection.4.2.4}%
+\contentsline {section}{\numberline {4.3}Communication}{24}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Pulse Width Modulation}{25}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Bus Standards}{25}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.4}Debugging}{27}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}JTAG}{27}{subsection.4.4.1}%
+\contentsline {section}{\numberline {4.5}Signal Processing}{27}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Direct Conversion}{27}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Sequential Conversion}{28}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Signal Theory}{30}{subsection.4.5.3}%
+\contentsline {chapter}{\numberline {5}Software}{31}{chapter.5}%
+\contentsline {chapter}{\numberline {A}Sources}{32}{appendix.A}%
