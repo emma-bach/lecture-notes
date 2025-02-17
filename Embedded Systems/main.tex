@@ -8,6 +8,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{pdfpages}
+%\usepackage{biblatex}
+%\addbibresource{bib.bib}
 
 %hyperref should be last apparently
 \usepackage{hyperref}
@@ -47,7 +49,7 @@ An embedded system generally consists of physical components such as sensors and
 
 \begin{figure}[h!]
 \centering
-\include{structure}
+\include{structure.tex}
 \caption{The structure of a typical embedded system.}
 \label{fig:embeddedsystemstructure}
 \end{figure}
@@ -621,7 +623,7 @@ output <= not input after 10 ns;
 output <= transport not input after 10 ns;
 \end{verbatim}
 A signal that uses \texttt{transport} delay always gets changed after the specified time.
-\clearpage
+%
 \chapter{Design Space Evaluation}
 Design Space Evaluation is the process of considering different possible ways to realize a given plan and comparing them based on criteria such as:
 \begin{multicols}{2}
@@ -672,12 +674,129 @@ Within the context of Embedded Systems, common decision points include choosing 
 \end{multicols}
 \newpar
 Formally, this comes down to a \tbf{multiobjective optimisation problem}.
+\section{Power Consumption}
+Generally, \tbf{power} is the most important constraint in Embedded Systems, and thus minimizing power consumption is one of the primary concerns during the design process. Modern processors have a power density of up to $100 \frac{W}{cm^2}$!
 \newpar
-Generally, \tbf{power} is the most important constraint in Embedded Systems, and thus minimizing power consumption is one of the primary concerns during the design process.
+Minimizing the power consumption leads to less pressure for the power supply and for voltage regulators and a much lower risk of overheating (also meaning less effort needed to introduce cooling). Naturally it also means lower costs.
+\newpar
+Low power design techniques include the usage of different components such as \tbf{low-power transistors}, which tend to come with drawbacks in speed. It may also involve dynamic power management, i.e. sleep modes (temporarily switching off components that aren't needed). Switching off the clock of a flip-flop specifically is known as \tbf{clock gating}. Dynamic power management naturally brings with it the cost of requiring additional logic. One can also use \tbf{dynamic voltage and frequency scaling}, where the power supply voltage is lowered when needed and the clock frequency is lowered accordingly.
+\newpar
+The power consumption $P$ of a CMOS circuit is
+\begin{equation*}
+P = \alpha C_L V_{DD}^2f
+\end{equation*}
+Where:
+\begin{itemize}
+ \item $\alpha$ is the \textit{switching activity} or \textit{activity factor}, defined as the probablity that a circuit node changes from logic 0 to logic 1 in any given clock cycle,
+ \item $C_L$ is the \textit{load capacitance}, i.e. the capacitance between the output of a circuit and ground,
+ \item $V_{DD}$ is the supply voltage,
+ \item and $f$ is the clock frequency.
+\end{itemize}
+\newpar
+For a more detailed breakdown of this equation, I found \href{https://cdn.intechopen.com/pdfs/82415.pdf}{\textit{Power Consumption in CMOS
+Circuits} by Len Luet Ng et al.} to be helpful.
+\newpar
+The delay of a CMOS circuit is
+\begin{equation*}
+\tau = k \cdot C_L \frac{V_{DD}}{(V_{DD}-V_t)^2}
+\end{equation*}
+Where $k$ is a contant that depends on the circuit and $V_t$ is the threshold voltage, i.e. the voltage defined as the cutoff between a logical ``1'' and a logical ``0''.
+\newpar
+The important takeaway from these equations is that
+\begin{equation*}
+P \propto V_{DD}^2, \text{ while } \tau \propto \frac{1}{V_{DD} + \frac{1}{V_{DD}}}.
+\end{equation*}
+This means that, by decreasing the supply voltage of a circuit, the circuit's power consumption can be decreased quadratically, while the circuit's delay increases roughly linearly (by a pretty generous definition of ``roughly'').
+%
+\section{Quality Testing}
+All manufacturing processes are inherently prone to defects. Naturally, defective parts should not be delivered to customers. Therefore, a need arises for \tbf{test processes} to distinguish good components from faulty ones. Testing can incur significant costs (the slides state an unsourced figure of ``up to 60\%''). Naturally, these still cannot identify 100\% of defective parts. There are many different approaches of testing for different types of components and the systems they make up. Parts are also susceptible to aging, which leads to parts which were previously defect-free to become defective over time. Lastly, parts may be susceptible to external effects like changing temperatures, noise or radiation.
+\newpar
+The fraction of defective delivered parts over total delivered parts is known as the \tbf{Defect Level (DL)} or as the number of \tbf{test escapes}. Naturally, a high defect level can lead to a loss of reputation and eventually to legal penalties. The fraction of defective-free part over all parts is known as the \tbf{Yield}. A higher lead naturally leads to lower testing costs and fewer test escapes. Finally, as already defined in the introduction, \tbf{Reliability} measures the probability that a part will work correctly over a given time, and is incredibly important especially for safety-critical systems. Ideally, a system should be able to undergo \tbf{graceful degradation}, meaning that as the system degrades, performance merely decreases gradually instead of suddenly catastrophically failing.
+\newpar
+Generally, a specification will include required bounds on quality parameters. For example, the IEC 61508 standard defines four safety integrity levels (SIL 1 through SIL 4). By this definition, an SIL 1 system must have a failure probability per hour lower than $\frac{1}{10^5}$, while an SIL 4 system needs to meet a much stricter requirement of at most $\frac{1}{10^8}$ failures per hour.
+%
+\section{Pareto Frontier}
+A solution of the multiobjective optimisation problem posed by design space exploration is given by a vector $V = (v_1, \hdots, v_n)$ of parameters describing the performance, costs etc. associated with a possible realisation of a specification. We define these parameters in such a way that higher values are always better, which means that, for parameters describing a cost, we need to either take the negative or the inverse of the cost value. Naturally, these parameters are generally only estimates, since determining the exact values would have to involve production of every single possible solution at a non-trivial scale.
+\newpar
+A natural way of discarding inferior solutions is given by \tbf{pareto superiority}. We say that a solution $A$ is pareto-superior to a solution $B$ iff we have both $\forall j(a_j \geq b_j)$ ($A$ is at least as good as $B$ in every aspect) and $\exists i(a_i > a_j)$ (There is at least one aspect of $A$ that is better than $B$). It should be intuitively obvious that if $A$ is superior to $B$ in every single criterium considered, then $A$ is preferable over $B$. The set of all solutions not dominated by any other solution is known as the \tbf{Pareto Frontier}.
 %
 \chapter{Hardware}
 \thispagestyle{fancy}
+\section{Microprocessors vs Microcontrollers}
+A Microprocessor consists of \tbf{only a computing unit}, which then needs to be complemented by memory, I/O interfaces etc. Microprocessors are fast, but often  expensive.
+\newpar
+Meanwhile, a Microcontroller is a \tbf{System-on-chip (SOC)}. It already contains memory, timers, voltage converters, and at least one I/O interface (generally even multiple). They are slower than microprocessors, but are cheap and energy efficient.
 %
+\section{Memory}
+Technological improvements to computer memory size and access times are currently made at a much slower pace than improvements to processor cycle times. This \tbf{Memory Wall} is a key challenge in the development of new AI models and, more generally, in most high performance computing applications.
+\begin{figure}[h!]
+ \centering
+ \includegraphics[scale=0.3]{figures/memorywall.png}
+ \caption{The memory wall in action (Source: \href{https://ayarlabs.com/wp-content/uploads/2024/05/Memory_Wall_Chart.svg}{ayarlabs})}
+\end{figure}
+\newpar
+The \tbf{Principle of Locality} is the Observation that programs tend to use data with addresses near those they have already used recently. It can be further split into \tbf{Temporal Locality}, which means that recently referenced items are likely to be referenced again soon, and \tbf{Spatial Locality}, meaning that items with nearby addresses are often referenced around the same time. Modern memory architectures exploit these properties through \tbf{caching}, where several types of memory exist within a system, and items  are placed in faster memory or slower memory depending on how likely it is that they will be needed in the near future.
+\newpar
+The most basic types of memory, ordered by speed, are:
+\begin{enumerate}
+ \item Registers
+ \item Cache, Scratchpad Memory (SPM)
+ \item Main Memory (RAM)
+ \item Secondary Storage (SSD, HDD)
+\end{enumerate}
+On its own, a processor tends to only include registers and cache or SPM. The registers of a processor could technically be considered a particularly fast type of cache. Fast caches have to be placed near the processing unit - the increases in signal travel time and especially in ambient noise that come with longer wires are actually relevant factors in determining memory speed.
+%
+\subsection{Cache Design}
+Some key questions of cache design are:
+\begin{itemize}
+ \item Which memory blocks do we place into which cache blocks?
+ \item How do we detect if and where a block is in the cache?
+ \item Which cache block is replaced after a \tbf{cache miss}, i.e. when an item is needed that isn't in the cache yet?
+ \item What happens if we write new things into memory?
+ \item How do we deal with multi-core architectures?
+\end{itemize}
+A \tbf{direct mapping cache} is a cache where the adress of any item in cache is simply the item's adress in main memory modulo the number of cache blocks. A cache where any item can occupy any block is known as an \tbf{associative cache}. To use an associative cache, one needs to specify what happens when the cache is full - a predefined \tbf{cache replacement strategy} is needed. Common cache replacement strategies include:
+\begin{itemize}
+ \item FIFO (first in, first out)
+ \item LRU (least recently used)
+ \item random selection
+\end{itemize}
+Interestingly, random selection is provably optimal in cases where the order that items are needed in is provided by an \textit{oblivious adversary} (See lecture ``Algorithm Theory'' for more details). However, for real-time embedded systems, predictability is key, which means that non-deterministic cache algorithms are used. For a worst case execution time analysis, one has to assume that almost every access to the cache leads to a cache miss.
+%
+\clearpage
+\subsection{Scratch Pad Memory}
+A scratch pad memory architecture maps small physical memories directly into the CPU's address space. Frequently used variables and instructions can thus be allocated to the scratch pad memory \tbf{at compile time}. This leads to \tbf{fast and predictable behavior and lower energy consumption}, especially compared to associative cache architectures. Some architectures contain both caches and SPM, leading to a hierachical memory structure:
+\begin{figure}[h!]
+\centering
+\include{memoryhierarchy}
+\caption{A memory architecture that combines caching with SPM}
+\label{fig:memoryhierarchy}
+\end{figure}
+%
+\subsection{I/O Access}
+The two most basic ways of handling I/O are \tbf{memory-mapped I/O}, where components get mapped directly into controller address space, and \tbf{port-mapped I/O}, also known as \tbf{programmed I/O}, where the CPU transfers bytes using a special instruction. However, both of those have the major disadvantage of keeping the CPU busy, with updates requiring polling.
+\newpar
+Most microprocessors and -controllers include a component that allows \tbf{DMA (Direct Memory Access)}. These are dedicated components that allow the CPU to do other work or sleep during a data transfer. However, the CPU still needs to initiate the transfer on its own. Typically, the CPU then receives an interrupt from the DMA once the transfer is done.
+\newpar
+Usage of DMAs brings with it the problem of \tbf{cache coherency}. Imagine the following scenario:
+\begin{itemize}
+ \item The CPU accesses location X in memory and stores the current value of X in cache
+ \item Subsequent operations on X update the cached copy of X, not the external memory version of X (since updating the external version would mean dealing with slow memory speeds, defeating the whole purpose of a cache.)
+ \item Whenever an outside device now tries to access X, that device will \tbf{recieve the old value of X.} Similary, if a device updates X in main memory, then \tbf{the CPU will be working with an outdated version of X.}
+\end{itemize}
+A simple cache consistency protocol consists of having both the CPU and outside devices broadcast an ``invalidate'' flag on every write to memory, signaling to each other that a value has become outdated. Alternatives include having a \tbf{write-through} or \tbf{write-around} cache instead of a write-back cache, meaning that everything that is written to cache is copied to main memory immediately. This sacrifices speed on writes (but still leaves the benefits caches have for reads).
+\subsection{Interrupts}
+Interrupts allow the CPU to be notified about important events. An interrupt generally gets processed as follows:
+\begin{enumerate}
+ \item an interrupt request is triggered
+ \item the CPU stops its current exectution flow and saves its current state to memory
+ \item the CPU executes the interrupt service routine associated with the specific interrupt request
+ \item the CPU reloads its state and continues normal operation
+\end{enumerate}
+Modern CPUs feature at least one programmable interrupt controller (PIC) that manages interrups along several lines (to allow several devices to send interrupts) by assigning priorities and delaying or outright ignoring low-important interrupts.
+%
+\section{Communication}
+In order to communicate with each other, digital devices need to send \tbf{modulated signals}.
 \chapter{Software}
 \thispagestyle{fancy}
 A big software chapter was teased all throughout the lecture but besides a non-exam-relevant chapter on the very very basic basics of embedded AI it was basically skipped :\textsuperscript{$\wedge$})

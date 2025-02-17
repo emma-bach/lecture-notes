@@ -1,0 +1,16 @@
+\begin{tikzpicture}[scale=1,-stealth]
+\draw[fill=white!90!black] (0,0) node[fill](P) {Processor};
+
+\draw[fill=white!90!black] (-2,-1) node[fill](C) {Cache};
+\draw[fill=white!90!black] (-2,-2) node[fill](M) {Main Memory};
+
+\draw[fill=white!90!black] (2,-1) node[fill](S) {SPM};
+
+\draw (P) to (C);
+\draw (C) to (P);
+\draw (P) to (S);
+\draw (S) to (P);
+\draw (C) to (M);
+\draw (M) to (C);
+
+\end{tikzpicture}
