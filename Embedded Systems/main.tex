@@ -886,7 +886,7 @@ A \tbf{direct mapping cache} is a cache where the adress of any item in cache is
 Interestingly, random selection is provably optimal in cases where the order that items are needed in is provided by an \textit{oblivious adversary} (See lecture ``Algorithm Theory'' for more details). However, for real-time embedded systems, predictability is key, which means that non-deterministic cache algorithms are used. For a worst case execution time analysis, one has to assume that almost every access to the cache leads to a cache miss.
 %
 \subsection{Scratch Pad Memory}
-A scratch pad memory architecture maps small physical memories directly into the CPU's address space. Frequently used variables and instructions can thus be allocated to the scratch pad memory \tbf{at compile time}. This leads to \tbf{fast and predictable behavior and lower energy consumption}, especially compared to associative cache architectures. Some architectures contain both caches and SPM, leading to a hierachical memory structure:
+A scratch pad memory architecture maps small physical memory addresses directly into the CPU's address space. Frequently used variables and instructions can thus be allocated to the scratch pad memory \tbf{at compile time}. This leads to \tbf{fast and predictable behavior and lower energy consumption}, especially compared to associative cache architectures. Some architectures contain both caches and SPM, leading to a hierachical memory structure:
 \begin{figure}[h!]
 \centering
 \include{memoryhierarchy}
