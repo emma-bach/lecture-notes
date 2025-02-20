@@ -1,0 +1,64 @@
+\documentclass{report}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage[titles]{tocloft}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pdfpages}
+%\usepackage{biblatex}
+%\addbibresource{bib.bib}
+
+%hyperref should be last apparently
+\usepackage{hyperref}
+
+\renewcommand\cftsecdotsep{\cftdot}
+\renewcommand\cftsubsecdotsep{\cftdot}
+
+\newcommand{\tbf}{\textbf}
+\newcommand{\argmin}[1] {
+    \begin{array}{c}
+        \text{argmin}\\
+        #1\\
+        \end{array}
+    }
+
+% Starts a new paragraph without indentation
+% and with an empty line between paragraphs
+\newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
+
+\pagestyle{fancy} %allows headers
+
+\lhead{Emma Bach}
+\rhead{\today}
+
+\renewcommand*\contentsname{Table of contents}
+
+
+\begin{document}
+\include{title}
+\tableofcontents
+\thispagestyle{fancy}
+\chapter{Introduction}
+Given a set $\{(x_1,y_1), \hdots, (x_n,y_n)\}$, i.e. a set of features (inputs) $x = \{x_1, \hdots, x_n\}$ and a target (desired output) $y = \{y_1, \hdots, y_n\}$, Machine Learning is the process of algorithmically finding the best possible function $f(x)$ such that
+\begin{equation*}
+ \forall x_i[f(x_i) \approx y_i].
+\end{equation*}
+$y$ is also known as the \tbf{ground truth}.
+In \tbf{unsupervised learning}, $y$ is not explicitly given to the algorithm (and may not even exist). The focus of the course, and thus these notes, was \tbf{supervised learning}, where $y$ is explicitly given.
+\newpar
+In order to find an optimal $f(x)$, we first rephrase the function in terms of \tbf{learnable parameters $\theta$} to get a function $f(x,\theta)$. We often write $f(x_i, \theta) = \hat{y}_i$, where the hat $\hat{}$ is supposed to show that $\hat{y}_i$ is an approximation of $y_i$. The full image $\hat{y}$ is often called the \tbf{prediction model}.
+\newpar
+We now need to define a seperate function that we can use to judge how good our values of $\theta$ are. Such a function is known as a \tbf{loss function}, which we write as $\mathcal{L}(y, \hat{y})$. The problem of finding the best possible $f$ then comes down to a minimization problem of the form
+\begin{equation*}
+\argmin{\theta} \sum_{n=1}^N \mathcal{L}(y_n, \hat{y}_n)
+\end{equation*}
+
+%
+
+
+
+\end{document}

@@ -121,10 +121,10 @@ As a reminder: a \tbf{finite state machine (FSM)}, also known as a \tbf{determin
 \end{itemize}
 As a computer science student, I myself was already very comfortable working with DFAs before this lecture, and I will thus skip the basic explanations of the topic.
 \newpar
-One major limitation of classical DFAs is that they don't model outputs of a system in any way. The two basic ways of adding outputs to DFAs are \tbf{Moore machines}, which specify an output symbol for each state (i.e. in addition to the set $O$ of output symbols, we add a map $S \to O$ to our specification), and mealy machines, which specify an output symbol for each \tbf{transition} (i.e. we change $\delta$ to be a map $S \times I \to S \times O$). The process by which Moore and Mealy Machines turn an input sequence into an output sequence is also known as \tbf{\colorbox{cyan}{\strut t}\colorbox{pink}{\strut r}\colorbox{white}{\strut a}\colorbox{pink}{\strut n}\colorbox{cyan}{\strut s}ducing}.
+One major limitation of classical DFAs is that they don't model outputs of a system in any way. The two basic ways of adding outputs to DFAs are \tbf{Moore machines}, which specify an output symbol for each \tbf{state} (i.e. in addition to the set $O$ of output symbols, we add a map $S \to O$ to our specification), and \tbf{Mealy machines}, which specify an output symbol for each \tbf{transition} (i.e. we change $\delta$ to be a map $S \times I \to S \times O$). The process by which Moore and Mealy Machines turn an input sequence into an output sequence is also known as \tbf{\colorbox{cyan}{\strut t}\colorbox{pink}{\strut r}\colorbox{white}{\strut a}\colorbox{pink}{\strut n}\colorbox{cyan}{\strut s}ducing}.
 %\colorbox{black}{\tbf{{\color{cyan}t}{\color{pink}r}{\color{white}a}{\color{pink}n}{\color{cyan}s}}}ducing.
 \newpar
-Moore Machines are a subset of Mealy Machines, in the sense that a Moore Machine can be seen as a Mealy Machine where every transition to the same state $s \in S$ produces the same output symbol. Nevertheless, the majority of Mealy Machines have an equivalent Moore Machine, and the ones that don't still have a semi-equivalent Moore Machine, meaning that if a Mealy Machine $M$ produces any output $o_1, \hdots, o_n$ from a input $i_1, \hdots, i_n$, the semi-equivalent Mealy Machine will output $x, o_1, \hdots, o_n$ (i.e. the output contains a new starting symbol, and everything afterwards is correct but comes one ``iteration'' later than expected).
+Moore Machines are a subset of Mealy Machines, in the sense that a Moore Machine can be seen as a Mealy Machine where every transition to the same state $s \in S$ produces the same output symbol. Nevertheless, the majority of Mealy Machines have an equivalent Moore Machine, and the ones that don't still have a semi-equivalent Moore Machine, meaning that if a Mealy Machine $M$ produces any output $o_1, \hdots, o_n$ from an input $i_1, \hdots, i_n$, the semi-equivalent Mealy Machine will output $x, o_1, \hdots, o_n$ (i.e. the output contains a new starting symbol, but everything afterwards is correct).
 \newpar
 When implemented as circuits, Moore Machines are safer to use than Mealy Machines, since the output always change exactly during the next clock cycle after the input has changed. Mealy Machines don't have to wait for a clock, making them faster to react to an input, but this may lead to undesired asynchronous feedback.
 %
@@ -1018,7 +1018,7 @@ Signals are differentiated by whether they are \tbf{time-continuous or time disc
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.5]{figures/DAC}
-\caption{A basic DAC (Source: \href{https://en.wikipedia.org/wiki/File:R2r-ladder.png}{Wikipedia}}
+\caption{A basic DAC (Source: \href{https://en.wikipedia.org/wiki/File:R2r-ladder.png}{Wikipedia})}
 \label{fig:DAC}
 \end{figure}
 \newpar
