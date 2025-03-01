@@ -10,7 +10,7 @@
 \contentsline {subsection}{\numberline {1.5.1}Nearest Neighbors}{4}{subsection.1.5.1}%
 \contentsline {subsection}{\numberline {1.5.2}Naive Bayes}{4}{subsection.1.5.2}%
 \contentsline {chapter}{\numberline {2}Linear Methods}{6}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Linear Regresion}{6}{section.2.1}%
+\contentsline {section}{\numberline {2.1}Linear Regression}{6}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Linear Classification}{7}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Gradient Descent}{7}{subsection.2.2.1}%
 \contentsline {chapter}{\numberline {3}Principles of Regularization}{8}{chapter.3}%

@@ -173,8 +173,8 @@ Using the law of total probability this can be extended to:
 Note that all of this only formally works if all features are conditionally independent.
 %
 \chapter{Linear Methods}
-\section{Linear Regresion}
-The regression problem:
+\section{Linear Regression}
+The following problem is also known as the regression problem:
 \begin{itemize}
  \item Dataset of $N$ instances $(x_i, y_i)$ ($x_i$ is generally a vector) 
  \item Find a model $\yhat$ that minimizes a loss function $\loss$:
@@ -187,7 +187,7 @@ The regression problem:
  \end{align*}
  $w_0$ is a fixed offset and thus often called the \tbf{bias}, while $w$ is the \tbf{weight vector} or \tbf{parameter vector}.
 \end{itemize}
-Linear Regressions are more powerful than they seem - for example, $f(x) = (x+1)^2$ can be written as \[f(a,b) = a +2b + 1\] (such that $b = x$ and $a = x^2$). Formally, we can take any set of arbitrary \tbf{basis functions} $\phi_j(x_i)$ and arrive at a linear model
+Linear regression is more powerful than it looks - for example, $f(x) = (x+1)^2$ can be expressed as a linear function by increasing the dimensionality and writing it as \[f(a,b) = a +2b + 1\] (such that $b = x$ and $a = x^2$). Formally, we can take any set of arbitrary \tbf{basis functions} $\phi_j(x_i)$ and arrive at a linear model
 \begin{align*}
  f(x_i;w) = w_0 + \sum_{j=1}^{M} w_j \phi_j(x_i)
 \end{align*}
@@ -197,17 +197,8 @@ The \tbf{residual error} of a linear model is given by:
 \begin{align*}
  y_i - f(x_i;w)
 \end{align*}
-For the loss function of a linear model, we just some the losses of the individual predictions. Typical loss choices are L2 loss $(y-\yhat)^2$ and L1 loss $|y - \yhat|$
+For the loss function of a linear model, we just sum the losses of the individual predictions. Typical choices for the loss function are L2 loss $(y-\yhat)^2$ and L1 loss $|y - \yhat|$
 \newpar
-Let $X$ be the input matrix, i.e.
-\begin{align*}
-X = 
-\begin{pmatrix}
-x_1\\
-\vdots\\
-x_n\\
-\end{pmatrix}
-\end{align*}
 A closed-form solution for linear regression using L2 loss exists under the following assumptions:
 \begin{itemize}
  \item The expected value of the residuals is 0: $\forall i: E(\epsilon_i) = 0$
@@ -218,6 +209,15 @@ If these hold, then the closed-form solution is:
 \begin{align}
  w = (X^T X)^{-1} X^T y
 \end{align}
+Where $X$ is the input matrix, i.e.
+\begin{align*}
+X = 
+\begin{pmatrix}
+x_1\\
+\vdots\\
+x_n\\
+\end{pmatrix}
+\end{align*}
 \section{Linear Classification}
 \tbf{Logistic regression} is a way of using linear regression to solve classification problems, by bounding the output of a linear model to $0 \leq h_w(x) \leq 1$ by taking the sigmoid of our output. The output is then interpreted as the probability that $y = 1$ (formally, $h_w(x) = P(y = 1|x;w)$). It's kind of fucked up that it's called ``logistic regression'' instead of ``logistic classification''.
 \begin{align}
