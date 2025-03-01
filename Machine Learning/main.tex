@@ -25,6 +25,7 @@
         #1\\
         \end{array}
     }
+\newcommand{\pd}[1]{\frac{\partial}{\partial #1}}
 
 % Starts a new paragraph without indentation
 % and with an empty line between paragraphs
@@ -36,6 +37,8 @@
 \rhead{\today}
 
 \renewcommand*\contentsname{Table of contents}
+\newcommand{\loss}{\mathcal{L}}
+\newcommand{\yhat}{\hat{y}}
 
 
 \begin{document}
@@ -56,9 +59,250 @@ We now need to define a seperate function that we can use to judge how good our 
 \begin{equation*}
 \argmin{\theta} \sum_{n=1}^N \mathcal{L}(y_n, \hat{y}_n)
 \end{equation*}
-
+This function that we want to minimize is called the \tbf{empirical risk}.
+\newpar
+\section{Basic Prediction Models}
+Common basic prediction models include:
+\begin{itemize}
+ \item Linear Models:
+ \begin{equation*}
+ \hat{y_n} = \theta_0 + \sum_{m=1}^M \theta_m x_{n,m} 
+ \end{equation*}
+ \item Polynomial Regression Models:
+ \begin{align*}
+ \hat{y_n} = \theta_0 &+ \sum_{m=1}^M \theta_m x_{n,m}\\
+           &+ \sum_{m=1}^M \sum_{m'=1}^M \theta_{m,m'} x_{n,m} x_{n,m'}\\
+           &+ \sum_{m=1}^M \sum_{m'=1}^M \sum_{m''=1}^M \theta_{m,m',m''} x_{n,m} x_{n,m'} x_{n,m''}\\
+           &+ \hdots\\
+ \end{align*}
+ \item Decision Trees
+ \item Neural Networks
+\end{itemize}
 %
+\subsection{Decision Trees}
+In a Decision Tree, the model gives its answer by starting at the root node of a binary tree and then moving from each node to one of its children by answering a yes/no question at each leaf. A decision tree can be thought of as approximating an arbitrary function through a piecewise combination of constant functions.
+%
+\subsection{Neural Networks}
+In a Neural Network, a given neuron labeled $i$ consists of a non-linear function $f_i(x, \theta_i)$, such that if the output of a neuron $i$ is connected to a neuron $j$, then the output $\hat{y_{n,j}}$ of the neuron $j$ is
+\begin{align*}
+ \hat{y_{n,j}} = f_j(f_i(x, \theta_i), \theta_j)
+\end{align*}
+%
+\section{Common Loss Functions}
+A \tbf{Regression Problem} is a problem where the output is an arbitrary real number. Common loss functions for regression include:
+\begin{itemize}
+ \item Least Squares:
+ \begin{align*}
+  \loss(y_n, \yhat_n) = (y_n - \yhat_n)^2
+ \end{align*}
+ Least Square Loss is an approximation of the maximum likelihood estimator of a linear model with normally distributed error (with a mean of 0).
+ \item L1 Loss:
+ \begin{align*}
+  \loss(y_n, \yhat_n) = |y_n - \yhat_n|
+ \end{align*}
+\end{itemize}
+For \tbf{Binary Classification Problems}, where $y_n$ can only take on two possible values, more specialized loss functions are used:
+\begin{itemize}
+ \item Logistic Loss, $y_n \in \{0,1\}$:
+ \begin{align*}
+  \loss(y_n, \yhat_n) = -y_n \log(\yhat_n) - (1-y) \log (1-\yhat_n)
+ \end{align*}
+ \item Hinge Loss, $y_n \in \{-1,1\}$:
+ \begin{align*}
+  \loss(y_n, \yhat_n) = \max(0,1-y_n\yhat_n)
+ \end{align*}
+\end{itemize}
+A \tbf{Softmax} is a type of function used to express \tbf{Non-Binary Classification Problems}, where targets $y_n \in {1, \hdots, C}$, as a set of binary classification targets:
+\begin{align*}
+ y_{n,k} = 
+\begin{cases}
+1 & y_n = k\\
+0 & y_n \neq k\\
+\end{cases}
+\end{align*}
+The final result is then obtained by re-expressing the results as probabilities among classes as follows:
+\begin{align*}
+ \yhat_{n,k} = \frac{e^{f(x_n, \theta_k)}}{\sum_{i=1}^{C}e^{f(x_n, \theta_i)}}
+\end{align*}
+The exponential function is used to avoid negative probabilities. A common loss function for Softmax problems is \tbf{Logloss}:
+\begin{align*}
+ \loss(y_n, \yhat_n) = -\sum_{i=i}^{C} y_{n,c} \log(\yhat_n,c)
+\end{align*}
+%
+\section{Overfitting and Underfitting}
+Two common issues every model needs to deal with are \tbf{Underfitting}, where the bias of a model is too high, leading to a model that is unable to capture the data's complexity, and \tbf{Overfitting}, where the variance of a model is too high, meaning that the model has captured noise in the training data and is unable to generalize to pieces of data not included in the training data. Very simple models like linear models tend to be prone to underfitting, while most modern models that are more complex tend to be more prone to overfitting. Decision Trees in particular are very prone to overfitting.
+%
+\subsection{Regularization}
+Regularization is the process of fighting overfitting by reducing the the size of the parameters of a model. This is expressed by adding a \tbf{Regularization Function} as a penalty term to the underlying optimization problem of minimizing the empirical risk:
+\begin{equation*}
+\argmin{\theta} \sum_{n=1}^N \mathcal{L}(y_n, \hat{y}_n) + \alpha \Omega(\theta)
+\end{equation*}
+Just as there are many different possible loss functions, there are also many different possible regularization functions. Using a regularization always comes with the tradeoff of increasing model bias (but is done in the vast majority of models, since with complex modern models, overfitting tends to be a more common issue than underfitting).
+%
+\section{ML Design Cycle}
+\begin{enumerate}
+ \item Pre-processing
+ \item Feature extraction / Feature encoding
+ \item Feature selection
+ \item Machine learning
+ \item Evaluation / Model Selection
+ \item Post-processing
+\end{enumerate}
+%
+\section{Non-Parametric Models}
+\subsection{Nearest Neighbors}
+Predict target $y_i$ by averaging over the targets of the $k$ nearest points $x_1, \hdots, x_k$ to the point $x_i$.
+For a continuus target the aggregation is simply the mean:
+\begin{align}
+ f(x_i) = \frac{1}{k} \sum_{y_j \in Y_{near}}^{k} y_j
+\end{align}
+For classification, we get our probability of the target being a certain class by taking the number of points belonging to each class and dividing by the total number of points we sampled:
+\begin{align}
+ f_c(x) = \frac{|y_j y_j \in Y_{near} \wedge y_j = c|}{k}
+\end{align}
+%
+\subsection{Naive Bayes}
+Bayes Rule:
+\begin{align}
+ P(y|x) = P(y) \frac{P(x|y)}{P(x)}
+\end{align}
+Using the law of total probability this can be extended to:
+\begin{align}
+ P(y|x) = P(y) \frac{P(x|y)}{\sum_{y' \in Y}P(x|y')P(y')}
+\end{align}
+Note that all of this only formally works if all features are conditionally independent.
+%
+\chapter{Linear Methods}
+\section{Linear Regresion}
+The regression problem:
+\begin{itemize}
+ \item Dataset of $N$ instances $(x_i, y_i)$ ($x_i$ is generally a vector) 
+ \item Find a model $\yhat$ that minimizes a loss function $\loss$:
+ \begin{align*}
+  \argmin{w \in W} \sum_{i=1}^{N} \loss(y_i f(x_i; w))
+ \end{align*}
+ \item Very simple and basic model: \tbf{Linear Regression}
+ \begin{align*}
+  f(x_i;w) &= w_0 + x_i w^{T}
+ \end{align*}
+ $w_0$ is a fixed offset and thus often called the \tbf{bias}, while $w$ is the \tbf{weight vector} or \tbf{parameter vector}.
+\end{itemize}
+Linear Regressions are more powerful than they seem - for example, $f(x) = (x+1)^2$ can be written as \[f(a,b) = a +2b + 1\] (such that $b = x$ and $a = x^2$). Formally, we can take any set of arbitrary \tbf{basis functions} $\phi_j(x_i)$ and arrive at a linear model
+\begin{align*}
+ f(x_i;w) = w_0 + \sum_{j=1}^{M} w_j \phi_j(x_i)
+\end{align*}
+Linear models are therefore linear in the weights $w_i$, but they don't have to be linear in the inputs $x_i$.
+\newpar
+The \tbf{residual error} of a linear model is given by:
+\begin{align*}
+ y_i - f(x_i;w)
+\end{align*}
+For the loss function of a linear model, we just some the losses of the individual predictions. Typical loss choices are L2 loss $(y-\yhat)^2$ and L1 loss $|y - \yhat|$
+\newpar
+Let $X$ be the input matrix, i.e.
+\begin{align*}
+X = 
+\begin{pmatrix}
+x_1\\
+\vdots\\
+x_n\\
+\end{pmatrix}
+\end{align*}
+A closed-form solution for linear regression using L2 loss exists under the following assumptions:
+\begin{itemize}
+ \item The expected value of the residuals is 0: $\forall i: E(\epsilon_i) = 0$
+ \item Residuals are uncorrelated and share the same variance: $\forall i: Var(\epsilon_i) = \sigma_2$
+ \item Residuals follow a normal distribution: $\forall i: \epsilon_i \sim \mathcal{N}(0,\sigma^2)$
+\end{itemize}
+If these hold, then the closed-form solution is:
+\begin{align}
+ w = (X^T X)^{-1} X^T y
+\end{align}
+\section{Linear Classification}
+\tbf{Logistic regression} is a way of using linear regression to solve classification problems, by bounding the output of a linear model to $0 \leq h_w(x) \leq 1$ by taking the sigmoid of our output. The output is then interpreted as the probability that $y = 1$ (formally, $h_w(x) = P(y = 1|x;w)$). It's kind of fucked up that it's called ``logistic regression'' instead of ``logistic classification''.
+\begin{align}
+ h_w(x) = \sigma(w^T x)
+\end{align}
 
-
+\newpar
+Alternative idea: predict $y = 1$ if $w x^T \geq 0$ and $y = 0$ otherwise (see support vector machines in a later chapter.)
+\newpar
+We use \tbf{Logistic Loss}, as already seen in the introduction:
+\begin{align}
+ \loss(y_i,h_w(x_i)) =
+ \begin{cases}
+    -log(1-h_w(x_i)) & y_i = 0\\
+    -log(h_w(x_i)) & y_i = 1
+ \end{cases}
+\end{align}
+Note: I wrote $h_w(x_i)$ here because that's what the lecture does, but there's no real reason not to just write $\yhat(x_i)$ instead.
+\subsection{Gradient Descent}:
+\begin{itemize}
+ \item For linear regression using L2 loss:
+ \begin{align}
+  \loss(w) = \sum_{i=1}^N (y_i - f(x_i; w))^2 
+ \end{align}
+ \begin{align}
+  \implies \pd{w} J(w) = \sum_{i=1}^N -2(y_i - f(x_i;w))x_i
+ \end{align}
+ \item For logistic regression using logistic loss:
+ \begin{align}
+  \loss(w) = \sum_{i=1}^N -y_i log(h_w(x_i))-(1-y_i)log(1-h_w(x_i))
+ \end{align}
+ \begin{align}
+  \implies \pd{w} J(w) = \sum_{i=1}^N -(y_i - h_w(x_i))x_i
+ \end{align}
+\end{itemize}
+\chapter{Principles of Regularization}
+Reminder: for $x \in \mathbb{R}$, the polynomial prediction model of degree $M$ is simply:
+\begin{align}
+ \yhat = f(x;\theta) = \sum_{j=0}^M \theta_j x^j
+\end{align}
+Optimal values $\theta1^*$ are learned by minimizing the empirical risk (which is just the L2 loss? Why is a new term needed here?)
+\begin{align}
+ \theta^* := \argmin{\theta} \sum_{i=1}^N (f(x_i;\theta)-y_i)^2
+\end{align}
+Small $M$ leads to underfitting, large $M$ leads to overfitting.
+\section{Bias-Variance Tradeoff}
+The expected target of $y$ given $x$ is written 
+\begin{align}
+ \overline{y}(x) := E_{y|x}(x) = \int_y y p(y|x)  
+\end{align}
+The expected prediction model $\overline{f}(x)$ over sample datasets is the model we expect to obtain given that we train randomly sampled data $D$ that was sampled following a distribution $\mathcal{P}$:
+\begin{align}
+ \overline{f}(x) := E_{D \sim P^N}[\hat{f}(x;D)]
+\end{align}
+The expected value of the loss function is also called the \tbf{expected test error}:
+\begin{align}
+ E_{(x,y)\sim P}[(\hat{f}(x;D)-y)^2]
+\end{align}
+It turns out that the expected test error can be directly decomposed into a simple function of the variance, the bias squared, and the expected noise:
+\begin{align}
+ E_{x,y,D}[(\hat{f}(x;D)-y)^2] &= E_{x,D}[(\hat{f}(x;D)-\overline{f}(x;D))^2]\\ &+ E_{x,D}[(\overline{f}(x;D) - \overline{y}(x))^2]\\ &+ E_{x,y}[(\overline{y}(x) - y)^2]
+\end{align}
+Recall the definitions of noise, bias and variance:
+\begin{itemize}
+ \item The \tbf{variance} of a random variable $X$ is defined as:
+ \begin{align}
+  \sigma = E[(X - E[X])^2] = E[(f - E(f))^2] = E[f - \overline{f}]
+ \end{align}
+ \item The \tbf{bias} of a predictor $X$ that predicts $y$ is defined as:
+ \begin{align}
+  b = E[E[X] - y] = E[\overline{f} - \overline{y}]
+ \end{align}
+ (Note: Why $\overline{y}$ instead of $y$? I assume both work because its wrapped up in an expected value anyways?)
+ \item The \tbf{noise} is the difference in our data from the expected value of the data, i.e:
+ \begin{align}
+  (\overline(y) - y)
+ \end{align}
+\end{itemize}
+\section{Regularization}
+An increase in model complexity will always lead to an increase in variance, but a decrease in bias. In practice, this means that any method of decreasing a models variance will increase the bias and vice versa. Since sensible models are more likely to overfit, Regularization is very commonly used, since it decreases variance. Common regularization functions are:
+\begin{align}
+ L1: \Omega(\theta) = \frac{1}{|\theta|} \sum_{k=1}^{|\theta|} |\theta_k|
+\end{align}
+\begin{align}
+ L2: \Omega(\theta) = \frac{1}{|\theta|} \sum_{k=1}^{|\theta|} \theta_k^2
+\end{align}
 
 \end{document}
