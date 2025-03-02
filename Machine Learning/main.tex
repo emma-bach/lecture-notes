@@ -364,9 +364,9 @@ Cons:
 \end{multicols}
 \chapter{Ensembles}
 \section{Bagging}
-Idea: If we have many models with independent outputs with low bias, high variance, then by the law of large numbers we can get closer to the correct value by averaging the prediction of multiple models.
+Idea: If we have many models with low biases but a high variance, and they have independent outputs, then by the law of large numbers we can get closer to the correct value by averaging the prediction of these different models.
 \newpar
-Since we only have one big dataset $D$, our models aren't actually independent. We try to get close by sampling many different smaller datasets $D^i$ with replacement, i.e. we allow a dataset to draw the same element multiple times, and then training our models on those datasets. This is known as \tbf{Bootstrap Aggregation}.
+Since we only have one big dataset $D$, our models aren't actually independent in practice. We try to get close by creating many different smaller datasets $D_i$ from $D$ by \tbf{sampling with replacement}, i.e. we allow a dataset to draw the same element multiple times, and then training our models on those datasets. This is known as \tbf{Bootstrap Aggregation}.
 \newpar
 The output of our bagged model is then simply the mean of the ouputs of the individual models:
 \begin{align}
@@ -377,7 +377,7 @@ The models still have to be \tbf{uncorrelated} to each other, i.e. their covaria
 \begin{align}
  \epsilon = E\left[\left(\frac{1}{K}\sum_{k=1}^k \epsilon_k\right)^2\right] = \frac{1}{K^2}E\left[\left(\sum_{k=1}^k \epsilon_k^2 + \sum_{k \neq l} \epsilon_k \epsilon_l\right)\right] = \frac{1}{K}v + \frac{K-1}{K}c
 \end{align}
-\tbf{Trees} are low bias, but often end up being correlated. We can decrease their correlation by randomizing which feature we decide to split on at each point. Bagged Trees that split on random features are known as \tbf{Random Forests}. Generally, random forests don't split on entirely random features, instead they pick $m$ features randomly out of the full set of $M$ features and then pick the best split among the $m$ features.
+\tbf{Trees} are low bias, but often end up being correlated. We can decrease their correlation by randomizing which feature we decide to split on at each point. Bagged Trees that split on random features are known as \tbf{Random Forests}. Generally, random forests don't split on entirely random features, instead they pick $m$ features randomly out of the full set of $M$ features and then pick the best split among the chosen features.
 \newpar
 Bagged ensembles provide an estimate of the test error via the out-of-bag training error, i.e. the output we get from the bagged model if we only take the output $f_k(x_i)$ of each submodel $k$ if $x_i$ wasn't part of its training data $D_k$:
 \begin{align}
