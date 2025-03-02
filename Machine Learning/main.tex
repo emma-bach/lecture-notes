@@ -9,7 +9,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{pdfpages}
-\usepackage{bbm}
+%\usepackage{bbm}
 %\usepackage{biblatex}
 %\addbibresource{bib.bib}
 
@@ -129,7 +129,7 @@ The final result is then obtained by re-expressing the results as probabilities 
 \end{align*}
 The exponential function is used to avoid negative probabilities. A common loss function for Softmax problems is \tbf{Logloss}:
 \begin{align*}
- \loss(y_n, \yhat_n) = -\sum_{i=i}^{C} y_{n,c} \log(\yhat_n,c)
+ \loss(y_n, \yhat_n) = -\sum_{i=i}^{C} y_{n,c} \log(\yhat_{n,c})
 \end{align*}
 %
 \section{Overfitting and Underfitting}
@@ -221,6 +221,7 @@ x_1\\
 x_n\\
 \end{pmatrix}
 \end{align*}
+%
 \section{Linear Classification}
 \tbf{Logistic regression} is a way of using linear regression to solve classification problems, by bounding the output of a linear model to $0 \leq h_w(x) \leq 1$ by taking the sigmoid of our output. The output is then interpreted as the probability that $y = 1$ (formally, $h_w(x) = P(y = 1|x;w)$). It's kind of fucked up that it's called ``logistic regression'' instead of ``logistic classification''.
 \begin{align}
@@ -239,6 +240,7 @@ We use \tbf{Logistic Loss}, as already seen in the introduction:
  \end{cases}
 \end{align}
 Note: I wrote $h_w(x_i)$ here because that's what the lecture does, but there's no real reason not to just write $\yhat(x_i)$ instead.
+%
 \subsection{Gradient Descent}:
 \begin{itemize}
  \item For linear regression using L2 loss:
@@ -256,6 +258,7 @@ Note: I wrote $h_w(x_i)$ here because that's what the lecture does, but there's 
   \implies \pd{J(w)}{w}  = \sum_{i=1}^N -(y_i - h_w(x_i))x_i
  \end{align}
 \end{itemize}
+%
 \chapter{Principles of Regularization}
 Reminder: for $x \in \mathbb{R}$, the polynomial prediction model of degree $M$ is simply:
 \begin{align}
@@ -266,6 +269,7 @@ Optimal values $\theta1^*$ are learned by minimizing the empirical risk (which i
  \theta^* := \argmin{\theta} \sum_{i=1}^N (f(x_i;\theta)-y_i)^2
 \end{align}
 Small $M$ leads to underfitting, large $M$ leads to overfitting.
+%
 \section{Bias-Variance Tradeoff}
 The expected target of $y$ given $x$ is written 
 \begin{align}
@@ -299,6 +303,7 @@ Recall the definitions of noise, bias and variance:
   n = (\overline{y} - y)
  \end{align}
 \end{itemize}
+%
 \section{Regularization}
 An increase in model complexity will always lead to an increase in variance, but a decrease in bias. In practice, this means that any method of decreasing a models variance will increase the bias and vice versa. Since sensible models are more likely to overfit, Regularization is very commonly used, since it decreases variance. Common regularization functions are:
 \begin{align}
@@ -307,6 +312,25 @@ An increase in model complexity will always lead to an increase in variance, but
 \begin{align}
  L2: \Omega(\theta) = \frac{1}{|\theta|} \sum_{k=1}^{|\theta|} \theta_k^2
 \end{align}
+%
+\chapter{Support Vector Machines}
+Motivation: Classify data by seperating it using a linear decision boundary. We want to find the boundary that maximizes the margin between the line and the current data.
+\newpar
+Seperation is generalized to arbitrary dimensions by hyperplanes:
+\begin{align}
+ H(x): w^T x + w_0 = 0
+\end{align}
+Classification of $x_i$ then comes down to simply taking $sign(H(x_i)$.
+\newpar
+As a loss function, we can take the hinge loss:
+\begin{align}
+ \sum_{i=1,f(x_i;w) = -1)} -y_i(w^Tx_i + w_0)
+\end{align}
+Since this will be negative if $y_i$ and $sign(w^Tx_i + w_0)$ don't agree.
+The size of the margin scales inversely with the size of the weights.
+\newpar
+If the data cant be linearly seperate, we introduce slack margins, i.e. we enforce a margin greater than $1 - \xi_i$ and then minimize $\xi_i$.
+%
 \chapter{Decision Trees}
 \begin{itemize}
  \item Equivalent to step function with steps in the middle between data points
@@ -319,6 +343,7 @@ An increase in model complexity will always lead to an increase in variance, but
 
  \item In this lecture, we only use \tbf{binary splits}.
 \end{itemize}
+%
 \section{Choosing Splits}
 We assign to each set $D$ an \tbf{Impurity} $H(D)$.
 We then define the \tbf{information gain} $I(x \leq v)$ of the split $x \leq v$ as the difference in impurity before and after the split:
@@ -332,17 +357,19 @@ Where:
  \item $D_R = \{(x,y) \in D \mid y > v\}$
 \end{itemize}
 Choosing correct splits then naturally comes down to maximizing the information gain.
+%
 \subsection{For regression}
 In regression, we want to minimize the variance:
 \begin{align}
  |D| \cdot H(D) = \sum_{(x,y) \in D} (y - \yhat_L(x))^2
 \end{align}
-
+%
 \subsection{For classification}
 In classification, where $y \in \{1, \hdots, k\}$, we want to minimize the \tbf{entropy} of the data in the chosen split:
 \begin{align}
  H(D) = -\sum_{k=1}^K p(y = k) log_2(p(y=k))
 \end{align}
+%
 \section{Pros and Cons of Decision Trees}
 \begin{multicols}{2}
 Pros:
@@ -362,6 +389,33 @@ Cons:
  \item[\vspace{-1em}]
 \end{itemize}
 \end{multicols}
+%
+\chapter{Neural Networks}
+Common activation functions and their gradients:
+\begin{itemize}
+ \item ReLu:
+ \begin{align}
+  \text{ReLu}(x) &= x \cdot \mathbf{1}(x \geq 0)\\
+  \pd{ReLu}{x} &= \mathbf{1}(x \geq 0)\\
+ \end{align}
+ \item Sigmoid:
+ \begin{align}
+  \sigma(x) &= \frac{1}{1+e^{-x}}\\
+  \pd{\sigma}{x} &= \sigma(x)(1-\sigma(x))
+ \end{align}
+ \item Hyperbolic Tan:
+ \begin{align}
+  \tanh(x) &= \frac{e^x - e^{-x}}{e^x + e^{-x}}\\
+  \pd{\tanh}{x} &= 1 - \tanh(x)^2
+ \end{align}
+ \item Softmax:
+ \begin{align}
+  \sigma_{SM}(x_i) &= \frac{e^{x_i}}{\sum_{n=1}^{N} e^{x_n}}\\
+  \pd{\sigma_{SM}}{x} &= oof,\ not\ doing\ this\ one
+ \end{align}
+
+\end{itemize}
+%
 \chapter{Ensembles}
 \section{Bagging}
 Idea: If we have many models with low biases but a high variance, and they have independent outputs, then by the law of large numbers we can get closer to the correct value by averaging the prediction of these different models.
@@ -424,7 +478,7 @@ weighting points misclassified by previous models higher than correctly classifi
 Specifically, AdaBoost uses an approximation of \tbf{instance-penalty loss}:
 \begin{align}
  \loss(y_i, f(x_i)) &= e^{-y_i f(x_i)}\\
- &\approx \frac{\sum_{i=1}^N w^{(k)}_i \cdot \mathbbm{1}(y_i \neq f(x_i))}{\sum_{i=1}^N w^{(k)}_i}\\ &:= \epsilon
+ &\approx \frac{\sum_{i=1}^N w^{(k)}_i \cdot 1(y_i \neq f(x_i))}{\sum_{i=1}^N w^{(k)}_i}\\ &:= \epsilon
 \end{align}
 In natural language, this just means dividing the sum of the weights of incorrectly classified data points by the total sum of the weights.
 \newpar
@@ -434,7 +488,7 @@ The model weights are then given by:
 \end{align}
 The feature weights $w_i$ are initialized as $\frac{1}{N}$, i.e. all features are weighted equally, and then updated according to the following rule:
 \begin{align}
-w_i^{(k+1)} = w_i^{(k)} e^{(\alpha_k \cdot \mathbbm{1}(y_i \neq f(x_i))}
+w_i^{(k+1)} = w_i^{(k)} e^{(\alpha_k \cdot 1(y_i \neq f(x_i))}
 \end{align}
 This means that the weights of correctly classified features stay the same, while the weights of incorrectly classified features increase by a factor of $\frac{1 - \epsilon_k}{\epsilon_k}$.
 %
