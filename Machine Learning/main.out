@@ -17,3 +17,15 @@
 \BOOKMARK [1][-]{section.3.1}{Bias-Variance Tradeoff}{chapter.3}% 17
 \BOOKMARK [1][-]{section.3.2}{Regularization}{chapter.3}% 18
 \BOOKMARK [0][-]{chapter.4}{Support Vector Machines}{}% 19
+\BOOKMARK [0][-]{chapter.5}{Decision Trees}{}% 20
+\BOOKMARK [1][-]{section.5.1}{Choosing Splits}{chapter.5}% 21
+\BOOKMARK [2][-]{subsection.5.1.1}{For regression}{section.5.1}% 22
+\BOOKMARK [2][-]{subsection.5.1.2}{For classification}{section.5.1}% 23
+\BOOKMARK [1][-]{section.5.2}{Pros and Cons of Decision Trees}{chapter.5}% 24
+\BOOKMARK [0][-]{chapter.6}{Neural Networks}{}% 25
+\BOOKMARK [0][-]{chapter.7}{Ensembles}{}% 26
+\BOOKMARK [1][-]{section.7.1}{Bagging}{chapter.7}% 27
+\BOOKMARK [1][-]{section.7.2}{Boosting}{chapter.7}% 28
+\BOOKMARK [2][-]{subsection.7.2.1}{Gradient Boosting}{section.7.2}% 29
+\BOOKMARK [2][-]{subsection.7.2.2}{AdaBoost}{section.7.2}% 30
+\BOOKMARK [1][-]{section.7.3}{Gradient-Boosted Decision Trees}{chapter.7}% 31

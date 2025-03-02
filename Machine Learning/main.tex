@@ -9,6 +9,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{pdfpages}
+%\usepackage{bbm}
 %\usepackage{biblatex}
 %\addbibresource{bib.bib}
 
@@ -17,15 +18,17 @@
 
 \renewcommand\cftsecdotsep{\cftdot}
 \renewcommand\cftsubsecdotsep{\cftdot}
+\renewcommand\epsilon{\varepsilon}
 
 \newcommand{\tbf}{\textbf}
 \newcommand{\argmin}[1] {
     \begin{array}{c}
+        \vphantom{#1}\\ %vphantom makes sure text is centered vertically in the end
         \text{argmin}\\
         #1\\
         \end{array}
     }
-\newcommand{\pd}[1]{\frac{\partial}{\partial #1}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
 
 % Starts a new paragraph without indentation
 % and with an empty line between paragraphs
@@ -59,7 +62,7 @@ We now need to define a seperate function that we can use to judge how good our 
 \begin{equation*}
 \argmin{\theta} \sum_{n=1}^N \mathcal{L}(y_n, \hat{y}_n)
 \end{equation*}
-This function that we want to minimize is called the \tbf{empirical risk}.
+This function that we want to minimize is also called the \tbf{empirical risk}.
 \newpar
 \section{Basic Prediction Models}
 Common basic prediction models include:
@@ -126,7 +129,7 @@ The final result is then obtained by re-expressing the results as probabilities 
 \end{align*}
 The exponential function is used to avoid negative probabilities. A common loss function for Softmax problems is \tbf{Logloss}:
 \begin{align*}
- \loss(y_n, \yhat_n) = -\sum_{i=i}^{C} y_{n,c} \log(\yhat_n,c)
+ \loss(y_n, \yhat_n) = -\sum_{i=i}^{C} y_{n,c} \log(\yhat_{n,c})
 \end{align*}
 %
 \section{Overfitting and Underfitting}
@@ -218,6 +221,7 @@ x_1\\
 x_n\\
 \end{pmatrix}
 \end{align*}
+%
 \section{Linear Classification}
 \tbf{Logistic regression} is a way of using linear regression to solve classification problems, by bounding the output of a linear model to $0 \leq h_w(x) \leq 1$ by taking the sigmoid of our output. The output is then interpreted as the probability that $y = 1$ (formally, $h_w(x) = P(y = 1|x;w)$). It's kind of fucked up that it's called ``logistic regression'' instead of ``logistic classification''.
 \begin{align}
@@ -236,6 +240,7 @@ We use \tbf{Logistic Loss}, as already seen in the introduction:
  \end{cases}
 \end{align}
 Note: I wrote $h_w(x_i)$ here because that's what the lecture does, but there's no real reason not to just write $\yhat(x_i)$ instead.
+%
 \subsection{Gradient Descent}:
 \begin{itemize}
  \item For linear regression using L2 loss:
@@ -243,16 +248,17 @@ Note: I wrote $h_w(x_i)$ here because that's what the lecture does, but there's 
   \loss(w) = \sum_{i=1}^N (y_i - f(x_i; w))^2 
  \end{align}
  \begin{align}
-  \implies \pd{w} J(w) = \sum_{i=1}^N -2(y_i - f(x_i;w))x_i
+  \implies \pd{J(w)}{w} = \sum_{i=1}^N -2(y_i - f(x_i;w))x_i
  \end{align}
  \item For logistic regression using logistic loss:
  \begin{align}
   \loss(w) = \sum_{i=1}^N -y_i log(h_w(x_i))-(1-y_i)log(1-h_w(x_i))
  \end{align}
  \begin{align}
-  \implies \pd{w} J(w) = \sum_{i=1}^N -(y_i - h_w(x_i))x_i
+  \implies \pd{J(w)}{w}  = \sum_{i=1}^N -(y_i - h_w(x_i))x_i
  \end{align}
 \end{itemize}
+%
 \chapter{Principles of Regularization}
 Reminder: for $x \in \mathbb{R}$, the polynomial prediction model of degree $M$ is simply:
 \begin{align}
@@ -263,6 +269,7 @@ Optimal values $\theta1^*$ are learned by minimizing the empirical risk (which i
  \theta^* := \argmin{\theta} \sum_{i=1}^N (f(x_i;\theta)-y_i)^2
 \end{align}
 Small $M$ leads to underfitting, large $M$ leads to overfitting.
+%
 \section{Bias-Variance Tradeoff}
 The expected target of $y$ given $x$ is written 
 \begin{align}
@@ -293,9 +300,10 @@ Recall the definitions of noise, bias and variance:
  (Note: Why $\overline{y}$ instead of $y$? I assume both work because its wrapped up in an expected value anyways?)
  \item The \tbf{noise} is the difference in our data from the expected value of the data, i.e:
  \begin{align}
-  (\overline(y) - y)
+  n = (\overline{y} - y)
  \end{align}
 \end{itemize}
+%
 \section{Regularization}
 An increase in model complexity will always lead to an increase in variance, but a decrease in bias. In practice, this means that any method of decreasing a models variance will increase the bias and vice versa. Since sensible models are more likely to overfit, Regularization is very commonly used, since it decreases variance. Common regularization functions are:
 \begin{align}
@@ -304,6 +312,7 @@ An increase in model complexity will always lead to an increase in variance, but
 \begin{align}
  L2: \Omega(\theta) = \frac{1}{|\theta|} \sum_{k=1}^{|\theta|} \theta_k^2
 \end{align}
+%
 \chapter{Support Vector Machines}
 Motivation: Classify data by seperating it using a linear decision boundary. We want to find the boundary that maximizes the margin between the line and the current data.
 \newpar
@@ -321,4 +330,210 @@ Since this will be negative if $y_i$ and $sign(w^Tx_i + w_0)$ don't agree.
 The size of the margin scales inversely with the size of the weights.
 \newpar
 If the data cant be linearly seperate, we introduce slack margins, i.e. we enforce a margin greater than $1 - \xi_i$ and then minimize $\xi_i$.
+%
+\chapter{Decision Trees}
+\begin{itemize}
+ \item Equivalent to step function with steps in the middle between data points
+ \item Depth $D$ is a property of individual nodes, the maximum depth of any node is known as the \tbf{height} of the tree.
+ \item Trees partition feature space into regions $R_i$ and then assign a constant prediction to each region.
+ \item The constant is obtained by aggregating the data points in that region, i.e. taking the mean:
+ \begin{align}
+  \yhat_{R_i}(x) = \frac{1}{|R_i|} \sum_{(x,y) \in R_i} y
+ \end{align}
+
+ \item In this lecture, we only use \tbf{binary splits}.
+\end{itemize}
+%
+\section{Choosing Splits}
+We assign to each set $D$ an \tbf{Impurity} $H(D)$.
+We then define the \tbf{information gain} $I(x \leq v)$ of the split $x \leq v$ as the difference in impurity before and after the split:
+\begin{align}
+ I(x \leq v) = |D| \cdot H(Y) - |D_L| \cdot H(Y_L) - |D_R| \cdot H(Y_R)
+\end{align}
+Where:
+\begin{itemize}
+ \item $D$ is the original set of data
+ \item $D_L = \{(x,y) \in D \mid y \leq v\}$
+ \item $D_R = \{(x,y) \in D \mid y > v\}$
+\end{itemize}
+Choosing correct splits then naturally comes down to maximizing the information gain.
+%
+\subsection{For regression}
+In regression, we want to minimize the variance:
+\begin{align}
+ |D| \cdot H(D) = \sum_{(x,y) \in D} (y - \yhat_L(x))^2
+\end{align}
+%
+\subsection{For classification}
+In classification, where $y \in \{1, \hdots, k\}$, we want to minimize the \tbf{entropy} of the data in the chosen split:
+\begin{align}
+ H(D) = -\sum_{k=1}^K p(y = k) log_2(p(y=k))
+\end{align}
+%
+\section{Pros and Cons of Decision Trees}
+\begin{multicols}{2}
+Pros:
+\begin{itemize}
+ \item Flexible with many tunable hyperparameters (splitting criterion, leaf model, split type, depth etc.)
+ \item Easily interpretable
+ \item Easily deals with different types of inputs
+ \item Handles features of different priorities well
+ \item Easily scalable for large datasets
+\end{itemize}
+Cons:
+\begin{itemize}
+ \item Tends to overfit
+ \item Fully deterministic, making them bad at bagging (see later section).
+ \item[\vspace{-1em}]
+ \item[\vspace{-1em}]
+ \item[\vspace{-1em}]
+\end{itemize}
+\end{multicols}
+%
+\chapter{Neural Networks}
+Common activation functions and their gradients:
+\begin{itemize}
+ \item ReLu:
+ \begin{align}
+  \text{ReLu}(x) &= x \cdot \mathbf{1}(x \geq 0)\\
+  \pd{ReLu}{x} &= \mathbf{1}(x \geq 0)\\
+ \end{align}
+ \item Sigmoid:
+ \begin{align}
+  \sigma(x) &= \frac{1}{1+e^{-x}}\\
+  \pd{\sigma}{x} &= \sigma(x)(1-\sigma(x))
+ \end{align}
+ \item Hyperbolic Tan:
+ \begin{align}
+  \tanh(x) &= \frac{e^x - e^{-x}}{e^x + e^{-x}}\\
+  \pd{\tanh}{x} &= 1 - \tanh(x)^2
+ \end{align}
+ \item Softmax:
+ \begin{align}
+  \sigma_{SM}(x_i) &= \frac{e^{x_i}}{\sum_{n=1}^{N} e^{x_n}}\\
+  \pd{\sigma_{SM}}{x} &= oof,\ not\ doing\ this\ one
+ \end{align}
+
+\end{itemize}
+%
+\chapter{Ensembles}
+\section{Bagging}
+Idea: If we have many models with independent outputs with low bias, high variance, then by the law of large numbers we can get closer to the correct value by averaging the prediction of multiple models.
+\newpar
+Since we only have one big dataset $D$, our models aren't actually independent. We try to get close by sampling many different smaller datasets $D^i$ with replacement, i.e. we allow a dataset to draw the same element multiple times, and then training our models on those datasets. This is known as \tbf{Bootstrap Aggregation}.
+\newpar
+The output of our bagged model is then simply the mean of the ouputs of the individual models:
+\begin{align}
+ \hat{f}(x) = \frac{1}{K} \sum_{k=1}^K \hat{f}^k(x)
+\end{align}
+\newpar
+The models still have to be \tbf{uncorrelated} to each other, i.e. their covariances have to be $0$, otherwise this process doesn't work. To be precise, the expected squared error of an ensemble of $K$ models with a shared variance $v$ and a covariamce $c$ is:
+\begin{align}
+ \epsilon = E\left[\left(\frac{1}{K}\sum_{k=1}^k \epsilon_k\right)^2\right] = \frac{1}{K^2}E\left[\left(\sum_{k=1}^k \epsilon_k^2 + \sum_{k \neq l} \epsilon_k \epsilon_l\right)\right] = \frac{1}{K}v + \frac{K-1}{K}c
+\end{align}
+\tbf{Trees} are low bias, but often end up being correlated. We can decrease their correlation by randomizing which feature we decide to split on at each point. Bagged Trees that split on random features are known as \tbf{Random Forests}. Generally, random forests don't split on entirely random features, instead they pick $m$ features randomly out of the full set of $M$ features and then pick the best split among the $m$ features.
+\newpar
+Bagged ensembles provide an estimate of the test error via the out-of-bag training error, i.e. the output we get from the bagged model if we only take the output $f_k(x_i)$ of each submodel $k$ if $x_i$ wasn't part of its training data $D_k$:
+\begin{align}
+ \epsilon_{OOB}& = \frac{1}{|D|} \sum_{i=1}^{|D|} \loss\left(y_i, \frac{1}{S(x_i)} \sum_{k \in S(x_i)}f_k(x_i)\right)\\
+ S(X) &= \{k \in \{1, \hdots, K\} \mid (x,y) \notin D_{k}\}
+\end{align}
+The variance of an ensemble is:
+\begin{align}
+ \sigma(x) = \sqrt{\frac{1}{K-1}\sum_{k=1}^K \left(\hat{f}_k(x) -\hat{f}(x)\right)^2}
+\end{align}
+%
+\section{Boosting}
+Boosting creates a low-bias model out of an esemble of high-bias models, by training each model to correct the error of the last model. The final ensemble $F_K$ is a weighted sum of a set of models $f_k$:
+\begin{align}
+ F_K(x) = \sum_{k=1}^K \alpha f_k(x)
+\end{align}
+We train each model sequentially while keeping the parameters of past models fixed:
+\begin{align}
+ \theta_{k+1} = \argmin{\theta}\sum_{n=1}^N \loss(y_n, F_k(x_n; \theta_{fixed}) + \alpha f(x_n; \theta))
+\end{align}
+\subsection{Gradient Boosting}
+\begin{enumerate}
+ \item Initialize model with a constant value:
+ \begin{align}
+  F_0(x) = \argmin{\alpha_0} \sum_{i=1}^n \loss(y_i,\alpha_0)
+ \end{align}
+ In the lecture, this calculation was skipped and 0 was always used instead.
+ \item Let $M$ be an arbitrary number of maximum iterations. For each $m = 1, \hdots, M$:
+ \begin{enumerate}
+ \item Compute \textit{pseudo-residuals}, i.e. the gradient of the loss function by the ensemble output:
+ \begin{align}
+  z_m = \pd{\loss(y_n, F_k(x_n))}{F_k (x_n)}
+ \end{align}
+ \item Train model $f_m$ on the set $\{(x_i,r_i)\}^n_{i=1}$
+ \item Compute the best possible $\alpha_n$, i.e. $\alpha_m = \argmin{\alpha} \sum_{i=1}^n \loss(y_i, F_{m-1} + \alpha f_m(x_i))$
+  \item Update the ensemble model: $F_k (x) = F_{m-1}(x) + \alpha_m f_m(x)$
+ \end{enumerate}
+\item Output the finished ensemble model $F_M$.
+\end{enumerate}
+\subsection{AdaBoost}
+AdaBoost is a special case of Gradient Boosting with a particular loss function that results in
+weighting points misclassified by previous models higher than correctly classified ones.
+\newpar
+Specifically, AdaBoost uses an approximation of \tbf{instance-penalty loss}:
+\begin{align}
+ \loss(y_i, f(x_i)) &= e^{-y_i f(x_i)}\\
+ &\approx \frac{\sum_{i=1}^N w^{(k)}_i \cdot 1(y_i \neq f(x_i))}{\sum_{i=1}^N w^{(k)}_i}\\ &:= \epsilon
+\end{align}
+In natural language, this just means dividing the sum of the weights of incorrectly classified data points by the total sum of the weights.
+\newpar
+The model weights are then given by:
+\begin{align}
+ \alpha_k = ln\left(\frac{1 - \epsilon_k}{\epsilon_k}\right)
+\end{align}
+The feature weights $w_i$ are initialized as $\frac{1}{N}$, i.e. all features are weighted equally, and then updated according to the following rule:
+\begin{align}
+w_i^{(k+1)} = w_i^{(k)} e^{(\alpha_k \cdot 1(y_i \neq f(x_i))}
+\end{align}
+This means that the weights of correctly classified features stay the same, while the weights of incorrectly classified features increase by a factor of $\frac{1 - \epsilon_k}{\epsilon_k}$.
+%
+\section{Gradient-Boosted Decision Trees}
+Tree overfitting happens if there are too many leaves (coresponding to too many steps in the final function) or if the leaves' output values are too high (correspnding to large jumps in the final function). A common regularization function for trees is thus:
+\begin{align}
+ \Omega(f) = \gamma T + \frac{\lambda}{2}\sum_{j=1}^T w_j^2
+\end{align}
+Where $T$ denotes the number of leaves.
+\newpar
+For Gradient Boosted Trees, the function we want to minimize at each step is:
+\begin{align}
+ J(y_i, f^{(k)}) = \left(\sum_{n=1}^N \loss_n^{k-1} G_n f^{(k)}(x_n) + \frac{1}{2} H_n (f^{(k)}(x_n))^2\right) + \Omega(f^{(k)})
+\end{align}
+i.e. we approximate $\loss_n^{(k)}$ via a Taylor expansion:
+\begin{align}
+ \loss_n^{(k)} \approx \loss_n^{(k-1)} +  G_n^{(k)}f^{k}(x_n) + \frac{1}{2}H_n(f^{(k)}(x_n))^2
+\end{align}
+Minimizing this loss function corresponds to minimizing the following Objective Function $O_j$ for each Leaf $j$:
+\begin{align}
+ O_j = - \frac{1}{2}\frac{\left(\sum_{n=1}^N G_n\right)^2}{\left(\lambda + \sum_{n=1}^N H_n\right)} + \gamma
+\end{align}
+Where $G_n$ is the gradient of the loss function over the model output and $H_n$ is the Hessian matrix, i.e. the multidimensional equivalent of the second derivative.
+\newpar
+If we let $I_J$ denotes the indices of all data points in the region $R_J$ belonging to leaf $J$, the optimal leaf weights are then given by:
+\begin{align}
+ w^* = - \frac{\sum_{n=1}^N G_n}{\lambda + \sum_{n=1}^N H_n}
+\end{align}
+
+\newpar
+The gain of splitting a leaf is simply:
+\begin{align}
+ Gain_j = O_j - O_L - O_R
+\end{align}
+just like the information gain of regular trees.
+\newpar
+We can decide to stop splitting further if $Gain_j \leq 0$. This means that $\gamma$ directly controls the minimum gain needed for the model to perform a split.
+\newpar
+The most common loss function for classification is logistic loss, so here are the gradient and hessian pre-calculated:
+\begin{align}
+ \loss_n &= -y_n \ln(\sigma(\yhat_n)) - (1-y_n)\ln(1-\sigma(\yhat_n))\\
+ G_n &= \pd{\loss_n}{\yhat_n} = \sigma(\yhat_n) - y_n\\
+ H_n &= \pd{^2 \loss_n}{^2\yhat_n} = \sigma(\yhat_n)(1 - \sigma(\yhat_n))
+\end{align}
+Remember that $\yhat_n^{(k)} = \yhat_n^{(k-1)} + f^{(k)}(x_n)$. (Or $\yhat_n^{(k)} = \yhat_n^{(k-1)} + \alpha f^{(k)}(x_n)$ if we want to do a weighted sum). In this lecture, we assume $\yhat^{(0)} = 0$.
+\newpar
+GBDTs have very low biases while also retaining a relatively low variance. They are also very fast to train, requiring a runtime of $O(kMN \log(T))$, where $k$ is the number of trees in the ensemble, $M$ is the number of features and $N$ is the number of data points.
 \end{document}
