@@ -304,5 +304,21 @@ An increase in model complexity will always lead to an increase in variance, but
 \begin{align}
  L2: \Omega(\theta) = \frac{1}{|\theta|} \sum_{k=1}^{|\theta|} \theta_k^2
 \end{align}
-
+\chapter{Support Vector Machines}
+Motivation: Classify data by seperating it using a linear decision boundary. We want to find the boundary that maximizes the margin between the line and the current data.
+\newpar
+Seperation is generalized to arbitrary dimensions by hyperplanes:
+\begin{align}
+ H(x): w^T x + w_0 = 0
+\end{align}
+Classification of $x_i$ then comes down to simply taking $sign(H(x_i)$.
+\newpar
+As a loss function, we can take the hinge loss:
+\begin{align}
+ \sum_{i=1,f(x_i;w) = -1)} -y_i(w^Tx_i + w_0)
+\end{align}
+Since this will be negative if $y_i$ and $sign(w^Tx_i + w_0)$ don't agree.
+The size of the margin scales inversely with the size of the weights.
+\newpar
+If the data cant be linearly seperate, we introduce slack margins, i.e. we enforce a margin greater than $1 - \xi_i$ and then minimize $\xi_i$.
 \end{document}
