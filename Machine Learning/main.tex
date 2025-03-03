@@ -322,14 +322,20 @@ Seperation is generalized to arbitrary dimensions by hyperplanes:
 \end{align}
 Classification of $x_i$ then comes down to simply taking $sign(H(x_i)$.
 \newpar
-As a loss function, we can take the hinge loss:
+As a loss function, we can take a variant of the hinge loss:
 \begin{align}
- \sum_{i=1,f(x_i;w) = -1)} -y_i(w^Tx_i + w_0)
+ \sum_{i=1,f(x_i;w) = -1}^N -y_i(w^Tx_i + w_0)
 \end{align}
 Since this will be negative if $y_i$ and $sign(w^Tx_i + w_0)$ don't agree.
 The size of the margin scales inversely with the size of the weights.
 \newpar
 If the data cant be linearly seperate, we introduce slack margins, i.e. we enforce a margin greater than $1 - \xi_i$ and then minimize $\xi_i$.
+\newpar
+Maximizing the margin is equivalent to minimizing the squared weights $w^T w$. (I'm skipping a significant amount of stuff on the lagrange dual form of the SVM problem  at this point due to time constraints)
+\newpar
+The set of points whose removal would allow the creation of a different hyperplane with a larger margin is known as the set of \tbf{support vectors}. The dual formulation allows us to do inference on a new point by calculating its dot product with the support vectors, instead of having to evaluate the entire hyperplane. To be honest, I'm not entirely sure how this is more efficient.
+\newpar
+We can still use SVMs on ``strongly'' non-linearly seperable data, where slack margins aren't enough, by applying a nonlinear mapping $\phi(x)$ to the data to make it linearly seperable in a higher dimensional space. We can efficiently do the necessary calculations using the \tbf{Kernel Trick}, where we replace instances of $\phi(x_i)^T \phi(x_j)$ in relevant equations with a kernel function $K(x_i,x_j) = \phi(x_i)^T \phi(x_j)$ that doesn't need to explicitly calculate the mapping $\phi$.
 %
 \chapter{Decision Trees}
 \begin{itemize}
@@ -536,4 +542,154 @@ The most common loss function for classification is logistic loss, so here are t
 Remember that $\yhat_n^{(k)} = \yhat_n^{(k-1)} + f^{(k)}(x_n)$. (Or $\yhat_n^{(k)} = \yhat_n^{(k-1)} + \alpha f^{(k)}(x_n)$ if we want to do a weighted sum). In this lecture, we assume $\yhat^{(0)} = 0$.
 \newpar
 GBDTs have very low biases while also retaining a relatively low variance. They are also very fast to train, requiring a runtime of $O(kMN \log(T))$, where $k$ is the number of trees in the ensemble, $M$ is the number of features and $N$ is the number of data points.
+%
+\chapter{Hyperparameter Optimization}
+A function $f(\lambda, D)$ is called a \tbf{response function} if its output is the loss of a given model that was trained on the dataset $D$ using the hyperparameters $\lambda$. It can also be a function of the hyperparameters and dataset that we want to maximize, such as classification accuracy.
+%
+\section{Bayesian Optimization}
+Straightforwardly optimizing $f$ is costly enough to generally be infeasible, since it would involve retraining the entire model for every new set of hyperparameters. Instead, we trade a surrogate model $\Psi$ to predict the output of $f$ based on known values. We then obtain new hyperparameters by picking the ones that maximize/minimize $\Psi$, training a model using these new hyperparameters, and retraining $\Psi$ on the augmented dataset that includes the performance of the model using the new hyperparameters.
+\newpar
+$\Psi$ is often called a \tbf{Gaussian Process Regressor}, and the process of optimizing hyperparameters by getting them from the surrogate model is also known as \tbf{Bayesian Optimization} or \tbf{Sequantial Model Based Optimization (SMBO)}.
+\newpar
+If we know the mean $\mu$ and the variance  $\sigma$ of the surrogate model, we can also pick our hyperparameters based on the \tbf{lower confidence bound}:
+\begin{align}
+ LCB(\lambda) = -\mu + \beta \sigma
+\end{align}
+or, for classification, where we want to maximize $\mu$, based on the \tbf{upper confidence bound}:
+\begin{align}
+ UCB(\lambda) = \mu + \beta \sigma
+\end{align}
+\section{Gray-Box Search}
+Bayesian Optimization is an example of black box optimization, where we don't know the structure of the problem. \tbf{Gray-box optimization} does have knowledge about the structure of the problem. This means that we can:
+\begin{itemize}
+ \item We can do \tbf{$k$-fold cross-validation} to discard bad hyperparameters early:
+\begin{itemize}
+ \item Split data $D$ into $k$ subsets
+ \item For every subset $D_i$, use $D \setminus D_i$ to train a model and $D_i$ as the test data
+ \item Retain evaluation score of each model
+\end{itemize}
+\item If we use iterative ML algorithms, we can simply stop poor runs early.
+\begin{itemize}
+ \item Hyperband: Start with a lot of models with random hyperparameters, then discard low-performing half / two thirds / a different fractions of the models each time a certain number of learning epochs is up.
+\end{itemize}
+\end{itemize}
+Hyperband is faster than Bayesian Optimization, but Bayesian Optimization generally produces better results if given enough time (but ``enough time'' may be a factor on the order of $10^2$)
+%
+\chapter{Advanced Regularization Or Whatever}
+\section{Dropout}
+During training of a neural network, at each step, train as if a random set of node outputs were actually $0$. We then take the output of multiple versions of a neural network with different dropped weights, making dropout a form of bagging.
+%
+\section{Residual Networks}
+A \tbf{residual network} is a type of neural network whose architecture includes connections that ``skip'' a certain number of layers, i.e. a neuron $h_n$ may be connected to a neuron $h_{n+c}$ for $c \geq 2$.
+\newpar
+Residual networks were the key advancement needed to start training ever deeper models, since they fix issues deep neural networks run into, like vanishing/exploding gradients during back propagation.
+\newpar
+Shake-Shake is a method of regularization for residual networks that randomly assigns weights to the output of each ``branch'' during training (?)
+%
+\section{Data Augmentation}
+\tbf{Data Augmentation} is the process of artificially creating additional data before training. It is primarily used in Image Processing Application, where it is easy to create realistic, sensible data through changes to images such as rotation, translation etc. Additional methods of data augmentation for images include:
+\begin{itemize}
+ \item Cutout, where a random patch of the image is replaced with black pixels
+ \item Mixup, where two images are linearly interpolated (i.e. made transparent and then layered over each other)
+ \item Cutmix, where a random patch of an image is replaced with a patch from a different image.
+\end{itemize}
+These can help a model deal with images in unusual circumstances, such as recognizing an object that is partially covered by something else.
+%
+\section{Cocktails}
+A combination of multiple regularizers is known as a \tbf{Cocktail}. Using cocktails is generally better than using an individual regularizer. Finding the best cocktail for a given problem is an active area of research.
+%
+\chapter{Error Measures}
+If a loss function we wish to use for a given problem is non-differentiable, we can use another arbitrary function as a \tbf{Proxy Loss} as long as we know that the minima of the proxy loss are at the same points as the minima of the original loss.
+%
+\section{Classification}
+Missclassification Rate:
+\begin{align}
+ MCR(y,\yhat) = \frac{FP + FN}{TP+TN+FP+FN}
+\end{align}
+An effective proxy loss of $MCR$ is the cross-entropy (presented here in the general form used for multiclass-classification, where $y_{n,c}$ is $1$ if $y_n = c$ and $0$ otherwise:
+\begin{align}
+ - \sum_{n=1}^N \sum_{c=1}^C y_{n,c} \log(\yhat_c(x_n;\theta))
+\end{align}
+
+\newpar
+True Positive Rate or Recall:
+\begin{align}
+ TPR(y,\yhat) = \frac{TP}{TP+FN}
+\end{align}
+False Positive Rate (``Ratio of false alarms'')
+\begin{align}
+ FPR(y,\yhat) = \frac{FP}{TN+FP}
+\end{align}
+The curve we get by plotting $TPR$ on the $y$-axis against $FPR$ on the $x$-axis for different activation thresholds is known as the $ROC$ curve (``Receiver Operating Characteristic''). The Area under the $ROC$ curve (``$AUC$'') tells us the likelihood that, for a given pair of $y_i = 0$ and $y_j = 1$, our model predicts a higher value to $\yhat_j$ than $\yhat_i$.
+\newpar
+Precision (Percentage of predicted positives that are correct):
+\begin{align}
+ PRC = \frac{TP}{TP+FP}
+\end{align}
+\newpar
+If we plot precision and recall against each other as we did for the $ROC$-curve, the result is known as a $PR$(precision-recall)-curve. Using a $PR$ curve makes sense in imbalanced datasets where we care more about the positive class.
+\newpar
+F1 (Harmonic mean between Precision and Recall):
+\begin{align}
+ F1 = 2\frac{PRC \cdot REC}{PRC + REC}
+\end{align}
+F1 is hard to optimize for because it is non-differentiable and non-decomposable. We have to train models using variants of regular classification loss functions (logistic loss, hinge loss etc.) as proxies. It also helps to oversample the positive or negative class, such that the training minibatches have approximately 50\% positive and 50\% negative instances.
+\section{Regression}
+Scale-dependent errors:
+\begin{itemize}
+ \item Mean Absolute Error:
+ \begin{align}
+  MAE = \frac{1}{N}\sum_{n=1}^N |y_n - \yhat_n|
+ \end{align}
+ \item Root Mean Square Error:
+ \begin{align}
+  RMSE = \sqrt{\frac{1}{N}\sum_{n=1}^N (y_n - \yhat_n)^2}
+ \end{align}
+\end{itemize}
+Scale independent errors: Percentage errors, such as Mean Absolute Percentage Error:
+\begin{align}
+ MAPE = \frac{1}{n}\sum_{n=1}^N \left|\frac{y_n - \yhat_n}{y_n}\right|
+\end{align}
+An issue with percentage errors is that they are undefined when $y_n = 0$ and produce extreme values when $y_n \approx 0$. One fix is to use scaled errors such as \tbf{Mean Absolute Scaled Error}:
+\begin{align}
+ MASE = \frac{1}{N} \sum_{n=1}^N \left|\frac{y_n - \yhat_n}{\frac{1}{N-1}\sum_{n'=2}^N |y_{n'} - y_{n'-1}|}\right|
+\end{align}
+\section{Ranking}
+$DCG$ (\tbf{Discounted Cumulative Gain}):
+\begin{align}
+ DCG = \sum_{i=1}^K \frac{2^{l_i} - 1}{\log(i+1)}
+\end{align}
+Where $l_i$ is the ``ground truth relevance'' of the data point that our model assigns $i$-th most relevant. The $DCG$ of the ground truth ranking is known as the $IDCG$, and a good error measure for our ranking model is then given by the normalized $DCG$:
+\begin{align}
+NDCG = \frac{DCG}{IDCG}
+\end{align}
+\newpar
+Pairwise Ranking Loss (Logistic Loss adapted for ranking problems):
+\begin{align}
+ \loss_{i,j} = -P_{i,j} \log(\hat{P}_{i,j}) - (1 - P_{i,j}) \log(1 - \hat{P}_{i,j})
+\end{align}
+Where $P_{ij}$ is given by:
+\begin{align}
+ P_{ij} = \begin{cases}
+           1 & l_i > l_j\\
+           0.5 & l_i = l_j\\
+           0 & l_i < l_j
+          \end{cases}
+\end{align}
+And $\hat{P}_{i,j}$ is an estimation of the probability that the pair $i,j$ is correctly ranked:
+\begin{align}
+ \hat{P}_{i,j} = \sigma(s_i-s_j)
+\end{align}
+Where $s_i$ are the predicted relevances.
+\newpar
+Alternatively, we may reexpress $P_{ij}$ in terms of the following term $S_{ij}$:
+\begin{align}
+ S_{ij} = \begin{cases}
+           1 & l_i > l_j\\
+           0 & l_i = l_j\\
+           -1 & l_i < l_j
+          \end{cases}
+\end{align}
+Sadly, Pairwise Loss is provably non-optimal for maximizing $NDCG$.
 \end{document}
+
