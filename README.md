@@ -10,3 +10,4 @@ In German:
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Mathe%20II/mathe2Aufschrieb.pdf">Mathematik II für Studierende der Informatik, SS23</a>
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Logik/logikAufschrieb.pdf">Logik für Studierende der Informatik, WS23/24</a>
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Stochastik/stochastikAufschrieb.pdf">Stochastik für Studierende der Informatik, SS24</a>
+- <a href="https://github.com/emma-bach/lecture-notes/blob/main/Optimierung/main.pdf">Optimierung, WS24/25</a>
