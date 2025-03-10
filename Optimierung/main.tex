@@ -1,0 +1,115 @@
+\documentclass{report}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage[titles]{tocloft}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pdfpages}
+%\usepackage{bbm}
+%\usepackage{biblatex}
+%\addbibresource{bib.bib}
+
+%hyperref should be last apparently
+\usepackage{hyperref}
+
+\renewcommand\cftsecdotsep{\cftdot}
+\renewcommand\cftsubsecdotsep{\cftdot}
+\renewcommand\epsilon{\varepsilon}
+
+\newcommand{\tbf}{\textbf}
+\newcommand{\argmin}[1] {
+    \begin{array}{c}
+        \vphantom{#1}\\[-3pt] %vphantom makes sure text is centered vertically, [-{x}pt] decreases vertical space between lines so that they are not unreasonably far apart.
+        \text{argmin}\\[-3pt]
+        #1\\
+        \end{array}
+    }
+\renewcommand{\min}[1] {
+    \begin{array}{c}
+        \vphantom{#1}\\[-3pt] %vphantom makes sure text is centered vertically, [-{x}pt] decreases vertical space between lines so that they are not unreasonably far apart.
+        \text{min}\\[-3pt]
+        #1\\
+        \end{array}
+    }
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+
+% Starts a new paragraph without indentation
+% and with an empty line between paragraphs
+\newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
+
+\pagestyle{fancy} %allows headers
+
+\lhead{Emma Bach}
+\rhead{\today}
+
+\renewcommand*\contentsname{Inhalt}
+
+
+\begin{document}
+\include{title}
+\tableofcontents
+\thispagestyle{fancy}
+\chapter{Einführung}
+Ein Optimierungsproblem besteht aus einer \tbf{zulässigen Menge} $G$ und einer \tbf{Zielfunktion} $f: G \to H$, wobei wir im Allgemeinen von $H = \mathbb{R}$ ausgehen werden. Wir schreiben dann zum Beispiel
+\begin{align*}
+ \min{x \in \mathbb{R}} f(x),
+\end{align*}
+um das Problem ``finde den kleinsten Wert, den $f(x)$ bei reellem $x$ annimt'' zu notieren, und
+\begin{align*}
+ \argmin{x \in \mathbb{R}} f(x) = 4
+\end{align*}
+für das Problem ``finde die kleinste reelle Zahl $x$, sodass $f(x) = 4$ ist.
+\newpar
+Historisch ist das Feld der mathematischen Optimierung unter Nebenbedingungen stark verankert im Feld der \tbf{Operations Research}, welches sich mit der Optimierung von Produktionskosten unter gegebenen Bedingungen beschäftigt. Heutzutage hat die Optimierung zahlreiche Anwendungen, z.B. in der Pfadplanung, in Computer Vision, in der Bioinformatik, im maschinellen Lernen oder im Hardwaredesign.
+\section{Anwendungsbeispiel: Support Vector Machines}
+Ein klassisches Problem des maschinellen Lernes ist die Klassifizierung von Daten durch eine lineare Entscheidungsgrenze - alle Punkte $(x_i,y_i)$ über einer Ebene werden einer Klasse zugeordnet, und alle Punkte unter der Ebene einer anderen Klasse. Das Problem besteht daraus, eine Optimale Trennungsebene zu finden. Diese wird beschrieben durch eine Gleichung der Form
+\begin{align*}
+ \hat{y}(x) = w^T x + w_0.
+\end{align*}
+Sei $w^*$ der Vektor $(w_0, w_1, \hdots, w_{n-1})$.
+Es stellt sich heraus, dass das zu lösende Optimierungsproblem gegeben ist durch:
+\begin{align*}
+\begin{array}{cc}
+\argmin{w^{*} \in \mathbb{R}^n} &\frac{1}{2} ||{w^{*}}^2||\\
+ \text{s.t. } &\forall i\ y_i\hat{y}(x_i) \geq 1
+\end{array}
+\end{align*}
+Wir wollen die Länge des Vektors $w^*$ minimieren, da dies zu einem größeren Abstand zwischen unserer Ebene und den Datenpunkten führt, wodurch unser Modell besser generalisiert. Die Nebenbedingung entspricht der Anforderung, dass alle Punkte korrekt klassifiziert werden sollen.
+\section{Typische Problemklassen}
+Optimierungsprobleme können gemäß diverser Kriterien klassifiziert werden:
+\begin{itemize}
+ \item Probleme mit Nebenbedingungen vs Probleme ohne Nebenbedingungen
+ \item Optimierung mit Variablen aus verschiedenen Mengen, insbesondere kontinuierliche Variablen vs diskrete Variablen
+ \item Lineare vs nichtlineare Funktionen
+ \item Eindimensionale vs mehrdimensionale Funktionen
+ \item Konvexe Funktionen vs nicht konvexe Funktionen
+ \item Konvexe Mengen vs nicht konvexe Mengen
+\end{itemize}
+Diese verschiedenen Problemklassen führen zu unterschiedlich schwierigen Problemen. Insbesondere sind konvexe Probleme einfacher zu lösen als nicht konvexe Probleme, kontinuierliche Probleme sind in der Regel einfacher zu lösen als diskrete Probleme, und lineare Probleme sind einfacher als nichtlineare Probleme. Relevante Fragen sind dann:
+\begin{itemize}
+ \item Wie schnell kovergiert das Verfahren zu einer Lösung? Wie viele Iterationen sind nötig? Was ist die Komplexität (in $O$-Notation) einer einzelnen Iteration?
+ \item Konvergiert das Verfahren immer gegen ein Globales Optimum? Falls nein, gibt es garantierte obere/untere Schranken für die maximale Abweichung vom globalen Optimum?
+\end{itemize}
+\section{Konvexität}
+Eine Menge $G$ ist \tbf{konvex}, wenn für beliebige Punkte $x,y \in G$ auch beliebige lineare Interpolationen zwischen den Punkten in der Menge enthalten sind:
+\begin{align*}
+ x,y \in G \implies \{(1-\alpha)x + \alpha y\ |\ \alpha \in [0,1]\} \subset G
+\end{align*}
+Intuitiv entspricht das der Forderung, dass zwischen für alle Paare von Punkten eine Verbindungsstrecke zwischen den Punkten in der Menge enthalten sein muss.
+\newpar
+Die \tbf{konvexe Hülle} einer Menge $G$ ist die kleinste konvexe Menge $H$ sodass $G \subset H$.
+\newpar
+Analog zur Definition einer konvexen Menge ist eine \tbf{konvexe Funktion} definiert als eine Funktion, für die gilt:
+\begin{align*}
+ x,y \in G \implies f((1-\alpha)x+\alpha y) \leq (1-\alpha)f(x) + \alpha f(y)\ \forall \alpha \in [0,1]
+\end{align*}
+Dies entspricht der Forderung, dass jede Verbindungsstrecke zwischen zwei Punkten auf dem Graphen unterhalb des Graphen liegen muss.
+\newpar
+Eine nicht konvexe Funktion, in der jedes lokale Minimum auch ein globales Minimum ist, wird als \tbf{quasikonvex} bezeichnet. Da dies dem Hauptvorteil von konvexen Funktionen in der Optimierung entspricht, ist die Optimierung von quasikonvexe Funktionen ebenfalls einfacher als die Optimierung allgemeiner nichtlinearer Funktionen.
+\chapter{Gradientenverfahren}
+\end{document}
+
