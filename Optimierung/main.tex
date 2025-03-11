@@ -9,6 +9,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{pdfpages}
+\usepackage{bm}
 %\usepackage{bbm}
 %\usepackage{biblatex}
 %\addbibresource{bib.bib}
@@ -74,11 +75,11 @@ Sei $w^*$ der Vektor $(w_0, w_1, \hdots, w_{n-1})$.
 Es stellt sich heraus, dass das zu lösende Optimierungsproblem gegeben ist durch:
 \begin{align*}
 \begin{array}{cc}
-\argmin{w^{*} \in \mathbb{R}^n} &\frac{1}{2} ||{w^{*}}^2||\\
+\argmin{w^{*} \in \mathbb{R}^n} &\frac{1}{2} ||{w^*}||^2\\
  \text{s.t. } &\forall i\ y_i\hat{y}(x_i) \geq 1
 \end{array}
 \end{align*}
-Wir wollen die Länge des Vektors $w^*$ minimieren, da dies zu einem größeren Abstand zwischen unserer Ebene und den Datenpunkten führt, wodurch unser Modell besser generalisiert. Die Nebenbedingung entspricht der Anforderung, dass alle Punkte korrekt klassifiziert werden sollen.
+Wir wollen die Länge $||w^{*}||$ des Vektors $w^*$ minimieren, da dies zu einem größeren Abstand zwischen unserer Ebene und den Datenpunkten führt, wodurch unser Modell besser generalisiert. Die Nebenbedingung entspricht der Anforderung, dass alle Punkte korrekt klassifiziert werden sollen.
 \section{Typische Problemklassen}
 Optimierungsprobleme können gemäß diverser Kriterien klassifiziert werden:
 \begin{itemize}
@@ -111,5 +112,83 @@ Dies entspricht der Forderung, dass jede Verbindungsstrecke zwischen zwei Punkte
 \newpar
 Eine nicht konvexe Funktion, in der jedes lokale Minimum auch ein globales Minimum ist, wird als \tbf{quasikonvex} bezeichnet. Da dies dem Hauptvorteil von konvexen Funktionen in der Optimierung entspricht, ist die Optimierung von quasikonvexe Funktionen ebenfalls einfacher als die Optimierung allgemeiner nichtlinearer Funktionen.
 \chapter{Gradientenverfahren}
+\section{Wiederholung: Mehrdimensionale Differentiation}
+Zur Erinnerung: der \tbf{Gradient} $\nabla f$ ist ein Vektor, der alle partiellen Ableitungen von $f$ enthält, also die Ableitung von $f$ in alle Koordinatenrichtungen:
+\begin{align*}
+ \nabla f = \left(\pd{f}{x_1}, \hdots, \pd{f}{x_n}\right)^T
+\end{align*}
+Im eindimensionalen Fall entspricht das genau der gewöhnlichen Ableitung, da partielle Ableitungen letztendlich genau wie ordinäre Ableitungen berechnet werden. Sei $f_1(x_1, x_2, x_3)$ eine beliebige Funktion $\mathbb{R}^3 \to \mathbb{R}$ und sei $f_2(x_1) = f_2(x_1, x_2, x_3)$ für beliebige Konstante $x_2,x_3$. Dann ist
+\begin{align*}
+ \pd{}{x_1}f_1(x_1,x_2,x_3) = \frac{d}{dx_1} f_2(x_1)
+\end{align*}
+Zum Beispiel:
+\begin{align*}
+ f_1(x_1,x_2,x_3) &= x_1^2x_2 + x_1 x_3 + 2x_2\\
+  \pd{}{x_1}f_1(x_1,x_2,x_3) &= 2x_1 x_2 + x_3
+\end{align*}
+entspricht der Ordinären Ableitung
+\begin{align*}
+f_2(x_1) &= x_1^2 x_2 + x_1 x_3 + 2x_2\\
+\frac{d}{dx_1} f_2(x_1) &= 2x_1 x_2 + x_3
+\end{align*}
+Eine mehrdimensionale Funktion $f: \mathbb{R}^n \to \mathbb{R}$ kann nicht nur in die Koordinatenrichtungen abgeleitet werden, sondern in beliebige Richtungen $\bm{d} \in \mathbb{R}^n$
+    {Um Formeln verständlicher zu notieren, werde ich so gut es geht Variablen $\bm{x} \in \mathbb{R}^n$ im Fall $n > 1$ immer durch fette Buchstaben notieren.}.
+Diese \tbf{Richtungsableitung} wird geschrieben als $\nabla_d f(x)$. Analog zur ordinären Definition der Ableitung ist die Richtungsableitung definiert als:
+\begin{align*}
+ \nabla_d f(x) = \lim_{h \to 0}\frac{f(x + h\bm{d}) - f(x)}{h}
+\end{align*}
+$f$ wird als differenzierbar bezeichnet, falls die Richtungsableitung in allen Richtungen existiert. Für ein differenzierbares $f$ kann die Richtungsableitung mit Hilfe des Gradienten sehr einfach als Skalarprodukt berechnet werden:
+\begin{align*}
+ \nabla_d f(x) = \nabla f(x)^T \bm{d}
+\end{align*}
+Im Rahmen dieser Vorlesung gehen wir davon aus, dass $f \in C^1$, also dass die zu minimierende Funktion mindestens einmal differenzierbar ist. Im Allgemeinen ist es jedoch wichtig, anzumerken, dass $f$ nicht umbedingt differenzierbar ist, nur weil partielle Ableitungen in alle Richtungen existieren.
+%
+\section{Iterative Optimierung}
+Eine Funktion $f(\bm{x}): \mathbb{R}^n \to \mathbb{R}$ kann numerisch durch iteratives ''Ausprobieren`` verschiedener Werte von $\bm{x}$ optimiert werden. Wir starten mit einem beliebigen Startwert $\bm{x}^{(0)}$
+    \footnote{Ich schreibe hier $\bm{x}^{(k)}$ mit der $k$ in Klammern, um klarzustellen, dass $\bm{x}^{(k)}$ nicht ''$\bm{x}$ hoch $k$`` ist, sondern ''das $k$-te $\bm{x}$``. Eigentlich würde ich das am liebsten als $\bm{x}_k$ notieren, aber da $\bm{x} \in \mathbb{R}^n$ ist, ist diese Notation viel zu leicht mit der Notation $x_k$ für die verschiedenen Komponenten von $\bm{x}$ zu verwechseln ($\bm{x} = (x_1, \hdots, x_n)^T$). Vermutlich werde ich an einigen Stellen aus Versehen trotzdem $\bm{x}^k$ schreiben, ich entschuldige mich im Voraus. (´-w-`)}
+, und bewegen uns dann bei jedem Schritt $k$ in eine Richtung $\bm{d}^{(k)} \in \mathbb{R}^n$, welche uns hoffentlich näher zum Optimum bringt. Wir nutzen zusätzlich einen Parameter $\tau^{(k)} \in \mathbb{R}$, welcher die Schrittweite beschreibt.
+\begin{align*}
+ \bm{x}^{(0)} &\in \mathbb{R}^n\\
+ \bm{x}^{(k+1)} &= \bm{x}^{(k)} + \tau^{(k)} \bm{d}^{(k)}
+\end{align*}
+In der Praxis wird oft einfach $\bm{x}^{(0)} = \bm{0}$ gewählt. Ist jedoch $f$ nicht quasikonvex, so kann eine schlechte Wahl von $\bm{x}^{(0)}$ dazu führen, dass das Verfahren nur gegen ein lokales Minimum kovergiert, welches oft kein globales Minimum ist und somit in vielen Fällen ein schlechtes Ergebnis.
+\subsection{Welche Richtung ist optimal?}
+Das Optimale $\bm{x}^{(k+1)}$ ist das, das $f(\bm{x}^{(k+1)}$ minimiert. Wir können $f(\bm{x}^{(k+1)})$ für kleine Schrittweiten $\tau^{(k)}$ folgendermaßen approximieren (\tbf{Taylor-Approximation}):
+\begin{align*}
+f(\bm{x}^{(k+1)}) = f(\bm{x}^{(k)} + \tau^{(k)}\bm{d}^{(k)}) \approx f(\bm{x}^{k}) + \tau^{(k)} \nabla f(\bm{x}^{(k)})\bm{d}^{(k)}
+\end{align*}
+Da wir den Wert von $f$ möglichst stark verringern wollen, sollte $\tau^{(k)} \nabla f(\bm{x}^{(k)})\bm{d}^{(k)}$ ein negativer Term mit möglichst großem Betrag sein. Dabei können wir $\tau^{(k)}$ aber nicht zu hoch wählen, da sonst die Approximation ungenau wird.
+\newpar
+Nach der Definition des Skalarprodukts gilt:
+\begin{align}
+ \nabla f(\bm{x}^{(k)})\bm{d}^{(k)} = ||\nabla f(\bm{x}^{(k)})||\ ||\bm{d}^{(k)}|| \cos(\theta)
+\end{align}
+Wobei $\theta$ der Winkel zwischen $\nabla f(\bm{x}^{(k)})$ und $\bm{d}^{(k)}$ ist. Diese Gleichung ist minimal, wenn $\cos(\theta) = -1$, also $\theta = 180$. Dementsprechend muss $\bm{d}^{(k)}$ in die umgekehrte Richtung von $\nabla f(\bm{x}^{(k)})$ zeigen, also $\bm{d}^{(k)} = -\nabla f(\bm{x}^{(k)})$.
+    \footnote{Technisch gesehen wird die Gleichung durch $\bm{d}^{(k)} = -\alpha \cdot \nabla f(\bm{x}^{(k)})$ mit möglichst großen $\alpha \in \mathbb{R}$ minimiert. Die ''Rolle`` dieses Parameters $\alpha$ wir jedoch bereits durch unseren Schrittweiten-Parameter $\tau^{(k)}$ abgedeckt, und es gilt auch für dieses theoretische $\alpha$, dass die Approximation sehr ungenau wird, wenn wir ein hohes $\alpha$ wählen.}
+\newpar
+Mit dieser optimalen Wahl der Abstiegsrichtung $\bm{d}^{(k)}$ erhalten wir das \tbf{Gradientenverfahren} (auch bekannt als ''Gradientenabstieg``, auf Englisch ''\tbf{Gradient Descent}''):
+\begin{align*}
+ \bm{x}^{(0)} &\in \mathbb{R}^n\\
+ \bm{x}^{(k+1)} &= \bm{x}^{(k)} - \tau^{(k)} \nabla f(\bm{x}^{(k)})
+\end{align*}
+\section{Bestimmung der Schrittweite}
+Die Wahl der Schrittweite $\tau^{(k)}$ ist für das Gradientenverfahren von entscheidender Bedeutung. Ist $\tau^{(k)}$ zu klein, wird die Konvergenz des Algorithmus oft deutlich verlangsamt. Ist $\tau^{(k)}$ zu groß, wird die Approximation ungenau. Dies kann dazu führen, dass das Verfahren über das Ziel hinausschießt, und im schlimmsten Fall eventuell gar nicht konvergiert.
+\newpar
+Die Bestimmung eines optimalen Werts für $\tau^{(k)} \in \mathbb{R}$ ist ein eigenes Optimierungsproblem.  In einigen Fällen ist ein dauerhaft konstantes $\tau$ genug, um die Konvergenz zu garantieren. In diesen Fällen ist eine konstante Schrittweite oft effizienter.
+\newpar
+Um ein optimales $\tau^{(k)}$ für eine gegebene Iteration $k$ zu finden, definieren wir eine neue Funktion $h: \mathbb{R} \to \mathbb{R}$:
+\begin{align*}
+h(\tau) &= f(\bm{x}^{(k)} + \tau \bm{d}^{(k)})\\
+ \tau^{(k)} &= \argmin{\tau \in \mathbb{R}} h(\tau)
+\end{align*}
+Um die Ableitung von $h$ zu finden, beschreiben wir den Term $\bm{x}^{(k)} + \tau \bm{d}^{(k)}$ als eine eigene eindimensionale Funktion $g(\tau)$. Dann gilt $h(\tau) = f(\bm{g(\tau)})$, gemäß der mehrdimensionalen Kettenregel gilt dann:
+\begin{align*}
+ \frac{d}{d\tau}h(\tau) &= \frac{d}{d\tau} f(\bm{g(\tau)})\\
+ &= \sum_{i=1}^n \left(\frac{d}{d \tau} \bm{g(\tau)}\right) \pd{}{g(\tau)_i}f(\bm{g(\tau)})\\
+ &= \sum_{i=1}^n d^{(k)}_i \pd{}{g(\tau)_i}f(\bm{g(\tau)})\\
+ &= \nabla f(\bm{g(\tau)}) \cdot \bm{d}^{(k)}\\
+ &= \nabla f(\bm{x}^{(k)} + \tau \bm{d}^{(k)}) \cdot \bm{d}^{(k)}
+\end{align*}
+
 \end{document}
 
