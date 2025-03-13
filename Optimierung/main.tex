@@ -38,6 +38,16 @@
     }
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
 
+\newcommand{\xk}{\bm{x}^{(k)}}
+\newcommand{\yk}{\bm{y}^{(k)}}
+
+\newcommand{\mk}{\bm{m}^{(k)}}
+
+\newcommand{\dk}{\bm{d}^{(k)}}
+\newcommand{\sk}{\bm{s}^{(k)}}
+
+\newcommand{\tauk}{\tau^{(k)}}
+\newcommand{\Bk}{B^{(k)}}
 % Starts a new paragraph without indentation
 % and with an empty line between paragraphs
 \newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
@@ -181,14 +191,210 @@ Um ein optimales $\tau^{(k)}$ für eine gegebene Iteration $k$ zu finden, defini
 h(\tau) &= f(\bm{x}^{(k)} + \tau \bm{d}^{(k)})\\
  \tau^{(k)} &= \argmin{\tau \in \mathbb{R}} h(\tau)
 \end{align*}
-Um die Ableitung von $h$ zu finden, beschreiben wir den Term $\bm{x}^{(k)} + \tau \bm{d}^{(k)}$ als eine eigene eindimensionale Funktion $g(\tau)$. Dann gilt $h(\tau) = f(\bm{g(\tau)})$, gemäß der mehrdimensionalen Kettenregel gilt dann:
+Um die Ableitung von $h$ zu finden, beschreiben wir den Term $\bm{x}^{(k)} + \tau \bm{d}^{(k)}$ als eine eigene eindimensionale Funktion $g(\tau)$. Dann ist $h(\tau) = f(\bm{g(\tau)})$, gemäß der mehrdimensionalen Kettenregel gilt also:
 \begin{align*}
  \frac{d}{d\tau}h(\tau) &= \frac{d}{d\tau} f(\bm{g(\tau)})\\
  &= \sum_{i=1}^n \left(\frac{d}{d \tau} \bm{g(\tau)}\right) \pd{}{g(\tau)_i}f(\bm{g(\tau)})\\
  &= \sum_{i=1}^n d^{(k)}_i \pd{}{g(\tau)_i}f(\bm{g(\tau)})\\
  &= \nabla f(\bm{g(\tau)}) \cdot \bm{d}^{(k)}\\
- &= \nabla f(\bm{x}^{(k)} + \tau \bm{d}^{(k)}) \cdot \bm{d}^{(k)}
+ &= \nabla f(\bm{x}^{(k)} + \tau \bm{d}^{(k)}) \dk
 \end{align*}
-
+Eine exakte Bestimmung des Optimalwerts ist mit hohem Aufwand Verbunden und ist oft sowieso nur von geringem Vorteil, da in der Regel auch bei wiederholter optimaler Wahl von $\tauk$ für den letztendlichen Gradientenabstieg viele Schritte nötig sind. Stattdessen werden in der Praxis approximative Lösungen gefunden, welche bestimmte \tbf{Qualitätsbedingungen} erfüllen.
+\newpar
+Eine einfache Suche nach einem beliebigen Wert, welcher den Funktionswert reduziert, also
+\begin{align*}
+f(\xk + \tauk \dk) - f(\tauk) \geq 0,
+\end{align*}
+ist dabei nicht genug, da bei hinreichend schneller Konvergenz von $f(\xk + \tauk \dk) - f(\tauk)$ gegen $0$ eventuell nie das Optimum erreicht wird.
+%
+\subsection{Die Armijo-Bedingung}
+Die \tbf{Armijo-Bedingung} hat das Ziel, sicherzustellen, dass die Zielfunktion bei einem Schritt um die gegebenen Schrittweite $\tauk$ hinreichend reduziert wird. Die Bedingung ist gegeben durch die folgende Ungleichung:
+\begin{align*}
+f(\xk + \tauk \dk) &\leq f(\xk) + \delta \tauk \nabla f(\xk)^T \dk
+\end{align*}
+Die minimal notwendige Reduktion wird dabei durch einen Parameter $\delta \in (0,1)$ gesteuert. Ein üblicher Wert ist dabei $\delta \approx 10^{-4}$. Die Multiplikation mit dem Gradienten bedeutet, dass bei einem steileren Gradienten auch nach einer höheren Reduktion gesucht wird.
+%
+\subsection{Die Wolfe-Bedingungen}
+Die \tbf{schwache Wolfe-Bedingung} fordert, dass der Gradient an der Zielposition entweder weniger steil als an der Startposition ist oder das Vorzeichen ändert:
+\begin{align*}
+-\nabla f(\xk + \tauk \dk)^T \dk \leq -\eta \nabla f(\xk)^T \dk
+\end{align*}
+Das Minus auf beiden Seiten kommt davon, dass bei einer Richtung $\dk$, welche zu einem Abstieg führt, notwendigerweise $\nabla f(\xk )^T \dk$ negativ ist.
+\newpar
+Wir wählen hier $\eta \in (\delta, 1)$.  In der Regel wird $\eta$ deutlich größer als $\delta$ gewählt, Wikipedia zitiert einen Richtwert von $\eta \approx 0.9$.
+\newpar
+Bei der \tbf{starken Wolfe-Bedingung} wird der Betrag der Terme genommen, also gefordert, dass auch bei Vorzeichenwechsel die Steigung nach dem Schritt weniger steil als davor sein soll:
+\begin{align*}
+|\nabla f(\xk + \tauk \dk)^T \dk| \leq \eta |\nabla f(\xk)^T \dk|
+\end{align*}
+Intuitiv verhindern die Wolfe-Bedingungen ineffizient kleine Schritte, bei denen man ohne Probleme in die gleiche Richtung weitergehen könnte.
+\newpar
+Schrittweiten, welche sowohl die starke Wolfe-Bedingung als auch die Armijo-Bedingung
+\footnote{In dieser Vorlesung wurden die starke Wolfe-Bedingung und die Armijo-Bedingung als seperate Bedingungen vorgestellt. In der Literatur wird die Armijo-Bedingung oft als Teil der starken Wolfe-Bedingung definiert, mit ``Erfüllung der starken Wolfe-Bedingungen'' ist dann die Erfüllung beider Bedingungen gemeint.}
+erfüllen, existieren unter den von uns gemachten Annahmen immer. Als Erinnerung: Wir haben folgende Annahmen gemacht:
+\begin{itemize}
+ \item $f(x)$ ist kontinuierlich differenzierbar ($f(x) \in C^1$)
+ \item $\dk$ ist eine Abstiegsrichtung an der Stelle $\xk$ (also $\nabla f(\xk )^T \dk < 0$)
+ \item $0 \leq \delta \leq \eta \leq 1$
+\end{itemize}
+Für die schwache Wolfe-Bedingung muss zusätzlich gegeben sein, dass die Menge $\{f(\xk + \tau \dk) \mid \tau > 0\}$ von unten beschränkt ist.
+\newpar
+\tbf{Beweis}, nach Nocedal und Wright \footnote{J. Nocedal, S. J. Wright: Numerical Optimization, Springer, 2006, Seite 35ff} (In der Vorlesung nicht gegeben):
+\begin{itemize}
+ \item $h(\tau) = f(\xk + \tau \dk)$ ist nach Annahme für alle $\tau$ nach unten beschränkt.
+ \item Da $\dk$ eine Abstiegsrichtung und $\delta$ positiv ist, ist die Linie $l_{Arm}(\tau) := f(\xk) + \delta \tau \nabla f(\xk)^T \dk$ nach unten unbeschränkt.
+ \item Es gilt außerdem $h(0) = l_{Arm}(0)$ und $l_{Arm}(0) = \delta h'(0) < h'(0)$, also muss für kleine $\tau$ in Abstiegsrichtung gelten, dass $h(\tau) < l_{Arm}(\tau)$.
+ \item Somit muss $l_{Arm}(\tau)$ den Graphen von $h(\tau)$ für mindestens einen Wert $\tau > 0$ schneiden. Sei $\tau'$ der kleinste Wert, bei dem es das tut.
+ \item Es folgt $\forall \tau < \tau': h(\tau) < l_{Arm}(\tau)$, da sonst $\tau'$ nicht der minimale Schnittpunkt wäre. Also erfüllen alle $\tau \in (0, \tau')$ die Armijo-Bedingung.
+ \item Nach dem Mittelwertsatz muss es nun ein $\tau'' \in (0, \tau')$ geben, sodass
+ \begin{align*}
+  f(\xk + \tau' \dk) - f(\xk) = \tau' \nabla f(\xk \tau'' \dk)^T \dk
+ \end{align*}
+ \item Da $\tau'$ ein Schnittpunkt ist, gilt nun
+ \begin{align*}
+  f(\xk + \tau' \dk) &= f(\xk) + \tau' \delta \nabla f(\xk)^T \dk\\
+  \implies f(\xk + \tau' \dk) - f(\xk) &= \tau' \delta \nabla f(\xk)^T \dk\\
+  \implies \tau' \nabla f(\xk \tau'' \dk)^T \dk &= \tau' \delta \nabla f(\xk)^T \dk\\
+  \implies \nabla f(\xk \tau'' \dk)^T \dk &= \delta \nabla f(\xk)^T \dk\\
+  \overset{\eta > \delta}{\implies} \nabla f(\xk \tau'' \dk)^T \dk &> \eta\nabla f(\xk)^T \dk\\
+ \end{align*}
+Also erfüllt $\tau''$ sowohl die Armijo-Bedingung als auch die schwache Wolfe-Bedingung. Desweiteren ist der Term auf der linken Seite der finalen Ungleichung negativ, also gilt sogar die starke Wolfe-Bedingung. Da die Ungleichungen strikt sind existiert desweiteren ein Intervall um $\tau''$, welches die beiden Bedingungen ebenfalls erfüllt.
+\end{itemize}
+\subsection{Line Search}
+Ein einfaches Verfahren zur Bestimmung eines geeigneten $\tau$ ist die sogenannte \tbf{Backtracking Line Search}:
+\begin{itemize}
+ \item Definiere $\tau^{(0)} = 1$
+ \item Falls die Armijo-Bedingung nicht erfüllt ist, probiere als nächstes $\tau^{(k+1)} = \beta \tauk$, wobei $\beta \in (0,1)$.
+\end{itemize}
+Unter Nutzung des Gradienten lässt sich auch ein \tbf{Interpolationsverfahren} anwenden, welches schneller konvergiert:
+\begin{itemize}
+ \item Definiere $\tau^{(0)} = 1$
+ \item Betrachte die Quadratische Taylor-Approximation von $h(\tau)$:
+ \begin{align*}
+  h_q(\tau) = \left(\frac{h(\tau^{(0)}) - h(0) - \tau^{(0)}h'(0)}{{\tau^{(0)}}^2}\right)\tau^2 + h'(0)\tau + h(0)
+ \end{align*}
+ Diese ist minimiert durch
+ \begin{align*}
+  \tau^{(1)} = \frac{h'(0) {\tau^{(0)}}^2}{2(h(\tau^{(0)}) - h(0) - h'(0)\tau^{(0)}}
+ \end{align*}
+ \item Solange $\tau^{(k)}$ die Armijo-Bedingung noch nicht erfüllt, bestimme $\tau^{(k+1)}$ durch ``kubische Interpolation mit $h(0), h'(0), h(\tau^{(0)}, h(\tau^{(1)})$ \footnote{Die Vorlesung war hier extrem vage - ich vermute, wir interpolieren iterativ immer $h(0), h'(0), h(\tau^{(k-1)}), h(\tau^{(k)})$? Wie genau man eine kubische Interpolation durchführt wurde aber nicht erklärt.}
+\end{itemize}
+Line Search Verfahren, welche die Wolfe-Bedingungen sicherstellen, sind komplizierter. Solche Verfahren bestehen aus zwei Komponenten:
+\begin{itemize}
+ \item \tbf{Bracketing} erweitert das Suchintervall, bis darin geeignete Schrittweiten garantiert werden können.
+ \item \tbf{Zooming} reduziert das Suchintervall, bis darin per Interpolationsverfahren eine geeignete Schrittweite gefunden wird.
+\end{itemize}
+\subsection{Conjugate Gradient-Verfahren}
+Angenommen, unsere Zielfunktion ist eine quadratische Funktion in folgender Form:
+\begin{align}
+ f(\bm{x}) = \frac{1}{2}\bm{x}^T A \bm{x} - \bm{b}^T \bm{x}
+\end{align}
+Das sogenannte \tbf{Conjugate Gradient-Verfahren} funktioniert dann folgendermaßen:
+\begin{itemize}
+ \item Wähle als erste Richtung den Gradienten an der Startposition:
+\begin{align*}
+ \bm{d}^{(0)} = - \nabla f(\bm{x}^{(0)} = \bm{b} - A \bm{x}^0
+\end{align*}
+ \item Bestimme die optimale Schrittweite:
+\begin{align*}
+ \tauk = \frac{|\nabla f(\xk)|}{{\dk}^T A \dk}
+\end{align*}
+\begin{align*}
+ \bm{x}^{(k+1)} = \xk + \tauk \dk
+\end{align*}
+ \item Wähle eine neue Richtung so, dass $\bm{d}^{(k+1)}$ und $\dk$ gemäß der von $A$ induzierten Metrik orthogonal sind, also ${\bm{d}^{(k+1)}}^T \cdot A \cdot \dk = 0$. Dies wird garantiert durch:
+\begin{align*}
+ \beta^{(k)} = \frac{|\nabla f(\bm{x}^{(k+1)})|^2}{|\nabla f(\xk)|^2}
+\end{align*}
+\begin{align*}
+ \bm{d}^{(k+1)} = - \nabla f(\bm{x}^{k+1}) + \beta^{(k)} \dk
+\end{align*}
+\end{itemize}
+Das Minimieren von $f$ entspricht genau dem Lösen des Gleichungssystems $Ax = b$. Das CG-Verfahren garantiert dadurch für die Matrix $A = \mathbb{R}^{n \times n}$ eine bei exakter Zahlendarstellung exakte Lösung nach nur $n$ Schritten. Wenn die \tbf{Konditionszahl} von $A$, definiert als der größte Eigenwert geteilt durch den kleinsten, klein ist, konvergiert es sogar wesentlich schneller.
+\newpar
+Für nicht quadratische Funktionen kann das Conjugate-Gradient verfahren nahezu identisch angewandt werden, allerdings existiert im Allgemeinen für die Schrittweitenbedingung keine analytische Lösung , weshalb wieder Line Search nötig wird.
+%
+\chapter{Newton und Quasi-Newton-Verfahren}
+\section{Das Newton-Verfahren}
+Das \tbf{Newton-Verfahren} ähnelt dem Gradientenverfahren, verwendet jedoch auch die Krümmung der Funktion, also die zweite Ableitung, gegeben durch die Hesse-Matrix $H_f$:
+\begin{align*}
+ \bm{x}^{(k+1)} = \xk - \tauk H_f^{-1} \xk \nabla f(\xk)
+\end{align*}
+Dadurch ermöglicht das Newton-Verfahren größere Schritte in Richtungen mit schwacher Krümmung, bei denen die Approximation genauer und somit das ''Risiko`` geringer ist.
+\newpar
+Zur Erinnerung: Die Hesse-Matrix $H_f$ ist gegeben durch:
+\begin{align*}
+ H_f =
+ \begin{pmatrix}
+  \frac{\partial^2 f}{\partial x_1 \partial x_1} & \hdots & \frac{\partial^2 f}{\partial x_1 \partial x_n}\\
+  \vdots & \ddots & \vdots\\
+  \frac{\partial^2 f}{\partial x_n \partial x_1} & \hdots & \frac{\partial^2 f}{\partial x_n \partial x_n}\\
+ \end{pmatrix}
+\end{align*}
+Die Hesse-Matrix ist symmetrisch, da $\frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial^2 f}{\partial x_j \partial x_i}$.
+\newpar
+Während das Gradientenverfahren also mit einer linearen Taylor-Approximation arbeitet, nutzt das Newton-Verfahren eine quadratische Taylor-Approximation:
+\begin{align*}
+ \mk(\bm{d}) &:= f(\xk + \bm{d}) \approx f(\xk) + {\bm{d}}^T \nabla f(\xk) + \frac{1}{2} {\bm{d}}^T H_f \xk\bm{d}\\
+ \nabla \mk(\bm{d}) &= \nabla f(\xk) + H_f(\xk)\bm{d}
+\end{align*}
+Für das optimale $d$ ist $\nabla \mk(\bm{d}) = 0$ und wir erhalten:
+\begin{align*}
+ H_f(\xk)\bm{d} &= - \nabla f(\xk)\\
+ \implies  \bm{d} &= - H_f^{-1} \xk \nabla f(\xk)
+\end{align*}
+Die Optimale Schrittweite $\tauk$ muss auch beim Newton-Verfahren durch Line Search bestimmt werden.
+\section{Konvergenzordnungen}
+Sei $s$ eine beliebige Folge und
+$\overline{s} := \lim_{k \to \infty} s_k$. Wir betrachten nun die Konvergenzordnung der Folge $s$, also die Geschwindigkeit, mit der die Folge konvergiert. In dieser Vorlesung unterscheiden wir folgende Konvergenzordnungen:
+\begin{itemize}
+ \item $s$ konvergiert \tbf{linear}, wenn:
+ \begin{align*}
+  \lim_{k \to \infty} \frac{|s_{k+1} - \overline{s}|}{|s_{k} - \overline{s}|} < 1
+ \end{align*}
+ ein Beispiel für eine linear konvergierende Folge ist $s_k = 0.9^k$. Das Gradientenverfahren konvergiert ebenfalls linear.
+ \item $s$ konvergiert \tbf{superlinear}, wenn:
+ \begin{align*}
+  \lim_{k \to \infty} \frac{|s_{k+1} - \overline{s}|}{|s_{k} - \overline{s}|} = 0
+ \end{align*}
+ ein Beispiel für eine superlinear konvergierende Folge ist $s_k = \frac{1}{k!}$.
+ \item $s$ konvergiert \tbf{quadratisch}, wenn:
+ \begin{align*}
+  \lim_{k \to \infty} \frac{|s_{k+1} - \overline{s}|}{|s_{k} - \overline{s}|^2} < 1
+ \end{align*}
+ ein Beispiel für eine superlinear konvergierende Folge ist $s_k = 0.9^{(2^k)}$.
+\end{itemize}
+Das Newton-Verfahren konvergiert für glatte, konvexe Funktionen nahe der Lösung quadratisch. Nominal ist es also wesentlich effizienter als Gradientenabstieg. Dabei ist jedoch zu berücksichtigen, dass die Berechung und Invertierung der Hesse-Matrix wesentlich aufwendiger ist als die Berechnung des Gradienten. Demenssprechend ist ein einzelner Iterationsschritt des Newton-Verfahrens auch wesentlich aufwendiger als ein einzelner Schritt des Gradientenverfahrens.
+\subsection{Konvergenzradius des Newton-Verfahren}
+Damit $\dk = - H_f^{-1} \xk \nabla f(\xk)$ eine Abstiegsrichtung ist, muss $H_f$ positiv definit sein, also die Krümmung positiv. Bei negativer Krümmung läuft das Newton-Verfahren in die falsche Richtung! Dies ist kein Problem für konvexe Funktionen, da diese überall positive Krümmung haben. Bei nicht konvexen Funktionen muss die Hesse-Matrix erst manipuliert werden, damit alle ihre Eigenwerte positiv werden.
+\section{Quasi-Newton Verfahren}
+Die Idee hinter Quasi-Newton-Verfahren ist es, die Hesse-Matrix mithilfe der Gradienten sukzessiv zu approxmieren. Man ersetzt also in der Iterationsformel des Newton-Verfahrens die Matrix $H_f$ durch eine Approximation $B$:
+\begin{align*}
+ \bm{x}^{(k+1)} = \xk - \tauk (B^k)^{-1} \nabla f(\xk)
+\end{align*}
+Die einfachste Möglichkeit ist eine lineare Taylor-Approximation des Gradienten. Sei $s = \bm{x}^{(k+1)} - \xk$. Dann haben wir:
+\begin{align*}
+ \nabla f(\xk + \bm{s} &\approx \nabla f(\xk) + H_f(\xk)\bm{s}\\
+ \implies H_f(\xk)(\bm{x}^{(k+1)} - \xk) &\approx \nabla f(\bm{x}^{(k+1)}) - \nabla f(\xk)
+\end{align*}
+Wir suchen also in jedem Schritt eine Matrix $\Bk$, sodass:
+\begin{align}
+ \Bk (\xk - \bm{x}^{(k-1)} = \nabla f(\xk) - \nabla f(\bm{x}^{(k-1)}))
+\end{align}
+Abgekürzt schreiben wir auch:
+\begin{align*}
+ \Bk \sk = \yk
+\end{align*}
+Aus $\Bk \sk = \yk$ folgt ${\sk}^T\Bk \sk = {\sk}^T\yk$. Wir gehen von einer konvexen Funktion $f$ aus, also ist $\Bk$ positiv definit. Daraus folgt ${\sk}^T\Bk \sk > 0$, damit gilt auch ${\sk}^T\yk > 0$. Diese Ungleichung können wir als Bedingung für die Schrittweitensuche nutzen.
+\newpar
+Um die Anzahl an möglichen $\Bk$ einzuschränken, können wir als weitere Bedingung fordern, dass $\Bk$ in jedem Schritt möglichst ähnlich zur letzten Iteration sein soll:
+\begin{align*}
+ \Bk = \min{B} ||B - B^{(k-1)}||
+\end{align*}
+$||\cdot||$ kann eine beliebige Matrixnorm sein. An diesem Punkt führen verschiedene Normen zu verschiedenen Unterverfahren. Ein beliebtes Verfahren ist das \tbf{Davidon-Fletcher-Powell Verfahren}, welches eine sog. gewichtete Frobeniusnorm benutzt.
+\subsection{Das Davidon-Fletcher-Powell Verfahren}
+\subsection{Das Broyden-Fletcher-Goldfarb-Shanno Verfahren}
+\section{Das Gauss-Newton Verfahren}
+Yay Gauss :D
 \end{document}
 
