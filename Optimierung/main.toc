@@ -18,4 +18,12 @@
 \contentsline {section}{\numberline {3.3}Quasi-Newton Verfahren}{10}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Das Davidon-Fletcher-Powell Verfahren}{11}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Das Broyden-Fletcher-Goldfarb-Shanno Verfahren}{11}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Das Gauss-Newton Verfahren}{11}{section.3.4}%
+\contentsline {section}{\numberline {3.4}Least-Squares-Aufgaben}{11}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Lineare Residuen}{12}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Nichtlineare Residuen}{12}{subsection.3.4.2}%
+\contentsline {chapter}{\numberline {4}Optimierung mit Nebenbedingungen}{14}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Optimierung mit Gleichheitsbedingungen}{14}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Optimierung mit Ungleichheitsbedingungen}{15}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Dualität}{16}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Beispiel: Optimierung mit Hilfe des dualen Problems}{17}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Wichtige Probleme mit starker Dualität}{17}{subsection.4.3.2}%

@@ -36,8 +36,10 @@
         #1\\
         \end{array}
     }
+
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
 
+% yay I love having to write very slightly less :D
 \newcommand{\xk}{\bm{x}^{(k)}}
 \newcommand{\yk}{\bm{y}^{(k)}}
 
@@ -47,7 +49,13 @@
 \newcommand{\sk}{\bm{s}^{(k)}}
 
 \newcommand{\tauk}{\tau^{(k)}}
+\newcommand{\rhok}{\rho^{(k)}}
+
 \newcommand{\Bk}{B^{(k)}}
+\newcommand{\Qk}{Q^{(k)}}
+
+\newcommand{\Jrx}{J_{\bm{r}}(\bm{x})}
+
 % Starts a new paragraph without indentation
 % and with an empty line between paragraphs
 \newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
@@ -374,12 +382,12 @@ Die Idee hinter Quasi-Newton-Verfahren ist es, die Hesse-Matrix mithilfe der Gra
 \end{align*}
 Die einfachste Möglichkeit ist eine lineare Taylor-Approximation des Gradienten. Sei $s = \bm{x}^{(k+1)} - \xk$. Dann haben wir:
 \begin{align*}
- \nabla f(\xk + \bm{s} &\approx \nabla f(\xk) + H_f(\xk)\bm{s}\\
+ \nabla f(\xk + \bm{s}) &\approx \nabla f(\xk) + H_f(\xk)\bm{s}\\
  \implies H_f(\xk)(\bm{x}^{(k+1)} - \xk) &\approx \nabla f(\bm{x}^{(k+1)}) - \nabla f(\xk)
 \end{align*}
 Wir suchen also in jedem Schritt eine Matrix $\Bk$, sodass:
 \begin{align}
- \Bk (\xk - \bm{x}^{(k-1)} = \nabla f(\xk) - \nabla f(\bm{x}^{(k-1)}))
+ \Bk (\bm{x}^{(k+1)} - \xk) = \nabla f(\bm{x}^{(k+1)}) - \nabla f(\xk)
 \end{align}
 Abgekürzt schreiben wir auch:
 \begin{align*}
@@ -393,8 +401,314 @@ Um die Anzahl an möglichen $\Bk$ einzuschränken, können wir als weitere Bedin
 \end{align*}
 $||\cdot||$ kann eine beliebige Matrixnorm sein. An diesem Punkt führen verschiedene Normen zu verschiedenen Unterverfahren. Ein beliebtes Verfahren ist das \tbf{Davidon-Fletcher-Powell Verfahren}, welches eine sog. gewichtete Frobeniusnorm benutzt.
 \subsection{Das Davidon-Fletcher-Powell Verfahren}
+Beim Davidon-Fletcher-Powell (DFPV)-Verfahren werden die Approximation $B^{k+1}$ und ihr Inverses $Q^{(k+1)}$ direkt aus den vorherigen Werten berechnet:
+\begin{align*}
+ \rhok &= \frac{1}{(\yk)^\top \yk}\\
+ B^{k+1} &= (I - \rhok \yk (\sk)^\top) \Bk (I - \rhok \sk (\yk)^\top) + \rhok \yk (\yk)^\top\\
+ Q^{(k+1)} &= \Qk - \frac{\Qk \yk (\yk)^\top \Qk}{(\yk)^\top \Qk \yk} + \frac{\sk (\sk)^\top}{(\yk)^\top \sk}
+\end{align*}
 \subsection{Das Broyden-Fletcher-Goldfarb-Shanno Verfahren}
-\section{Das Gauss-Newton Verfahren}
-Yay Gauss :D
+Das Broyden-Fletcher-Goldfarb-Shanno (BFGS)-Verfahren ist eine etwas effizientere Variante des DFPV-Verfahrens, bei dem $Q^{(k+1)}$ direkt folgendermaßen berechnet wird:
+\begin{align*}
+ Q^{k+1} &= (I - \rhok \sk (\yk)^\top) \Qk (I - \rhok \yk (\sk)^\top) + \rhok \yk (\yk)^\top\\
+\end{align*}
+$Q^{k+1}$ ist immer positiv definit, wenn $Q^{(k)}$ positiv definit war.
+\newpar
+Das volle BFGS-Verfahren verläuft dann also folgendermaßen:
+\begin{enumerate}
+ \item $\bm{x}^{(0)} \in \mathbb{R}$, $Q^{(0)} \in \mathbb{R}^{n \times n}$ (z.B. $Q^{(0)} = I_n$)
+ \item $\dk = \Qk \nabla f(\xk)$
+ \item Bestimme optimale Schrittweite $\tauk$ durch Line Search mit Wolfe-Bedingungen. Es sollte immer zuerst $\tauk = 1$ getestet werden, da diese Schrittweite zur schnellsten Konvergenz führt und in den meisten Iterationen in der Praxis akzeptiert wird.
+ \item Berechne neue Lösung $\bm{x}^{(k+1)} = \xk + \tauk \dk$
+ \item Berechne neue Approximation der inversen Hesse Matrix:
+ \begin{align*}
+  \sk &= \bm{x}^{(k+1)} - \xk\\
+  \yk &= \nabla f(\bm{x}^{(k+1)}) - \nabla f(\xk)\\
+  \rhok &= \frac{1}{(\yk)^\top \yk}\\
+  Q^{k+1} &= (I - \rhok \sk (\yk)^\top) \Qk (I - \rhok \yk (\sk)^\top) + \rhok \yk (\yk)^\top\\
+ \end{align*}
+\end{enumerate}
+Die Vorlesung gibt folgende Iterationszahlen für ein Beispielproblem aus der Praxis:
+\begin{itemize}
+ \item Gradientenabstieg: $5264$ Iterationen
+ \item BFGS: $34$ Iterationen
+ \item Newton: $21$ Iterationen (Aber wie bereits gesagt ist dafür jede Iteration sehr viel teurer als bei BFGS)
+\end{itemize}
+
+\section{Least-Squares-Aufgaben}
+Eine sehr häufige Klasse von Zielfunktionen, welche inbesondere in der Statistik und somit auch im maschinellen Lernen wichtig sind, ist gegeben durch \tbf{Least Squares}, auch bekannt als $L_2$-Loss:
+\begin{align*}
+ f(x) = \frac{1}{2}\sum_{j=1}^m r_j(\bm{x})^2
+\end{align*}
+Wobei $r_j$ in der Regel ein Klassifikationsfehler für einen Datenpunkt $x_j, y_j$ ist, also:
+\begin{align*}
+ r_j(\bm{x}) = (\hat{y}_j(\bm{x}) - y_j) \in \mathbb{R}
+\end{align*}
+Wenn wir die Residuen $r_j$ als einen \tbf{Residuenvektor} $\bm{r}(\bm{x}) = (r_1(\bm{x}), \hdots, r_m(\bm{x}))^\top$ schreiben, erhalten wir eine gekürzte Schreibweise des Problems:
+\begin{align*}
+ f(x) = \frac{1}{2}||\bm{r}(\bm{x})||^2
+\end{align*}
+Der Residuenvektor ist eine Funktion $r: \mathbb{R}^n \to \mathbb{R}^m$, also eine Funktion mit mehrdimensionaler Bildmenge. Die Ableitung einer solchen Funktion ist gegeben durch die sog. \tbf{Jacobimatrix}:
+\begin{align*}
+\Jrx = \begin{pmatrix}
+        \nabla r_1(\bm{x}^\top)\\
+        \vdots\\
+        \nabla r_m(\bm{x}^\top)\\
+       \end{pmatrix}
+       \in \mathbb{R}^{m \times n}
+\end{align*}
+Im Least-Squares-Problem lässt sich damit der Gradient von $f(x)$ sehr kompakt darstellen:
+\begin{align*}
+ \nabla f(\bm{x}) = \frac{1}{2}\sum_{j=1}^m 2 r_j(\bm{x}) \nabla r_j(\bm{x}) = \Jrx^\top \bm{r(x)}
+\end{align*}
+Die Hesse-Matrix ist dann gegeben durch:
+\begin{align*}
+ H_f(\bm{x}) &= \sum_{j=1}^m \nabla r_j(\bm{x}) \nabla r_j(\bm{x})^\top + \sum_{j=1}^m r_j(x) \nabla^2 r_j(\bm{x})\\
+ &= J(\bm{x})^\top J(\bm{x}) + \sum_{j=1}^m r_j(x) \nabla^2 r_j(\bm{x})
+\end{align*}
+\subsection{Lineare Residuen}
+Ist die Residuenfunktion $\bm{r(x)}$ linear, dann ist  $\bm{r(x)} = J\bm{x} - \bm{b}$ mit $J \in \mathbb{R}^{m \times n}$. In diesem Fall lässt sich das Ergebnis weiter vereinfachen: Wir haben dann $\Jrx = J$, und der zweite Teil der Hesse-Funktion fällt weg. Dann gilt also ganz einfach
+\begin{align*}
+ H_f(\bm{x}) = J^\top J.
+\end{align*}
+Das Problem der Optimierung von $f$ ist dann durch folgendes lineares Gleichungssystem beschrieben:
+\begin{align*}
+ \nabla f(\bm{x}) &= 0\\
+ \implies J^\top \bm{r(x)} &= 0\\
+ \implies J^\top (J\bm{x} - \bm{b}) &= 0\\
+  \implies J^\top J\bm{x} &= J^\top \bm{b}\\
+\end{align*}
+%
+\subsection{Nichtlineare Residuen}
+Für nichtlineare Residuen bietet es sich an, die Hesse-Matrix einfach durch der ersten Term zu approximieren:
+\begin{align*}
+ H_f(\bm{x}) &= J(\bm{x})^\top J(\bm{x}) + \sum_{j=1}^m r_j(x) \nabla^2 r_j(\bm{x})\\
+ &\approx J(\bm{x})^\top J(\bm{x})
+\end{align*}
+Dies entspricht der in dieser Vorlesung bereits oft verwendeten linearen Taylor-Approximation einer Funktion. Anders als bei BFGS wird hier die spezifische Problemstruktur von Summen quadrierter Residuen ausgenutzt. Wir können die Newtonsche Gleichung von ganz am Anfang nutzen, um ein simples lineares Gleichungssystem zu erhalten:
+\begin{align*}
+ H_f(\xk)\bm{d} &= - \nabla f(\xk) = -J_r(\xk)^\top \bm{r(x)}\\
+ \implies J_r(\xk)^\top J_r(\xk) \dk &= -J_r(\xk)^\top \bm{r(x)}\\
+\end{align*}
+Die Lösung ist dann eine optimale Abstiegsrichtung $\dk$. Dieses Verfahren ist bekannt als \tbf{Gauss-Newton-Verfahren}, da es das Newton-Verfahren durch das Lösen einer Sequenz von linearen Gleichungssystem approximiert (Welche dann wiederum durch das Gauss-Verfahren gelöst werden können). Das Verfahren funktioniert genau dann gut, wenn ale Eigenwerte von $J^\top J$ deutlich positiv sind. Bei Eigenwerten Nahe null sind andere Verfahren notwendig, welche in dieser Vorlesung nicht besprochen werden, z.B. das Verfahren von Levenberg-Marquardt.
+%
+%
+%
+\chapter{Optimierung mit Nebenbedingungen}
+Bisher war der Suchraum für ein Optimum einer Funktion $f: \mathbb{R}^n \to \mathbb{R}$ immer der gesamte Urbildraum $\mathbb{R}^n$. In vielen Fällen ist der Suchraum aber eine Teilmenge $G \subset \mathbb{R}^n$, welche eingeschränkt ist durch Nebenbedingungen wie ''$x_1 \leq 5$``. Die Lösung eines Problems ohne Nebenbedingung gibt offensichtlich immer eine untere Schranke für die tatsächliche Lösung, da natürlich jede Lösung des Problems mit Nebenbedingungen auch eine Lösung des Problems ohne Nebenbedingungen ist. Oft, aber nicht immer, liegt das Optimum auf dem Rand von $G$. Wir gehen in der Regel davon aus, dass $G$ Kompakt ist, da sonst in diesem Fall kein tatsächliches Optimum existiert.
+\newpar
+Ein Optimierungsproblem wird im Allgemeinen geschrieben als:
+\begin{align*}
+\begin{array}{cc}
+\argmin{x \in \mathbb{R}^n} &f(x)\\
+ \text{subject to} &c_i(\bm{x}) = 0 \quad \forall i \in \mathcal{E}\\
+ &c_i(\bm{x}) \geq 0 \quad \forall i \in \mathcal{I}\\
+\end{array}
+\end{align*}
+%
+\section{Optimierung mit Gleichheitsbedingungen}
+Die $m$ Gleichheitsbedingungen sind zusammengefasst durch eine vektorwertige Funktion $\bm{c(x)}: \mathbb{R}^n \to \mathbb{R}^m$ gegeben. Es gilt demenssprechend genau dann $\bm{c(x)} = \bm{0}$, wenn alle Gleichheitsbedingungen erfüllt sind. Ein Schritt in Richtung $\bm{d}$ ist dementsprechend genau dann erlaubt, wenn $\nabla \bm{c}^\top \bm{d} = 0$ und $\nabla f^\top \bm{d} \leq 0$, also wenn $\bm{d}$ eine Abstiegsrichtung ist und wenn sich der Wert von $\bm{c(x)}$ nach dem Schritt nicht ändert (und demenssprechend die Gleichheitsbedingungen danach immer noch erfüllt sind).
+\newpar
+Es stellt sich heraus, dass in einem Extrempunkt die Gradienten $\nabla f$ und $\nabla c$ immer parallel sein müssen, also
+\begin{align*}
+ f(\bm{x})  = \bm{\lambda} (\bm{x}) \quad \bm{\lambda} \in \mathbb{R}^m
+\end{align*}
+Ist diese Bedingung nicht gegeben, so existiert ein Schritt, welcher $f$ ändert, aber nicht $c$, und somit ist die momentane Position $\bm{x}$ kein Extremum.
+\newpar
+Diese Bedingung können wir nun ausnutzen. Angenommen, $f$ ist eine Funktion $\mathbb{R}^n \to \mathbb{R}$ und $c$ ist eine Funktion $\mathbb{R}^n \to \mathbb{R}^m$. Dann ist die \tbf{Lagrange-Funktion} $\mathcal{L}$ des Problems die folgende Funktion $\mathbb{R}^{n+m} \to \mathbb{R}$:
+\begin{align*}
+ \mathcal{L}(\bm{x}, \bm{\lambda}) = f(\bm{x}) - \bm{\lambda} \bm{c}(\bm{x})
+\end{align*}
+Die Schreibweise ''$\mathcal{L}(\bm{x}, \bm{\lambda})$`` fand ich persönlich sehr gewöhnungsbedürftig und anfangs sehr verwirrend. Es ist wichtig, sich zu merken, dass $\bm{x}$ selbst ein $n$-dimensionaler Vektor ist. Letzendlich ''erfinden`` wir quasi eine neue Menge an Eingabevariablen, gegeben durch den Vektor $\bm{\lambda} = (\lambda_1, \hdots, \lambda_m)$, welchen wir hinten an den ''Eingabevektor`` $\bm{x} = (x_1, \hdots, x_n)^\top$ hängen. So erhalten wir einen neuen Vektor $\bm{x}' = (x_1, \hdots, x_n, \lambda_1, \hdots, \lambda_m)^\top$, welchen wir dann in die Lagrange-Funktion einsetzten. Eine intuitivere, und arguably korrektere, Schreibweise dafür wäre $\mathcal{L}(x_1, \hdots, x_n, \lambda_1, \hdots, \lambda_m)$. Da das jedoch den meisten Mathematikern zu viel Schreibarbeit ist wird in der Praxis nunmal $\mathcal{L}(\bm{x}, \bm{\lambda})$ geschrieben. Die ''Original-Variablen`` $x_i$ werden oft als die \tbf{primalen Variablen} bezeichnet, die neuen Variablen $\lambda_i$ hingegen als die \tbf{Lagrange-Multiplikatoren}.
+\newpar
+Die Bedingung für ein Minimum von $f$ kann nun mithilfe der Lagrange-Funktion ausgedrückt werden als:
+\begin{align*}
+ \nabla_{\bm_x} \mathcal{L}(\bm{x}, \lambda) = \nabla f(\bm{x}) - \bm{\lambda} \nabla \bm{c}(\bm{x}) = 0
+\end{align*}
+Wir können also nun unser Optimierungsproblem mit Gleichheitsbedingungen in ein äquivalentes Optimierungsproblem ohne Nebenbedingungen umformen. Wenn für eine Komponente $i$ diese Bedingung bereits durch $\lambda_i = 0$ erfüllt ist, dann ist $c_i$ eine \tbf{Nebenbedingung ohne Relevanz}, d.h. das Minimum unter Einschränkung durch die Nebenbedingung $c_i$ ist dasselbe wie das Minimum ohne die Nebenbedingung. Man sagt in diesem Fall auch, dass die Nebenbedingung \tbf{inaktiv} ist. Die Menge der aktiven Nebenbedingungen wir auch als die \tbf{aktive Menge} bezeichnet.
+%
+\section{Optimierung mit Ungleichheitsbedingungen}
+Auch hier ist die Parallelität der Gradienten eine notwendige Bedingung. Allerdings zählt nun das Vorzeichen von $\bm{\lambda}$, da wir $\bm{c}$ am Rand zwar nicht verringern können, aber beliebig erhöhen. Wir erhalten also die Bedingung
+\begin{align*}
+ f(\bm{x})  = \bm{\lambda c}(\bm{x}) \quad \bm{\lambda} \in \mathbb{R}_+^m
+\end{align*}
+bzw.
+\begin{align*}
+ \nabla_{\bm_x} \mathcal{L}(\bm{x}, \bm{\lambda}) = \nabla f(\bm{x}) - \bm{\lambda} \nabla \bm{c}(\bm{x}) = 0, \quad \forall i\ \lambda_i > 0
+\end{align*}
+Zusätzlich gilt am Optimum immer
+\begin{align*}
+ \bm{\lambda c}(\bm{x}) = 0,
+\end{align*}
+da sich für jedes $i$ entweder das Optimum auf dem Rand befindet, also $c_i(\bm{x}) = 0$, oder die Nebenbedingung inaktiv ist, also $\lambda_i = 0$. Wir sagen, eine Nebenbedingung ist \tbf{streng komplementär}, wenn immer nur genau einer dieser beiden Fälle auftritt.
+\newpar
+Zusammenfassend sind die \tbf{notwendigen Bedingungen} für ein lokales Optimum die folgenden:
+\begin{align*}
+\begin{array}{rl}
+ \nabla_x \mathcal{L}(\bm{x}, \bm{\lambda}) = 0 \\
+ c_i(\bm{x}) = 0 &\forall i \in \mathcal{E}\\
+ \lambda_i c_i(\bm{x}) = 0 &\forall i \in \mathcal{I}\\
+ c_i(\bm{x}) \geq 0 &\forall i \in \mathcal{I}\\
+ \lambda_i \geq 0 &\forall i \in \mathcal{I}\\
+\end{array}
+\end{align*}
+Diese Bedingungen sind bekannt als die \tbf{Karush-Kuhn-Tucker-Bedingungen (KKT)}. Später werden wir sehen, dass wir durch die Einführung weiterer Lagrange-Multiplikatoren Ungleichheitsbedingungen als weitere Gleichheitsbedingungen ausdrücken können. So werden wir letztendlich bei der Folgenden deutlich übersichtlicheren Liste landen:
+\begin{align*}
+\begin{array}{rl}
+ \nabla_x {\mathcal{L}(\bm{x}, \bm{\lambda})} = \bm{0}\\
+ c_i(\bm{x}) = 0 &\forall i \in (1,\hdots,m),\\
+\end{array}
+\end{align*}
+oder noch genauer:
+\begin{align*}
+\begin{array}{rl}
+ \pd{\mathcal{L}(\bm{x}, \bm{\lambda})}{x_i} = 0 &\forall i \in (1,\hdots,n)\vspace{1mm}\\
+ c_i(\bm{x}) = 0 &\forall i \in (1,\hdots,m)\\
+\end{array}
+\end{align*}
+%
+\section{Dualität}
+Mithilfe der Lagrange-Funktion können wir nun aus dem Originalproblem (auch \tbf{primales Problem} genannt)
+\begin{align*}
+\begin{array}{cc}
+\argmin{x \in \mathbb{R}^n} &f(x)\\
+ \text{subject to} &c_i(\bm{x}) = 0 \quad \forall i \in \mathcal{E}\\
+ &c_i(\bm{x}) \geq 0 \quad \forall i \in \mathcal{I}\\
+\end{array}
+\end{align*}
+ein sogenanntes \tbf{duales Problem} erhalten:
+\begin{align*}
+q(\bm{\lambda}) := \inf_{\bm{x} \in \mathbb{R}^n} \mathcal{L}(\bm{x}, \bm{\lambda}), \forall i: \lambda_i \geq 0\\
+ \max_{\bm{\lambda} \in \mathbb{R}^m} q(\bm{\lambda})\\
+\end{align*}
+Intuitiv kann man sich vorstellen, dass für ein festes $\bm{x}$ die Lagrange-Funktion einen höheren Wert hat, je mehr Bedingungen erfüllt sind. Somit führt die Maximierung der dualen Funktion auch zu einer Optimierung der Originalfunktion. Die duale Problemlösung ist hauptsächlich dann sinnvoll, wenn es eine analytische Lösung zur Maximierung von $q(\bm{\lambda})$ gibt, und/oder wenn im dualen Problem keine Nebenbedingungen mehr existieren.
+\newpar
+\tbf{Lemma}: Für beliebige $\hat{\bm{\lambda}} \in \mathbb{R}^m$, $\hat{\bm{x}} \in \mathbb{R}^n$ gilt $q(\hat{\bm{\lambda}}) \leq f(\hat{\bm{x}} \in \mathbb{R}^n)$.\\
+\tbf{Beweis}:
+\begin{align*}
+ q(\hat{\bm{\lambda}}) = \inf_{\bm{x}} f(\bm{x}) - \hat{\bm{\lambda}}^\top \bm{c(x)} \leq f(\hat{\bm{x}}) - \hat{\bm{\lambda}}^\top \bm{c(x)} \leq f(\hat{\bm{x}})
+\end{align*}
+Also erhalten wir eine untere Schranke für $f(\bm{x})$, indem wir $q(\hat{\bm{\lambda}})$ maximieren.
+\newpar
+\tbf{Lemma}: $q(\bm{\lambda})$ ist konkav.\\
+\tbf{Beweis}:
+\begin{align*}
+ \mathcal{L}(\bm{x}, (1-\alpha)\bm{\lambda}_0 + \alpha \bm{\lambda}_1) &= f(\bm{x}) - (1 - \alpha) \bm{\lambda_0} \bm{c}(x) - \alpha \bm{\lambda}_1 \bm{c}(x)\\
+ &= (1-\alpha) f(\bm{x}) + \alpha f(x) - (1 - \alpha) \bm{\lambda_0} \bm{c}(x) - \alpha \bm{\lambda}_1 \bm{c}(x)\\
+ &= (1- \alpha) \mathcal{L}(\bm{x},\bm{\lambda}_0) + \alpha \mathcal{L}(\bm{x},\bm{\lambda}_1)\\
+\end{align*}
+Für beliebige Funktionen $f,g$ gilt im Allgemeinen $\inf_x(f(x) + g(x)) \leq \inf_x f(x) + \inf_x g(x)$, also:
+\begin{align*}
+ \inf_{\bm{x}}\mathcal{L}(\bm{x}, (1-\alpha)\bm{\lambda}_0 + \alpha \bm{\lambda}_1) \leq (1- \alpha) \inf_{x}  \mathcal{L}(\bm{x},\bm{\lambda}_0) +  \alpha \inf_{x} \mathcal{L}(\bm{x},\bm{\lambda}_1). \quad \square\\
+\end{align*}
+In vielen Fällen ist das duale Problem einfacher zu lösen als das primale Problem. Das duale Problem liefert eine untere Schranke für die Lösung des Originalproblems:
+\begin{align*}
+ \inf_{x} f(\bm{x}) - \bm{\lambda}^\top \bm{c(x)} \leq f(\bm{x}) - \bm{\lambda}^\top \bm{c}(\bm{x}) \leq f(\bm{x})
+\end{align*}
+Wir sprechen von \tbf{starker Dualität}, wenn das Optimum des dualen Problems auch das primale Problem minimiert. Dies ist der Fall unter folgenden Bedingungen:
+\begin{itemize}
+ \item $f(x)$ ist konvex
+ \item Die gültige Menge $G$ ist  konvex
+ \item $\mathcal{L}(x, \hat{\bm{\lambda}})$ ist \tbf{streng} konvex, wobei $\hat{\bm{\lambda}}$ die Lösung des dualen Problems ist.
+\end{itemize}
+Für ein ''gut benommenes`` Problem ist die Lösung des dualen Problems äquivalent zum Wert der konvexen Entspannung des primalen Problems, also zu dem Problem, was wir erhalten, wenn wir das feasible Set $G$ durch seine konvexe Hülle und die Funktion $f(\bm{x})$ durch ihre konvexe Schließung ersetzen\footnote{\href{https://en.wikipedia.org/wiki/Duality_gap?useskin=vector}{''Duality Gap``, Wikipedia}}. ''Gut benommen`` bedeutet in diesem Kontext, dass das Minimum die KKT-Bedingungen erfüllt - Gegenbeispiele sind hier oft Probleme mit seltsamen Feasible Sets, bei denen z.B. Ungleichheitsbedingungen existieren, welche nur einen einzigen Punkt zulassen. Es gibt eine lange Reihe an sogenannten Regularitätsbedingungen, die zu dieser Bedingung äquivalent sind. Einige Beispiele sind:
+\begin{itemize}
+ \item \tbf{Linearity Constraint Qualification (LCQ)}: Alle $c_i$ sind affin.
+ \item \tbf{Linear Independence Constraint Qualification (LICQ)}: Die Gradienten der Ungleichheitsbedingungen und die Gradienten der Gleichheitsbedingungen sind am Minimum linear unabhängig.
+ \item \tbf{Slater's Condition}: In einem Problem mit konvexem $f$, konvexen Ungleichheitsbedingungen und affinen Gleichheitsbedingungen existiert ein Punkt $\bm{x}$, welcher alle Gleichheitsbedingungen erfüllt und alle Ungleichheitsbedingungen Strikt erfüllt (also $c_i(\bm{x}) > 0$ anstatt nur $c_i(\bm{x}) \geq 0$).
+ \item etc. etc.
+\end{itemize}
+
+
+%
+%
+%
+\subsection{Beispiel: Optimierung mit Hilfe des dualen Problems}
+Gegeben sei folgendes konvexes Problem:
+\begin{align*}
+\begin{array}{cc}
+\argmin{x_1, x_2 \in \mathbb{R}} &\frac{1}{2} (x_1^2 + x_2^2)\\
+ \text{s.t. } &x_1 - 1 \geq 0\\
+\end{array}
+\end{align*}
+Die Lagrange-Funktion ist dann:
+\begin{align*}
+ \mathcal{L}(x_1, x_2, \lambda) = \frac{1}{2} (x_1^2 + x_2^2) - \lambda(x_1 - 1)
+\end{align*}
+Nötige Bedingung ist, dass die partiellen Ableitung von $\mathcal{L}$ Null sind, also:
+\begin{align*}
+ \pd{\mathcal{L}(x_1, x_2, \lambda)}{x_1} = x_1 - \lambda &= 0\\
+ \pd{\mathcal{L}(x_1, x_2, \lambda)}{x_2} =x_2 &= 0\\
+\end{align*}
+Wir setzen diese Werte in die Lagrange-Funktion ein und erhalten:
+\begin{align*}
+ \mathcal{L}(x_1, x_2, \lambda) = \frac{1}{2} (x_1^2 + x_2^2) - \lambda(x_1 - 1) = \frac{1}{2} (\lambda^2 + 0^2) - \lambda(\lambda - 1) = -\frac{1}{2}\lambda^2 + \lambda\\
+\end{align*}
+Das Maximum dieser Funktion ist $\lambda = 1$. Unsere Lösung ist also $x_1 = \lambda = 1, x_2 = 0$.
+%
+%
+%
+\subsection{Wichtige Probleme mit starker Dualität}
+\tbf{Lineare Programme} sind Probleme der Form:
+\begin{align*}
+\begin{array}{cc}
+ \min{\bm{x}} &\bm{w}^{\top} \bm{x}\\
+ \text{s.t.} &A \bm{x} - \bm{b} \geq \bm{0}
+\end{array}
+\end{align*}
+Das duale Problem eines linearen Programms ist:
+\begin{align*}
+ \max_{\bm{\lambda}} \bm{b}^\top \bm{\lambda}, A^\top \bm{\lambda} = \bm{w}, \bm{\lambda} \geq 0
+\end{align*}
+\newpar
+\tbf{Quadratische Programme} sind Probleme der Form:
+\begin{align*}
+\begin{array}{cc}
+ \min{\bm{x}} &\frac{1}{2}\bm{x}^\top Q \bm{x} + \bm{w}^T \bm{x}\\
+ \text{s.t.} &A \bm{x} - \bm{b} \geq \bm{0}
+\end{array}
+\end{align*}
+Das duale Problem eines quadratischen Programms ist:
+\begin{align*}
+ \max_{\bm{\lambda}} -\frac{1}{2}(A^\top \bm{\lambda} - \bm{w})^\top Q^{-1}(A^\top \bm{\lambda} - \bm{w}) + \bm{b}^\top \bm{\lambda}, \bm{\lambda} \geq 0
+\end{align*}
+%
+%
+%
+\iffalse \subsection{Alternative Herleitung}
+Wir betrachten ein generelles Optimierungsproblem mit Ungleichheitsbedingungen:
+\begin{align*}
+\begin{array}{cc}
+\argmin{x \in \mathbb{R}^n} &f(x)\\
+ \text{subject to}
+ &c_i(\bm{x}) \geq 0 \quad \forall i \in \mathcal{I}\\
+\end{array}
+\end{align*}
+Dann ist die eigentlich zu minimierende Funktion gegeben durch:
+\begin{align*}
+ J(\bm{x}) = \begin{cases}
+              f(x) & c_i(\bm{x}) \geq 0\ \forall i\\
+              \infty & \text{else}\\
+             \end{cases}
+\end{align*}
+Diese Funktion lässt sich mithilfe einer Step-Funktion $S(\bm{x})$ folgendermaßen Ausdrücken:
+\begin{align*}
+ S(\bm{x}) = \begin{cases}
+              0 & x_i \geq 0\ \forall i\\
+              -\infty & \text{else}\\
+             \end{cases}\\
+J(\bm{x}) = f(\bm{x}) - \sum_{i=1}^{m}S(c_i(\bm{x}))
+\end{align*}
+$J(x)$ ist nicht differenzierbar. Um sie zu optimieren, wollen wir sie also durch eine lineare Funktion approximieren. Das heißt, wir   suchen $\bm{\lambda}$, sodass $\bm{\lambda}^\top \bm{x} \approx S(x)$. Damit dies der Funktion $S(x)$ entspricht, wollen wir $\lambda_i \to -\infty$, wenn $c_i(\bm{x}) < 0$, und $\lambda_i = 0$ sonst. Für festes $\bm{x}$ gilt also
+\begin{align*}
+ &\max_{\bm{\lambda}} \mathcal{L}(x, \lambda) = J(\bm{x})\\
+ \implies &\min{\bm{x}} J(\bm{x}) = \min{\bm{x}}\max_{\bm{\lambda}} \mathcal{L}(\bm{x}, \bm{\lambda})
+\end{align*}
+Im dualen Problem vertauschen wir die Reihenfolge der Zielfunktionen:
+\begin{align*}
+ \max_{\bm{\lambda}} \min{\bm{x}} \mathcal{L}(\bm{x}, \bm{\lambda}) \leq \min{\bm{x}}  \max_{\bm{\lambda}} \mathcal{L}(\bm{x}, \bm{\lambda})
+\end{align*}
+Was für manche Probleme einfacher ist und für andere schwieriger. Somit besteht das Duale Problem einfach aus der Suche nach der größten unteren Schranke. Diese ist exakt für konvexe Funktionen mit konvexen Nebenbedingungen.
+\fi
 \end{document}
 
