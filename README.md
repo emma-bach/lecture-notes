@@ -11,3 +11,7 @@ In German:
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Logik/logikAufschrieb.pdf">Logik für Studierende der Informatik, WS23/24</a>
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Stochastik/stochastikAufschrieb.pdf">Stochastik für Studierende der Informatik, SS24</a>
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Optimierung/main.pdf">Optimierung, WS24/25</a>
+
+Additional notes unrelated to specific lectures:
+- <a href="https://github.com/emma-bach/lecture-notes/blob/main/Theory%20of%20Functional%20Programming/main.pdf">Theory of Functional Programming</a>
+
