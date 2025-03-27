@@ -27,3 +27,5 @@
 \contentsline {section}{\numberline {4.3}Dualität}{16}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}Beispiel: Optimierung mit Hilfe des dualen Problems}{17}{subsection.4.3.1}%
 \contentsline {subsection}{\numberline {4.3.2}Wichtige Probleme mit starker Dualität}{17}{subsection.4.3.2}%
+\contentsline {chapter}{\numberline {5}Lineare Programmierung}{19}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Nichtlineare Programmierung}{21}{chapter.6}%

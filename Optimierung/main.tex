@@ -513,7 +513,7 @@ Es stellt sich heraus, dass in einem Extrempunkt die Gradienten $\nabla f$ und $
 \begin{align*}
  f(\bm{x})  = \bm{\lambda} (\bm{x}) \quad \bm{\lambda} \in \mathbb{R}^m
 \end{align*}
-Ist diese Bedingung nicht gegeben, so existiert ein Schritt, welcher $f$ ändert, aber nicht $c$, und somit ist die momentane Position $\bm{x}$ kein Extremum.
+Ist diese Bedingung nicht gegeben, so existiert ein Schritt, welcher $f$ ändert, aber nicht $c$, und somit ist die momentane Position $\bm{x}$ kein Extremum. \footnote{Falls dies intuitiv noch unklar ist empfehle ich als zusätzliche Erklärung das Video \href{https://www.youtube.com/watch?v=5A39Ht9Wcu0}{\textit{Understanding Lagrange Multipliers Visually}, von \textit{Serpentine Integral}.}}
 \newpar
 Diese Bedingung können wir nun ausnutzen. Angenommen, $f$ ist eine Funktion $\mathbb{R}^n \to \mathbb{R}$ und $c$ ist eine Funktion $\mathbb{R}^n \to \mathbb{R}^m$. Dann ist die \tbf{Lagrange-Funktion} $\mathcal{L}$ des Problems die folgende Funktion $\mathbb{R}^{n+m} \to \mathbb{R}$:
 \begin{align*}
@@ -710,5 +710,58 @@ Im dualen Problem vertauschen wir die Reihenfolge der Zielfunktionen:
 \end{align*}
 Was für manche Probleme einfacher ist und für andere schwieriger. Somit besteht das Duale Problem einfach aus der Suche nach der größten unteren Schranke. Diese ist exakt für konvexe Funktionen mit konvexen Nebenbedingungen.
 \fi
+%
+%
+%
+\chapter{Lineare Programmierung}
+Ist eine Zielfunktion linear, so ist auch ihr Gradient konstant. Dementsprechend gilt für die Lösung eines linearen Problems immer Einer der folgenden drei Fälle:
+\begin{itemize}
+ \item Es existiert keine Lösung, da die Nebenbedingungen widersprüchlich sind.
+ \item Die Lösung liegt auf einer ''Ecke`` des feasible Sets. (Oder auf einer Kante, oder die Zielformel ist konstant und alle Punkte sind eine Lösung.)
+  \item Das feasible Set ist in Richtung des negativen Gradienten nicht geschlossen, die Funktion wird beliebig klein.
+\end{itemize}
+Dieser Fakt wird genutzt durch das sogenannte \tbf{Simplex-Verfahren}, welches zu Beginn eine beliebige Ecke ''ausprobiert``, und dann immer zu der benachbarten Ecke geht, welche den Funktionswert verringert. Dabei wird der Fakt ausgenutzt, dass wir genau dann auf einer Ecke liegen, wenn $m$ Variablen $0$ sind, wobei $m$ der Anzahl an Variablen in der Zielfunktion entspricht.
+\newpar
+Ein Lineares Programm in \tbf{Standardform} sieht im Allgemeinen folgendermaßen aus:
+\begin{align*}
+  \min{\bm{x} \in \mathbb{R}^{m+n}}&\bm{w}^\top (x_0, \hdots, x_m)^\top\\
+  s.t. & A\bm{x} - \bm{b}= 0\\
+  &x_i \geq 0\\
+\end{align*}
+Wobei $A$ die Matrix ist, welche die Gleichheitsbedingungen enthält. Sind also alle Gleichheitsbedingungen gegeben durch $\bm{c}_i^\top \bm{x} = 0$, so ist \footnote{Ich betreibe hier im Namen der Übersichtlichkeit etwas unsaubere Notation, indem ich $c_i$ als eine Funktion interpretiere und $\bm{c}_i$ als einen Vektor, mit dem in der Funktion multipliziert wird, also $c_i(\bm{x}) = \bm{c}_i \bm{x}$}
+\begin{align*}
+A =
+\begin{pmatrix}
+\bm{c}_1\\
+\vdots\\
+\bm{c}_n
+\end{pmatrix}
+\text{, also }
+A \bm{x} =
+\begin{pmatrix}
+c_1(\bm{x})\\
+\vdots\\
+c_n(\bm{x})
+\end{pmatrix}
+\end{align*}
+Falls wir mit einem Programm mit $n$ Ungleichheitsbedingungen starten, so sind $x_{m+1}, \hdots, x_{m+n}$ sogenannte ''Schlupfvariablen``, welche wir hinzufügen, um eine Ungleichheitsbedingung $c_i(x_1, \hdots, x_m) \geq b_i$ als eine Gleichheitsbedingung $c_i(x_1, \hdots, x_m) - b_i - x_j = 0$ mit $x_i, x_{m+i} \geq 0$ auszudrücken. In der Vorlesung wurde dies komplizierter geschrieben - die Schlupfvariablen wurden $\xi_i$ genannt und das Gleichungssystem wurde kompliziert umgeformt, um auszudrücken, dass wir keine negativen $x_i$ haben dürfen. Ich persönlich finde diese vereinfachte Schreibweise mit $\bm{x} \in \mathbb{R}^{m+n}$ jedoch deutlich sinnvoller und  einleuchtender.
+\newpar
+An dieser Stelle möchte ich noch einmal kurz zur geometrischen Intuition hinter diesem Problem kommen. Jede der ursprünglichen Ungleichheitsbedingungen spannt eine Hyperebene auf, welche den Raum $\mathbb{R}^m$ in zwei Hälften teilt - für eine Ungleichheitsbedingung $c_i(x_1, \hdots, x_m) \geq b_i$ ist diese Hyperebene durch die Menge $H_i = \{(x_0, \hdots, x_m) \mid c_i(x_1, \hdots, x_m) = b_i\}$ gegeben. Die Punkte $\geq b_i$ sind dann die Hälfte des Raumes, welche in der Bedingung erlaubt ist, und die Punkte $< b_i$ sind die Hälfte des Raumes, welche nicht erlaubt ist. Durch die Bedingungen $x_i \geq 0$ an die ursprünglichen Variablen werden $m$ zusätzliche Hyperebenen an den Koordinatenebenen aufgespannt. Nimmt man alle Bedingungen zusammen, so ist das feasible Set $G$ eine konvexe Menge, deren Seiten durch die Hyperebenen begrenzt sind. Das ist entweder ein normaler Polyeder, oder bei unbeschränkten Problemen eine Art ''offener Polyeder``, welchen man sich als Polyeder vorstellen kann, bei dem die Ecken an Punkten in der Unendlichkeit liegen dürfen.
+\newpar
+Die Punkte im Lösungsraum sind trotz Einführung der Schlupfvariablen intuitiv gegeben durch die ursprünglichen $\bm{x} \in \mathbb{R}^m$. Also befinden wir uns im $m$-Dimensionalen Raum, dies bedeutet ein Punkt $\bm{x}$ ist auf einer Ecke, wenn sich an ihm $m$ Hyperebenen schneiden. Dies ist der Fall, wenn $\bm{x}$ auf mindestens $m$ der Hyperebenen gleichzeitig liegt.
+\newpar
+Was bedeutet das nun für unser Problem in Standardform, in dem die Ungleichheitsbedingungen durch Gleichheitsbedingungen ersetzt sind? Wenn $c_i(x_1, \hdots, x_m) \geq b_i$ die ursprüngliche Ungleichheitsbedingung ist, dann ist die äquivalente Gleichheitsbedingung $c_i(x_1, \hdots, x_m) - x_{m+1} = b_i$. Wenn also in der ursprünglichen Ungleichheitsbedingung $c_i$ bereits Gleichheit gegeben ist, so muss in der Gleichheitsbedingung $x_{m+i} = 0$ gelten.
+\newpar
+Wir befinden uns also genau dann auf einer Hyperebene, wenn entweder eine Schlupfvariable $x_{m+i}= 0$ ist - dann befinden wir uns auf der Ebene $H_i = \{(x_0, \hdots, x_m) \mid c_i(x_1, \hdots, x_m) = b_i\}$, die der Bedingung $c_i$ entspricht - oder wenn eine der Ursprünglichen Variablen $0$ ist - dann befinden wir uns auf der Ebene $x_i = 0$, welche der Bedingung $x_i \geq 0$ entspricht. Also sind wir immer dann auf einer Ecke, wenn mindestens $m$ der Variablen $0$ sind.
+\newpar
+Dies ist genau der Fakt, welchen sich das Simplex-Verfahren zunutze macht. Wir starten mit einem beliebigen Punkt $\bm{x} \in \mathbb{R}^{m+n}$. An jedem Schritt nehmen wir dann eine Variable $x_i$, welche momentan $0$ ist - es bietet sich an, die zu nehmen, welche in der Zielfunktion den negativen Koeffizienten mit dem höchsten Betrag hat, da diese zur Stärksten Verbesserung führt - und erhöhen diese. Dafür müssen wir dann eine andere Variable, welche mit $x_i$ in Relation steht, auf $0$ setzen. An jedem Schritt stellen wir unsere Gleichheitsbedingungen so um, dass jede Gleichheitsbedingung auf der linken Seite genau eine Variable enthält, welche momentan nicht $0$ ist, und setzen ebenso in der Zielfunktion immer die Variablen ein, welche gerade $0$ sind.
+\newpar
+Indem wir die Zielfunktion umstellen, erhalten wir eine simple Bedingung, an der wir erkennen können, ob wir das Optimum erreicht haben: Wir haben das Optimum erreicht, wenn alle Koeffizienten in der Zielfunktion positiv sind, da in diesem Fall jede Veränderung der Variablen zu einer Verschlechterung des Ergebnisses führt.
+\newpar
+Ich persönlich fand die in der Vorlesung gegebene Erklärung des Simplex-Verfahrens viel zu kompliziert und insgesamt sehr verwirrend. Dementsprechend möchte ich an dieser Stelle explizit das Video \href{https://www.youtube.com/watch?v=E72DWgKP_1Y}{''The Art of Linear Programming``, von Tom S}, erwähnen, durch welches das Simplex-Verfahren für mich endlich übersichtlich und intuitiv verständlich wurde.
+%
+%
+%
+\chapter{Nichtlineare Programmierung}
 \end{document}
 
