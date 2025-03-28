@@ -13,5 +13,5 @@ In German:
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Optimierung/main.pdf">Optimierung, WS24/25</a>
 
 Additional notes unrelated to specific lectures:
-- <a href="https://github.com/emma-bach/lecture-notes/blob/main/Theory%20of%20Functional%20Programming/main.pdf">Theory of Functional Programming</a>
+- <a href="https://github.com/emma-bach/lecture-notes/blob/main/Handbook%20of%20Logic%20in%20Computer%20Science/main.pdf">Handbook of Logic in Computer Science</a>
 
