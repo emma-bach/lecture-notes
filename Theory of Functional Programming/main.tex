@@ -26,6 +26,8 @@
 % and with an empty line between paragraphs
 \newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
 \newcommand{\trans}{\twoheadrightarrow}
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\tbf}[1]{\textbf{#1}}
 
 \pagestyle{fancy} %allows headers
 
@@ -51,13 +53,53 @@
 %
 \chapter*{Preface}
 \addcontentsline{toc}{chapter}{Preface}
-These notes are not based on any particular lecture I attended. Instead, they were created during self-study of theoretical topics related to functional programming and the $\lambda$-calculus.
+These notes are not based on any particular lecture I attended. Instead, they were created during self-study of theoretical topics related to type theory, functional programming and the $\lambda$-calculus.
 \newpar
-My primary source is the ``Handbook of Logic in Computer Science'', edited by Samson Abramsky, Dov  Gabbay and Thomas Maibaum, in particular volume 2, which deals with computational structures \cite{handbookvol2}.  Additional sources I found helpful include the video ``What is plus times plus?'' by YouTube channel 2Swap, which is a wonderful introduction to the $\lambda$-calculus \cite{2swap}.
+My primary sources are ``Types and Programming Languages'' by Benjamin C. Pierce \cite{types} and the ``Handbook of Logic in Computer Science'', edited by Samson Abramsky, Dov  Gabbay and Thomas Maibaum, in particular volume 2, which deals with computational structures \cite{handbookvol2}.  Additional sources I found helpful include the video ``What is plus times plus?'' by YouTube channel 2Swap, which is a wonderful introduction to the $\lambda$-calculus \cite{2swap}.
+\newpar
+The first few chapters correspond to \cite{types}, which tends to use informal, intuitive definitions, while the latter are generally from \cite{handbookvol2}, which is very formal and rigourous. These differences will be noticable in the notes too.
 %
+\chapter{Untyped Systems}
+\section{Untyped Arithmetic Expressions}
+This chapter serves as an introduction of many concepts related to formal languages, such as abstract syntax, inductive definitions, evaluations, and the modeling of run-time errors.
+\newpar
+In this first section, we will examine a simple language containing the following elements:
+\begin{itemize}
+ \item the boolean constants \texttt{true} and \texttt{false}
+ \item conditional expressions \texttt{if $t_1$ then $t_2$ else $t_3$}
+ \item the numeric constant $0$
+ \item the arithmetic operators \texttt{succ} and \texttt{pred}
+ \item a 1-ary function \texttt{iszero}
+\end{itemize}
+We summarize these contents by writing them as the following grammar:
+\begin{align*}
+ t ::= &\\
+ &\ttt{true}\\
+ &\ttt{false}\\
+ &\ttt{if t then t else t}\\
+ &\ttt{0}\\
+ &\ttt{succ t}\\
+ &\ttt{pred t}\\
+ &\ttt{iszero t}
+\end{align*}
+The first line $t ::=$ declares that we are defining a set of \tbf{terms}, and that we are using the letter $t$ to refer to these terms. Each line that follows gives a possible \tbf{syntactic form} for terms. The letter $t$ does not refer to any specific term - whenever $t$ appears, we may substitute any term. A symbol like $t$ is called a \tbf{metavariable}, the ``meta'' referring to the fact that it is not a variable within the language we are defining (also known as the \tbf{object language}), but rather in the notation that we are defining the language in (the \tbf{metalanguage}).
+\newpar
+This ``meta-'' naming scheme comes from \tbf{metamathematics}, which is the field of logic that deals with the mathematical properties of formal systems of mathematical reasoning, such as programming languages. The collection of true statements we can make about such a system is known as the \tbf{metatheory} of the system.
+\newpar
+A \tbf{program} in the given language is just a term belonging to it. If we additionally assign semantical meaning to the terms we defined, we can evaluate terms belonging to our system, by \tbf{reducing} them to another term belonging to the language. For example, the term \ttt{if false then 0 else 1;} evaluates to \ttt{1}, and the term \ttt{iszero(pred(succ(0)))} evaluates to \ttt{true}. Note that parentheses are added for readability, but often not included in the formal description of the language. Also note that, in our language, all natural numbers are formally represented as repeated applications of \ttt{succ} to \ttt{0}. However, for brevity, arabic numerals will be used to represent these terms. For example, whenever we use the term \ttt{2}, the equivalent term actually used in the language would be \ttt{succ(succ(0))}.
+\newpar
+A more formal mathematical definition of our language would use induction to define the set $\mathcal{T}$ of all terms:
+\begin{definition}
+The set of terms is the smallest set $\mathcal{T}$ such that:
+\begin{enumerate}
+ \item $\{\ttt{true}, \ttt{false}, \ttt{0}\} \subseteq \mathcal{T}$
+ \item if $t_1 \in \mathcal{T}$, then $\{\ttt{succ $t_1$, pred $t_1$, iszero $t_1$}\}\subseteq \mathcal{T}$
+ \item if $t_1, t_2, t_3 \in \mathcal{T}$, then $\ttt{if $t_1$ then $t_2$ else $t_3$} \in \mathcal{T}$
+\end{enumerate}
+
+\end{definition}
 %
-%
-\chapter{Term Rewriting Systems}
+\chapter{Formal Term Rewriting Systems}
 \section{Abstract Reduction Systems}
 \begin{definition}
 \hphantom{}

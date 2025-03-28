@@ -12,4 +12,9 @@ S.~Ambramsky, Dov~M. Gabbay, and T.S.E.Maibaum, editors.
   Computational Structures}.
 \newblock Oxford Science Publications, 1992.
 
+\bibitem{types}
+Benjamin~C. Pierce.
+\newblock {\em Types and Programming Languages}.
+\newblock The MIT Press, 2002.
+
 \end{thebibliography}

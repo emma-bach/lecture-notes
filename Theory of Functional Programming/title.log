@@ -1,0 +1,191 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2024.3.16)  28 MAR 2025 12:33
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**title.tex
+(./title.tex
+LaTeX2e <2020-02-02> patch level 2
+L3 programming layer <2020-02-14>
+
+! LaTeX Error: Environment titlepage undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 \begin{titlepage}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+l.3 	{\Large
+             \textsc{Study Notes}\par}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3 	{\Large \textsc{Study Notes}
+                                 \par}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (30.31094pt too wide) in paragraph at lines 3--3
+ []\OT1/cmr/m/sc/10 Study 
+ []
+
+
+Overfull \hbox (30.56091pt too wide) in paragraph at lines 3--3
+ \OT1/cmr/m/sc/10 Notes 
+ []
+
+! Undefined control sequence.
+l.5 	{\huge
+           \bfseries Handbook of Logic in Computer Science\par}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.5 	{\huge\bfseries H
+                      andbook of Logic in Computer Science\par}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (51.96498pt too wide) in paragraph at lines 5--5
+ []\OT1/cmr/bx/n/10 Handbook 
+ []
+
+
+Overfull \hbox (9.26384pt too wide) in paragraph at lines 5--5
+ \OT1/cmr/bx/n/10 of 
+ []
+
+
+Overfull \hbox (26.72208pt too wide) in paragraph at lines 5--5
+ \OT1/cmr/bx/n/10 Logic 
+ []
+
+
+Overfull \hbox (9.58328pt too wide) in paragraph at lines 5--5
+ \OT1/cmr/bx/n/10 in 
+ []
+
+
+Overfull \hbox (27.47208pt too wide) in paragraph at lines 5--5
+ \OT1/cmr/bx/n/10 Com- 
+ []
+
+
+Overfull \hbox (27.25682pt too wide) in paragraph at lines 5--5
+ \OT1/cmr/bx/n/10 puter 
+ []
+
+
+Overfull \hbox (18.52768pt too wide) in paragraph at lines 5--5
+ \OT1/cmr/bx/n/10 Sci- 
+ []
+
+
+Overfull \hbox (22.04156pt too wide) in paragraph at lines 5--5
+ \OT1/cmr/bx/n/10 ence 
+ []
+
+! Undefined control sequence.
+l.7 	{\Large
+            \itshape Emma Bach\par}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.7 	{\Large\itshape E
+                      mma Bach\par}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (28.24985pt too wide) in paragraph at lines 7--7
+ []\OT1/cmr/m/it/10 Emma 
+ []
+
+
+Overfull \hbox (21.86098pt too wide) in paragraph at lines 7--7
+ \OT1/cmr/m/it/10 Bach 
+ []
+
+! Undefined control sequence.
+l.10 	{\large
+              \today\par}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.10 	{\large \today
+                    \par}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: \begin{document} ended by \end{titlepage}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.11 \end{titlepage}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+)
+! Emergency stop.
+<*> title.tex
+             
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 24 strings out of 483107
+ 466 string characters out of 5964630
+ 231847 words of memory out of 5000000
+ 15148 multiletter control sequences out of 15000+600000
+ 533293 words of font info for 27 fonts, out of 8000000 for 9000
+ 59 hyphenation exceptions out of 8191
+ 13i,1n,15p,87b,73s stack positions out of 5000i,500n,10000p,200000b,80000s
+!  ==> Fatal error occurred, no output PDF file produced!
