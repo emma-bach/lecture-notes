@@ -1,0 +1,151 @@
+\documentclass{report}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage[titles]{tocloft}
+\usepackage[titletoc]{appendix}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{pdfpages}
+\usepackage{bm}
+%\usepackage{bbm}
+%\usepackage{biblatex}
+%\addbibresource{bib.bib}
+
+%hyperref should be last apparently
+\usepackage{hyperref}
+
+\renewcommand\cftsecdotsep{\cftdot}
+\renewcommand\cftsubsecdotsep{\cftdot}
+\renewcommand\epsilon{\varepsilon}
+
+% Starts a new paragraph without indentation
+% and with an empty line between paragraphs
+\newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
+\newcommand{\trans}{\twoheadrightarrow}
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bR}{\mathbb{R}}
+
+\renewcommand*\contentsname{Inhalt}
+\renewcommand*\proofname{Beweis}
+
+\pagestyle{fancy} %allows headers
+
+\lhead{Emma Bach}
+\rhead{\today}
+
+
+\begin{document}
+% \newtheorem{codename}{printedname}[countedwith]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{theorem}[lemma]{Satz}
+\newtheorem{proposition}[lemma]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{example}[lemma]{Example}
+%
+%
+%
+\include{title}
+\tableofcontents
+\thispagestyle{fancy}
+%
+%
+%
+\chapter{Wiederholung}
+Zu Beginn will ich einige relevante Sätze, Definitionen und Notationsstandards aus der Vorlesung ``Lineare Algebra I'' wiederholen.
+\begin{definition}
+Sei $f: V \to W$ eine lineare Abbildung. Sei $A = \{a_1, \hdots, a_n\}$ eine Basis von $V$ und $B = \{b_1, \hdots, b_m\}$ eine Basis von $W$. So lässt sich jeder Vektor $w \in W$ darstellen als \textbf{endliche} Linearkombination der Basisvektoren:
+\begin{equation}
+    w = \sum_{i=1}^{m} \alpha_i b_i
+\end{equation}
+Insbesondere lassen sich die Bilder der Basisvektoren $a_j \in A$ in dieser Form darstellen:
+\begin{equation}
+    f(a_j) = \sum_{i=1}^{m} \alpha_{ij} b_i
+\end{equation}
+Die \textbf{Darstellungsmatrix} $\text{Mat}_B^A f$ ist genau durch diese Koeffizienten $\alpha_{ij}$ gegeben.
+\begin{equation}
+    \text{Mat}_B^A f = 
+    \begin{pmatrix}
+       \alpha_{11} & \hdots & \alpha_{1n}\\
+       \vdots      &        & \vdots\\
+       \alpha_{m1} & \hdots & \alpha_{mn}\\
+    \end{pmatrix}
+\end{equation}
+\end{definition}
+\newpar
+In der Regel arbeiten wir mit der Standardbasis $E = \{e_1, \hdots, e_n\}$ und interpretieren jede Matrix $M$ als Darstellungsmatrix $M_E^E f$ einer Linearen Abbildung $f$. 
+\begin{definition}
+Die \textbf{Basiswechselmatrix} $T_B^A$ ist die Abbildungsmatrix der Identitätsabbildung.
+\begin{equation}
+ T_B^A = \text{Mat}_B^A (\text{id}_V)
+\end{equation}
+\end{definition}
+\begin{theorem}
+Für jede Basis $B$ eines beliebigen Vektorraums $V$ gilt 
+\begin{align}
+T_B^B = id_V = \begin{pmatrix}
+                1 & \hdots & 0\\
+                \vdots & \ddots & \vdots\\
+                0 & \hdots & 1\\
+               \end{pmatrix}
+\end{align}
+\end{theorem}
+\begin{proof}
+Da die Darstellung jedes Vektors durch die Basisvektoren eindeutig gegeben ist, ist die Darstellung $id_V(b_j) = b_j = \sum_{i=1}^{m} \alpha_{ij} b_i$ eines Basisvektors als Linearkombination genau gegeben durch die Linearkombination mit $\alpha_{ij} = 1$ und $\alpha_{ik} = 0$ für $k \neq j$. Dies entspricht genau dem Standardbasisvektor $e_j$. Also gilt $T_B^B = (e_1 \hdots e_n) = id_V$.
+\end{proof}
+\newpage
+\begin{proposition}
+Gegeben $\text{Mat}_B^A f$ lässt sich die Abbildungsmatrix $\text{Mat}_D^C f$ von $f$ bezüglich zweier neuen Basen $C$ und $D$ durch Nutzung von Basiswechselmatrizen folgendermaßen berechnen:
+\begin{equation}
+ \text{Mat}_D^C(f) = T_D^B \cdot \text{Mat}_B^A f \cdot T_C^B
+\end{equation}
+Ein besonders relevanter Spezialfall ist:
+\begin{equation}
+ \text{Mat}_B^B(f) = T_B^A \cdot \text{Mat}_A^A f \cdot T_A^B
+\end{equation}
+\end{proposition}
+\newpar
+\begin{theorem}
+\label{satz:basiswechsel_inverse}
+Es gilt $T_B^A$ = $(T_A^B)^{-1}$
+\end{theorem}
+\begin{proof}
+\begin{align*}
+T_A^B \cdot T_B^A &= T_A^B \cdot id_V \cdot T_B^A\\
+                  &=\text{Mat}_A^B (\text{id}_V) \cdot \text{Mat}_B^B (id_V) \cdot \text{Mat}_B^A (\text{id}_V)\\
+                  &= \text{Mat}_A^A (\text{id}_V)\\
+                  &= \text{id}_V\\
+\end{align*}
+\end{proof}
+\newpar
+Betrachten wir eine beliebige Basis $B = \{b_1, \hdots, b_n\}$. Die Matrix $T_B^E$ kann man trivial finden, da jeder Vektor $b_i = (b_{i1} \hdots b_{in})^T$ bezüglich der Standardbasis trivial geschrieben ist als $b_i = \sum_{i=1}^n b_{ij} \cdot e_i$. Nach \ref{satz:basiswechsel_inverse} lässt sich die Matrix $T_E^B$ ebenfalls ohne größere Probleme durch invertierung von $T_B^E$ finden.
+\appendix
+\chapter{Ausblicke in die Zukunft}
+In der Funktionalanalysis werden unendlichdimensionale Vektorräume betrachtet. 
+\begin{theorem}
+\label{satz:basisfunktionen}
+Der Vektorraum aller Funktionen $f: \bR \to \bR$ hat eine Basis.
+\end{theorem}
+\newpar
+Wie sieht diese Basis aus? Es stellt sich heraus, dass der Beweis nur dank Auswahlaxiom funktioniert, und dass sich diese Basis nicht explizit konstruieren lässt. Die Menge der sog. Kroneckerdeltas $\delta_{ij}$ sieht auf den ersten Blick wie ein vielversprechender Kandidat aus:
+\begin{equation*}
+ \delta_{ij} = \begin{cases}
+            1 & i = j\\
+            0 & i \neq j\\
+           \end{cases}
+\end{equation*}
+Aber es muss bedacht werden, dass zwingende Bedingung für eine Basis ist, dass sich jeder Vektor nicht nur als Linearkombination der Basisvektoren darstellen lässt, sondern sogar als \tbf{endliche Linearkombination}. Diese Definition der Basis ist auch bekannt als Hamelbasis.
+\newpar
+Es stellt sich heraus, dass die Hamel-Basis aus \ref{satz:basisfunktionen} nur dank Auswahlaxiom existiert und nicht explizit dargestellt werden kann. Lockern wir den traditionellen Basisbegriff, um zählbar unendliche Linearkombinationen zu erlauben, erhalten wir den Begriff der Schauder-Basis. Die Funktionen $\delta_{ij}$ reichen jedoch immer noch nicht als Schauder-Basis des Raums $f: \bR \to \bR$, sondern nur für den Folgenraum $f: \bN \to \bR$. 
+\newpar
+Da sich der Begriff der Linearkombination auf keine sinnvolle Weise auf überabzählbare Mengen erweitern lässt bleibt man an diesem Punkt leider stecken, es existiert leider keine explizit angebbare Basis des Raums $f: \bR \to \bR$. :(
+\end{document}

@@ -1,5 +1,0 @@
-\contentsline {chapter}{Preface}{2}{chapter*.2}%
-\contentsline {chapter}{\numberline {1}Untyped Systems}{3}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Untyped Arithmetic Expressions}{3}{section.1.1}%
-\contentsline {chapter}{\numberline {2}Formal Term Rewriting Systems}{5}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Abstract Reduction Systems}{5}{section.2.1}%
