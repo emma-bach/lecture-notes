@@ -1,2 +1,0 @@
-\contentsline {chapter}{\numberline {1}Wiederholung}{2}{chapter.1}%
-\contentsline {chapter}{\numberline {A}Ausblicke in die Zukunft}{4}{appendix.A}%
