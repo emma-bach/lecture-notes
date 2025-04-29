@@ -12,6 +12,7 @@
 \usepackage{amsthm}
 \usepackage{pdfpages}
 \usepackage{bm}
+\usepackage{tikz-cd}
 %\usepackage{bbm}
 %\usepackage{biblatex}
 %\addbibresource{bib.bib}
@@ -34,7 +35,7 @@
 \newcommand{\bR}{\mathbb{R}}
 
 \renewcommand*\contentsname{Inhalt}
-\renewcommand*\proofname{Beweis}
+%\renewcommand*\proofname{Beweis}
 
 \pagestyle{fancy} %allows headers
 
@@ -44,8 +45,8 @@
 
 \begin{document}
 % \newtheorem{codename}{printedname}[countedwith]
-\newtheorem{lemma}{Lemma}[section]
-\newtheorem{theorem}[lemma]{Satz}
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{theorem}[lemma]{Theorem}
 \newtheorem{proposition}[lemma]{Proposition}
 \newtheorem{anmerkung}[lemma]{Anmerkung}
 
@@ -222,9 +223,86 @@ Ein zentrales Ziel der Vorlesung ``Lineare Algebra II'' ist es, zu einer Matrix 
 \begin{align*}
  A = Mat_{B_1}^{B_1}(f) \text{ und } B = Mat_{B_2}^{B_2}(f)
 \end{align*}
+%
+%
+%
+%\chapter{Die Jordansche Normalform}
+\newpage\newpar
+Let $V$ be a vector space. Let $f: V \to V$ be a nilpotent endomorphism.
+\newpar
+Define
+$
+V^p = \ker(f^p)
+$
+Where $f^p$ denotes composition.
+\begin{lemma}
+\begin{equation*}
+ V^1 \subseteq V^2 \subseteq \hdots \subseteq V
+\end{equation*}
 
-%
-%
+\end{lemma}
+\begin{lemma}
+\begin{equation*}
+ \forall p : \forall v \in V : v \in V^p \Leftrightarrow f(v) \in V^{p-1}
+\end{equation*}
+\end{lemma}
+
+
+\begin{theorem}
+The \textbf{``natural mapping''}
+\begin{align*}
+ \overline{f}: V^p / V^{p-1} \to V^{p-1} / V^{p-2}
+\end{align*}
+is injective.
+\end{theorem}
+\begin{proof}
+We know that the restriction$f|_{V^p}$ is a map $V^p \to V^{p-1}$.
+\newpar
+Let $q_p$ denote the quotient map $V^p \to V^p/V^{p-1}$.
+\newpar
+Let $q_{p-1}$ denote the quotient map $V^{p-1} \to V^{p-1}/V^{p-2}$.
+\newpar
+We have the following diagram:
+\begin{figure}[h!]
+\centering
+\begin{tikzcd}[row sep = huge, column sep = huge]
+V^p
+\arrow[r, "f|_{V^p}"]
+\arrow[d, "q_p"]
+& V^{p-1}
+\arrow[d, "q_{p-1}"] \\
+V^p/V^{p-1}
+\arrow[r, "\overline{f}"]
+&  V^{p-1}/V^{p-2}
+\end{tikzcd}
+\end{figure}
+\newpar
+By \textbf{``the universal property''} we have that a unique $\overline{f}$ exists iff. $V^{p-1} \subseteq \ker(q_{p-1} \circ f|_{V^p})$. This inclusion holds, since for $v \in V^{p-1}$ we have $f(v) \in V^{p-2}$, which is exactly the kernel of $q_{p-1} V^{p-1} \to V^{p-1}/V^{p-2}$. Therefore the diagram commutes.
+\newpar
+We will show injectivity of $\overline{f}$ by showing $\ker(f) = \{0\}$. Let $k \in V^p / V^{p-1}$. Pick an arbitrary representative $v \in k$. Because the diagram commutes, we have
+\begin{align*}
+ k \in \ker f \Leftrightarrow f | V_p (v) \in \ker(q_{p-1}) \Leftrightarrow f(v) \in V^{p-2} \Leftrightarrow v \in V^{p-1}
+\end{align*}
+Since $k \in V^p / V^{p-1}$, we have that $v \in V^{p-1}$ must be in the same equivalence class as $0$. Therefore the kernel of $\overline{f}$ consists only of the equivalence class of the zero vector (which *is* the zero vector of the quotient space).
+\end{proof}
+\newpage
+We have the following diagram:
+\begin{figure}[h!]
+\centering
+\begin{tikzcd}[row sep = huge, column sep = huge]
+V
+\arrow[d, "q"]
+& F(V) = V^p
+\arrow[r, "\eta_V = f|_{V^p}"]
+\arrow[d, "F(q) = q_p"]
+& G(V) = V^{p-1}
+\arrow[d, "G(q) = q_{p-1}"] \\
+V/ker(f)
+&  F(V/ker(f)) = V^p/V^{p-1}
+\arrow[r, "\eta_{V/ker(f)} = \overline{f}"]
+&  G(V/ker(f)) = V^{p-1}/V^{p-2}
+\end{tikzcd}
+\end{figure}
 %
 %
 %
