@@ -30,12 +30,21 @@
 \newcommand{\trans}{\twoheadrightarrow}
 \newcommand{\ttt}[1]{\texttt{#1}}
 \newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
 
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bF}{\mathbb{F}}
 \newcommand{\bN}{\mathbb{N}}
 \newcommand{\bR}{\mathbb{R}}
 
+\newcommand{\vv}{\vec{v}}
+\newcommand{\vw}{\vec{w}}
+\newcommand{\vz}{\vec{0}}
+
+\newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
+
 \renewcommand*\contentsname{Inhalt}
-%\renewcommand*\proofname{Beweis}
+\renewcommand*\proofname{Beweis}
 
 \pagestyle{fancy} %allows headers
 
@@ -46,13 +55,19 @@
 \begin{document}
 % \newtheorem{codename}{printedname}[countedwith]
 \newtheorem{lemma}{Lemma}[chapter]
-\newtheorem{theorem}[lemma]{Theorem}
+\newtheorem{theorem}[lemma]{Satz}
 \newtheorem{proposition}[lemma]{Proposition}
-\newtheorem{anmerkung}[lemma]{Anmerkung}
+\newtheorem{corollary}[lemma]{Korollar}
+
+
 
 \theoremstyle{definition}
 \newtheorem{definition}[lemma]{Definition}
-\newtheorem{example}[lemma]{Example}
+\newtheorem{beispiel}[lemma]{Beispiel}
+\newtheorem{beobachtung}[lemma]{Beobachtung}
+\newtheorem{anmerkung}[lemma]{Anmerkung}
+\newtheorem{question}[lemma]{Frage}
+\newtheorem{application}[lemma]{Anwendung}
 %
 %
 %
@@ -226,8 +241,7 @@ Ein zentrales Ziel der Vorlesung ``Lineare Algebra II'' ist es, zu einer Matrix 
 %
 %
 %
-%\chapter{Die Jordansche Normalform}
-\newpage\newpar
+\chapter{Die Jordansche Normalform}
 Let $V$ be a vector space. Let $f: V \to V$ be a nilpotent endomorphism.
 \newpar
 Define
@@ -303,6 +317,329 @@ V/ker(f)
 &  G(V/ker(f)) = V^{p-1}/V^{p-2}
 \end{tikzcd}
 \end{figure}
+\section{Erste Anwendungen}
+\textbf{Erinnerung:} Über $\bC$ ist jede Matrix ähnlich zu einer Jordan-Matrix.
+\newpar
+\underline{Erste Anwendungen:}
+\begin{enumerate}
+ \item Hohe Potenzen von Endomorphismen ausrechnen.
+ \item Die Exponentialfunktion mit Matrixwertigen Argumenten ausrechnen und damit lineare Differentialgleichungen lösen, auch in vielen Veränderlichen und mit höheren Ableitungen.
+\end{enumerate}
+\section{Konjugationsklassen}
+\newpar
+Frage: Ist in unserer Situation die Jordan-Matrix von $f$ eindeutig?
+\newpar
+Antwort: Nein! Blöcke können durch Umsortierung der Basis vertauscht werden.
+\begin{align*}
+ V = \bC^2, \vv_1, \vv_2 \text{ EW zu } \lambda_1 \neq \lambda_2\\
+\end{align*}
+\begin{align*}
+ B &= (\vv_1, \vv_2)\\
+ Mat_B^B f &= \begin{pmatrix}
+              \lambda_1 & 0\\
+              0 & \lambda_2\\
+             \end{pmatrix}\\
+ B' &= (\vv_2, \vv_1)\\
+ Mat_{B'}^{B'} f &= \begin{pmatrix}
+              \lambda_2 & 0\\
+              0 & \lambda_1\\
+             \end{pmatrix}\\
+\end{align*}
+$\implies$ Neue Frage: Ist die Jordan-Matrix eindeutig bis auf Umsortierung der Blöcke?
+\newpar
+Versuch einer Antwort: Sei $B$ eine Jordan-Basis,
+\begin{align*}
+ Mat_B^B (f) = \begin{pmatrix}
+                Jor(\lambda_1, n_1) & 0 & 0\\
+                0 & \ddots & 0\\
+                0 & 0 & Jor(\lambda_r, n_r)\\
+               \end{pmatrix}
+\end{align*}
+Beachte: Die Skalare $\lambda_1, \hdots, \lambda_r$ sind genau die Eigenwerte von $f$ und müssen deshalb in jeder Jordan-Matrix von $f$ auftreten.
+\newpar
+\underline{Beachte:} Wenn $\lambda$ ein Eigenwert von $f$ ist, seien $i_1, \hdots, i_k$ die Indizes mit $\lambda_i = \lambda$. Die Summe der indizes ist die Dimension des Hauptraums von $f$ zu $\lambda$, muss also für jede Jordan-Matrix von $f$ gleich sein.
+\begin{align*}
+ \sum_{j=1}^k n_{i_j} = \dim Hau_f (\lambda) = \text{ alg. Mult. von $f$}
+\end{align*}
+Die rechte Seite hängt nicht von $B$ ab, ist also eine Invariante der Jordan-Matrizen von $f$. Außerdem: Wenn $f$ auf den Hauptraum $Hau_f(\lambda)$ eingeschränkt wird und wir die Räume $V^p$ und die Partition $m_p$ betrachten, sind die Zahlen $n_{i}$ genau die Zahlen, die in der zu $m_p$ dualen Partition auftreten (wenn auch in willkürlicher Reihenfolge)
+\newpar
+$\implies$ \ul{Ergebnis:} Ja! Die Jordanmatrix ist eindeutig bis auf Umsortieren der Blöcke.
+\newpar
+\begin{definition}
+ Die Ähnlichkeitsrelation zwischen Matrizen wird auch als \tbf{Konjugation} (oder genauer als \tbf{Konjugationswirkung von $Gl_n$ auf eine Matrix}) bezeichnet.
+\end{definition}
+\begin{definition}
+ Als \tbf{Orbit (der Konjugationswirkung von $Gl_n$ auf $M$)} einer Matrix $M$ bezeichnen wir die Menge der Matrizen, die zu einer gegebenen Matrix $M$ ähnlich sind.
+\end{definition}
+\newpar
+\ul{Beobachtung:} Jede Matrix ist einer Jordanmatrix ähnlich, also liegt in jedem Orbit mindestens eine Jordan-Matrix!
+\newpar
+Wären Jordan-Matrizen eindeutig, hätten wir nun eine triviale Bijektion zwischen der Menge aller Orbiten von Matrizen und den Jordanformen. Da Jordanmatrizen nur bis auf Umsortieren eindeutig ist, ist die Situation etwas komplizierter (aber nicht viel komplizierter!)
+\newpar
+\begin{theorem}
+ Sei $B$ eine Jordan-Basis für $f$ mit Matrix $M_f = Mat_B^B (f)$. Sei $A \in Mat(n \times n)$ eine Matrix, die sich von $M_f$ nur durch Umsortierung von Blöcken unterscheidet. Dann gibt es eine Umsortierung $B'$ von $B$, sodass $Mat_{B'}^{B'} (f) = A$.
+\end{theorem}
+\newpar
+ \ul{Äquivalent:} Wenn sich Matrizen in Jordanform nur durch Umsortierung der Blöcke unterscheiden, sind sie ähnlich.
+\newpar
+ \ul{Ebenfalls Äquivalent:} Wenn ein Orbit eine Jordan-Matrix $A$ enthält, so auch alle Jordan-Matrizen, welche aus $A$ durch Umsortierung der Blöcke entstehen.
+\newpar
+\begin{theorem}
+ Wenn $B_1$, $B_2$ Jordanbasen von $f$ sind, dann unterscheiden sich die Darstellungsmatrizen $\Mat{B_1}{B_1}{f}$ und $\Mat{B_2}{B_2}{f}$ von $f$ zu den beiden Basen nur durch Umsortierung der Blöcke.
+\end{theorem}
+\newpar
+\ul{Äquivalent:} Zwei Jordanmatrizen im selben Orbit unterscheiden sich nur durch Umsortieren der Blöcke.
+\newpar
+\ul{Zusammenfassung:} Es existiert eine Bijektion zwischen den Orbiten der Konjugationswirkung und den Äquivalenzklassen von Jordanmatrizen unter Umsortierung.
+\section{Der Satz von Cayley-Hamilton}
+Seien $V$ ein Vektorraum und $f \in End(V)$ ein Endomorphismus. Wir betrachteten bisher Ausdrücke wie $f$, $f^2$, $f^3$, $f^5 - \lambda \cdot Id_V$ (äquivalent zu $f^5 - \lambda f^0$). Diese sehen aus wie Polynome. Können wir diese Idee formalisieren?
+\begin{definition}
+ Gegeben ein Körper $k$ schreiben wir für die Menge der Polynome mit Variable $t$ und Koeffizienten aus $k$:
+ \begin{align*}
+  k[t] = \left\{\sum_{i=0}^m a_i t^i \mid i \in \bN, a_i \in k\right\}
+ \end{align*}
+\end{definition}
+\begin{anmerkung}
+Gegeben ein Polynom $p \in k[t]$ induziert dieses eine Funktion 
+\begin{align*}
+ k &\to k\\
+ x &\to \sum a_i x^i\\
+\end{align*}
+Sei $\phi$ die Funktion, welche jedem Polynom die durch das Polynom induzierte Abbildung zuordnet:
+\begin{align*}
+ \phi : k[t] \to (t \to k)
+\end{align*}
+Im Allgemeinen ist $\phi$ nicht injektiv! Sei zum Beispiel $k = F_2$, dann induzieren die Polynome $f, f^2, f_3, \hdots$ alle die selbe Funktion. Polynome sind also von den von ihnen induzierten Funktionen zu unterscheiden. 
+\end{anmerkung}
+\begin{definition}
+ Wir Betrachten die Auswertung eines Polynoms in $f$:
+ \begin{align*}
+ \begin{array}{ccccc}
+  \phi_f & : & k[t] &\to& End(V)\\
+       & &\sum a_i t^i &\to& \sum a_i \cdot f^i
+ \end{array}
+ \end{align*}
+ Analog definieren wir die Auswertung für Matrizen $A$.
+\end{definition}
+\begin{beobachtung}
+ Seien $A$, $B$ ähnlich mit $A = S B S^{-1}$. Dann gilt $A^n = (S B S^{-1})^n = S B^n S^{-1}$, also sind $A^n$ und $B^n$ ebenfalls ähnlich. Also gilt für jedes Polynom:
+ \begin{align*}
+  p = \sum a_i t^i
+ \end{align*}
+ \begin{align*}
+  \phi_A(p) &= \sum a_i A^i\\ &= \sum a_i S B^i S^{-1}\\ &= S \left(\sum a_i B^i\right) S^{-1}\\ &= S \phi_B(p) S^{-1}
+ \end{align*}
+ Also bleibt Ähnlichkeit unter der Anwendung von Polynomen erhalten.
+\end{beobachtung}
+\begin{beobachtung}
+ Betrachte $f \in End(V)$. Wähle Basis $B$ von $V$. Dann ist
+ \begin{align*}
+  \Mat{B}{B}{f^i} = \left[\Mat{B}{B}{f}\right]^i
+ \end{align*}
+ Also gilt für jedes Polynom $p = \sum a_i t^i$:
+ \begin{align*}
+  \Mat{B}{B}{\phi_f(p)} &= \Mat{B}{B}{\sum a_i f^i}\\ 
+                        &= \sum a_i \Mat{B}{B}{f^i}\\ 
+                        &= \sum a_i \left[\Mat{B}{B}{f}\right]^i\\
+                        &= \phi_{\Mat{B}{B}{f}}(p)
+ \end{align*}
+\end{beobachtung}
+\begin{anmerkung}
+ Die Abbildungen $\phi_f$, $\phi_A$ werden auch \tbf{Einsetzungsabbildungen} genannt. Statt $\phi_f(p)$ und $\phi_A(p)$ schreibt man oft $p(f)$ und $p(A)$.
+\end{anmerkung}
+\begin{theorem}
+ \emph{\tbf{Cayley-Hamilton}:} Sei $\chi_f \in k[t]$ das charakteristische Polynom von $f$. Dann ist
+ \begin{align*}
+  \chi_f(f) = 0.
+ \end{align*}
+\end{theorem}
+\begin{proof}
+ (Nur für $k = \bC$). Sei $B$ eine Jordan-Basis. Dann 
+ \begin{align*}
+  \Mat{B}{B}{\chi_f(f)} = \chi_f \left(\Mat{B}{B}{f}\right).
+ \end{align*}
+ Es genügt also 
+ $
+  \chi_f \left(\Mat{B}{B}{f}\right) = 0
+ $
+ zu zeigen.
+ \newpar
+ Schreibe
+ \begin{align*}
+  \Mat{B}{B}{f} = \begin{pmatrix}
+                   Jor(\lambda_1, n_1) & 0 & 0\\
+                   0 & \ddots & 0\\
+                   0 & 0 & Jor(\lambda_r, n_r)\\
+                  \end{pmatrix}
+ \end{align*}
+ Es gilt
+ \begin{align*}
+  \chi_f(t) = (t - \lambda_1)^{n_1} \cdot \hdots \cdot  (t - \lambda_1)^{n_r}
+ \end{align*}
+ Wegen der Blockgestalt gilt:
+ \begin{align*}
+  \chi_f(\Mat{B}{B}{f}) = \begin{pmatrix}
+                   \chi_f(Jor(\lambda_1, n)) & 0 & 0\\
+                   0 & \ddots & 0\\
+                   0 & 0 & \chi_f(Jor(\lambda_r, n))\\
+                  \end{pmatrix}
+ \end{align*}
+ Wir wissen, dass jeder Jordanblock $Jor(\lambda_i - \lambda_i, n_i$ nilpotent mit Index $n_i$ ist. Also hat das charakteristische Polynom Nullfaktoren, also ist $\chi_f \left(\Mat{B}{B}{f}\right) = 0$.
+\end{proof}
+%
+%
+%
+%
+%
+\section{Minimalpolynome}
+\begin{definition}
+Wir nennen ein Polynom $p$ das Minimalpolynom eines Endomorphismus $f$, wenn gilt:
+\begin{enumerate}
+ \item $p$ ist nicht das Nullpolynom
+ \item $p(f) = 0$
+ \item Der Grad von $p$ ist minimal unter allen Polynomen mit $f$ als Nullstelle \label{minpoly-3}
+ \item Der Leitkoeffizient ist $1$ ($p$ ist normiert) \label{minpoly-4}
+\end{enumerate}
+Analog für quadratische Matrizen statt Endomorphismen.
+\end{definition}
+\newpar
+Normierung wird einfach durch Skalarmultiplikation des Polynoms erreicht, ist also keine starke Bedingung.
+\begin{theorem}
+ Ähnliche Matrizen haben das selbe Minimalpolynom.
+\end{theorem}
+\begin{proof}
+ \begin{align*}
+  A &= S B S^{-1}\\
+  \implies A^n &= (S B S^{-1})^n = S B^n S^{-1}\\
+  \implies p(A) &= p(S B S^{-1}) = S \cdot  p(B) \cdot S^{-1} := 0 \implies p(B) = 0\\
+ \end{align*}
+\end{proof}
+\begin{theorem}
+ $f$ hat das selbe Minimalpolynom wie seine darstellenden Matrizen.
+\end{theorem}
+\begin{theorem}
+ Minimalpolynome existieren.
+\end{theorem}
+\begin{proof}
+ Gemäß Satz von Cayley-Hamilton gibt es mindestens ein Polynom, welches nicht das Nullpolynom ist und $f$ als Nullstelle hat. Also finde nichttriviales Polynom $p$ von minimalem Grad finden, welches $f$ als Nullstelle hat \footnote{Die Menge der Grade von Polynomen mit $f$ als Nullstelle ist eine nichtleere Teilmenge der Natürlichen Zahlen, hat also ein Minimum.}. Sei $a$ der Leitkoeffizient von $p$. Dann ist $a^{-1}p$ ein normiertes Polynom vom selben Grad mit $f$ als Nullstelle.
+\end{proof}
+\begin{theorem}
+Minimalpolynome sind eindeutig.
+\end{theorem}
+\begin{proof}
+ Seien $p_1, p_2 \in k[t]$ zwei Minimalpolynome von $f$. Wir wissen, dass die Grade gleich sein müssen (\ref{minpoly-3}) und dass die Leitkoeffizienten $1$ sein müssen (\ref{minpoly-4}). Wir haben:
+ \begin{align*}
+  p_1(t) &= t^n + \sum^{n-1}_{i=0} a_i t^i\\
+  p_2(t) &= t^n + \sum^{n-1}_{i=0} b_i t^i\\
+ \end{align*}
+ \begin{align*}
+  \implies (p_1 - p_2)(t) = \sum^{n-1}_{i=0} (a_i - b_i) t^i\\
+ \end{align*}
+ Der Grad des Differenzpolynoms muss kleiner als $n$ sein, sonst wären $p_1$ und $p_2$ nicht minimal. Gleichzeitig gilt:
+ \begin{align*}
+  (p_1 - p_2)(f) = p_1(f) - p_2(f) = 0 - 0 = 0
+ \end{align*}
+ Also muss $p_1 - p_2$ das Nullpolynom sein, also ist $p_1 = p_2$.
+\end{proof}
+\begin{question}
+ Wie viele Polynome gibt es überhaupt, die $f$ als Nullstelle haben?
+\end{question}
+\newpar
+\ul{Antwort 1:} Viele! Wenn $p$ ein Polynom ist mit $p(f) = 0$, so hat jedes Vielfache von $p$ unter Polynommultiplikation ebenfalls $f$ als Nullstelle.
+\newpar
+\ul{Antwort 2:}
+\begin{theorem}
+ Alle Polynome, die $f$ als Nullstelle haben, sind Vielfache (unter Polynommultiplikation) des Minimalpolynoms. Wenn $p$ das Minimalpolynom von $f$ ist und $q \in k[t]$ ein beliebiges nichttriviales Polynom mit $q(f) = 0$, dann existiert ein $r \in k[t]$, sodass $q = r \cdot p$.
+\end{theorem}
+\begin{proof}
+Sei $q$ gegeben. Polynomdivision mit Rest liefert Polynome $r_1, r_2 \in k[t]$ sd. $\deg r_2 < \deg p$ und 
+\begin{align*}
+ q = r_1 \cdot p + r_2
+\end{align*}
+Es gilt nun:
+\begin{align*}
+ q(f) &= r_1(f)p(f) + r_2(f)\\
+ \implies 0 &= r_1(f) \cdot 0 + r_2(f)\\
+ \implies r_2(f) &= 0\\
+\end{align*}
+Da $\deg r_2 < \deg p$ und $p$ ein Minimalpolynom muss $r_2$ also das Nullpolynom sein. Der Beweis für Matrizen funktioniert identisch.
+\end{proof}
+\begin{question}
+ Wie findet man das Minimalpolynom für ein gegebenes $f$?
+\end{question}
+\newpar
+\ul{Antwort}: Schwierig, es sei denn, man kennt die Jordanform!
+\begin{proposition}
+ Sei $A$ eine quadratische Matrix. Sei $\lambda \in k$. Die folgenden Aussagen sind äquivalent:
+ \begin{enumerate}
+  \item $\lambda$ ist ein Eigenwert von $A$.
+  \item $\lambda$ ist eine Nullstelle des charakteristischen Polynoms.
+  \item $\lambda$ ist eine Nullstelle des Minimalpolynoms.
+ \end{enumerate}
+\end{proposition}
+\begin{proof}
+\newpar
+ \begin{itemize}
+  \item[$1 \Leftrightarrow 2$:] Die Äquivalenz der ersten beiden Aussagen ist bereits bekannt.
+  \item[$3 \Rightarrow 2$:] Das charakteristische Polynom ist ein Vielfaches des Minimalpolynoms.
+  \item[$1 \Rightarrow 3$:] Sei ein Eigenwert $\lambda$ gegeben. Per Annahme existiert eine zu $A$ ähnliche Matrix $B$ der Form:
+  \begin{align*}
+   B = \begin{pmatrix}
+        \lambda & *\\
+        0 & *\\
+       \end{pmatrix}
+  \end{align*}
+  Wenn $p$ ein beliebiges Polynom ist, dann ist:
+  \begin{align*}
+   p(B) = \begin{pmatrix}
+           p(\lambda) & *\\
+           * & *\\
+          \end{pmatrix}
+  \end{align*}
+  Wenn $p$ das Minimalpolynom ist, ist $p(B) = 0_{n \times n}$, also insbesondere $p(B)_{11} = p(\lambda) = 0$.
+ \end{itemize}
+\end{proof}
+\begin{application}
+ Bestimmung von Minimalpolynomen.
+\end{application}
+\newpar
+Sei $A$ eine quadratische Matrix:
+\begin{align*}
+ A = \begin{pmatrix}
+      2 & 1 & 0\\
+      0 & 2 & 1\\
+      0 & 0 & 2\\
+     \end{pmatrix}
+\end{align*}
+Dann gilt $\chi_A(t) = (t-2)^3$. Das Minimalpolynom hat also $2$ als einzige Nullstelle. $p_1(t) = (t-2)$ und $p_2(t) = (t-2)^2$ erfüllen die Bedingung $p(A) = 0_{n \times n}$ nicht, also ist $\chi_A(t)$ das Minimalpolynom.
+\newpar
+\begin{align*}
+ B = \begin{pmatrix}
+      2 & 1 & 0 & 0 & 0\\
+      0 & 2 & 1 & 0 & 0\\
+      0 & 0 & 2 & 0 & 0\\
+      0 & 0 & 0 & 2 & 1\\
+      0 & 0 & 0 & 0 & 2
+     \end{pmatrix}
+\end{align*}
+Dann gilt $\chi_B(t) = (t-2)^5$. Allerdings ist der Nilpotenzindex der Matrix $B - \lambda E_n$ diesmal $3$, also ist bereits $p(t) = (t-2)^3$ ein Minimalpolynom.
+\newpar
+Analog für sehr große Matrizen mit vielen Jordanblöcken mit verschiedenen Eigenwerten.
+\begin{corollary}
+Sei $A$ eine $n \times n$-Matrix über $\bC$. Sei $m_i$ der längste Jordanblock der Matrix zum Eigenwert $\lambda_i$, definiert für alle Eigenwerte. Dann ist das Minimalpolynom von $A$ gegeben durch:
+\begin{align*}
+ p(t) = \sum_{i=1}^{d} (t - \lambda_i)^{m_i}
+\end{align*}
+\end{corollary}
+\chapter{Euklidische und Hermitische Vektorräume}
+
+%
+%
+%
+%
+%
+%
+%
 %
 %
 %
