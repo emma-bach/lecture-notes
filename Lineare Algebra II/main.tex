@@ -10,12 +10,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{pdfpages}
-\usepackage{bm}
-\usepackage{tikz-cd}
-%\usepackage{bbm}
-%\usepackage{biblatex}
-%\addbibresource{bib.bib}
+\usepackage{tikz-cd} % commutative diagrams
+\usepackage{physics} % \abs and \norm macros
 
 %hyperref should be last apparently
 \usepackage{hyperref}
@@ -37,11 +33,15 @@
 \newcommand{\bN}{\mathbb{N}}
 \newcommand{\bR}{\mathbb{R}}
 
+\newcommand{\ve}{\vec{e}}
 \newcommand{\vv}{\vec{v}}
 \newcommand{\vw}{\vec{w}}
+\newcommand{\vx}{\vec{x}}
+\newcommand{\vy}{\vec{y}}
 \newcommand{\vz}{\vec{0}}
 
 \newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
+\newcommand{\scalar}[2]{\langle #1, #2 \rangle}
 
 \renewcommand*\contentsname{Inhalt}
 \renewcommand*\proofname{Beweis}
@@ -68,6 +68,7 @@
 \newtheorem{anmerkung}[lemma]{Anmerkung}
 \newtheorem{question}[lemma]{Frage}
 \newtheorem{application}[lemma]{Anwendung}
+\newtheorem{konsequenz}[lemma]{Konsequenz}
 %
 %
 %
@@ -631,8 +632,210 @@ Sei $A$ eine $n \times n$-Matrix über $\bC$. Sei $m_i$ der längste Jordanblock
  p(t) = \sum_{i=1}^{d} (t - \lambda_i)^{m_i}
 \end{align*}
 \end{corollary}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
 \chapter{Euklidische und Hermitische Vektorräume}
+\begin{definition}
+ Die folgende Abbildung $||\bR^n|| \to \bR$ nennen wir die \tbf{Euklidische Norm}:
+ \begin{align*}
+  || \cdot || : \bR^n &\to \bR\\
+  \vx &\to \sqrt{\sum x_i^2}
+ \end{align*}
+\end{definition}
 
+\begin{definition}
+Wir nennen eine Abbildung $\phi$ eine \tbf{Isometrie}, wenn sie metrikerhaltend ist, also:
+\begin{align*}
+ d(\phi(\vx), \phi(\vy)) = d(\vx, \vy)
+\end{align*}
+
+\end{definition}
+\newpar
+($\hdots$)
+\newpar
+\ul{Konsequenz:} Die Isometrien bilden einer Untergruppe der Gruppe $Bij(\bR^n)$ der Bijektiven Selbstabbildungen (= Permutationen) des Raums.
+\newpar
+\ul{Ziel:} Diese Gruppe beschreiben!
+\newpar
+Wir können das Problem vereinfachen, indem wir die Abbildung:
+\begin{align*}
+ \phi_0 : \bR^n &\to \bR^n\\
+ \phi(\vv) &\to \phi(\vz)
+\end{align*}
+betrachten, welche eine Isometrie mit $\phi_0(\vz) = \vz$ ist.
+
+\begin{definition}
+ Isometrien, für die $\phi(\vz) = \vz$ gilt, heißen \tbf{orthogonale Transformationen}. 
+\end{definition}
+\newpar
+Orthogonale Transformationen bilden eine Untergruppe der Isometrien.
+\newpar
+\begin{definition}
+Das Standardskalarprodukt, oder Euklidische Skalarprodukt, auf $\bR^n$ ist die Abbildung:
+\begin{align*}
+ \scalar : \bR^n \times \bR^n &\to \bR\\
+                    (\vx, \vy) &\to \sum_{i=1}^n x_i y_i
+\end{align*}
+\end{definition}
+\begin{anmerkung}
+\begin{align*}
+ \forall \vx \in \bR^n : ||\vx||^2 = \langle \vx, \vx \rangle
+\end{align*}
+\end{anmerkung}
+\begin{anmerkung}
+ Das Skalarprodukt hat folgende Eigenschaften:
+ \begin{enumerate}
+  \item Linearität in der ersten Komponente:
+  \begin{align*}
+   \langle \vx_1 + \lambda \vx_2, \vy \rangle = \langle \vx_1, \vy \rangle + \lambda \langle \vx_2, \vy \rangle
+  \end{align*}
+  \item Linearität in der zweiten Komponente:
+  \begin{align*}
+   \langle \vx, \vy_1 + \lambda \vy_2 \rangle = \langle \vx, \vy_1 \rangle + \lambda \langle \vx, \vy_2 \rangle
+  \end{align*}
+  \item Positive Definitheit:
+  \begin{align*}
+   \langle \vx, \vx \rangle \geq 0\\
+   \langle \vx, \vx \rangle = 0 \Leftrightarrow \vx = \vz
+  \end{align*}
+  \item Symmetrie:
+  \begin{align*}
+   \scalar{\vx}{\vy} = \scalar{\vy}{\vx}
+  \end{align*}
+  \item Verallgemeinerter Satz des Pythagoras:
+  \begin{align*}
+   || \vx + \vy ||^2 = ||\vx||^2 + 2 \scalar{\vx}{\vy} + ||\vy||^2
+  \end{align*}
+
+ \end{enumerate}
+\end{anmerkung}
+\begin{definition}
+ Zwei Vektoren $\vx, \vy$ heißen \tbf{orthogonal} zueinander, wenn 
+ \begin{align*}
+  \langle \vx, \vy \rangle = 0
+ \end{align*}
+\end{definition}
+\begin{definition}
+ Eine Basis $\vv_1, \hdots, \vv_n$ heißt \tbf{Orthonormalbasis}, wenn:
+ \begin{align*}
+   \forall i,j : \langle \vv_i \vv_j \rangle = \delta_{ij}
+ \end{align*}
+\end{definition}
+\newpar
+\ul{Motivation:}
+Wenn irgendein $\vv \in \bR$ gegeben ist, kann ich schreiben:
+\begin{align*}
+ \vv = \sum_{i = 1}^n a_i \vv_i
+\end{align*}
+Im Allgemeinen muss man ein Gleichungssystem lösen, um die $a_i$ zu finden. Bilden die $\vv_i$ eine Orthonormalbasis, ist es jedoch einfach:
+\begin{align*}
+  \scalar{\vv_j}{\vv} &= \scalar{\vv_j}{\sum a_i \vv_i}\\
+                      &= \sum a_i \scalar{\vv_j}{\vv_i}\\
+                      &= a_j
+\end{align*}
+Also gilt:
+\begin{align*}
+ \vv = \sum_i \scalar{\vv_i}{\vv} \vv_i
+\end{align*}
+Diese Technik wird im Englischen als \tbf{coefficient picking} bezeichnet.
+\begin{theorem}
+ Orthogonale Transformationen erhalten das Skalarprodukt. Wenn also $\phi$ eine orthogonale Transformation ist und $\vx, \vy \in \bR^n$ gegeben sind, gilt:
+ \begin{align*}
+  \scalar{\vx}{\vy} = \scalar{\phi(\vy)}{\phi(\vy)}
+ \end{align*}
+\end{theorem}
+\begin{proof}
+ ``Doofe Rechnung mit Pythagoras, werd ich nicht machen.''
+\end{proof}
+\begin{konsequenz}
+ \label{orthotransbasis}
+ Orthogonale Transformationen bilden Orthonormalbasen auf Orthonormalbasen ab.
+\end{konsequenz}
+\begin{proof}
+ Sei $\phi$ eine orthogonale Transformation, sei $\vv_1, \hdots, \vv_n \in \bR^n$ eine Orthonormalbasis.
+ \begin{enumerate}
+  \item Seien Indizes $i, j$ gegeben. Dann ist:
+  \begin{align*}
+   \scalar{\phi(\vv_i)}{\phi(\vv_j)} \overset{Fact}{=} \scalar{\vv_i}{\vv_j} = \delta_{ij}
+  \end{align*}
+  \item Sei eine lineare Relation der Bildvektoren gegeben, also:
+  \begin{align*}
+   \vz = \sum \lambda_i \phi(\vv_i)
+  \end{align*}
+  Dann gilt:
+  \begin{align*}
+   \vz &= \scalar{\phi(\vv_j)}{\vz}\\
+       &= \scalar{\phi(\vv_j)}{\sum \lambda_i \phi(\vv_i)}\\
+       &= \sum_i \lambda_i \scalar{\phi(\vv_j)}{\phi(\vv_i)}\\
+       &= \lambda_j
+  \end{align*}
+  Also $\forall j : \lambda_j = 0$, also bilden die Bildvektoren eine Basis.
+ \end{enumerate}
+\end{proof}
+\begin{konsequenz}
+ Orthogonaltransformationen sind linear, bilden also eine Untergruppe von $GL_n(\bR)$.
+\end{konsequenz}
+\begin{proof}
+ Die Standardbasis ist eine Orthonormalbasis, nach \ref{orthotransbasis} ist also die Bildmenge der Standardbasis unter der Orthogonaltransformation $\phi$ ebenfalls eine Orthonormalbasis. Gegeben $\vv \in \bR$ schreibe:
+ \begin{align*}
+  \phi(\vv) &= \sum_i \scalar{\phi(\ve_i)}{\phi(\vv)} \phi(\vv)\\
+  &:= \sum_i \eta_i(\vv) \phi(\vv)
+ \end{align*}
+ \ul{Beobachtung:} Es genügt nun zu zeigen, dass für alle $i$ die Abbildung $\eta_i$ linear ist. Seien also $\vv_1, \vv_2 \in \bR^n$, $\lambda \in \bR$ gegeben. Dann
+ \begin{align*}
+  \eta_i (\vv_1 + \lambda \vv_2) &= \scalar{\phi(\ve_i)}{\phi(\vv_1 + \lambda \vv_2)}\\
+  &= \scalar{\ve_i}{\vv_1 + \lambda \vv_2} \qquad\text{(Def. Orthogonaltransformationen)}\\
+  &= \scalar{\ve_i}{\vv_1} + \lambda \scalar{\ve_i}{\vv_2}\\
+  &= \scalar{\phi(\ve_i)}{\phi(\vv_1)} + \lambda \scalar{\phi(\ve_i)}{\phi(\vv_2)}\\
+ \end{align*}
+\end{proof}
+\begin{question}
+Wie können die Orthogonalen Transformationen als Matrizen beschrieben werden?
+\end{question}
+\ul{Proberechung:} Sei $\phi$ Orthogonal. Sei $B$ die Standardbasis des $\bR^n$. Dann ist:
+\begin{align*}
+ \Mat{B}{B}{\phi} = \left(\phi(\ve_1) \mid \hdots \mid \phi(\ve_n)\right)
+\end{align*}
+\ul{Beachte:} Die Spaltenvektoren bilden wieder eine Orthonormalbasis, also:
+\begin{align*}
+ \forall i,j : \scalar{\phi(\ve_i)}{\phi(\ve_j)} = \delta_{ij}
+\end{align*}
+\newpar
+Wir beachten das Produkt der Matrix mit ihrer Transponierten:
+\begin{align*}
+\Mat{B}{B}{\phi}^T \cdot \Mat{B}{B}{\phi} &= (a_{ij}) \text{ mit } a_{ij} = \scalar{\phi(\ve_i)}{\phi{\ve_j}} = \delta_ij\\
+&= E_n
+\end{align*}
+\begin{theorem}
+ Ist $A$ darstellende Matrix einer Orthogonalen Transformationen, so ist $A^{-1} = A^T$.
+\end{theorem}
+\begin{proposition}
+ Die Rückrichtung gilt auch - ist $A^{-1} = A^T$, so ist die dazugehörige Transformation orthogonal.
+\end{proposition}
+
+%
+%
+%
+%
+%
+%
 %
 %
 %

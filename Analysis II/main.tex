@@ -1,0 +1,286 @@
+\documentclass{report}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage[titles]{tocloft}
+\usepackage[titletoc]{appendix}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{pdfpages}
+\usepackage{bm}
+\usepackage{tikz-cd}
+\usepackage{physics}
+%\usepackage{bbm}
+%\usepackage{biblatex}
+%\addbibresource{bib.bib}
+
+%hyperref should be last apparently
+\usepackage{hyperref}
+
+\renewcommand\cftsecdotsep{\cftdot}
+\renewcommand\cftsubsecdotsep{\cftdot}
+\renewcommand\epsilon{\varepsilon}
+
+% Starts a new paragraph without indentation
+% and with an empty line between paragraphs
+\newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
+\newcommand{\trans}{\twoheadrightarrow}
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bQ}{\mathbb{Q}}
+\newcommand{\bR}{\mathbb{R}}
+
+\newcommand{\ve}{\vec{e}}
+\newcommand{\vv}{\vec{v}}
+\newcommand{\vw}{\vec{w}}
+\newcommand{\vx}{\vec{x}}
+\newcommand{\vy}{\vec{y}}
+\newcommand{\vz}{\vec{0}}
+
+\newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
+\newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
+
+\renewcommand*\contentsname{Inhalt}
+\renewcommand*\proofname{Beweis}
+
+\pagestyle{fancy} %allows headers
+
+\lhead{Emma Bach}
+\rhead{\today}
+
+
+\begin{document}
+% \newtheorem{codename}{printedname}[countedwith]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{theorem}[lemma]{Satz}
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{corollary}[lemma]{Korollar}
+
+
+
+\theoremstyle{definition}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{beispiel}[lemma]{Beispiel}
+\newtheorem{beobachtung}[lemma]{Beobachtung}
+\newtheorem{anmerkung}[lemma]{Anmerkung}
+\newtheorem{question}[lemma]{Frage}
+\newtheorem{application}[lemma]{Anwendung}
+\newtheorem{konsequenz}[lemma]{Konsequenz}
+%
+%
+%
+\include{title}
+\tableofcontents
+\thispagestyle{fancy}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\chapter{Wiederholung}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\chapter{Der Euklidische Raum}
+\begin{lemma}
+ Sei $(V, \scalar{\_}{\_})$ ein euklidischer Vektorraum. Dann wird durch
+ \begin{align*}
+  \norm{u} = \sqrt{\scalar{u}{u}}
+ \end{align*}
+auf $V$ eine Norm erklärt. Diese bezeichnet man als die durch das Skalarprodukt induzierte Norm.
+\end{lemma}
+\begin{definition}
+ Seu $(V, \scalar{\_}{\_})$ ein euklidischer Vektorraum, Die Vektoren $u, v \in V$ heißen \tbf{orthogonal}, wenn \begin{align*}
+   \scalar{u}{v} = 0                                                                                                                 
+ \end{align*}
+ ist. Für $u, v \in V \setminus \{0\}$ Wird die reelle Zahl
+ \begin{align*}
+  \phi = \arccos \frac{\scalar{u}{v}}{\norm{u}\ \norm{v}}
+ \end{align*}
+ als der Winkel zwischen $u$ und $v$ bezeichnet.
+\end{definition}
+\begin{anmerkung}
+ Es gilt
+ \begin{align*}
+  \frac{\abs{\scalar{u}{v}}}{\norm{u}\ \norm{v}} \leq 1
+ \end{align*}
+\end{anmerkung}
+\begin{lemma}
+\label{lemma:normequiv}
+ Für $X = (x_1, \hdots, x_n) \in \bR^n$ sei
+ \begin{align*}
+  \norm{X}_{\max} := \max\{\abs{x_1}, \hdots, \abs{x_n}\}
+ \end{align*}
+ Dann ist $||\_||_{\max}$ eine Norm auf $\bR^n$ und es gilt
+ \begin{align*}
+  \norm{X}_{\max} \leq \norm{X} \leq \sqrt{n}\norm{X}_{\max}
+ \end{align*}
+\end{lemma}
+\begin{theorem}
+Die Menge $\bQ^n$ der Punkte mit rational Koordinaten ist dicht in $\bR^n$.
+\end{theorem}
+\begin{proof}
+Sei $X \in \bR^n$ und $\epsilon \in \bR^+$. Da $\bQ$ dicht in $\bR$ ist gilt
+\begin{align*}
+ \forall i \in \{1, \hdots, n\} : \exists y_i \in \bQ : \abs{x_i - y_i} \leq \frac{\epsilon}{\sqrt{n}}
+\end{align*}
+Durch Lemma \ref{lemma:normequiv} folgt:
+\begin{align*}
+ \norm{x-y} \leq \sqrt{n}\norm{X - Y} < \epsilon
+\end{align*}
+\end{proof}
+\begin{theorem}
+\label{theorem:componentcauchy}
+ Sei $(X_k)_{k \in \bN}$ eine Folge aus $\bR^n$. Sei $X_k = (x_1^{(k)}, \hdots, x_n^{(k)})$. Dann gilt:
+ \begin{align*}
+  \lim_{k \to \infty} X_k = X \Leftrightarrow \forall i : \lim_{k \to \infty} x_i^{(k)} = x_i
+ \end{align*}
+ Insbesondere ist $X_k$ eine Cauchyfolge, wenn die Komponenten Cauchyfolgen sind.
+\end{theorem}
+\begin{proof}
+ $X_k \to X$, $i \in \{1, \hdots, n\}$, $\epsilon \in \bR^+$. Dann gilt
+ \begin{align*}
+  \exists k_o \in \bN : \forall k \geq k_0 : \norm{X_k - X} \leq \epsilon \implies \forall i : \abs{x_i^{(k)} - x_i} < \epsilon \implies \lim_{k \to \infty} x_i^{(k)} = x_i
+ \end{align*}
+ Und umgekehrt:
+ \begin{align*}
+  \forall i : x_i^{(k)} \to x_i, \epsilon \in \bR^+ \implies \exists k_0^i \in \bN : \forall k \geq k_0^i \abs{x_i^{(k)} - x_i} \leq \frac{\epsilon}{\sqrt{n}}
+ \end{align*}
+ \[
+  k_0 := \max\{k_0^n, \hdots, k_0^n\} \implies \forall k \geq k_0 : \abs{x_i^{(k)} - x_i} < \frac{\epsilon}{\sqrt{n}} \implies \norm{X_k - X} \leq \sqrt{n}\norm{X_k - X} < \epsilon
+ \]
+\end{proof}
+\begin{theorem}
+ Für konvergente Folgen $(X_k),(Y_k) \in \bR^n$, $(\lambda_k) \in \bR$ gilt:
+\begin{align}
+ \lim_{k \to \infty} (X_k + Y_k) = \lim_{k \to \infty} X_k + \lim_{k \to \infty} Y_k\\
+ \lim_{k \to \infty} \lambda_k X_k = \left(\lim_{k \to \infty} \lambda_k\right)\left(\lim_{k \to \infty}
+ X_k\right)\\
+ \lim_{k \to \infty} \scalar{X_k}{Y_k} = \scalar{\lim_{k \to \infty} X_k}{\lim_{k \to \infty} Y_k}
+\end{align}
+\end{theorem}
+\begin{theorem}
+ $\bR^n$ ist vollständig.
+\end{theorem}
+\begin{proof}
+Ist $X_k$ eine Cauchyfolge in $\bR^n$, so sind nach Satz \ref{theorem:componentcauchy} alle Teilfolgen Cauchy in $\bR$. Also:
+\begin{align*}
+ \exists x_i \in \bR : x_i^{(k)} \to x_i \implies \exists X \in \bR^n : X_k \to X
+\end{align*}
+\end{proof}
+\begin{theorem}
+\emph{\textbf{(Bolzano-Weierstrass:)}} Jede beschränkte Folge in $\bR^n$ besitzt eine konvergente Teilfolge.
+\end{theorem}
+\begin{proof}
+ Sei $(X_k)$ eine beschränkte Folge in $\bR^n$. Nach \ref{lemma:normequiv} müssen die Komponentenfolgen ebenfalls beschränkt sein. Nach dem eindimensionalen Fall des Satzes von Bolzano-Weierstrass existieren also konvergente Teilfolgen der Koordinatenfolgen. Angenommen, die konvergente Teilfolge der ersten Komponente ist gegeben durch $x_1^{(k_n)} \to x_1$. So ist $x_2^{(k_n)}$ ebenfalls eine beschränkte Teilfolge, also existiert eine Teilfolge $x_2^{(k_n)_m}$ welche in den ersten beiden Komponenten konvergiert. Führt man dieses Verfahren induktiv fort, erhält man eine konvergente Teilfolge von $(X_k)$.
+\end{proof}
+\begin{theorem}
+ Sei $(A_i)_{i \in \bN}$ eine Folge abgeschlossener beschränkter nichtleerer Teilmengen des $\bR^n$, sodass $A_1 \supseteq A_2 \supseteq \hdots$ Dann ist $\bigcap_{i \in \bN} \neq \emptyset$
+\end{theorem}
+\begin{proof}
+ $A_i \neq \emptyset \implies \exists X_i \in A$ sd. $(X_i)_{i \in \bN}$ eine Folge ist. Da $A_i$ beschränkt ist ist $(X_i)_{i \in \bN}$ beschränkt, also hat $X_i$ eine konvergente Teilfolge $X_{i_k}$ mit Limes $X$. Es gilt $X_{i_k} \in A_{i_k} \subseteq A_i$, also ist $X$ ein Berührpunkt von $A_i$, also $X \in A_i$.
+\end{proof}
+\begin{theorem}
+ Jede abgeschlossene beschränkte Teilmenge des $\bR^n$ ist kompakt.
+\end{theorem}
+\begin{proof}
+ Analog zur eindimensionalen Version, wobei statt Intervallen $[a_i,b_i]$ Hyperwürfel $[a_i^{(1)}, b_i^{(1)}] \times \hdots \times [a_i^{(n)}, b_i^{(n)}]$ genutzt werden müssen.
+\end{proof}
+\begin{theorem}
+\label{theorem:allnormsequiv}
+ Seien $\norm{\_}_1$ und $\norm{\_}_2$ Normen auf $\bR^n$. So existieren $k, K \in \bR^+$ mit
+ \begin{align*}
+  \forall X \in \bR^n : k\norm{X}_1 \leq \norm{X}_2 \leq K\norm{X}_1
+ \end{align*}
+\end{theorem}
+\begin{proof}
+Diese Normenäquivalenz bildet eine Äquivalenzrelation. Es reicht also, zu zeigen, dass jede Norm $||\_||_2$ äquivalent zu einer spezifischen Norm $\norm{\_}_1$ ist. Wir wählen $\norm{\_}_{\max}$.\\
+Sei $(E_i)$ die Standardbasis des $\bR^n$. Wir definieren:
+\begin{align*}
+ K := \norm{E_1}_2 + \hdots + \norm{E_n}_2
+\end{align*}
+Dann gilt:
+\begin{align*}
+ \norm{X}_2 &= \norm{x_1 E_1 + \hdots + x_n E_n}\\
+         &\leq \abs{x_1}\norm{E_1}_2 + \hdots + \abs{x_n} \norm{E_n}_2\\
+         &\leq \norm{X}_{\max} K \quad ^\text{[citation needed]}
+\end{align*}
+Es bleibt die Rückrichtung zu zeigen. 
+\begin{lemma}
+ $f(X) := \norm{X}_2$ ist stetig.
+\end{lemma}
+\begin{proof}
+\begin{align*}
+ \abs{\norm{X}_2 - \norm{Y}_2} \leq \norm{X - Y}_2 \leq K\norm{X - Y}_{\max} \leq K \norm{X - Y}
+\end{align*}
+Also ist $\norm{\_}_2$ stetig bezüglich der euklidischen Norm $\norm{\_}$.
+\end{proof}
+Wir definieren nun:
+\begin{align*}
+ A := \{X \in \bR^n \mid ||X||_{\max} = 1\}
+\end{align*}
+Diese Menge ist beschränkt. Wir wollen Zeigen, dass sie außerdem abgeschlossen ist. Sei $X_i \to X$, $X_i \in A$. Es gilt:
+\begin{align*}
+  \abs{\norm{X_i}_{\max} - \norm{X}_{\max}} \leq \norm{X_i - X}_{\max} \leq \norm{X_i - X}
+\end{align*}
+Also konvergiert jede Menge, also ist $A$ kompakt, also auch abgeschlossen. Dementsprechend muss $f$ auf $A$ ein Minimum $k$ annehmen. Wir wissen $f \geq 0$, also ist$k \geq 0$. Es gilt sogar $k > 0$, da keiner der Vektoren in $A$ der Nullvektor ist. Nun gilt also $\forall X \in A : ||X||_2 \geq k$. Wir definieren:
+\begin{align*}
+ \lambda := \frac{1}{\norm{X}_{\max}}
+\end{align*}
+\begin{align*}
+ \norm{\lambda X}_{\max} = \abs{\lambda} \norm{X}_{\max} = 1 
+\end{align*}
+\begin{align*}
+ |\lambda| \norm{X}_2 = \norm{\lambda X}_2 \geq k \implies \norm{X_2} \geq k \norm{X}_{\max}
+\end{align*}
+\end{proof}
+\begin{anmerkung}
+ Im unendlichdimensionalen Fall gilt Satz \ref{theorem:allnormsequiv} nicht.
+\end{anmerkung}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\section{Abbildungen und Koordinatenfunktionen auf $\bR^n$}
+In diesem Abschnitt betrachten wir Funktionen $F: \bR^n \to \bR^k$. Betrachten wir zuerst den Spezialfall Linearer Funktionen, also $\forall X,Y \in \bR^n : \forall \lambda, \mu \in \bR : F(\lambda X + \mu Y) = \lambda F(X) + \mu F(Y)$.
+\newpar
+Sei $(E_i)$ die Standardbasis des $\bR^n$ und sei $(E_i')$ die Standardbasis des $\bR^k$. Nun gilt:
+\begin{align*}
+ F(E_j) = \sum_{i=1}^k a_{ij} E_i'
+\end{align*}
+Daraus erhalten wir Koeffizienten $a_{ij}$, welche eine Matrix bilden. Umgekehrt können wir aus den Koeffizienten die Abbildung $F$ rekonstruieren, indem wir definieren:
+\begin{align*}
+ F(X) &= F\left(\sum_{j=1}^n x_j E_j\right) \\
+ &= \sum x_j F(E_j) \\
+ &= \sum_{j=1}^n x_j \sum_{i=1}^k a_{ij} E_i'\\
+ &= \sum_{i=1}^k \left(\sum_{j=1}^n a_{ij} x_j\right) E_i'
+\end{align*}
+
+\end{document}
