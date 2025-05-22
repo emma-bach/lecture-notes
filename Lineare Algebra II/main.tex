@@ -10,12 +10,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{pdfpages}
-\usepackage{bm}
-\usepackage{tikz-cd}
-%\usepackage{bbm}
-%\usepackage{biblatex}
-%\addbibresource{bib.bib}
+\usepackage{tikz-cd} % commutative diagrams
+\usepackage{physics} % \abs and \norm macros
 
 %hyperref should be last apparently
 \usepackage{hyperref}
@@ -35,13 +31,22 @@
 \newcommand{\bC}{\mathbb{C}}
 \newcommand{\bF}{\mathbb{F}}
 \newcommand{\bN}{\mathbb{N}}
+\newcommand{\bQ}{\mathbb{Q}}
 \newcommand{\bR}{\mathbb{R}}
 
+%\newcommand{\va}{\vec{a}}
+%newcommand{\vb}{\vec{b}}
+\newcommand{\vc}{\vec{c}}
+\newcommand{\ve}{\vec{e}}
 \newcommand{\vv}{\vec{v}}
 \newcommand{\vw}{\vec{w}}
+\newcommand{\vx}{\vec{x}}
+\newcommand{\vy}{\vec{y}}
 \newcommand{\vz}{\vec{0}}
 
 \newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
+\newcommand{\Matnn}{\text{Mat}(n \times n)}
+\newcommand{\scalar}[2]{\langle #1, #2 \rangle}
 
 \renewcommand*\contentsname{Inhalt}
 \renewcommand*\proofname{Beweis}
@@ -68,6 +73,7 @@
 \newtheorem{anmerkung}[lemma]{Anmerkung}
 \newtheorem{question}[lemma]{Frage}
 \newtheorem{application}[lemma]{Anwendung}
+\newtheorem{konsequenz}[lemma]{Konsequenz}
 %
 %
 %
@@ -631,8 +637,536 @@ Sei $A$ eine $n \times n$-Matrix über $\bC$. Sei $m_i$ der längste Jordanblock
  p(t) = \sum_{i=1}^{d} (t - \lambda_i)^{m_i}
 \end{align*}
 \end{corollary}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
 \chapter{Euklidische und Hermitische Vektorräume}
+\begin{definition}
+ Die folgende Abbildung $||\bR^n|| \to \bR$ nennen wir die \tbf{Euklidische Norm}:
+ \begin{align*}
+  || \cdot || : \bR^n &\to \bR\\
+  \vx &\to \sqrt{\sum x_i^2}
+ \end{align*}
+\end{definition}
 
+\begin{definition}
+Wir nennen eine Abbildung $\phi$ eine \tbf{Isometrie}, wenn sie metrikerhaltend ist, also:
+\begin{align*}
+ d(\phi(\vx), \phi(\vy)) = d(\vx, \vy)
+\end{align*}
+
+\end{definition}
+\newpar
+($\hdots$)
+\newpar
+\ul{Konsequenz:} Die Isometrien bilden einer Untergruppe der Gruppe $Bij(\bR^n)$ der Bijektiven Selbstabbildungen (= Permutationen) des Raums.
+\newpar
+\ul{Ziel:} Diese Gruppe beschreiben!
+\newpar
+Wir können das Problem vereinfachen, indem wir die Abbildung:
+\begin{align*}
+ \phi_0 : \bR^n &\to \bR^n\\
+ \phi(\vv) &\to \phi(\vz)
+\end{align*}
+betrachten, welche eine Isometrie mit $\phi_0(\vz) = \vz$ ist.
+
+\begin{definition}
+ Isometrien, für die $\phi(\vz) = \vz$ gilt, heißen \tbf{orthogonale Transformationen}. 
+\end{definition}
+\newpar
+Orthogonale Transformationen bilden eine Untergruppe der Isometrien.
+\newpar
+\begin{definition}
+Das Standardskalarprodukt, oder Euklidische Skalarprodukt, auf $\bR^n$ ist die Abbildung:
+\begin{align*}
+ \scalar : \bR^n \times \bR^n &\to \bR\\
+                    (\vx, \vy) &\to \sum_{i=1}^n x_i y_i
+\end{align*}
+\end{definition}
+\begin{anmerkung}
+\begin{align*}
+ \forall \vx \in \bR^n : ||\vx||^2 = \langle \vx, \vx \rangle
+\end{align*}
+\end{anmerkung}
+\begin{anmerkung}
+ Das Skalarprodukt hat folgende Eigenschaften:
+ \begin{enumerate}
+  \item Linearität in der ersten Komponente:
+  \begin{align*}
+   \langle \vx_1 + \lambda \vx_2, \vy \rangle = \langle \vx_1, \vy \rangle + \lambda \langle \vx_2, \vy \rangle
+  \end{align*}
+  \item Linearität in der zweiten Komponente:
+  \begin{align*}
+   \langle \vx, \vy_1 + \lambda \vy_2 \rangle = \langle \vx, \vy_1 \rangle + \lambda \langle \vx, \vy_2 \rangle
+  \end{align*}
+  \item Positive Definitheit:
+  \begin{align*}
+   \langle \vx, \vx \rangle \geq 0\\
+   \langle \vx, \vx \rangle = 0 \Leftrightarrow \vx = \vz
+  \end{align*}
+  \item Symmetrie:
+  \begin{align*}
+   \scalar{\vx}{\vy} = \scalar{\vy}{\vx}
+  \end{align*}
+  \item Verallgemeinerter Satz des Pythagoras:
+  \begin{align*}
+   || \vx + \vy ||^2 = ||\vx||^2 + 2 \scalar{\vx}{\vy} + ||\vy||^2
+  \end{align*}
+
+ \end{enumerate}
+\end{anmerkung}
+\begin{definition}
+ Zwei Vektoren $\vx, \vy$ heißen \tbf{orthogonal} zueinander, wenn 
+ \begin{align*}
+  \langle \vx, \vy \rangle = 0
+ \end{align*}
+\end{definition}
+\begin{definition}
+ Eine Basis $\vv_1, \hdots, \vv_n$ heißt \tbf{Orthonormalbasis}, wenn:
+ \begin{align*}
+   \forall i,j : \langle \vv_i \vv_j \rangle = \delta_{ij}
+ \end{align*}
+\end{definition}
+\newpar
+\ul{Motivation:}
+Wenn irgendein $\vv \in \bR$ gegeben ist, kann ich schreiben:
+\begin{align*}
+ \vv = \sum_{i = 1}^n a_i \vv_i
+\end{align*}
+Im Allgemeinen muss man ein Gleichungssystem lösen, um die $a_i$ zu finden. Bilden die $\vv_i$ eine Orthonormalbasis, ist es jedoch einfach:
+\begin{align*}
+  \scalar{\vv_j}{\vv} &= \scalar{\vv_j}{\sum a_i \vv_i}\\
+                      &= \sum a_i \scalar{\vv_j}{\vv_i}\\
+                      &= a_j
+\end{align*}
+Also gilt:
+\begin{align*}
+ \vv = \sum_i \scalar{\vv_i}{\vv} \vv_i
+\end{align*}
+Diese Technik wird im Englischen als \tbf{coefficient picking} bezeichnet.
+\begin{theorem}
+ Orthogonale Transformationen erhalten das Skalarprodukt. Wenn also $\phi$ eine orthogonale Transformation ist und $\vx, \vy \in \bR^n$ gegeben sind, gilt:
+ \begin{align*}
+  \scalar{\vx}{\vy} = \scalar{\phi(\vy)}{\phi(\vy)}
+ \end{align*}
+\end{theorem}
+\begin{proof}
+ ``Doofe Rechnung mit Pythagoras, werd ich nicht machen.''
+\end{proof}
+\begin{konsequenz}
+ \label{orthotransbasis}
+ Orthogonale Transformationen bilden Orthonormalbasen auf Orthonormalbasen ab.
+\end{konsequenz}
+\begin{proof}
+ Sei $\phi$ eine orthogonale Transformation, sei $\vv_1, \hdots, \vv_n \in \bR^n$ eine Orthonormalbasis.
+ \begin{enumerate}
+  \item Seien Indizes $i, j$ gegeben. Dann ist:
+  \begin{align*}
+   \scalar{\phi(\vv_i)}{\phi(\vv_j)} \overset{Fact}{=} \scalar{\vv_i}{\vv_j} = \delta_{ij}
+  \end{align*}
+  \item Sei eine lineare Relation der Bildvektoren gegeben, also:
+  \begin{align*}
+   \vz = \sum \lambda_i \phi(\vv_i)
+  \end{align*}
+  Dann gilt:
+  \begin{align*}
+   \vz &= \scalar{\phi(\vv_j)}{\vz}\\
+       &= \scalar{\phi(\vv_j)}{\sum \lambda_i \phi(\vv_i)}\\
+       &= \sum_i \lambda_i \scalar{\phi(\vv_j)}{\phi(\vv_i)}\\
+       &= \lambda_j
+  \end{align*}
+  Also $\forall j : \lambda_j = 0$, also bilden die Bildvektoren eine Basis.
+ \end{enumerate}
+\end{proof}
+\begin{konsequenz}
+ Orthogonaltransformationen sind linear, bilden also eine Untergruppe von $GL_n(\bR)$.
+\end{konsequenz}
+\begin{proof}
+ Die Standardbasis ist eine Orthonormalbasis, nach \ref{orthotransbasis} ist also die Bildmenge der Standardbasis unter der Orthogonaltransformation $\phi$ ebenfalls eine Orthonormalbasis. Gegeben $\vv \in \bR$ schreibe:
+ \begin{align*}
+  \phi(\vv) &= \sum_i \scalar{\phi(\ve_i)}{\phi(\vv)} \phi(\vv)\\
+  &:= \sum_i \eta_i(\vv) \phi(\vv)
+ \end{align*}
+ \ul{Beobachtung:} Es genügt nun zu zeigen, dass für alle $i$ die Abbildung $\eta_i$ linear ist. Seien also $\vv_1, \vv_2 \in \bR^n$, $\lambda \in \bR$ gegeben. Dann
+ \begin{align*}
+  \eta_i (\vv_1 + \lambda \vv_2) &= \scalar{\phi(\ve_i)}{\phi(\vv_1 + \lambda \vv_2)}\\
+  &= \scalar{\ve_i}{\vv_1 + \lambda \vv_2} \qquad\text{(Def. Orthogonaltransformationen)}\\
+  &= \scalar{\ve_i}{\vv_1} + \lambda \scalar{\ve_i}{\vv_2}\\
+  &= \scalar{\phi(\ve_i)}{\phi(\vv_1)} + \lambda \scalar{\phi(\ve_i)}{\phi(\vv_2)}\\
+ \end{align*}
+\end{proof}
+\begin{question}
+Wie können die Orthogonalen Transformationen als Matrizen beschrieben werden?
+\end{question}
+\ul{Proberechung:} Sei $\phi$ Orthogonal. Sei $B$ die Standardbasis des $\bR^n$. Dann ist:
+\begin{align*}
+ \Mat{B}{B}{\phi} = \left(\phi(\ve_1) \mid \hdots \mid \phi(\ve_n)\right)
+\end{align*}
+\ul{Beachte:} Die Spaltenvektoren bilden wieder eine Orthonormalbasis, also:
+\begin{align*}
+ \forall i,j : \scalar{\phi(\ve_i)}{\phi(\ve_j)} = \delta_{ij}
+\end{align*}
+\newpar
+Wir beachten das Produkt der Matrix mit ihrer Transponierten:
+\begin{align*}
+\Mat{B}{B}{\phi}^T \cdot \Mat{B}{B}{\phi} &= (a_{ij}) \text{ mit } a_{ij} = \scalar{\phi(\ve_i)}{\phi{\ve_j}} = \delta_ij\\
+&= E_n
+\end{align*}
+\begin{theorem}
+ Ist $A$ darstellende Matrix einer Orthogonalen Transformationen, so ist $A^{-1} = A^T$.
+\end{theorem}
+\begin{proposition}
+ Die Rückrichtung gilt auch - ist $A^{-1} = A^T$, so ist die dazugehörige Transformation orthogonal.
+\end{proposition}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\section{Bilinearformen}
+\begin{definition}
+ Sei $k$ ein Körper, $V$ ein Vektorraum. Eine Abbildung $b : V \times V \to k$ heißt \tbf{Bilinearform}, falls gilt:
+ \begin{enumerate}
+  \item Linearität in der ersten Komponente
+  \item Linearität in der zweiten Komponente
+ \end{enumerate}
+\end{definition}
+\begin{beispiel}
+\begin{enumerate}
+ \item Das Standardskalarprodukt des $\bR^n$
+ \item Für $A \in (n \times n, k)$ die Abbildung $b : (\vx, \vy) \to \vx^\top A \vy$
+\end{enumerate}
+\end{beispiel}
+\begin{definition}
+ Wir nennen eine Bilinearform $b$ symmetrisch, wenn $\forall \vx, \vy \in V : b(\vx, \vy) = b(\vy, \vx)$
+\end{definition}
+\begin{question}
+ Für welche Matrizen ist die Bilinearform $\vx^\top A \vy$ symmetrisch?
+\end{question}
+\hspace{-14pt}\ul{Antwort}: Die Bilinearform zu $A$ ist genau dann symmetrisch, wenn die Matrix symmetrisch ist, also $A = A^\top$.
+\begin{definition}
+ Wir nennen eine Bilinearform $b : V \times V \to k$ \tbf{positiv semidefinit}, wenn $\forall \vx : b(\vx,\vx) \geq 0$. Wir nennen sie \tbf{positiv definit}, wenn $\forall \vx \neq 0 : b(\vx, \vx) > 0$
+\end{definition}
+\hspace{-14pt}\ul{Problem}: Auf den meisten Körpern $k$ existiert keine Totalordnung! Dementsprechend definieren wir positive Definitheit nur für $k \subseteq \bR$).
+\begin{beobachtung}
+ Die Bilinearformen bilden einen Vektorraum über $k$ (einen Untervektorraum des $k$-Vektorraums der Abbildungen $V \times V \to k$).
+\end{beobachtung}
+\begin{beobachtung}
+ Die symmetrischen Bilinearformen bilden einen Untervektorraum des Raums der Bilinearformen.
+\end{beobachtung}
+\begin{beobachtung}
+ Die positiv definiten Bilinearformen sind im Vektorraum aller Bilinearformen abgeschlossen unter Addition und unter Skalarmultiplikation mit \tbf{nichtnegativen} Skalaren. Sie bilden dementsprechend keinen Untervektorraum, aber immerhin einen konvexen Kegel.
+\end{beobachtung}
+\begin{definition}
+ Sei $k \subseteq \bR$. Ein Skalarprodukt auf einem $k$-Vektorraum $V$ ist eine symmetrische, positiv definite Bilinearform.
+\end{definition}
+\begin{beispiel}
+ Das Euklidische Skalarprodukt auf dem $\bR^n$.
+\end{beispiel}
+\begin{beispiel}
+ $V = \mathcal{C}([0,1])$ (Stetige Funktionen auf $[0,1]$), dann können wir ein Skalarprodukt $\scalar{\_}{\_}$ definieren als:
+ \begin{align*}
+  \scalar{\_}{\_} : V \times V &\to \bR\\
+  (f,g) &\to \int_{0}^1 f g dx\\
+ \end{align*}
+\end{beispiel}
+\begin{beobachtung}
+ Sei $k$ ein Körper, $V$ ein endlichdimensionaler $k$-Vektorraum, $B = \{\vv_1, \hdots, \vv_n\}$ eine angeordnete Basis mit Koordinatenabbildung $\phi_B : V \to k^n$. Wir haben zwei Konstruktionen:
+ \begin{enumerate}
+  \item \begin{align*}
+         \text{Mat}_B: \{\text{Bilinearform}\} &\to \text{Mat}(n \times n)\\
+         b &\to (b(\vv_i, \vv_j))_{i,j}
+        \end{align*}
+  \item \begin{align*}
+         S_B : \text{Mat}(n \times n) &\to \{\text{Bilinearformen}\}\\
+         A &\to ((\vx,\vy) \to \phi_B(\vx)^\top A \phi_B(\vy))
+        \end{align*}
+ \end{enumerate}
+\end{beobachtung}
+\begin{proposition}
+ $\text{Mat}_B$ und $S_B$ sind inverse zueinander. Insbesondere ist dementsprechend die Dimension der $V$-Bilinearformen gleich der Dimension der $V$-Matrizen, also $\dim(V)^2$. 
+\end{proposition}
+\begin{corollary}
+ Gleichzeitig identifizieren diese Isomorphismen direkt symmetrische Bilinearformen mit symmetrischen Matrizen, also $\dim(\text{symmetrische Bilinearformen}) = \dim(\text{symmetrische Matrizen}) = \sum_{k=1}^n k = \frac{n(n+1)}{2}$
+\end{corollary}
+\begin{question}
+ Wie genau hängt die Matrix von der Wahl der Basis ab?
+\end{question}
+\hspace{-14pt}\ul{Antwort:} Seien $B_1$ und $B_2$ angeordnete Basen mit Basiswechselmatrix $S = \Mat{B_1}{B_2}{\text{id}_V}$ und kommutativem Diagramm:
+\begin{figure}[h!]
+\centering
+\begin{tikzcd}[row sep = huge, column sep = huge]
+k^n
+\arrow[r, "\vv \to S \cdot \vv"]
+& k^n\\
+V
+\arrow[u, "\phi_{B_1}"]
+\arrow[r,"\text{id}_V"]
+&  V
+\arrow[l,""]
+\arrow[u, "\phi_{B_2}"]
+\end{tikzcd}
+\end{figure}
+\newpar
+Sei $b : V \times V \to k$ eine Bilinearform. \ul{Erinnerung:} Die Matrix $\Mat{}{B_1}{b}$ ist eindeutig dadurch festgelegt, dass $\forall \vx \to \vy \in V : b(\vx, \vy) = \phi_{B_1}(\vx) \cdot \Mat{}{B_1}{b} \cdot \phi_{B_2}(\vy)$. Ebenso $\Mat{}{B_2}{b}$. Also:
+\begin{align*}
+ \forall \vv \in V: \phi_{B_2}(\vv) &= S \phi_{B_1}(\vv)\\
+ &= (S \phi_{B_1}(\vx))^\top \Mat{}{B_2}{b} S \phi_{B_1}(\vy))
+\end{align*}
+Also gilt 
+\begin{align*}
+ \Mat{}{B_1}{b} = S^\top \Mat{}{B_2}{b} S
+\end{align*}
+Dies erinnert natürlich stark an Ähnlichkeit von Darstellungsmatrizen von Endomorphismen, allerdings wird das Inverse durch eine Transponierte ersetzt! Das ist natürlich einfacher als das Invertieren, Basiswechsel von Bilinearformen ist dementsprechend einfacher als Basiswechsel von Endomorphismen.
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\section{Hermitische Sesquilinearformen}
+\ul{\tbf{Problem:}} Reelle Vektorräume sind kompliziert (Das Problem ``Wie viele reelle Nullstellen hat ein Polynom'' ist NP-Vollständig!!!) Vieles wird einfacher, wenn man über den komplexen Zahlen arbeitet. 
+\newpar
+Allerdings konnten wir über $\bC$ bisher zum Beispiel nicht die positive Definitheit definieren. Wir wollen nun die Definition von Bilinearformen und Symmetrie ändern, damit sie sich besser mit den komplexen Zahlen vertragen.
+\begin{definition}
+ Sei $V$ ein $\bC$-Vektorraum. Eine Sesquilinearform ist eine Abbildung $b : V \times V \to \bC$, sodass gilt:
+ \begin{enumerate}
+  \item Linearität in der ersten Komponente
+  \item Sesquilinearität in der zweiten Komponente:
+  \begin{align*}
+   \forall \vec{a}, \vec{b}, \vc \in V : \forall \lambda \in \bC : b(\vec{a}, \vec{b} + \lambda \vc) = b(\vec{a}, \vec{b}) + \overline{\lambda}b(\vec{a}, \vc)
+  \end{align*}
+  (Der skalare Faktor $\lambda$ wird also komplex konjugiert.)
+ \end{enumerate}
+\end{definition}
+\begin{beispiel}
+ Die Standardsesquilinearform auf $\bC^n$:
+ \begin{align*}
+  \scalar{\_}{\_}  : \bC^n \times \bC^n &\to \bC\\
+  (\vx, \vy) &\to \sum x_i \overline{y_i}\\
+ \end{align*}
+\end{beispiel}
+\begin{beispiel}
+ Sei $A \in \Matnn$. Dann betrachte:
+ \begin{align*}
+  b : \bC^n \times \bC^n &\to \bC\\
+  (\vx, \vy) &\to \vx^\top A \overline{\vy}\\
+ \end{align*}
+\end{beispiel}
+\begin{definition}
+ Eine Sesquilinearform heißt \tbf{Hermitsch}, falls:
+ \begin{align*}
+  \forall \vx, \vy \in V : b(\vx, \vy) = \overline{b(\vy, \vx)}
+ \end{align*}
+\end{definition}
+\begin{proposition}
+ Eine Sesquilinearform ist genau dann Hermitsch, wenn $A^\top = \overline{A}$.
+\end{proposition}
+\begin{beobachtung}
+ In einer darstellenden Matrix einer hermitschen Sesquilinearform müssen also die Diagonalelemente reell sein!
+\end{beobachtung}
+\begin{beobachtung}
+ Wenn $b : V \times V \to \bC$ hermitsch ist, so gilt:
+ \begin{align*}
+  b(\vx, \vx) = \overline{b(\vx, \vx)}
+ \end{align*}
+ Also ist das Bild eines Vektors mit sich selbst reell - also haben wir für komplexe Sesquilinearformen nicht das Problem der Definition von Definitheit, welches wir für Bilinearformen hatten!
+\end{beobachtung}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\section{Unitäre und Euklidische Vektorräume}
+\begin{definition}
+ Ein \tbf{Euklidischer Vektorraum} ist ein $\bR$-Vektorraum mit Skalarprodukt. Ein \tbf{Unitärer Vektorraum} ist ein $\bC$-Vektorraum mit Skalarprodukt.
+\end{definition}
+\begin{definition}
+ Sei $V$ ein $k$-Vektorraum, wobei $k \subset \bC$ (typischerweise $\bQ, \bR$ oder $\bC$). Eine \tbf{Norm} auf $V$ ist eine Abbildung $\norm{\_,\_} : V \times V \to k$ mit folgenden Eigenschaften:
+ \begin{enumerate}
+  \item Absolute Homogenität:
+  \begin{align*}
+   \forall \vv \in V : \forall \lambda \in k : \norm{\lambda \cdot \vv} = \abs{\lambda} \cdot \norm{\vv}
+  \end{align*}
+  \item Dreiecksungleichung:
+  \begin{align*}
+   \norm{\vx + \vy} \leq \norm{\vx} + \norm{\vy}
+  \end{align*}
+  \item Positive Definitheit\footnote{Hier anders formuliert als für allgemeine Bilinearformen, denn Nichtgegativität folgt bereits aus Dreiecksungleichung}:
+  \begin{align*}
+   \norm{\vx} = 0 \Leftrightarrow \vx = \vz
+  \end{align*}
+ \end{enumerate}
+\end{definition}
+\begin{beispiel}
+ Sei $V$ ein Euklidischer oder Unitärer Vektorraum mit Skalarprodukt $\scalar{\_}{\_}$. Dann gelten:
+ \begin{enumerate}
+  \item Cauchy-Schwarz:
+  \begin{align*}
+   \forall \vx : \forall \vy : \abs{\scalar{\vx}{\vy}} \leq \sqrt{\scalar{\vx}{\vx}} \sqrt{\scalar{\vy}{\vy}}
+  \end{align*}
+  \item Satz des Pythagoras:
+  \begin{align*}
+   \forall \vx : \forall \vy : \norm{\vx + \vy}^2 = \norm{\vx}^2 + 2 \Re\scalar{\vx}{\vy} + \norm{\vy}^2
+  \end{align*}
+ \end{enumerate}
+\end{beispiel}
+\begin{beispiel}
+ \tbf{\ul{Operatornorm:}}
+ Seien $V$, $W$ zwei endlichdimensionale $k$-Vektorräume mit Normen $\norm{}_V$ und $\norm{}_W$. Dann definieren folgende Norm auf den linearen Abbildungen $Hom(V,W)$:
+ \begin{align*}
+  \norm{}_{op} : Hom(V,W) &\to \bR\\
+  f &\to \max \{\norm{f(\vv)}_W\}\\
+ \end{align*}
+\end{beispiel}
+\newpar
+ \ul{Nachrechnen:} Diese Operatornorm ist tatsächlich eine Norm, insbesondere kann tatsächlich von einem Maximum statt einem Supremum gesprochen werden.
+ \newpar
+ \ul{Spezialfall}: $W = k$. Dann ist $Hom(V,W) = V^*$ der \tbf{Dualraum}. Durch die Operatornorm erhält man aus einer beliebigen Norm auf $V$ eine Norm auf dem Dualraum.
+ \begin{beispiel}
+ \tbf{\ul{``Mannheim-Norm:''}}
+ \begin{align*}
+  \norm{}_{0} : \bR^n &\to \bR\\
+  X &\to \sum_{i} \abs{x_i}
+ \end{align*}
+ \end{beispiel}
+  \begin{beispiel}
+ \tbf{\ul{Maximumsnorm:}}
+ \begin{align*}
+  \norm{}_{\infty} : \mathcal{C}([0,1], \bR) &\to \bR\\
+  f &\to \max \{|f(z)|\}
+ \end{align*}
+ \end{beispiel}
+ \newpar
+ \ul{Provokation:} Die Beispiele fügen sich in zwei unendliche Reihen - eine für Summen und eine für Integrale - ein. Es existieren also zwei Normen $\norm{}_n$ für jedes $n \in \bN$.
+ \newpar
+ \ul{Frage:} Kommt die Mannheim-Norm von einem Skalarprodukt?
+ \begin{beispiel}
+  Sei $V$ ein Vektorraum und $\norm{} : V \to \bR$ eine Norm. Sei $W$ ein Untervektorraum von $V$. Dann ist die Einschränkung $\norm{}_W : W \to \bR$ wieder eine Norm.
+ \end{beispiel}
+ \begin{definition}
+  Ein \tbf{normierter Vektorraum} ist ein Vektorraum mit einer Norm. Ein Vektor aus einem normiertern Vektorraum heißt normiert, wenn er Norm $1$ hat.
+ \end{definition}
+\section{Metriken}
+\begin{definition}
+ Sei $M$ eine Menge. Eine Metrik ist eine Abbildung $d : M \times M \to \bR$, sodass gilt:
+ \begin{enumerate}
+  \item Symmetrie: $\forall a, b \in M : d(a,b) = d(b,a)$
+  \item Dreiecksungleichung: $\forall a,b,c \in M : d(a,c) \leq d(a,b) + d(b,c)$
+  \item Positive Definitheit: $d(a,b) \geq 0$ und $d(a,b) = 0 \Leftrightarrow a = b$
+ \end{enumerate}
+\end{definition}
+\begin{beispiel}
+ Sei $(V, \norm{}_V)$ ein normierter Vektorraum. Dann ist 
+ \begin{align*}
+  d : V \times V &\to \bR\\
+  (\vx, \vy) &\to \norm{\vx - \vy}
+ \end{align*}
+ eine Metrik.
+\end{beispiel}
+\begin{beispiel}
+ Sei $\Gamma$ ein zusammenhängender Graph. Dann ist die Länge des kürzesten Weges zwischen zwei Punkten eine Metrik. Die Erdős-Zahl induziert dementsprechend eine Metrik auf der Menge der Mathematiker.
+\end{beispiel}
+\begin{beispiel}
+ Die bescheuerte Metrik (auch bekannt also diskrete Metrik). Sei $M$ eine Menge. Dann ist folgedende Abbildung eine Metrik:
+ \begin{align*}
+  d : M \times M &\to \bR\\
+      (a,b) &\to \begin{cases}
+                  0 & a = b\\
+                  1 & \text{sonst}\\
+                 \end{cases}
+ \end{align*}
+\end{beispiel}
+\section{Orthogonalität}
+Sei $(V, \scalar{\_}{\_})$ ein Euklidischer oder Unitärer Vektorraum.
+\begin{definition}
+ Nenne Vektoren $\vx, \vy$ orthogonal zueinander, wenn $\scalar{\vx}{\vy} = 0$. Wir schreiben dann auch $\vx \bot \vy$.
+\end{definition}
+\begin{definition}
+ Seien $A, B \subset V$ Untervektorräume von $V$. Wir nennen $A$ orthogonal auf $B$, wenn
+ \begin{align*}
+  \forall \vec{a} \in A, \vec{b} \in B : \scalar{\vec{a}}{\vec{b}} = 0
+ \end{align*}
+\end{definition}
+\begin{definition}
+ Sei $A \subset V$ ein Untervektorraum von $V$. Wir definieren:
+ \begin{align*}
+  A^\bot = \{\vv \in V \mid \forall \vec{a} \in A : \scalar{\vv}{\vec{a}} = 0\}
+ \end{align*}
+\end{definition}
+\newpar
+\ul{Achtung:} $A^{\bot}$ ist manchmal auch definiert als $A^\bot = \{f \in V^* \mid A \subset ker(f)\}$. Dies ist nicht die gleiche Menge, allerdings sind diese Räume kanonisch isomorph.
+\begin{definition}
+ Sei $(\vv_i)_{i \in I}$ eine Familie von Vektoren. Wir nennen die Familie orthogonal, falls $\forall i \neq j : \scalar{\vv_i}{\vv_j} = 0$. Wir nennen die Familie orthonormal, wenn zusätzlich $\forall i : \scalar{\vv_i}{\vv_i} = 1$. Eine orthonormale Basis nennen wir Orthonormalbasis :).
+\end{definition}
+
+
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
 %
 %
 %
