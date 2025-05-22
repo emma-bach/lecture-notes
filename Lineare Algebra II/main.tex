@@ -31,6 +31,7 @@
 \newcommand{\bC}{\mathbb{C}}
 \newcommand{\bF}{\mathbb{F}}
 \newcommand{\bN}{\mathbb{N}}
+\newcommand{\bQ}{\mathbb{Q}}
 \newcommand{\bR}{\mathbb{R}}
 
 %\newcommand{\va}{\vec{a}}
@@ -1015,9 +1016,147 @@ Allerdings konnten wir über $\bC$ bisher zum Beispiel nicht die positive Defini
  \end{align*}
  Also ist das Bild eines Vektors mit sich selbst reell - also haben wir für komplexe Sesquilinearformen nicht das Problem der Definition von Definitheit, welches wir für Bilinearformen hatten!
 \end{beobachtung}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\section{Unitäre und Euklidische Vektorräume}
+\begin{definition}
+ Ein \tbf{Euklidischer Vektorraum} ist ein $\bR$-Vektorraum mit Skalarprodukt. Ein \tbf{Unitärer Vektorraum} ist ein $\bC$-Vektorraum mit Skalarprodukt.
+\end{definition}
+\begin{definition}
+ Sei $V$ ein $k$-Vektorraum, wobei $k \subset \bC$ (typischerweise $\bQ, \bR$ oder $\bC$). Eine \tbf{Norm} auf $V$ ist eine Abbildung $\norm{\_,\_} : V \times V \to k$ mit folgenden Eigenschaften:
+ \begin{enumerate}
+  \item Absolute Homogenität:
+  \begin{align*}
+   \forall \vv \in V : \forall \lambda \in k : \norm{\lambda \cdot \vv} = \abs{\lambda} \cdot \norm{\vv}
+  \end{align*}
+  \item Dreiecksungleichung:
+  \begin{align*}
+   \norm{\vx + \vy} \leq \norm{\vx} + \norm{\vy}
+  \end{align*}
+  \item Positive Definitheit\footnote{Hier anders formuliert als für allgemeine Bilinearformen, denn Nichtgegativität folgt bereits aus Dreiecksungleichung}:
+  \begin{align*}
+   \norm{\vx} = 0 \Leftrightarrow \vx = \vz
+  \end{align*}
+ \end{enumerate}
+\end{definition}
+\begin{beispiel}
+ Sei $V$ ein Euklidischer oder Unitärer Vektorraum mit Skalarprodukt $\scalar{\_}{\_}$. Dann gelten:
+ \begin{enumerate}
+  \item Cauchy-Schwarz:
+  \begin{align*}
+   \forall \vx : \forall \vy : \abs{\scalar{\vx}{\vy}} \leq \sqrt{\scalar{\vx}{\vx}} \sqrt{\scalar{\vy}{\vy}}
+  \end{align*}
+  \item Satz des Pythagoras:
+  \begin{align*}
+   \forall \vx : \forall \vy : \norm{\vx + \vy}^2 = \norm{\vx}^2 + 2 \Re\scalar{\vx}{\vy} + \norm{\vy}^2
+  \end{align*}
+ \end{enumerate}
+\end{beispiel}
+\begin{beispiel}
+ \tbf{\ul{Operatornorm:}}
+ Seien $V$, $W$ zwei endlichdimensionale $k$-Vektorräume mit Normen $\norm{}_V$ und $\norm{}_W$. Dann definieren folgende Norm auf den linearen Abbildungen $Hom(V,W)$:
+ \begin{align*}
+  \norm{}_{op} : Hom(V,W) &\to \bR\\
+  f &\to \max \{\norm{f(\vv)}_W\}\\
+ \end{align*}
+\end{beispiel}
+\newpar
+ \ul{Nachrechnen:} Diese Operatornorm ist tatsächlich eine Norm, insbesondere kann tatsächlich von einem Maximum statt einem Supremum gesprochen werden.
+ \newpar
+ \ul{Spezialfall}: $W = k$. Dann ist $Hom(V,W) = V^*$ der \tbf{Dualraum}. Durch die Operatornorm erhält man aus einer beliebigen Norm auf $V$ eine Norm auf dem Dualraum.
+ \begin{beispiel}
+ \tbf{\ul{``Mannheim-Norm:''}}
+ \begin{align*}
+  \norm{}_{0} : \bR^n &\to \bR\\
+  X &\to \sum_{i} \abs{x_i}
+ \end{align*}
+ \end{beispiel}
+  \begin{beispiel}
+ \tbf{\ul{Maximumsnorm:}}
+ \begin{align*}
+  \norm{}_{\infty} : \mathcal{C}([0,1], \bR) &\to \bR\\
+  f &\to \max \{|f(z)|\}
+ \end{align*}
+ \end{beispiel}
+ \newpar
+ \ul{Provokation:} Die Beispiele fügen sich in zwei unendliche Reihen - eine für Summen und eine für Integrale - ein. Es existieren also zwei Normen $\norm{}_n$ für jedes $n \in \bN$.
+ \newpar
+ \ul{Frage:} Kommt die Mannheim-Norm von einem Skalarprodukt?
+ \begin{beispiel}
+  Sei $V$ ein Vektorraum und $\norm{} : V \to \bR$ eine Norm. Sei $W$ ein Untervektorraum von $V$. Dann ist die Einschränkung $\norm{}_W : W \to \bR$ wieder eine Norm.
+ \end{beispiel}
+ \begin{definition}
+  Ein \tbf{normierter Vektorraum} ist ein Vektorraum mit einer Norm. Ein Vektor aus einem normiertern Vektorraum heißt normiert, wenn er Norm $1$ hat.
+ \end{definition}
+\section{Metriken}
+\begin{definition}
+ Sei $M$ eine Menge. Eine Metrik ist eine Abbildung $d : M \times M \to \bR$, sodass gilt:
+ \begin{enumerate}
+  \item Symmetrie: $\forall a, b \in M : d(a,b) = d(b,a)$
+  \item Dreiecksungleichung: $\forall a,b,c \in M : d(a,c) \leq d(a,b) + d(b,c)$
+  \item Positive Definitheit: $d(a,b) \geq 0$ und $d(a,b) = 0 \Leftrightarrow a = b$
+ \end{enumerate}
+\end{definition}
+\begin{beispiel}
+ Sei $(V, \norm{}_V)$ ein normierter Vektorraum. Dann ist 
+ \begin{align*}
+  d : V \times V &\to \bR\\
+  (\vx, \vy) &\to \norm{\vx - \vy}
+ \end{align*}
+ eine Metrik.
+\end{beispiel}
+\begin{beispiel}
+ Sei $\Gamma$ ein zusammenhängender Graph. Dann ist die Länge des kürzesten Weges zwischen zwei Punkten eine Metrik. Die Erdős-Zahl induziert dementsprechend eine Metrik auf der Menge der Mathematiker.
+\end{beispiel}
+\begin{beispiel}
+ Die bescheuerte Metrik (auch bekannt also diskrete Metrik). Sei $M$ eine Menge. Dann ist folgedende Abbildung eine Metrik:
+ \begin{align*}
+  d : M \times M &\to \bR\\
+      (a,b) &\to \begin{cases}
+                  0 & a = b\\
+                  1 & \text{sonst}\\
+                 \end{cases}
+ \end{align*}
+\end{beispiel}
+\section{Orthogonalität}
+Sei $(V, \scalar{\_}{\_})$ ein Euklidischer oder Unitärer Vektorraum.
+\begin{definition}
+ Nenne Vektoren $\vx, \vy$ orthogonal zueinander, wenn $\scalar{\vx}{\vy} = 0$. Wir schreiben dann auch $\vx \bot \vy$.
+\end{definition}
+\begin{definition}
+ Seien $A, B \subset V$ Untervektorräume von $V$. Wir nennen $A$ orthogonal auf $B$, wenn
+ \begin{align*}
+  \forall \vec{a} \in A, \vec{b} \in B : \scalar{\vec{a}}{\vec{b}} = 0
+ \end{align*}
+\end{definition}
+\begin{definition}
+ Sei $A \subset V$ ein Untervektorraum von $V$. Wir definieren:
+ \begin{align*}
+  A^\bot = \{\vv \in V \mid \forall \vec{a} \in A : \scalar{\vv}{\vec{a}} = 0\}
+ \end{align*}
+\end{definition}
+\newpar
+\ul{Achtung:} $A^{\bot}$ ist manchmal auch definiert als $A^\bot = \{f \in V^* \mid A \subset ker(f)\}$. Dies ist nicht die gleiche Menge, allerdings sind diese Räume kanonisch isomorph.
+\begin{definition}
+ Sei $(\vv_i)_{i \in I}$ eine Familie von Vektoren. Wir nennen die Familie orthogonal, falls $\forall i \neq j : \scalar{\vv_i}{\vv_j} = 0$. Wir nennen die Familie orthonormal, wenn zusätzlich $\forall i : \scalar{\vv_i}{\vv_i} = 1$. Eine orthonormale Basis nennen wir Orthonormalbasis :).
+\end{definition}
 
-%
-%
+
 %
 %
 %
