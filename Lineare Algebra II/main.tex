@@ -38,6 +38,7 @@
 %newcommand{\vb}{\vec{b}}
 \newcommand{\vc}{\vec{c}}
 \newcommand{\ve}{\vec{e}}
+\renewcommand{\vu}{\vec{u}}
 \newcommand{\vv}{\vec{v}}
 \newcommand{\vw}{\vec{w}}
 \newcommand{\vx}{\vec{x}}
@@ -46,7 +47,7 @@
 
 \newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
 \newcommand{\Matnn}{\text{Mat}(n \times n)}
-\newcommand{\scalar}[2]{\langle #1, #2 \rangle}
+\newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
 
 \renewcommand*\contentsname{Inhalt}
 \renewcommand*\proofname{Beweis}
@@ -1155,7 +1156,120 @@ Sei $(V, \scalar{\_}{\_})$ ein Euklidischer oder Unitärer Vektorraum.
 \begin{definition}
  Sei $(\vv_i)_{i \in I}$ eine Familie von Vektoren. Wir nennen die Familie orthogonal, falls $\forall i \neq j : \scalar{\vv_i}{\vv_j} = 0$. Wir nennen die Familie orthonormal, wenn zusätzlich $\forall i : \scalar{\vv_i}{\vv_i} = 1$. Eine orthonormale Basis nennen wir Orthonormalbasis :).
 \end{definition}
-
+\begin{theorem}
+ Seien $\vv_1, \vv_2 \in V$ und $\vv_1 \neq \vz$. Sei $\vv_2' = \vv_2 - \frac{\scalar{\vv_2}{\vv_1}}{\scalar{\vv_1}{\vv_1}} \cdot \vv_1$. Dann gilt:
+ \begin{enumerate}
+  \item $\vv_1 \bot \vv_2'$
+  \item $\{\vv_1, \vv_2'\}$ ist linear unabhängig genau dann, wenn $\{\vv_1, \vv_2\}$ linear unabhängig ist.
+ \end{enumerate}
+ \begin{proof}
+  \begin{enumerate}
+   \item \begin{align*}
+          \scalar{\vv_2'}{\vv_1} &= \scalar{\vv_2 - \frac{\scalar{\vv_2}{\vv_1}}{\scalar{\vv_1}{\vv_1}} \cdot \vv_1}{\vv_1}\\
+          &= \scalar{\vv_2}{\vv_1} - \scalar{\frac{\scalar{\vv_2}{\vv_1}}{\scalar{\vv_1}{\vv_1}} \cdot\vv_1}{\vv_1}\\
+          &= \scalar{\vv_2}{\vv_1} - \frac{\scalar{\vv_2}{\vv_1}}{\scalar{\vv_1}{\vv_1}} \cdot \scalar{\vv_1}{\vv_1}\\
+          &= \scalar{\vv_2}{\vv_1} - \scalar{\vv_2}{\vv_1}\\
+          &= 0\\
+         \end{align*}
+  \end{enumerate}
+ \end{proof}
+\end{theorem}
+\begin{theorem}
+ Sei $V$ ein euklidischer oder unitärer Vektorraum und $U \subseteq V$ ein Untervektorraum. Dann lässt sich jede Orthonormalbasis $\{\vu_1, \hdots, \vu_m\}$ von $U$ zu einer Orthonormalbasis $\{\vu_1, \hdots, \vu_m, \vu_{m+1}, \hdots, \vu_{n}\}$ von $V$ ergänzen.
+\end{theorem}
+\begin{proof}
+ Absteigende Induktion über die Dimension von $U$.
+ \begin{enumerate}
+  \item \ul{Induktionsbasis:}\\
+  Sei $\dim U = \dim V$. Da $U \subseteq V$ und da alle $n$-Dimensionalen $k$-Vektorräume isomorph sind gilt dann auch $U = V$, also ist jede Orthonormalbasis von $U$ bereits eine Orthonormalbasis von $V$.
+  \item \ul{Induktionsschritt:}\\
+  Sei $\dim U < \dim V$. Dann existiert ein Vektor $\vv \in V \setminus U$. Da $\vz \in U$ ist $\vz \notin V \setminus U$, also $\vv \neq \vz$. Setze nun \footnote{Wir dividieren nicht separat durch $\scalar{\vu_i}{\vu_i}$, da die Vektoren $\vu_i$ bereits normal sind, also $\scalar{\vu_i}{\vu_i} = 1$.}
+  \begin{align*}
+   \vv' = \vv - \sum_{i=1}^m \scalar{\vv}{\vu_i} \cdot \vu_i
+  \end{align*}
+  So gilt für jeden Index $j$:
+  \begin{align*}
+   \scalar{\vv'}{\vu_j} 
+   &= \scalar{\vv- \sum_{i=1}^m \scalar{\vv}{\vu_i} \cdot \vu_i}{\vu_j}\\
+   &= \scalar{\vv}{\vu_j} - \sum_{i=1}^m \scalar{\vv}{\vu_i} \scalar{\vu_i}{\vu_j}\\
+   &= \scalar{\vv}{\vu_j} - \sum_{i=1}^m \scalar{\vv}{\vu_i} \delta_{ij}\\
+   &= \scalar{\vv}{\vu_j} - \scalar{\vv}{\vu_j}\\
+   &= 0\\
+  \end{align*}
+  Setze nun $\vu_{m+1} := \frac{\vv'}{\norm{\vv'}}$. So gilt:
+  \begin{enumerate}
+  \item[(i)] $\forall j \neq {m+1} : \vu_{m+1} \top \vu_j$
+  \begin{align*}
+   \scalar{\vu_{m+1}}{\vu_j} = \frac{1}{\norm{\vv'}} \scalar{\vv'}{\vu_j} = 0
+  \end{align*}
+  \item[(ii)] $\norm{\vu_{m+1}} = 1$
+  \begin{align*}
+   \norm{\vu_{m+1}} 
+   &= \norm{\frac{\vv'}{\norm{\vv'}}}\\
+   &= \norm{\frac{1}{\norm{\vv'}} \cdot \vv'}\\
+   &= \abs{\frac{1}{\norm{\vv'}}} \cdot \norm{\vv'}\\
+   &= \frac{1}{\norm{\vv'}} \cdot \norm{\vv'}\\
+   &= 1\\
+  \end{align*}
+  \end{enumerate}
+  
+ \end{enumerate}
+\end{proof}
+\begin{corollary}
+ Jeder endlichdimensionale euklidische / unitäre Vektorraum besitzt eine Orthonormalbasis.
+\end{corollary}
+\begin{definition}
+ Dieses Verfahren lässt sich zu einem Algorithmus erweitern, welcher aus einer beliebigen Basis $(v_i)$ eine Orthonormalbasis $(u_i)$ konstruiert. Dieser ist bekannt als das \tbf{Gram-Schmidt-Verfahren}.
+ \begin{enumerate}
+  \item Initialisierung:
+  \begin{itemize}
+   \item Normiere den Ersten Vektor $\vu_1 = \frac{\vv_1}{\norm{\vv_1}}$
+  \end{itemize}
+  \item Seien $\vu_1, \hdots, \vu_k$ bereits konstruiert.
+  \begin{itemize}
+   \item Definiere $\vv_{k+1}' = \vv_{k+1} - \sum_{i = 1}^k \scalar{\vv_{k+1}}{\vu_i} \cdot \vu_i$
+   \item Normiere $\vu_{k+1} = \frac{\vv_{k+1}'}{\norm{\vu_{k+1}'}}$
+  \end{itemize}
+ \end{enumerate}
+\end{definition}
+\begin{theorem}\emph{\ul{\tbf{Orthogonale Zerlegung}}}:
+ Seien $V$ ein endlichdimensionaler unitärer/euklidischer Vektorräume mit $U \subseteq V$. Dann lässt sich jedes $\vv \in V$ eindeutig schreiben als 
+ \begin{align*}
+  \vv = p(\vv) + r(\vv) \qquad p(\vv) \in U, r(\vv) \in U^{\bot},
+ \end{align*}
+ es gilt also $V = U \oplus U^\bot$.
+\end{theorem}
+\begin{proof}
+ Angenommen $\vv = p_1(\vv) + r_1(\vv) = p_2(\vv) + r_2(\vv)$. Sei 
+ \begin{align*}
+  \vw = p_1(\vv) - p_2(\vv) = r_2(\vv) - r_1(\vv)
+ \end{align*}
+ Also $\vw = p_1(\vv) - p_2(\vv) \in U$ und $\vw = r_2(\vv) - r_1(\vv) \in U^\bot$, also $\scalar{\vw}{\vw} = 0$, also $\vw = 0$, also $p_1(\vv) = p_2(\vv)$ und $r_1(\vv) = r_2(\vv)$. Also ist die Darstellung eindeutig.
+ \newpar
+ Sei $\vv \in V$ und $(u_i)$ eine Orthonormalbasis von $U$. Definiere 
+ \begin{align*}
+  r(\vv) = \vv - \sum_{i=1}^m \scalar{\vv}{\vu_i} \cdot \vu_i
+ \end{align*}
+ Für jeden Index $j$ gilt $\scalar{r(\vv)}{\vu_j} = 0$, also $r(\vv) = U^\bot$. Definiere nun zusätzlich
+ \begin{align*}
+  p(\vv) = \vv - r(\vv) = \sum_{i = 1}^m \scalar{\vv}{\vu_i} \cdot \vu_i \in U
+ \end{align*}
+ Somit haben wir die gewünschte Zerlegung gefunden.
+\end{proof}
+\begin{anmerkung}
+ Die Abbildung $p$ ist linear, wir nennen sie die \tbf{orthogonale Projektion auf $U$}.
+\end{anmerkung}
+\begin{beobachtung}
+ Die Orthogonale Projektion minimiert den Abstand - $p(\vv)$ ist der nächste Punkt aus $U$ zu $V$ bezüglich der durch das Skalarprodukt induzierte Norm.
+\end{beobachtung}
+\begin{proof}
+ \begin{align*}
+  \norm{\vw - \vv} &= \norm{p(\vv) + \vw - p(\vv) - \vv}\\
+  \implies \norm{\vw - \vv}^2 &= \norm{p(\vv) + \vw - p(\vv) - \vv}^2\\
+  &= \norm{p(\vv) - \vv}^2 + \norm{\vw}^2 + \scalar{p(\vv) - \vv}{\vw - p(\vv)} + \scalar{\vw'}{p(\vv) - \vv}\\
+  &\geq \norm{p(\vv) - \vv}^2
+ \end{align*}
+\end{proof}
 
 %
 %
