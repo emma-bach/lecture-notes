@@ -616,6 +616,63 @@ $F : M \subset \bR^n \to \bR^k$ $X,Y \in M$. Sei $[X,Y] = \{(1- \lambda)X + \lam
 
  \end{proof}
 \end{theorem}
+[missing stuff - gradients]
+\begin{definition}
+ Eine Funktion $f$ heißt \tbf{partiell differenzierbar}, wenn für jede Koordinatenachse $i$ die Partielle Ableitung $\forall i \in \{0, \hdots, n\} : \partial_i f : M \subseteq \bR \to \bR : X \to \delta_i f(X)$ existiert.
+\end{definition}
+\begin{theorem}
+ Ist $f: M \to \bR$ in einer Umgebung von $X_0$ partiell differenzierbar und sind die partiellen Ableitungen in $X_0$ stetig, so ist $f$ in $X_0$ differenzierbar.
+\end{theorem}
+\begin{proof}
+ Sei $U$ ein offener Ball um $X_0$, welcher vollständig in $M$ enthalten ist. Sei $H \in \bR^n$, sodass $X_0 + H \in U$. Nun gilt:
+ \begin{align*}
+  f(X_0 + H) - f(X_0) &= \sum_{i=1}^n (f(x_1, \hdots, x_{i-1}, \hdots, x_i + h_i, x_{i+1} + h_{i+1} , \hdots, x_n + h_n))\\
+  &- \sum_{i=1}^n (f(x_1, \hdots, x_{i-1}, \hdots, x_i, x_{i+1} + h_{i+1} , \hdots, x_n + h_n))\\
+ \end{align*}
+ Die Summenglieder sind partielle Ableitung. Nach Mittelwertsatz erhalten wir:
+ \begin{align*}
+  \sum_{i=1}^n h_1 \partial_i f(x_1, \hdots x_{i-1}, x_i + c_ih_i, x_{i+1}, \hdots, x_n)\ c_i \in (0,1)\\
+ \end{align*}
+ Nun gilt:
+ \begin{align*}
+  &\frac{1}{\norm{H}} \abs{f(X_0 + H) - f(X_0) - \scalar{\grad f(X_0)}{H}}\\
+  =&\frac{1}{\norm{H}} \abs{\sum_{i=1}^n h_1 \partial_i f(x_1, \hdots x_{i-1}, x_i + c_ih_i, x_{i+1} + h_{i+1}, \hdots, x_n + h_n) - \partial_i(f(x_0, \hdots, x_n))} \\
+  \leq&\abs{\sum_{i=1}^n \partial_i f(x_1, \hdots x_{i-1}, x_i + c_ih_i, x_{i+1} + h_{i+1}, \hdots, x_n + h_n) - \partial_i(f(x_0, \hdots, x_n))} \to 0\\
+ \end{align*}
+\end{proof}
+ Sei $M \subseteq \bR^n$ offen, $X_0 \in M$, $F: M \to \bR^k$. Seien $\forall i \in \{1, \hdots, n\} f: M \to \bR^n \to \bR$ Koordinatenfunktionen.
+ \begin{align*}
+  F(X) = (f_1(X), \hdots, f_k(X)) = \sum_{i=1}^k f_i(X)E_i'
+ \end{align*}
+ \begin{align}
+  Y = F(X) \Leftrightarrow \forall i : y_i = f_i(x_1, \hdots, x_n)
+ \end{align}
+\begin{theorem}
+Die Abbildung $F$ ist genau dann differenzierbar in $X_0$, wenn alle Koordinatenfunktionen $f_i$ in $X_0$ differenzierbar sind. Ist das der Fall, gilt:
+\begin{align*}
+ DF_{X_0}(H) = \sum_{i=1}^k (Df_i)_{X_0}(H)E_i' \forall H \in \bR^n 
+\end{align*}
+\end{theorem}
+\begin{proof}
+ $L : \bR^n \to \bR^n$ linear. Dann
+ \begin{align*}
+  \lim_{H \to 0} \frac{F(X_0 + H) - F(X_0) - L(H)}{\norm{H}} = 0 \Leftrightarrow \lim_{H \to 0} \frac{f_i(X_0 + H) - f_i(X_0) - (D_i \circ L)(H)}{\norm{H}} = 0
+ \end{align*}
+ \end{proof}
+ Wir wollen nun das Differential bezüglich der Standardbasis übersichtlich darstellen. Es gilt:
+ \begin{align*}
+  L(E_j) = \sum_{i=1}^k a_{ij} E_i'\\
+  DF_{X_0} = \sum_{i=1}^k \partial_j f_i(X_0) E_j'
+ \end{align*}
+ Die Koeffizienten der Darstellenden Matrix sind also identisch mit den Partiellen Ableitungen.
+\begin{theorem}
+ Sei $F : M \to \bR^k$ differenzierbar in $X_0 \in M$. Dann wir das Differential $DF_{X_0}$ bezüglich der Standardbasis in $\bR^n$ und $\bR^k$ beschrieben als die $k \times n$-Matrix
+ \begin{align*}
+  JF(X_0) = (\delta_j f_i(X_0))_{1 \leq i \leq n, 1 \leq j \leq k}
+ \end{align*}
+ Sie heißt die Funktionalmatrix oder Jacobimatrix von $F$ in $X_0$. Falls $k = n$ wird die Determinante dieser Matrix als Funktionaldeterminante oder Jacobideterminante von $F$ in $X_0$ bezeichnet.
+\end{theorem}
+
 
 %
 %
