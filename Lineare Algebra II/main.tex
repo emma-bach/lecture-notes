@@ -50,7 +50,7 @@
 \newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
 
 \renewcommand*\contentsname{Inhalt}
-\renewcommand*\proofname{Beweis}
+\renewcommand*\proofname{Beweis\newline}
 
 \pagestyle{fancy} %allows headers
 
@@ -1279,6 +1279,127 @@ Sei $(V, \scalar{\_}{\_})$ ein Euklidischer oder Unitärer Vektorraum.
 %
 %
 %
+%
+%
+%
+%
+%
+
+\begin{theorem}
+ Eigenschaften des Orthogonalen Komplements:
+ \begin{enumerate}
+  \item Es gilt $U^\bot \cong U^0 := \{f \in V^* (= \textnormal{Hom}(V,k)) \mid U \subseteq \ker(f)\}$.
+  
+  Genauer: Sei $s : V \to V^*, \vv \to \scalar{\underline{\hphantom{v}}}{\vv}$. Dann gilt $s(U^\bot) = U^0$ und umgekehrt für die Inverse $s^{-1}$.
+  \item Es gilt $\dim U^\bot = \dim V - \dim U$
+  \item Es ist $V = U \oplus U^\bot$ (Also $U \cap U^\bot = \{0\}$ und $V = U + U^\bot$)
+  \item Es gilt $U = (U^\bot)^\bot$
+ \end{enumerate}
+\end{theorem}
+\begin{proof}
+ \hphantom{v}
+ \begin{enumerate}
+  \item
+  \item
+  \item Sei $v \in U \cap U^\bot$. Weil $v \in U^\bot$ ist, gilt $\forall u \in U : \scalar{v}{u} = 0$. Insbesondere gilt $\scalar{\vv}{\vv} = 0$, also $\vv = \vz$.
+ \newpar
+ Nach Dimensionalsformel dilt $\dim U + U^\bot = \dim U + \dim U^\bot - \dim (U \cap U^\bot)$, also $\dim U + \dim U^\bot = \dim U + (\dim V - \dim U) + 0 = \dim V$, also $\dim U + \dim U^\bot = \dim V$, also $U + U^\bot = V$.
+   \item Es gilt $\dim (U^\top)^\top = \dim V - \dim U^\bot = \dim V - (\dim V - \dim U) = \dim U$. Es gilt zusätzlich $\forall \vu \in (U^\bot)^\bot : \forall \vv \in U^\bot :\vu \bot \vv$, also $\vu \in V$.
+ \end{enumerate} 
+\end{proof}
+\begin{theorem}
+ Es gibt eine kanonische Identifikation, also einen kanonischen Isomorphismus, zwischen dem Quotientenvektorraum $V / U$ und dem Orthogonalraum $U^\bot$.
+\end{theorem}
+\begin{proof}
+ Wir vergleichen die Quotientenabbildung $q : V \to V / U$ mit der orthogonalen Projektion $\pi : V \to U^\bot$. Wir haben folgendes kommutatives Diagramm:
+ \begin{center}
+ \begin{tikzcd}[row sep = huge, column sep = huge]
+    V
+    \arrow[r, "q"]
+    \arrow[d, "id"]
+    & V / U
+    \arrow[d, "\eta"] \\
+    V
+    \arrow[r, "\pi"]
+    &  U^\bot
+\end{tikzcd}
+\end{center}
+\end{proof}
+\hspace{-20pt}
+Wobei $\eta$ gemäß universeller Eigenschaft eindeutig ist. Wir wissen, dass $\pi$ surjektiv ist, also ist $\pi$ auch injektiv. Also ist $id \circ \pi$ bijektiv, dementsprechend ist auch $q \circ \eta$ bijektiv, also ist insbesondere $\eta$ bijektiv.
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\section{Die adjungierte Abbildung}
+\ul{Situation:} Seien $(V, \scalar{\cdot}{\cdot}_V)$ und $(w, \scalar{\circ}{\circ})$ endlichdimensionale Euklidische Vektorräume mit Identifikationsabbildungen $s_v : V \to V^*$ und $s_w : W \to W^*$.
+\newpar
+\ul{Problem:} Sei $f : V \to W$ linear mit zugehöriger Rückzugsabbildung:
+\begin{align*}
+ f^* : W^* &\to V^*\\
+ (\varphi : W \to \bR) &\to \varphi \circ f
+\end{align*}
+Wir suchen nun eine Abbildung $f^{ad}$, durch die folgendes Diagramm kommutiert:
+\begin{center}
+ \begin{tikzcd}[row sep = huge, column sep = huge]
+    V
+    \arrow[d, "s_v"]
+    & W
+    \arrow[l, "f^{ad}"]
+    \arrow[d, "s_w"] \\
+    V^*
+    &  W^*
+    \arrow[l, "f^*"]\\
+\end{tikzcd}
+\end{center}
+\begin{theorem}
+Für die adjungierte Abbildung $f^{ad}$ gilt:
+ \begin{align*}
+ \forall \vv \in V, \vw \in W : \scalar{f(\vv)}{\vw}_W = \scalar{\vv}{f^{ad}(\vw)}_V
+\end{align*}
+\end{theorem}
+\begin{proof}
+ Per Definition ist:
+ \begin{align*}
+  f^{ad} = s_v^{-1}  \circ f^* \circ s_w\\
+  \Leftrightarrow s_v \circ f^{ad} = f^* \circ s_w\\
+ \end{align*}
+ Dies ist eine Gleichheit von Abbildungen $W \to V^*$. Sei also ein $\vw \in W$ gegebben. Dann ist
+ \begin{align*}
+  s_v \circ f^{ad}(\vw) = f^* \circ s_w(\vw) \in V^*
+ \end{align*}
+ Also $\forall \vv \in V$:
+ \begin{align*}
+  s_v \circ f^{ad}(\vw)(\vv) = f^* \circ s_w(\vw)(\vv)
+ \end{align*}
+ Per Definition von $s_v$ und $s_w$ ist dies genau:
+ \begin{align*}
+  \scalar{\vv}{f^{ad}(\vw)}_V = (\scalar{\cdot}{\vw}_W \circ f)(\vv) = \scalar{f(\vv)}{\vw}
+ \end{align*}
+\end{proof}
+\begin{proposition}
+ Diese Eigenschaft ist eine universelle Eigenschaft, welche $f^{ad}$ eindeutig festlegt.
+\end{proposition}
+\begin{proof}
+ Wenn $f^{ad}$ und $f^{ad}_2$ Abbildungen sind, welche die Identität erfüllen, gilt 
+ \begin{align*}
+  \scalar{\vv}{f^{ad}(\vw)} = \scalar{f(\vv)}{\vw} = \scalar{\vw}{f^{ad}_2(\vw)}
+ \end{align*}
+ \ul{Erinnerung:} Wenn $(\vv_i)$ eine Orthonormalbasis ist, dann gilt $\forall \vv \in V : \vv = \sum \scalar{\vv}{\vv_i} \vv_i$. Wenn also für $\vv, \vv' \in V$ $\forall i : \scalar{\vv}{\vv_i} = \scalar{\vv'}{\vv_i}$, dann $\vv = \vv'$. Per Definition der adjungierten Abbildungen gilt:
+ \begin{align*}
+  \scalar{\vv_i}{f^{ad}(\vw)} = \scalar{\vv_i}{f^{ad}_2(\vw)}
+ \end{align*}
+ Per universeller Eigenschaften folgt:
+ \begin{align*}
+  \scalar{\vv_i}{f^{ad}(\vw)} = \scalar{\vv_i}{f^{ad}_2(\vw)} = \scalar{f(\vv)}{\vw}
+ \end{align*}
+ Also $f^{ad}$ = $f^{ad}_2$.
+\end{proof}
 %
 %
 %
