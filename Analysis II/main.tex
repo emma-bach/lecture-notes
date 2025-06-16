@@ -42,11 +42,13 @@
 \newcommand{\bR}{\mathbb{R}}
 
 \newcommand{\ve}{\vec{e}}
+\newcommand{\vh}{\vec{h}}
 \newcommand{\vv}{\vec{v}}
 \newcommand{\vw}{\vec{w}}
 \newcommand{\vx}{\vec{x}}
 \newcommand{\vy}{\vec{y}}
 \newcommand{\vz}{\vec{0}}
+\newcommand{\zz}{\vec{z}}
 
 \newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
 \newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
@@ -725,6 +727,143 @@ Die Abbildung $F$ ist genau dann differenzierbar in $X_0$, wenn alle Koordinaten
  \end{align*}
  heißt die \tbf{Hesse-Matrix} von $f$ in $X_0$.
 \end{theorem}
+\clearpage
+[...]
+\clearpage
+\begin{lemma}
+ Sei $M \subseteq \bR^n$ offen, $F : M \to \bR^n$ eine $C^1$-Abbildung, sei $L : \bR^n \to \bR^n$ eine lineare Abbildung, sei $X, Y \in M$ mit $[X, Y] \subseteq M$. Dann gilt:
+ \begin{align*}
+  \norm{F(X) - F(Y) - L(X-Y)} \leq \norm{X - Y} \cdot \max_{Z \in [X,Y]} \norm{DF_Z - L}
+ \end{align*}
+\end{lemma}
+\begin{proof}
+ \begin{align*}
+  G(X) := F(X) - L(X) \quad X \in M
+ \end{align*}
+ \begin{align*}
+  DG_Z = DF_Z - L
+ \end{align*}
+ Dann muss für $F \in C^1$ folgende Funktion stetig sein:
+ \begin{align*}
+  Z \to \norm{DF_Z - L}
+ \end{align*}
+ Zusätzlich ist $[X,Y]$ kompakt, also existiert das Maximum
+ \begin{align*}
+  \max_{Z \in [X,Y]} \norm{DF_Z - L} := c
+ \end{align*}
+ Gemäß Mittelwertsatz ist nun
+ \begin{align*}
+  \norm{F(X) - F(Y) - L(X-Y)} \leq c \norm{X - Y}
+ \end{align*}
+\end{proof}
+\begin{theorem}
+ Sei $M \subseteq R^n$ offen. Sei $\vx_0 \in M$. Sei $F : M \to \bR^n$ eine $C^r$-Abbildung ($r \in \bN_1$). Sei das Differential $DF_{\vx_0}$ regulär, also $\det JF(\vx_0) \neq 0$. Dann existiert eine offene Umgebung $U \subseteq M$ von $ \vx_0$, sodass folgendes gilt:
+ \begin{enumerate}
+  \item die Einschränkung $F|_U$ ist injektiv
+  \item die Bildmenge $F(U) := V$ ist offen
+  \item die Umkehrabbildung $(F|_U)^{-1} : V \to U$ ist $C^r$. 
+ \end{enumerate}
+\end{theorem}
+\begin{proof}
+ Sei $I$ die Identitätsabbildung des $\bR^n$. Sei $U(0, \alpha) := \{\vx \in \bR^n \mid \vx < \alpha\}$.
+ \newpar
+ \ul{Annahmen}: $\vx_0 = 0$, $F(0) = 0$ (Erfüllbar durch Verschieben), $DF_0 = I$ (Erfüllbar durch invertierbare Lineare Abbildung der Funktion?)
+ \newpar
+ $\vx \to \norm{DF_{\vx} - I}$ ist stetig mit $\norm{DF_0 - I} = 0$. Also gilt
+ \begin{align*}
+  \forall \epsilon > 0 : \exists \alpha > 0 : \forall \vx \in U_\alpha : \norm{DF_{\vx} - I} \leq \epsilon
+ \end{align*}
+ Nach 4.3 folgt:
+ \begin{align*}
+  \forall \vx, \vy \in U_\alpha : \norm{F(\vx) - F(\vy) - (\vx-\vy)} \leq \epsilon \norm{\vx - \vy}
+ \end{align*}
+ \begin{align*}
+  \norm{\vx - \vy} &\leq \norm{\vx - \vy - (F(\vx) - F(\vy))} + \norm{F(\vx) - F(\vy)}\\
+  &\leq \epsilon \norm{\vx - \vy} + \norm{F(\vx) - F(\vy)}\\
+ \end{align*}
+ also:
+ \begin{align*}
+  (1- \epsilon)\norm{\vx - \vy} \leq \norm{F(\vx) - F(\vy)}
+ \end{align*}
+ Also ist $\norm{F(\vx) - F(\vy)} = 0$ gdw. $\vx = \vy$, also folgt Injektivität.
+ \newpar
+ \begin{lemma}
+  $U_{(1-\epsilon)\alpha} \subseteq F(U_\alpha)$
+ \end{lemma}
+ \begin{proof}
+  Sei $\vy \in U_{(1-\epsilon)\alpha}$. Wir suchen $\vx \in U_\alpha : \vy = F(\vx)$. Wir wollen den Banchschen Fixpunktsatz anwenden. Dafür definieren wir $\phi : \overline{U_\alpha} \to \bR^n$ als:
+  \begin{align*}
+   \phi(\vx) := \vy - F(\vx) + \vx
+  \end{align*}
+  Sei nun $X \in \overline{U_\alpha}$. Dann gilt:
+  \begin{align*}
+   \norm{\phi(\vx)} &\leq \norm{\vy} + \norm{F(\vx) - \vx}\\
+                    &\leq \norm{\vy} + \epsilon \norm{\vx}\\
+                    &< (1-\epsilon)\alpha + \epsilon \alpha\\
+                    &= \alpha\\
+  \end{align*}
+  Sei $X,Z \in \overline{U_\alpha}$. Nun gilt:
+  \begin{align*}
+   \norm{\phi(\vx) - \phi(\zz)} &= \norm{F(\vx) - \vx - (F(\zz) - \zz)}\\
+                                &\leq \epsilon \norm{\vx - \zz}
+  \end{align*}
+  Gemäß Banachschem Fixpunktsatz existert also genau ein $X \in \overline{U_\alpha}$, sodass $\phi(\vx) = \vx$, also $F(\vx) = \vy$. Da $\phi(\vx) < \alpha$ gilt auch $\vx \in U_\alpha$.
+ \end{proof}
+ Sei nun $V : U_{(1 - \epsilon) \alpha}$ und $U := F^{-1}(V)$. Gemäß Lemma ist $U$ eine Obermenge von $V$, also ist $U$ eine offene Umgebung von $0$. Wir wissen bereits, dass $F|_U$ injektiv ist. Sei also nun $G : V \to U$ die Umkehrabbildung von $F|_U$.
+ \begin{lemma}
+  $G$ ist in $0$ differenzierbar.
+ \end{lemma}
+ \begin{proof}
+ Sei $\epsilon' \in \bR^+$. So existiert ein $\alpha' \in \bR^+$, sodass $U_{\alpha'} \in M$ und
+ \begin{align*}
+  \norm{F(\vx) - \vx} \leq \frac{\epsilon'}{1 + \epsilon'} \norm{\vx} \quad \forall \vx \in U_{\alpha'}
+ \end{align*}
+ \begin{align*}
+  \norm{\vx} &\leq \norm{\vx - F(\vx)} + \norm{F(\vx)}\\
+             &\leq \frac{\epsilon'}{1 + \epsilon'} \norm{\vx} + \norm{F(\vx)}
+ \end{align*}
+ also:
+ \begin{align*}
+  \norm{\vx} \leq (1 + \epsilon') \norm{F(\vx)} \quad \forall \vx \in U_{\alpha'}
+ \end{align*}
+ Sei nun $\vh \in V$ mit $\norm{\vh} < \alpha'(1 - \epsilon)$. Sei $\vx := G(\vh)$. Gemäß Lemma ist $V \subseteq F(U_\alpha)$, also $G(V) \subseteq G(F(U_\alpha))$, also $U \subseteq U_\alpha$, also $\vx \in U$ (?)
+ \newpar
+ Gemäß vorheriger Überlegungen haben wir
+ \begin{align*}
+  \norm{X} \leq \frac{1}{1 - \epsilon} \norm{F(\vx)} = \frac{1}{1 - \epsilon} \norm{\vh} < \alpha' 
+ \end{align*}
+ Wir betrachten nun endlich den Differentialquotienten:
+ \begin{align*}
+  \norm{G(\vh) - \vh} &= \norm{\vx - F(\vx)}\\
+                      &\overset{(*)}{\leq} \frac{\epsilon*}{1 + \epsilon'}\norm{\vx}\\
+                      &\leq \epsilon'\norm{F(\vx)}\\
+                      &\leq \epsilon' \norm{\vh}
+ \end{align*}
+ also:
+ \begin{align*}
+  \frac{\norm{G(\vh) - \vh}}{\norm{\vh}} \leq \epsilon'
+ \end{align*}
+ für alle $0 < \norm{\vh} < \min \{\alpha(1 - \epsilon), \alpha' (1 - \epsilon)\}$, also ist $G$ in $0$ differenzierbar mit $DG_0 = I$.
+ \end{proof}
+ Was ist nun, wenn die Vorraussetzungen $\vx = 0$, $F(0) = 0$, $DF_0 = I$ nicht gelten?
+ \newpar
+ Wir definieren lineare Translationsabbildungen $T_{\zz} : \bR^n \to \bR^n$ $\vx \to \vx + \zz$. Sei nun:
+ \begin{itemize}
+  \item $L : DF_{\vx_0}$,
+  \item $M' := (L \circ T_{-\vx_0})(M)$,
+  \item $F'(\vx) := T_{-F(\vx_0} \circ F \circ T_{\vx_0} \circ L^{-1}(\vx)$
+ \end{itemize}
+ Die Differentiale sind $DL = L$ und $DT_Z = I$. Nun gilt:
+ \begin{align*}
+  DF'_{0} = I \circ DF_{\vx_0} \circ I \circ (DF_{\vx_0})^{-1} = I
+ \end{align*}
+ Also $F'(0) = 0$, $0 \in M'$. $F'$ ist also umkehrbar und die Umkehrabbildung ist differenzierbar in $0$. Für die Ursprüungliche Abbildung gilt $F = T_{T_{\vx_0}} \circ F' \circ L \circ T_{-\vx_0}$.
+\end{proof}
+\begin{definition}
+ Sei $F : M \subseteq \bR^n \to \bR^n$ eine $C^r$-Funktion mit regulären Differentialen. Eine solche Abbildung nennt man einen $C^r$-Diffeomorphismus.
+\end{definition}
+
+
 %
 %
 %
