@@ -34,8 +34,9 @@
 \newcommand{\bQ}{\mathbb{Q}}
 \newcommand{\bR}{\mathbb{R}}
 
-%\newcommand{\va}{\vec{a}}
-%newcommand{\vb}{\vec{b}}
+\newcommand{\cB}{\mathcal{B}}
+
+\newcommand{\bb}{\vec{b}}
 \newcommand{\vc}{\vec{c}}
 \newcommand{\ve}{\vec{e}}
 \renewcommand{\vu}{\vec{u}}
@@ -48,6 +49,8 @@
 \newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
 \newcommand{\Matnn}{\text{Mat}(n \times n)}
 \newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\Id}{\text{Id}}
+\newcommand{\SO}{\mathcal{SO}}
 
 \renewcommand*\contentsname{Inhalt}
 \renewcommand*\proofname{Beweis\newline}
@@ -150,6 +153,7 @@ det \begin{pmatrix}
     = aei + bfg + cdh - ceg - bdi - afh
 \end{align*}
 %
+Die Determinante eines Endomorphismus $f : V \to V$ ist das Produkt der Eigenwerte (unter Beachtung der algebraischen Vielfachheiten!)
 %
 \section{Basiswechsel}
 Zu Beginn will ich einige relevante Sätze, Definitionen und Notationsstandards aus der Vorlesung ``Lineare Algebra I'' wiederholen.
@@ -1400,6 +1404,152 @@ Für die adjungierte Abbildung $f^{ad}$ gilt:
  \end{align*}
  Also $f^{ad}$ = $f^{ad}_2$.
 \end{proof}
+%
+%
+%
+%
+%
+%
+\clearpage
+[...]
+\clearpage
+\chapter{Orthogonale und unitäre Endomorphismen}
+\begin{definition}
+ Sei $V$ ein endlichdimensionaler euklidischer (bzw. unitärer) Vektorraum. Wir nennen einen Endomorphismus $f : V \to V$ euklidisch (bzw. unitär), falls für alle $\vv, \vw in V$ folgende Gleichung gilt:
+ \begin{align*}
+    \scalar{f(\vv)}{f(\vw)} = \scalar{\vv}{\vw}
+ \end{align*}
+ \end{definition}
+ \begin{lemma}
+  Ein Endomorphismus $f : V \to W$ ist orthogonal genau dann, wenn für alle $\vv \in V$ folgende Gleichung gilt:
+  \begin{align*}
+   \norm{f(\vv)} = \vv
+  \end{align*}
+ \end{lemma}
+ \begin{theorem}
+  Sei $f : V \to V$ orthogonal (bzw. unitär). Dann gilt folgendes:
+  \begin{enumerate}
+   \item Für alle Eigenwerte $\lambda$ von $f$ gilt $\abs{\lambda} = 1$.
+   \item $\abs{\det f} = 1$
+   \item Für alle $\vv, \vw \in V$ gilt:
+   \begin{align*}
+    \vv \bot \vw \Leftrightarrow f(\vv) \bot f(\vw)
+   \end{align*}
+   \item $f$ ist injektiv
+   \item $f$ ist ein isomorphismus mit orthogonaler (bzw. unitärer) Umkehrabbildung $f^{-1}$
+  \end{enumerate}
+ \end{theorem}
+ \begin{corollary}
+  Es sei $(V, \scalar{\_}{\_})$ ein endlichdimensionaler euklidischer (bzw. unitärer) Vektorraum. Dann bilden die orthogonalen (bzw. unitären) Abbildungen eine Untergruppe von $\text{Aut}(V)$. Wir nennen diese Gruppe die orthogonale Gruppe (bzw. unitäre Gruppe) von $V$.
+ \end{corollary}
+
+
+\section{Normalformen unitärer Endomorphismen}
+\begin{theorem}
+ Sei $V$ ein endlichdimensionaler euklidischer Vektorraum und $f : V \to V$ orthogonal. Dann gibt es eine angeordnete orthonormalbasis $\cB$, sodass
+ \begin{align*}
+  \Mat{\cB}{\cB}{f} = \begin{pmatrix}
+                       \Id_{a \times a} &  &  & \hdots & 0\\
+                        & \Id_{b \times b} &  & & \vdots\\
+                        &  & A_1 &  & \\
+                       \vdots &  &  & \ddots & \\
+                       0 & \hdots &   &  & A_k\\
+                      \end{pmatrix}
+ \end{align*}
+ Wobei $A_1, \hdots, A_k \in \SO_2$ (also zweidimensionale Drehmatrizen).
+\end{theorem}
+\begin{proof}
+ Folgt nach der nächsten Sektion zur Komplexifizierung, welche zur Vorbereitung des Beweises dient.
+\end{proof}
+\subsection{Komplexifizierung}
+Sei $V$ ein endlichdimensionaler reeller Vektorraum. Wir konstruieren einen komplexen Vektorraum $V^\bC$ wie folgt: Wir betrachten die Menge $V \times V$, mit folgenden Operationen:
+\begin{align*}
+ + :  (V \times V) \times (V \times V) &\to (V \times V)\\
+ ((\vv_1,\vw_1),(\vv_2, \vw_2)) &\to (\vv_1 + \vv_2, \vw_1 + \vw_2)\\
+\end{align*}
+\begin{align*}
+ \cdot : \bC \times (V \times V) &\to (V \times V)\\
+ ((a + ib), (\vv, \vw)) &\to (a\vv - b\vw, b\vv + a\vw)\\
+\end{align*}
+Wir schreiben die Elemente $\vv, \vw \in V^\bC$ suggestiv direkt als $\vv + i\vw$. Wir definieren zusätzlich die komplexe Konjugation:
+\begin{align*}
+ \overline{\cdot} : V \times V &\to V \times V\\
+                    (\vv, \vw) &\to (\vv, - \vw)
+\end{align*}
+Und die kanonische Inklusion:
+\begin{align*}
+ \cdot^\bC : V &\to V \times V\\
+                    \vv &\to (\vv, 0)
+\end{align*}
+Mithilfe der Abbildung $\cdot^\bC$ fassen wir $V$ als Teilmenge von $V^\bC$ auf. Gegeben $\vv \in V$ nennen wir $\vv^\bC \in V^\bC$ den komplexifizierten Vektor.
+\begin{lemma}
+ Gegeben eine Basis $\cB$ des $\bR$-Vektorraums $V$ ist die komplexifizierte Basis $\cB^\bC$ eine Basis des $\bC$-Vektorraums $V^\bC$.
+\end{lemma}
+\noindent
+Wir können nun lineare Abbildungen $f$ durch folgende Vorschrift komplexifizieren:
+\begin{align*}
+ f^\bC(\bb^\bC) = (f(\bb))^\bC
+\end{align*}
+\begin{lemma}
+ Sei $f : V \to V$ orthogonal. Dann gibt es einen Untervektorraum $U \subseteq V$, sodass $\dim U \in \{1,2\}$ und $f(U) \subseteq U$.
+\end{lemma}
+\begin{proof}
+ Angenommen, $f$ hat einen reellen Eigenwert $\lambda \in \bR$. So ist der gesuchte Raum durch den Raum gegeben, der durch einen dazugehörigen Eigenvektor aufgespannt wird.
+ \newpar
+ Falls kein reeller Eigenwert existiert, muss nach dem Fundamentalsatz der Analysis ein komplexer Eigenwert $(a + bi) := \lambda \in \bC \setminus \bR$ existieren. So ist $\overline{\lambda}$ ebenfalls eine Nullstelle des charakteristischen Polynoms, also ebenfalls ein Eigenwert:
+ \begin{align*}
+  \chi_f(\overline{\lambda}) &= \sum a_i \cdot \overline{\lambda}^i\\
+                             &= \sum a_i \cdot \overline{\lambda^i}\\
+                             &= \sum \overline{a_i} \cdot \overline{\lambda^i} \qquad (a_i \in \bR)\\
+                             &= \sum \overline{a_i \cdot \lambda^i}\\
+                             &= \overline{\chi_f(\lambda)}\\
+                             &= 0
+ \end{align*}
+ Wir wissen, dass $f^\bC$ einen komplexen Eigenvektor $\vv = (\vv_1, \vv_2)$ zum Eigenwert $\lambda \in \bC$ haben muss. Es gilt $f(\overline{\vv}) = \overline{f(\vv)}$, also ist $\overline{\vv}$ ein Eigenvektor zum Eigenwert $\overline{\lambda}$. $\vv$ und $\overline{\vv}$ sind Eigenvektoren zu unterschiedlichen Eigenwerten, also linear unabhängig. Es folgt, dass folgende Menge ebenfalls unabhängig ist:
+ \begin{align*}
+  \left\{\frac{1}{2}(\vv + \overline{\vv}), \frac{i}{2}(\vv - \overline{\vv})\right\} = \{(\vv_1,0),(\vv_2,0)\}
+ \end{align*}
+ Also ist $U = \text{span}(\vv_1, \vv_2)$ ein zweidimensionaler reeller Untervektorraum von $V$ mit den gewünschten Eigenschaften.
+\end{proof}
+
+\noindent
+Da orthogonale Abbildungen isomorphismen sind gilt sogar $f(U) = U$. Es folgt, dass $f|_U : U \to U$ ebenfalls orthogonal ist.
+
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
 %
 %
 %
