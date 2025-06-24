@@ -46,6 +46,8 @@
 \newcommand{\vy}{\vec{y}}
 \newcommand{\vz}{\vec{0}}
 
+\newcommand{\veta}{\vec{\eta}}
+
 \newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
 \newcommand{\Matnn}{\text{Mat}(n \times n)}
 \newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
@@ -1511,9 +1513,81 @@ Wir können nun lineare Abbildungen $f$ durch folgende Vorschrift komplexifizier
  \end{align*}
  Also ist $U = \text{span}(\vv_1, \vv_2)$ ein zweidimensionaler reeller Untervektorraum von $V$ mit den gewünschten Eigenschaften.
 \end{proof}
-
 \noindent
 Da orthogonale Abbildungen isomorphismen sind gilt sogar $f(U) = U$. Es folgt, dass $f|_U : U \to U$ ebenfalls orthogonal ist.
+\clearpage
+[...]
+\clearpage
+\begin{theorem}
+ THEOREM
+\end{theorem}
+\begin{proof}
+ Per Induktion über $n := \dim V$.
+ \begin{enumerate}
+  \item[(i)] Induktionsbasis: $n = 1$. In diesem Fall ist $f = \pm \Id_V$, also sind wir fertig durch Wahl einer beliebigen Orthonormalbasis (wobei ohnehin nur $\{+1\}$ oder $\{-1\}$ als Basis in Frage kommen)
+  \item[(ii)] Induktionsschritt: Sei $n > 1$ und sei die Behauptung für alle orthonormalen Endomorphismen von Vektorräumen kleinerer Dimensionen schon bewiesen.
+  \newpar
+  \ul{Fall 1}: $f$ hat einen reellen Eigenwert $\lambda$. Sei $\vu \in V$ ein Eigenvektor und sei $U = \langle \vu \rangle$. Dann gilt $f(U) = U$ und $f(U^\bot) = U^\bot$, $U^\bot$ hat Dimension $n - 1$. Jetzt ist $f \mid_{U^\bot}$ ein orthogonaler Endomorphismus von $U^\bot$, also gibt es per Induktionsannahme eine Orthonormalbasis $B = \vv_1, \hdots, \vv_{n-1} \in U^\bot$, sodass die Aussage gilt. Dann ist $B \cup \frac{1}{\norm{\vu}}\vu$ eine Orthonormalbasis von $V$. Nach Umsortieren ist es eine Basis mit den gesuchten Eigenschaften.
+  \newpar
+  \ul{Fall 2}: $f$ hat keinen reellen Eigenwert. Nach Vorbereitung 2 gibt es einen Untervektorraum $U \subseteq V$ mit $f(U) = U$ und $\dim U \in \{1,2\}$. Da $f$ keinen rellen Eigenwert hat, ist $\dim U \neq 1$, also $\dim U = 2$. Desweiteren kann $f \mid_U$ keine Spiegelung sein, sonst gäbe es ebenfalls einen reellen Eigenwert, also ist $f \mid_U$ eine Drehung ($\det (f \mid_U) = 1$) und für eine ONB $B_1 = \{\vv_1, \vv_2\}$ ist $\Mat{B_1}{B_1}{f \mid_U} \in \mathcal{SO}_2$. Wählen wir eine Basis $B_2 = (\vw_i)_{i \leq n-2}$ von $U^\bot$, so ist nach Induktionsannahme $B = B_1 \cup B_2$ eine Orthonormalbasis mit den gesuchten Eigenschaften.
+ \end{enumerate}
+\end{proof}
+\section{Selbstadjungierte Endomorphismen}
+\begin{definition}
+ Ein Endomorphismus $f : V \to V$ heißt selbstadjungiert, wenn $f = f^{ad}$, also:
+ \begin{align*}
+  \scalar{f(\vv)}{\vw} = \scalar{\vv}{f(\vw)}
+ \end{align*}
+\end{definition}
+\begin{beispiel}
+ Sei $V = \bR^n$ mit Standardskalarprodukt, $A \in \Matnn$, $f : \vv \to A \vv$. Die Abbildung $f$ ist selbstadjungiert gdw:
+ \begin{align*}
+  \scalar{f(\vv)}{\vw} = \scalar{\vv}{f(\vw)}
+  &\Leftrightarrow \scalar{A\vv}{\vw} = \scalar{\vv}{A \vw}\\
+  &\Leftrightarrow (A\vv)^\top \vw = \vv^\top A \vw\\
+  &\Leftrightarrow \vv^\top \cdot A^\top \cdot \vw = \vv^\top \cdot A \cdot \vw
+ \end{align*}
+ Durch $\vv, \vw = e_i, e_j$ erhält man direkt $A = A^\top$.
+\end{beispiel}
+\begin{beispiel}
+ Sei $V = \bC^n$ mit Standardskalarprodukt und $A = \text{Mat}(n \times n, \bC)$ mit dazugehörigem Endomorphismus $f$. Dann ist $f$ selbstadjungiert gdw. $A^\top = \overline{A}$, also $A$ Hermitsch.
+\end{beispiel}
+\begin{proposition}
+Sei $B$ eine Orthonormalbasis von $V$. Dann ist $f$ selbstadjungiert genau dann, wenn $\Mat{B}{B}{f}$ symmetrisch oder Hermitsch ist.
+\end{proposition}
+\begin{theorem}
+ Alle Eigenwerte einer selbstadjungierten Abbildung sind reell.
+\end{theorem}
+\begin{proof}
+ Für den Unitären Fall: Sei $f$ selbstadjungiert, $\lambda$ ein Eigenwert und $\vv \in V \setminus \{0\}$ ein zugehöriger Eigenvektor. Dann gilt:
+ \begin{align*}
+  \scalar{f(\vv)}{\vw} = \scalar{\lambda \vv}{\vv} = \lambda \scalar{\vv}{\vv}\\
+  \scalar{\vv}{f(\vv} = \scalar{\vv}{\lambda \vv} = \overline{\lambda} \scalar{\vv}{\vv}\\
+ \end{align*}
+ Es gilt $\scalar{\vv}{\vv} \neq 0$, also $\lambda = \overline{\lambda}$, also $\lambda \in \bR$.
+\end{proof}
+\begin{corollary}
+ Selbstadjungierte Endomorphismen sind diagonalisierbar.
+\end{corollary}
+\begin{theorem}
+ Für jede selbstadjungierte Abbildung $f$ existiert eine Orthonormalbasis aus Eigenvektoren von $f$.
+\end{theorem}
+\begin{proof}
+ Per Induktion über $n = \dim V$.
+ \begin{enumerate}
+  \item[(IB)] Sei $\vv \in V$ ein Eigenvektor mit Länge $1$. Dann ist $\{\vv\}$ die gesuchte Basis.
+  \item[(IV)] Sei $n > 1$. Sei die Aussage für selbstadjungierte Endomorphismen von Vektorräumen kleinerer Dimension bereits bewiesen. Wir wissen: es existiert ein reeller Eigenwert $\lambda$. Sei $\vu \in V$ ein zugehöriger Eigenvektor der Länge 1 und $U = \langle \vu \rangle$. Sei $\veta$ in $f(U^\bot)$. Wähle $\veta' \in U^\bot$, sodass $\veta = f(\veta')$.  Es gilt:
+  \begin{align*}
+   \scalar{f(\veta')}{\vu} = \scalar{\veta'}{f(\vu)} = \lambda\scalar{\veta'}{\vu} = 0
+  \end{align*}
+  Also $\scalar{\eta}{\vu} = 0$, also $\eta \in U^\bot$, also $f(U^\bot) \subseteq U^\bot$.
+  \newpar
+  \ul{Behauptung:} $f \mid_{U^\bot}$ ist selbstadjungiert. Da $\dim U^\bot < \dim V$ liefert die Induktionsannahme eine Orthonormalbasis $B = (\vv_i)_{i < n}$ von $U^\bot$. Dann ist $\vu \cup B$ eine gesuchte Basis.
+ \end{enumerate}
+\end{proof}
+\begin{proposition}
+ Sei $A \in \text{Mat}(n \times n, \bR)$ symmetrisch. Dann gibt es eine orthogonale Matrix $S$, sodass $SAS^{-1}$ diagonal ist.
+\end{proposition}
 
 %
 %

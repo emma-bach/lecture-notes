@@ -862,7 +862,63 @@ Die Abbildung $F$ ist genau dann differenzierbar in $X_0$, wenn alle Koordinaten
 \begin{definition}
  Sei $F : M \subseteq \bR^n \to \bR^n$ eine $C^r$-Funktion mit regulären Differentialen. Eine solche Abbildung nennt man einen $C^r$-Diffeomorphismus.
 \end{definition}
+\clearpage
+[...]
+\clearpage
+\begin{theorem}
+ \emph{\tbf{(Implizite Funktion):}}  Sei $k < n$, $M \subseteq \bR^n$ offen, $F \in C^r : M \to \bR^k$, sei $N = \{\vx \in M \mid F(\vx) = 0\}$. Sei $\vx_0 \in N$ und $DF_{\vx_0}$ vom Rang $k$. 
+ 
+ \noindent Dann gibt es nach passender Identifizierung von $\bR^n$ mit $\bR^{n-k} \times \bR^k$ eine offene Umgebung $U \subseteq M$ von $\vx_0$, eine offene Menge $V \subseteq \bR^{n-k}$ und eine Abbildung $G \in C^r : V \to \bR^k$, sodass $N \cap U$ der Graph von $G$ ist.
+\end{theorem}
+\begin{proof}
+ $DF_{\vx_0}$ hat Rang $k$. Es gilt also $k$ linear unabhängige Spalten. OBDA seien dies die letzten $k$ Spalten. Die ersten $(n-k)$ Basisvektoren bilden eine Basis des $\bR^{n-k}$, ebenso bilden die letzten $k$ Vektoren eine Basis des $\bR^k$. Wir haben somit eine Identifikation $\bR^n \simeq \bR^{n-k} \times \bR^k$ erhalten, sodass wir $\vx \in \bR^n$ abbilden auf $\vx = (\vx',\vx'')$. Wir definieren folgende Funktion:
+ \begin{align*}
+  \phi : M \times \bR^k &\to \bR^{n-k} \times \bR^k\\
+  (\vx', \vx'') &\to (\vx', F(\vx', \vx''))
+ \end{align*}
+ Da $F, \times \in C^r$ ist $\phi$ ebenfalls in $C^r$. Für die Jakobimatrix gilt:
+ \begin{align*}
+  J \phi = 
+  \begin{pmatrix}
+    1 & \hdots & 0 & 0 & \hdots & 0\\
+    \vdots & \ddots & \vdots\\
+  \end{pmatrix}
+ \end{align*}
+ 
+ [WIP]
+ 
+ Nach dem Satz der Inversen Funktion existiert eine Umgebung $U_0$ von $\vx_0$, sodass auf dieser Umgebung eine Umkehrabbildung $\psi$ existiert. Und so weiter :)
+\end{proof}
+\begin{anmerkung}
+ Seien $A$, $B$ Mengen. Es existieren folgende Funktionen: 
+ \begin{itemize}
+  \item Das Produkt $A \times B$
+  \item Die Projektion $\pi_1 : A \times B \to A$ auf die erste Komponente
+  \item Die Projektion $\pi_2 : A \times B \to B$ auf die zweite Komponente
+  \item Die kanonische Injektion $i : A \to A \times B : a \to (a,0)$
+ \end{itemize}
+\end{anmerkung}
+\begin{theorem}
+ \emph{\tbf{Über lokal surjektive Abbildungen:}} Sei $k < n$. Sei $M \subseteq \bR^n$ offen, $F : M \to \bR^k$ eine Abbildung der Klasse $C^r$, $r \in \bN_1$. Sei $X_0 \in M$ und $F$ in $X_0$ vom Rang $k$, also $DF_{X_0}$ surjektiv. Dann gibt es eine offene Umgebung $U$ von $X_0$ in $M$, eine offene Menge $V$ in $\bR^{n-k}$, und einen $C^r$-Diffeomorphismus $h : U \to V \times F(u)$, sodass das folgende Diagramm kommutiert:
+ \begin{figure}[h!]
+ \centering
+    \begin{tikzcd}[row sep = huge, column sep = huge]
+    U
+    \arrow[r, "h"]
+    \arrow[dr, "F"]
+    & V \times F(u)
+    \arrow[d, "\pi_2"] \\
+    &  F(u)
+    \end{tikzcd}
+\end{figure}
+\end{theorem}
+\begin{proof}
+Nach Vorraussetzung hat $JF(X_0)$ $k$ unabhängige Spalten. Seien dies OBdA die letzten Spalten. Wir definieren $\pi_1 : \bR^n \to \bR^{n-k}$, $\pi_2 : \bR^n \to \bR^k$.
+\begin{align*}
+ \varphi : M \to \bR^{n-k} \times \bR^k : X \to (\pi_1(X), F(X))
+\end{align*}
 
+\end{proof}
 
 %
 %
