@@ -27,6 +27,7 @@
 \newcommand{\ttt}[1]{\texttt{#1}}
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\mc}[1]{\mathcal{#1}}
 
 \newcommand{\bC}{\mathbb{C}}
 \newcommand{\bF}{\mathbb{F}}
@@ -39,6 +40,7 @@
 \newcommand{\bb}{\vec{b}}
 \newcommand{\vc}{\vec{c}}
 \newcommand{\ve}{\vec{e}}
+\newcommand{\vp}{\vec{p}}
 \renewcommand{\vu}{\vec{u}}
 \newcommand{\vv}{\vec{v}}
 \newcommand{\vw}{\vec{w}}
@@ -1588,6 +1590,46 @@ Sei $B$ eine Orthonormalbasis von $V$. Dann ist $f$ selbstadjungiert genau dann,
 \begin{proposition}
  Sei $A \in \text{Mat}(n \times n, \bR)$ symmetrisch. Dann gibt es eine orthogonale Matrix $S$, sodass $SAS^{-1}$ diagonal ist.
 \end{proposition}
+\begin{section}{Hauptachsentransformation}
+ \begin{theorem}
+ \label{thrm:hauptachsen}
+  Sei $V$ ein endlichdimensionaler Vektorraum über $\bR$ oder $\bC$, sei $s : V \times V \to k$ eine symmetrische oder Hermitische Form. Weiter sei $\mc{A}$ eine angeordnete Basis von $V$ und $A = \text{Mat}_\mc{A}(s)$ die dazugehörige Matrix. Dann gibt es eine Basis $\mc{B} \subset V$, sodass:
+  \begin{enumerate}
+   \item Die Matrix $B = \text{Mat}_\mc{B}(s)$ diagonal ist,
+   \item Die Koordinatenwechselmatrix $S = \Mat{\mc{B}}{\mc{A}}{\text{Id}_V}$ orthogonal oder unitär ist,
+   \item Die Einträge der Diagonalmatrix $B$ relle Eigenwerte von $A$ sind.
+  \end{enumerate}
+ \end{theorem}
+ \begin{definition}
+   In dieser Situation nennen wir die Vektoren aus $\mc{B}$ die \tbf{Hauptachsen von $s$} und den Basiswechsel von $\mc{A}$ zu $\mc{B}$ die \tbf{Hauptachsentransformation}.
+ \end{definition}
+ \begin{theorem}
+  In der Situation von Satz \ref{hauptachsen} sind folgende Aussagen äquivalent:
+  \begin{enumerate}
+   \item Die Form $s$ ist positiv definit.
+   \item Alle Eigenwerte von $A$ sind größer als Null.
+  \end{enumerate}
+ \end{theorem}
+ \begin{subsection}{Anwendung - Rotation von Körpern im Raum}
+  Wir betrachten Lineare Bewegung / Translation, also einen Körper mit Masse $m$ der sich mit einer konstanten Geschwindigkeit $\vv$ bewegt. Der Impuls ist gegeben durch $\vp = m \cdot \vv$. Es stellt sich heraus, dass jeder Begriff der linearen Bewegung einen Analogen Begriff in der Rotation hat, z.B. Impuls $\leftrightarrow$ Drehimpuls - Bei symmetrischer Massenverteilung ist der Drehimpuls gegeben durch Trägheitsmoment $\cdot$ Drehgeschwindigkeit. Im Allgemeinen ist die Formel etwas komplizierter (Drehimpuls = Trägheitstensor $\cdot$ Drehgeschwindigkeit):
+  \begin{align*}
+   \vec{L} = \Theta \cdot \vec{\omega}
+  \end{align*}
+  Wobei die Richtung von $\vec{\omega}$ die Rotationsachse ist und die Länge der Rotationsgeschwindigkeit entspricht. In dieser spezifischen Situation ist der Trägheitstensor $\Theta$ einfach eine $3 \times 3$-Matrix - spezifischer handelt es sich um eine \textit{symmetrische} Matrix! Eine Beobachtung: Drehimpuls und Drehgeschwindigkeit zeigen genau dann in die selbe Richtung, wenn die Drehachse ein Eigenvektor des Trägheitstensors ist! Der sylvestersche Trägheitssatz sagt uns nun, dass es genau drei Richtungen gibt, in denen man ohne Umwucht drehen kann.
+ \end{subsection}
+ \begin{subsection}{Anwendung - Kovarianz}
+  Untersucht man gleichzeitig Zufallsvariablen $X_1, \hdots, X_n$, so bilden die Kovarianzen der Zufallsvariablen eine symmetrische \tbf{Kovarianzmatrix}:
+  \begin{align*}
+   A_{ij} = \text{Kov}(i,j), \quad A_{ii} = \text{Var}(i)
+  \end{align*}
+Da die Matrix symmetrisch ist, existiert eine Orthonormalbasis aus Eigenvektoren. Welche Bedeutung hat ein Eigenvektor der Kovarianzmatrix? Gegeben einen Vektor $\vv = (\lambda_1, \hdots, \lambda_n)^\top$, betrachte die Zufallsvariable $X_{\vv} = \sum \lambda_i X_i$. Zentrale Beobachtung: Die Kovarianzmatrix gibt ebenfalls die Kovarianz solcher Linearkombinationen aus Zufallsvariablen - Gegeben $\vv, \vw \in \bR^n$ gilt 
+  \begin{align*}
+   \text{Kov}(\vv, \vw) = \vv^\bot A \vw
+  \end{align*}
+ \end{subsection}
+ Die Hauptachsentransformation erlaubt uns nun, das Problem zu reduzieren, indem als Basis die ``Richtungen'' der Kovarianzen genommen werden, und die dazu orthogonalen Vektoren. Daraufhin können dann Achsen, entlang denen die Varianz gering ist, ignoriert werden, ohne die Daten zu sehr zu verfälschen.
+\end{section}
+
 
 %
 %
