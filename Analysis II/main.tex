@@ -14,9 +14,7 @@
 \usepackage{bm}
 \usepackage{tikz-cd}
 \usepackage{physics}
-%\usepackage{bbm}
-%\usepackage{biblatex}
-%\addbibresource{bib.bib}
+\usepackage{placeins}
 
 %hyperref should be last apparently
 \usepackage{hyperref}
@@ -913,16 +911,43 @@ Die Abbildung $F$ ist genau dann differenzierbar in $X_0$, wenn alle Koordinaten
 \end{figure}
 \end{theorem}
 \begin{proof}
-Nach Vorraussetzung hat $JF(X_0)$ $k$ unabhängige Spalten. Seien dies OBdA die letzten Spalten. Wir definieren $\pi_1 : \bR^n \to \bR^{n-k}$, $\pi_2 : \bR^n \to \bR^k$.
+Nach Vorraussetzung hat $JF(X_0)$ $k$ unabhängige Spalten. Seien dies OBdA die letzten Spalten. Wir interpretieren $\bR^n = \bR^k \times \bR^{n-k}$ und definieren $\pi_1 : \bR^n \to \bR^{n-k}$ und $\pi_2 : \bR^n \to \bR^k$ als die dazugehörigen kanonischen Projektionen. Sei $\varphi$ folgende Funktion:
 \begin{align*}
- \varphi : M \to \bR^{n-k} \times \bR^k : X \to (\pi_1(X), F(X))
+ \varphi : M &\to \bR^{n-k} \times \bR^k\\
+ X &\to (\pi_1(X), F(X))
 \end{align*}
+Es gilt $F \in C^r$ und $\pi_1 \in C^r$, also auch $\varphi \in C^r$. Gemäß des Satzes der inversen Funktion existiert also eine Umgebung $\varphi \in C^r$, auf der $\varphi$ ein $C^r$ Diffeomorphismus (also $C^r$ und invertierbar).
+\newpar
+Da $\varphi^{-1}$ stetig ist, ist das Urbild $(\varphi^{-1})^{-1}(U') = \varphi(U')$ offen. Es enthält also eine offene Umgebung von $\varphi(X_0) = (\pi_1(X_0), F(X_0))$ der Form $V \times X$, also ist $V$ offen in $\bR^{n-k}$. Wir setzen $U := \varphi^{-1}(V \times W)$ und $h = \varphi \mid_U$. Dann ist $F(U) = W$, und für $X \in U$ gilt $h(X) = (\pi_1(X), F(X))$, also $\pi_2 \circ h = F$.
 \end{proof}
+\noindent Im Fall $k > n$ erhalten wir lokale Injektivität statt lokaler Surjektivität:
+\begin{theorem}
+ \emph{\tbf{Über lokal injektive Abbildungen:}} Sei $k > n$. Sei $M \subseteq \bR^n$ offen, sei $F : M \to \bR^k$ eine $C^r$-Abbildung. Sei $X_0 \in M$ und $F$ in $X_0$ vom Rang $n$ (und damit das Differential $DF_{X_0}$ injektiv). Sei $i$ die kanonische Injektion.
+ \newpar
+ Dann gibt es eine offene Umgebung $U$ von $X_0$ in $M$, eine offene Umgebung $V$ von $0$ in $\bR^{k-n}$, eine offene Umgebung $W$ von $F(X_0)$ in $\bR^k$, und einen $\bC^r$-Diffeomorphismus $h : U \times V \to W$, sodass das folgende Diagramm kommutiert:
+ \FloatBarrier
+ \begin{figure}[h!]
+ \centering
+    \begin{tikzcd}[row sep = huge, column sep = huge]
+    U
+    \arrow[r, "i"]
+    \arrow[dr, "F"]
+    & V \times F(u)
+    \arrow[d, "h"] \\
+    &  F(u)
+    \end{tikzcd}
+\end{figure}
+\end{theorem}
+\FloatBarrier
+\begin{proof}
+ hi :D
+\end{proof}
+
 \clearpage
 [...]
 \clearpage
 \begin{lemma}
- Erfülle $F$ die Vorraussetzung $(S)$, sei außerdem $y_i (a,b) \to \bR^n$ eine Lösung des Gleichungssystems $Y'(t) = F(t,Y(t))$. Weiter existiere der Grenzwert $\lim_{t \to^+ b} Y(t) := y_1$ und es gelte $(b,y_1) \in \Omega$. Dann existier $\delta > 0$, sodass man die Lösung $y$ zu einer Lösung auf dem Intervall $(a, b+\delta]$ fortsetzen kann.
+ Erfülle $F$ die Vorraussetzung $(S)$, sei außerdem $y_i (a,b) \to \bR^n$ eine Lösung des Gleichungssystems $Y'(t) = F(t,Y(t))$. Weiter existiere der Grenzwert $\lim_{t \to^+ b} Y(t) := y_1$ und es gelte $(b,y_1) \in \Omega$. Dann existiert $\delta > 0$, sodass man die Lösung $y$ zu einer Lösung auf dem Intervall $(a, b+\delta]$ fortsetzen kann.
 \end{lemma}
 \begin{definition}
  Seien $A,B \in \bR^{n+1}$. Wir definieren zwischen den beiden Mengen folgendermaßen eine Abstandsfunktion: \begin{align*}

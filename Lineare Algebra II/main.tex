@@ -1629,20 +1629,158 @@ Da die Matrix symmetrisch ist, existiert eine Orthonormalbasis aus Eigenvektoren
  \end{subsection}
  Die Hauptachsentransformation erlaubt uns nun, das Problem zu reduzieren, indem als Basis die ``Richtungen'' der Kovarianzen genommen werden, und die dazu orthogonalen Vektoren. Daraufhin können dann Achsen, entlang denen die Varianz gering ist, ignoriert werden, ohne die Daten zu sehr zu verfälschen.
 \end{section}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\begin{chapter}{Multilineare Algebra}
+\begin{definition}
+ Seien $U, V, W$ Vektorräume. Eine \tbf{bilineare Abbildung} ist eine bilineare Abbildung $U \times V \to W$.
+\end{definition}
+\begin{definition}
+ Seien $V_1, \hdots, V_n, W$ Vektorräume. Eine \tbf{multilineare Abbildung} ist eine bilineare Abbildung $V_1 \times \hdots \times V_n \to W$.
+\end{definition}
+\noindent Ein Beispiel für eine Multilineare Abbildung ist die Determinante einer Matrix, aufgefasst als Funktion der Spalten (bzw. Zeilen) der Matrix.
+\begin{section}{Das Tensorprodukt}
+\begin{definition}
+ Sei $k$ ein Körper und $U, V$ zwei $k$-Vektorräume. Ein Tensorprodukt von $U$ und $V$ ist ein $k$-Vektorraum $T$ zusammen mit einer bilinearen Abbildung $\tau : U \times V \to T$, sodass es für alle bilinearen Abbildungen $s : U \times V \to W$ genau eine lineare Abbildung $\eta : T \to W$ gibt, sodass das folgende Diagramm kommutiert:
+ \begin{figure}[h!]
+    \centering
+    \begin{tikzcd}[row sep = huge, column sep = huge]
+    U \times V
+    \arrow[r, "\tau \text{ bilinear}"]
+    \arrow[d, "id"]
+    & T
+    \arrow[d, "\exists!\eta \text{ linear}"] \\
+    U \times V
+    \arrow[r, "s \text{ bilinear}"]
+    &  W
+    \end{tikzcd}
+ \end{figure}
+\end{definition}
+\begin{theorem}
+ $\eta$ ist ein Isomorphismus
+\end{theorem}
+\begin{proof}
+ Nach universeller Eigenschaft der Tensorprodukte existiert genau eine lineare Abbildung $\mu : T_2 \to T_1$, sodass das folgende Diagramm kommutiert:
+ \begin{figure}[h!]
+    \centering
+    \begin{tikzcd}[row sep = huge, column sep = huge]
+    U \times V
+    \arrow[r, "\tau_2 \text{ bilinear}"]
+    \arrow[d, "id"]
+    & T_2
+    \arrow[d, "\exists!\mu \text{ linear}"] \\
+    U \times V
+    \arrow[r, "\tau_1 \text{ bilinear}"]
+    &  T_1
+    \end{tikzcd}
+ \end{figure}
+ \newpar
+ \clearpage
+ \noindent Wir betrachten nun das folgende Diagramm:
+  \begin{figure}[h!]
+    \centering
+    \begin{tikzcd}[row sep = huge, column sep = huge]
+    U \times V
+    \arrow[r, "\tau_1 \text{ bilinear}"]
+    \arrow[d, "id"]
+    & T_1
+    \arrow[d, "\exists!\eta \text{ linear}"] \\
+    U \times V
+    \arrow[r, "\tau_2 \text{ bilinear}"]
+    \arrow[d, "id"]
+    & T_2
+    \arrow[d, "\exists!\mu \text{ linear}"] \\
+    U \times V
+    \arrow[r, "\tau_1 \text{ bilinear}"]
+    &  T_1
+    \end{tikzcd}
+ \end{figure}
+ \newpar
+ Da die obere Hälfte kommutiert gilt $\mu (\eta(\tau_1(v)) = \mu(\tau_2(v))$. Da die untere Hälfte kommutiert gilt $\mu(\tau_2(v))= \tau_1(v)$. Also kommutiert auch das kombinierte Diagramm.
+ \newpar
+ Das folgende Diagramm kommutiert trivial:
+ \begin{figure}[h!]
+    \centering
+    \begin{tikzcd}[row sep = huge, column sep = huge]
+    U \times V
+    \arrow[r, "\tau_1 \text{ bilinear}"]
+    \arrow[d, "id"]
+    & T_1
+    \arrow[d, "id"] \\
+    U \times V
+    \arrow[r, "\tau_1 \text{ bilinear}"]
+    &  T_1
+    \end{tikzcd}
+ \end{figure}
+ \newpar
+ Also gibt es zwei Abbildungen, welche das Diagramm kommutieren lassen: $id$ und $\mu \circ \eta$. Aufgrund der universellen Eigenschaft des Tensorprodukts $T_1$ ist die Abbildung, welche das Diagramm kommutieren lässt, aber eindeutig. Also gilt $\mu \circ \eta = id$. Der Beweis für $\eta \circ \mu = id$ folgt analog, wobei $T_2$ und $T_1$ vertauscht werden.
+ \end{proof}
+ \begin{theorem}
+  Tensorprodukte existieren.
+ \end{theorem}
+  Dieser Satz wird einiges an Arbeit benötigen. Wir führen zuerst neue Notation und einige Definitionen ein.
+  \newpar
+  \noindent \ul{\tbf{Katastrophale Notation:}} Da je zwei Tensorprodukträume isomorph sind redet man in der Literatur von ``dem Tensorprodukt'' als wäre es eindeutig. (das selbe Problem hat ``der'' Quotientenraum $V / U$). Man bezeichnet alle Tensorprodukte von $U$ und $V$ mit $U \otimes V$. Gegeben zwei Vektoren $\vu \in U$, $\vv \in V$ schreibt man statt $\tau(\vu, \vv)$ auch $\vu \otimes \vv \in U \otimes V$.
+  \subsection{Direkte Produkte}
+  \ul{Ziel:} Gegeben zwei Vektorräume $V, W$ existiert der Produktraum $V \times W$. Wir wollen dies für beliebig viele Faktoren.
+  \newpar
+  \ul{Konstruktion:} Wir formalisieren das Konzept einer Folge von Vektoren. Sei $I$ eine Menge. Sei $(V_i)_{i \in I}$ eine Familie von $k$-Vektorräumen. Dann betrachte
+  \begin{align*}
+   \prod_{i \in I} V_i = \left\{(\vv_i)_{i \in I} \mid \forall i : \vv_i \in V_i\right\}
+  \end{align*}
+  \ul{Einfach:} Auf $\prod V_i$ lässt sich durch komponentenweise Addition und Skalarmultiplikation eine $k$-Vektorraumstruktur definieren. Diesen Vektorraum nennen wir das \tbf{direkte Produkt} der Familie $(V_i)_{i \in I}$.
+  \newpar
+  Spezialfall: Es gibt einen Vektorraum $V$, sodass $\forall i : V_i = V$. In diesem Spezialfall schreibt man für das direkte Produkt auch $V^I$ (z.B. $\bR^\bN$ für Folgen reeller Zahlen).
+  \newpar
+  \begin{beobachtung}
+   In diesem Spezialfall ist das Produkt $\prod_{i \in I} v_i = V^I$ genau die Menge der Abbildungen $I \to V$. Hier sieht man explizit, dass $\bR^\bN$ die Menge der Abbildungen $\bN \to \bR$ sind.
+  \end{beobachtung}
+   \noindent Das direkte Produkt ist durch eine universelle Eigenschaft gegeben :D
+   
+   \begin{definition}
+    Sei ein Index $j \in I$ gegeben. Die Abbildung 
+    \begin{align*}
+            p_j : \prod_{i \in I} V_i &\to V_j\\
+            (\vv_i)_{i \in I} &\to \vv_J\\
+    \end{align*}
+    Ist eine lineare Abbildung, welche als die Profektion auf die $j$-te Komponente bezeichnet wird.
+   \end{definition}
+   \begin{theorem}
+    Sei $W$ ein $k$-Vektorraum und sei $(\varphi_i : W \to V_i)_{i \in I}$ eine Familie von linearen Abbildungen. Dann gibt es genau eine lineare Abbildung $\eta : W \to \prod_{i \in I} V_i$, sodass die folgenden Diagramme kommutieren:
+    \begin{figure}[h!]
+        \centering
+        \begin{tikzcd}[row sep = huge, column sep = huge]
+        W
+        \arrow[r, "\exists ! \eta"]
+        \arrow[d, "id"]
+        & \prod_{i \in I} V_i
+        \arrow[d, "p_j"] \\
+        W
+        \arrow[r, "\varphi_j"]
+        &  V_j
+        \end{tikzcd}
+    \end{figure}
+   \end{theorem}
 
+\end{section}
 
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
+\end{chapter}
+
 %
 %
 %
