@@ -1736,12 +1736,18 @@ Da die Matrix symmetrisch ist, existiert eine Orthonormalbasis aus Eigenvektoren
   Dieser Satz wird einiges an Arbeit benötigen. Wir führen zuerst neue Notation und einige Definitionen ein.
   \newpar
   \noindent \ul{\tbf{Katastrophale Notation:}} Da je zwei Tensorprodukträume isomorph sind redet man in der Literatur von ``dem Tensorprodukt'' als wäre es eindeutig. (das selbe Problem hat ``der'' Quotientenraum $V / U$). Man bezeichnet alle Tensorprodukte von $U$ und $V$ mit $U \otimes V$. Gegeben zwei Vektoren $\vu \in U$, $\vv \in V$ schreibt man statt $\tau(\vu, \vv)$ auch $\vu \otimes \vv \in U \otimes V$.
+  %
+  %
+  %
+  %
+  %
   \subsection{Direkte Produkte}
   \ul{Ziel:} Gegeben zwei Vektorräume $V, W$ existiert der Produktraum $V \times W$. Wir wollen dies für beliebig viele Faktoren.
   \newpar
   \ul{Konstruktion:} Wir formalisieren das Konzept einer Folge von Vektoren. Sei $I$ eine Menge. Sei $(V_i)_{i \in I}$ eine Familie von $k$-Vektorräumen. Dann betrachte
   \begin{align*}
-   \prod_{i \in I} V_i = \left\{(\vv_i)_{i \in I} \mid \forall i : \vv_i \in V_i\right\}
+   \prod_{i \in I} V_i &= \left\{(\vv_i)_{i \in I} \mid \forall i : \vv_i \in V_i\right\}\\
+   \bigoplus_{i \in I} V_i &= \left\{(\vv_i)_{i \in I} \mid \forall i : \vv_i \in V_i \text{ und nur endlich viele } \vv_i \neq \vz \right\}
   \end{align*}
   \ul{Einfach:} Auf $\prod V_i$ lässt sich durch komponentenweise Addition und Skalarmultiplikation eine $k$-Vektorraumstruktur definieren. Diesen Vektorraum nennen wir das \tbf{direkte Produkt} der Familie $(V_i)_{i \in I}$.
   \newpar
@@ -1756,9 +1762,9 @@ Da die Matrix symmetrisch ist, existiert eine Orthonormalbasis aus Eigenvektoren
     Sei ein Index $j \in I$ gegeben. Die Abbildung 
     \begin{align*}
             p_j : \prod_{i \in I} V_i &\to V_j\\
-            (\vv_i)_{i \in I} &\to \vv_J\\
+            (\vv_i)_{i \in I} &\to \vv_j\\
     \end{align*}
-    Ist eine lineare Abbildung, welche als die Profektion auf die $j$-te Komponente bezeichnet wird.
+    Ist eine lineare Abbildung, welche als die kanonische Projektion auf die $j$-te Komponente bezeichnet wird.
    \end{definition}
    \begin{theorem}
     Sei $W$ ein $k$-Vektorraum und sei $(\varphi_i : W \to V_i)_{i \in I}$ eine Familie von linearen Abbildungen. Dann gibt es genau eine lineare Abbildung $\eta : W \to \prod_{i \in I} V_i$, sodass die folgenden Diagramme kommutieren:
@@ -1776,7 +1782,83 @@ Da die Matrix symmetrisch ist, existiert eine Orthonormalbasis aus Eigenvektoren
         \end{tikzcd}
     \end{figure}
    \end{theorem}
-
+	\begin{definition}
+		Gegeben Index $j$, betrachte
+		\begin{align*}
+			\iota_j : V_j &\to \bigoplus_i V_i\\
+				  \vv &\mapsto 
+				  \begin{pmatrix}
+				  	\vv & i = j\\
+				  	\vz_{V_i} & i \neq j\\
+				  \end{pmatrix}_i
+		\end{align*}
+		\ul{Behauptung:} Diese Abbildung ist linear und injektiv.
+	\end{definition}
+	\begin{proposition}
+	Gegeben $\vv \in \bigoplus V_i$ haben wir
+	\begin{align*}
+		\vv = \sum_i \iota_i(p_i(\vv))
+	\end{align*}
+	\end{proposition}
+	\begin{theorem}
+		\textbf{Universelle Eigenschaft:} Gegeben einen $k$-Vektorraum $W$ und für jeden Index $i$ eine lineare Abbildung
+		\begin{align*}
+			\varphi_i : V_i \to W.
+		\end{align*}
+		Dann gibt es genau eine lineare Abbildung
+		\begin{align*}
+			\mu : \bigoplus V_i \to W,
+		\end{align*}
+	sodass für alle indizes $j$ das folgende Diagramm kommutiert:
+	\begin{figure}[h!]
+		\centering
+		\begin{tikzcd}[row sep = huge, column sep = huge]
+			V_j
+			\arrow[r, "\iota_j"]
+			\arrow[d, "id"]
+			& \bigoplus_{i \in I} V_i
+			\arrow[d, "\exists ! \mu"] \\
+			V_j
+			\arrow[r, "\varphi_j"]
+			&  W
+		\end{tikzcd}
+	\end{figure}
+	\end{theorem}
+	\begin{proof}
+		Seien zwei Abbildungen $\mu_1$, $\mu_2$ gegeben wie im Satz. Schreibe $\vv$ als Summe von Bildern der kanonischen Projektionen: \[\vv = \sum_i \iota_i(p_i(\vv))\]. Dann gilt:
+		\begin{align*}
+			\mu_1(\vv) &= \sum \mu_1(\iota_i(p_i(\vv)))\\
+					   &= \sum \varphi(p_i(\vv))\\
+					   &= \sum \mu_2(\iota_i(p_i(\vv)))\\
+					   &= \mu_2(\vv)
+		\end{align*}
+		Also ist die Eindeutigkeit Bewiesen. Existenz folgt durch:
+		\begin{align*}
+			\mu : \bigoplus V_i &\to W\\
+					\vv 		&\mapsto \sum_i \varphi_i(p_i(\vv))
+		\end{align*}
+	\end{proof}
+	\hspace{-16pt}\textbf{\ul{Anwendung:}} Es gibt einen kanonischen Isomorphismus zwischen
+	\begin{align*}
+		\left(\bigoplus V_i\right)^* \simeq \prod\left(V_i^*\right)
+	\end{align*}
+	Also ist $\left(\bigoplus V_i\right)^*$ gigantisch viel größer als der Raum $\bigoplus V_i$ selbst!
+	\begin{proof}\hphantom{hi}\newpar
+		\ul{Schritt 1: Konstruktion einer linearen Abbildung zwischen den Räumen.}
+		\begin{itemize}
+			\item[] Betrachte für alle indizes $j$ die kanonische Injektion $\iota_j$. Betrachte die dazugehörige Abbildung zwischen den Dualräumen:
+			\begin{align*}
+				(\iota_j)^* : \left(\bigoplus V_i\right)^* &\to V_j^*\\
+			\end{align*}
+			Die universelle Eigenschaft des Produkts von $V_j^*$ liefert eine eindeutige lineare Abbildung \[\eta : \left(\bigoplus V_i\right)^* \to V_j^*\].		
+		\end{itemize}
+		\ul{Schritt 2: Injektivität.}
+		\begin{itemize}
+			\item[] Sei $\varphi \in \ker(\eta)$. Zu zeigen ist, dass $\varphi$ die Nullabbildung ist. Erinnerung: Kann $\vv$ schreiben als Summe von Vektoren im Bild der Inklusionsabbildungen. Es genügt also 
+			\[\forall j : \forall \vv \in \Im{\iota_j} : \varphi(\vv) = 0\]
+			Sei also ein Index $j$ gegeben und sei $\vv = \iota_j (\vv_j)$ für ein geeignetes $\vv_j \in V_j$. Da das Diagramm kommutiert, ist $(\iota_j)^*(\varphi) = \varphi \circ \iota_j = 0$
+		\end{itemize}
+	\end{proof}
 \end{section}
 
 \end{chapter}
