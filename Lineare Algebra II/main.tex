@@ -37,7 +37,7 @@
 
 \newcommand{\cB}{\mathcal{B}}
 
-\newcommand{\bb}{\vec{b}}
+\renewcommand{\vb}{\vec{b}}
 \newcommand{\vc}{\vec{c}}
 \newcommand{\ve}{\vec{e}}
 \newcommand{\vp}{\vec{p}}
@@ -55,6 +55,9 @@
 \newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
 \newcommand{\Id}{\text{Id}}
 \newcommand{\SO}{\mathcal{SO}}
+
+\newcommand{\tensor}{\otimes}
+\newcommand{\Hom}{\text{Hom}}
 
 \renewcommand*\contentsname{Inhalt}
 \renewcommand*\proofname{Beweis\newline}
@@ -253,6 +256,30 @@ Ein zentrales Ziel der Vorlesung ``Lineare Algebra II'' ist es, zu einer Matrix 
 \begin{align*}
  A = Mat_{B_1}^{B_1}(f) \text{ und } B = Mat_{B_2}^{B_2}(f)
 \end{align*}
+\begin{section}{Der Satz von Wünsch-dir-was}
+\begin{theorem}
+	Let $V$ and $W$ be vector spaces. Let $B_V$ and $V_W$ be bases. Then 
+\end{theorem}
+\begin{proof}
+	Sei $((\vb_i)_{i \in I})$ eine Basis von $V$. Dann induzieren wir eine eindeutige lineare Abbildung durch
+	\[g(f_1(\vb_i)) = f_2(\vb_i).\]
+\end{proof}
+\end{section}
+\clearpage
+\section{Universelle Eigenschaft des Quotientenraums}
+Wenn $W \subseteq \text{ker}(l)$ existiert genau ein $\eta$, sodass das folgende Diagramm kommutiert:
+\begin{figure}[h!]
+	% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWIl0sWzAsMiwiViJdLFsyLDAsIlYvVyJdLFsyLDIsIlQiXSxbMCwxLCJpZCIsMl0sWzEsMywibCIsMl0sWzAsMiwicSJdLFsyLDMsIlxcZXhpc3RzICEgXFxldGEiXV0=
+	\[\begin{tikzcd}
+		V && {V/W} \\
+		\\
+		V && W
+		\arrow["q", from=1-1, to=1-3]
+		\arrow["id"', from=1-1, to=3-1]
+		\arrow["{\exists ! \eta}", from=1-3, to=3-3]
+		\arrow["l"', from=3-1, to=3-3]
+	\end{tikzcd}\]
+\end{figure}
 %
 %
 %
@@ -1492,7 +1519,7 @@ Mithilfe der Abbildung $\cdot^\bC$ fassen wir $V$ als Teilmenge von $V^\bC$ auf.
 \noindent
 Wir können nun lineare Abbildungen $f$ durch folgende Vorschrift komplexifizieren:
 \begin{align*}
- f^\bC(\bb^\bC) = (f(\bb))^\bC
+ f^\bC(\vb^\bC) = (f(\vb))^\bC
 \end{align*}
 \begin{lemma}
  Sei $f : V \to V$ orthogonal. Dann gibt es einen Untervektorraum $U \subseteq V$, sodass $\dim U \in \{1,2\}$ und $f(U) \subseteq U$.
@@ -1629,6 +1656,11 @@ Da die Matrix symmetrisch ist, existiert eine Orthonormalbasis aus Eigenvektoren
  \end{subsection}
  Die Hauptachsentransformation erlaubt uns nun, das Problem zu reduzieren, indem als Basis die ``Richtungen'' der Kovarianzen genommen werden, und die dazu orthogonalen Vektoren. Daraufhin können dann Achsen, entlang denen die Varianz gering ist, ignoriert werden, ohne die Daten zu sehr zu verfälschen.
 \end{section}
+%
+%
+%
+%
+%
 %
 %
 %
@@ -1858,9 +1890,241 @@ Da die Matrix symmetrisch ist, existiert eine Orthonormalbasis aus Eigenvektoren
 			\[\forall j : \forall \vv \in \Im{\iota_j} : \varphi(\vv) = 0\]
 			Sei also ein Index $j$ gegeben und sei $\vv = \iota_j (\vv_j)$ für ein geeignetes $\vv_j \in V_j$. Da das Diagramm kommutiert, ist $(\iota_j)^*(\varphi) = \varphi \circ \iota_j = 0$
 		\end{itemize}
+		\ul{Schritt 3: Surjektivität}
+		\begin{itemize}
+			\item Sei eine Familien von linearen Abbildungen $(f_i)_{i \in I \in \prod(V^*)}$ gegeben. Wir brauchen eine lineare Abbildung 
+			\[\varphi : \bigoplus V_i \to k\]
+			Eine mögliche Wahl ist:
+			\[(v_i)_{i \in I} \mapsto \sum_{i \in I} f_i(p_i((v_i)_{i \in I}))\]
+			Dass diese Abbildung die richtige ist folgt aus der Kommutativität des Diagramms (This proof is left as an exercise for the reader.) - Zu zeigen ist:
+			\[\eta(\varphi) = (f_i)_{i \in I}\]
+			Dazu verwendet man:
+			\[\eta(\varphi) = (f_i) \Leftrightarrow \forall j \in I : p_j(\eta(\varphi)) = p_j((f_i)_{i \in I})\]
+		\end{itemize}
 	\end{proof}
 \end{section}
-
+\begin{section}{Existenz des Tensorprodukts}
+	\ul{Situation:} Gegeben Körper $k$, zwei $k$-Vektorrume $U, V$ wollen wir einen Vektorraum $T$ und eine bilineare Abbildung $\tau : U \times V \to T$ finden, sodass das folgende Diagramm kommutiert:
+	 \begin{figure}[h!]
+		\centering
+		\begin{tikzcd}[row sep = huge, column sep = huge]
+			U \times V
+			\arrow[r, "\tau \text{ bilinear}"]
+			\arrow[d, "id"]
+			& T
+			\arrow[d, "\exists!\eta \text{ linear}"] \\
+			U \times V
+			\arrow[r, "s \text{ bilinear}"]
+			&  W
+		\end{tikzcd}
+	\end{figure}
+	\newpar
+	\ul{Konstruktion 1:} Betrachte den durch die Menge $U \times V$ frei erzeugten Vektorraum, also
+	\[T' = k^{(U \times V)}\]
+	Dieser ist identifiziert mit der Menge der Abbildungen $U \times V \to k$, die fast überall $0$ sind. Betrachte dazu
+	\begin{align*}
+		\tau' : U \times V &\to T'\\
+			(\vu, \vv) &\mapsto e_{\vu, \vv}
+	\end{align*}
+	Wobei $e_{\vu, \vv}$ die Abbildung ist, welche das Paar $(\vu, \vv)$ auf $1_k$ abbildet und alle anderen Paare auf $0_k$.
+	\newpar
+	\ul{Eigenschaft der Konstruktion:}
+	Sei $W$ irgendein Vektorraum und sei $s : U \times V \to W$ irgendeine bilineare Abbildung. Dann gibt es genau eine lineare Abbildung $\eta' : T' \to W$, sodass das Tensorproduktdiagramm kommutiert.
+	\begin{proof}
+		Diese Abbildung ist induziert durch $\eta'(e_{(\vu, \vv)}) = s(\vu, \vv)$. Professor Kebekus nennt dies den "Satz von Wünsch-dir-was".
+	\end{proof}
+	\noindent Ups, diese Konstruktion ist falsch! $\tau'$ ist nicht im geringsten bilinear!
+	\newpar
+	\ul{Überlegung:} Wenn $\tau'$ tatsächlich bilinear wäre, dann wäre
+	\[\tau'(\lambda \vu, \vv) = \lambda \tau'(\vu,\vv)\]
+	also:
+	\[e_{(\lambda \vu, \vv)} - \lambda \cdot e_{(\vu, \vv)}\]
+	etc.
+	\newpar
+	\ul{Reparatur:}
+	\newpar
+	Sei
+	\[M_1 = \left\{e_{(\vu_1 + \lambda \vu_2, \vv)} - e_{\vu_1, \vv} - \lambda e_{\vu_2 \vv} \mid \vu_1, \vu_2 \in U, \lambda \in k, \vv \in V\right\}\]
+	und
+	\[M_2 = \left\{e_{(\vu, \vv_1 - \lambda \vv_2)} - e_{\vu, \vv_1} - \lambda e_{\vu, \vv_2} \mid \vu_1, \vu_2 \in U, \lambda \in k, \vv \in V\right\}\]
+	Betrachte nun
+	\[T = T' / \langle M_1, M_2\rangle\]
+	\iffalse
+	und das Diagramm
+	\begin{figure}[h!]
+		% https://q.uiver.app/#q=WzAsMyxbMCwwLCJVIFxcdGltZXMgViJdLFsyLDAsIlQnIl0sWzQsMCwiVCJdLFswLDEsIlxcdGF1JyJdLFsxLDIsIlxcdGV4dHtxdW90fSJdLFswLDIsIlxcdGF1IiwyLHsiY3VydmUiOjV9XV0=
+		\[\begin{tikzcd}
+			{U \times V} && {T'} && T
+			\arrow["{\tau'}", from=1-1, to=1-3]
+			\arrow["\tau"', curve={height=30pt}, from=1-1, to=1-5]
+			\arrow["{\text{quot}}", from=1-3, to=1-5]
+		\end{tikzcd}\]
+	\end{figure}
+	\fi
+	und $\tau = \tau' \circ \text{quot}$. Die Quotientenabbildung teilt alles raus, was die bilinearität stört, also ist $\tau$ bilinear.
+	\newpar
+	Sei nun wieder ein Vektorraum $W$ und eine bilineare Abbildung $s : U \times V \to W$ gegeben. Die universelle Eigenschaft des Quotientenraums sagt, es existiert genau ein $\eta$, sodass das Quotientenraumdiagramm kommutiert, falls $\langle M_1, M_2 \rangle \subseteq \text{ker}(\eta')$. Das gilt, weil $s$ bilinear ist.
+	\newpar
+	Wir werden nun versuchen, das Tensorprodukt besser zu verstehen.
+	\newpar
+	\begin{definition}
+		Seien $U, V$ Vektorräume. Wir bezeichnen das Tensorprodukt mit $U \otimes V$. Die bilineare Abbildung $\tau$ bezeichnen wir mit $\otimes : U \times V \to U \otimes V$. Die Elemente von $U \otimes V$ werden als \textbf{Tensoren} bezeichnet. Elemente im Bild von $\oplus$ nennen wir \textbf{reine Tensoren}.
+	\end{definition}
+	\begin{lemma}
+		Der Tensor $\ve_1 \tensor \ve_1 + \ve_2 \tensor \ve_2$ ist nicht rein.
+	\end{lemma}
+	\begin{proof}
+		Angenommen, wir hätten
+		\begin{align*}
+			\ve_1 \tensor \ve_1 + \ve_2 \tensor \ve_2 = \vv \tensor \vw
+		\end{align*}
+	\end{proof}
+	\newpar
+	Reine Tensoren bilden im Allgemeinen keinen Untervektorraum.
+	\newpar
+	Für einen reinen Tensor $t$ ist die Darstellung $t = \vu \otimes \vv$ in der Regel nicht eindeutig. Das folgt zum Beispiel bereits aus der Bilinearität von $\otimes$:
+	\begin{align*}
+		(2\vu) \otimes \vv = \vu \otimes (2\vv) = 2(\vu \otimes \vv)
+	\end{align*}
+	Es gibt aber auch viele Beispiele, in denen sich die möglichen Vektoren auf keine Weise ähnlich sind. Die Frage, ob ein gegebener Tensor rein ist, ist im Allgemeinen schwierig.
+	\begin{theorem}
+		Sei $R \subseteq U \otimes V$ die Menge der reinen Tensoren. Dann gilt
+		\[\langle R \rangle = U \otimes V.\]
+		Also ist jedes Tensorprodukt eine Linearkombination reiner Tensoren.
+	\end{theorem}
+	\begin{proof}
+		\iffalse
+		\begin{figure}[h!]
+			% https://q.uiver.app/#q=WzAsNixbMCwwLCJVIFxcdGltZXMgViJdLFswLDIsIlUgXFx0aW1lcyBWIl0sWzMsMCwiVSBcXG90aW1lcyBWIl0sWzMsMiwiXFxsYW5nbGUgUiBcXHJhbmdsZSJdLFswLDQsIlUgXFx0aW1lcyBWIl0sWzMsNCwiVSBcXG90aW1lcyBWIl0sWzAsMSwiaWQiLDJdLFsxLDMsIlxcb3RpbWVzIDogVSBcXHRpbWVzIFYgXFx0byBcXGxhbmdsZSBSXFxyYW5nbGUiLDJdLFswLDIsIlxcb3RpbWVzIDogVSBcXHRpbWVzIFYgXFx0byBVIFxcdGltZXMgVVxcb3RpbWVzIFYiXSxbMiwzLCJcXGV4aXN0cyAhIFxcZXRhIl0sWzEsNCwiaWQiLDJdLFs0LDUsIlxcb3RpbWVzIiwyXSxbMyw1LCJJbmtsdXNpb24iLDIseyJzdHlsZSI6eyJ0YWlsIjp7Im5hbWUiOiJob29rIiwic2lkZSI6InRvcCJ9fX1dLFsyLDUsImlkIiwyLHsiY3VydmUiOi01fV1d
+			\[\begin{tikzcd}
+				{U \times V} &&& {U \otimes V} \\
+				\\
+				{U \times V} &&& {\langle R \rangle} \\
+				\\
+				{U \times V} &&& {U \otimes V}
+				\arrow["{\otimes : U \times V \to U \times U\otimes V}", from=1-1, to=1-4]
+				\arrow["id"', from=1-1, to=3-1]
+				\arrow["{\exists ! \eta}", from=1-4, to=3-4]
+				\arrow["id"', curve={height=-30pt}, from=1-4, to=5-4]
+				\arrow["{\otimes : U \times V \to \langle R\rangle}"', from=3-1, to=3-4]
+				\arrow["id"', from=3-1, to=5-1]
+				\arrow["Inklusion"', hook, from=3-4, to=5-4]
+				\arrow["\otimes"', from=5-1, to=5-4]
+			\end{tikzcd}\]
+		\end{figure}
+		\fi
+	\end{proof}
+	\begin{theorem}
+		Seien $(u_i)_{i \in I}$ und $(v_i)_{i \in J}$ Basen von $U$ und $V$. Dann ist 
+		\[(u_i \tensor v_j)_{(i,j) \in I \times J}\]
+		eine Basis des Tensorprodukts.
+	\end{theorem}
+	\begin{beispiel}
+		\begin{align*}
+			U^* \tensor V &\to \Hom(U,V)\\
+			\phi \tensor \vv &\mapsto (\vu \mapsto \phi(\vu) \vv)
+		\end{align*}
+		Dies ist eine lineare Abbildung zwischen Räumen der gleichen Dimension, also ein Isomorphismus! Der Raum $\Hom(U,V)$ ist also ein Tensorprodukt!
+	\end{beispiel}
+	\noindent Eine Konsequenz ist nun, dass Tensorprodukte endlichdimensionaler Räume als Matrizen betrachtet werden können! Genauer:
+	\begin{definition}
+		Sei $\dim U < \infty$ und $\dim V < \infty$. Seien $\vu_{1}, \hdots, \vu_{n}$ und $\vv_1, \hdots, \vv_m$ angeordnete Basen von $U$ und $V$. Wir betrachten die folgende \textit{lexikographisch angeordnete Produktbasis}:
+		\begin{align*}
+			\begin{array}{ccc}
+				\vu_1 \tensor \vv_1, & \hdots & \vu_1 \tensor \vv_m,\\
+				\vu_2 \tensor \vv_1, & \hdots & \vu_2 \tensor \vv_m,\\
+				\vdots & & \vdots\\
+				\vu_n \tensor \vv_1, & \hdots & \vu_n \tensor \vv_m,\\
+			\end{array}
+		\end{align*}
+	\end{definition}
+	\section{Tensorprodukte von Abbildungen und Matrizen}
+	\begin{definition}
+		Sei $f_1 : U_1 \to V_1$ und $f_2 : U_2 \to V_2$. Wir definieren folgende Abbildung:
+		\begin{align*}
+			U_1 \times U_2 \overset{f_1 \times f_2}{\longrightarrow} V_1 \times V_2 \overset{\tensor}{\longrightarrow}{V_1 \tensor V_2}
+		\end{align*}
+		Diese Abbildung ist bilinear! Also gibt es genau eine lineare Abbildung, sodass das folgende Diagramm kommutiert:
+		% https://q.uiver.app/#q=WzAsNCxbMCwwLCJVXzEgXFx0aW1lcyBVXzIiXSxbMiwwLCJVXzEgXFxvdGltZXMgVV8yIl0sWzIsMiwiVl8xIFxcb3RpbWVzIFZfMiJdLFswLDIsIlVfMSBcXHRpbWVzIFVfMiJdLFswLDEsIlxcdGF1X1UiXSxbMCwzLCIiLDIseyJsZXZlbCI6Miwic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFszLDIsIlxcdGF1X1YgXFxjaXJjIChmXzEgXFx0aW1lcyBmXzIpIiwyXSxbMSwyLCJcXGV4aXN0cyFcXGV0YSJdXQ==
+		\[\begin{tikzcd}
+			{U_1 \times U_2} && {U_1 \otimes U_2} \\
+			\\
+			{U_1 \times U_2} && {V_1 \otimes V_2}
+			\arrow["{\tau_U}", from=1-1, to=1-3]
+			\arrow[equals, from=1-1, to=3-1]
+			\arrow["{\exists!\eta}", from=1-3, to=3-3]
+			\arrow["{\tau_V \circ (f_1 \times f_2)}"', from=3-1, to=3-3]
+		\end{tikzcd}\]
+		Betrachte:
+		\begin{align*}
+			f_1 : k^{b_1} &\to k^{a_1}\\
+				  \vv &\mapsto A_1 \vv
+		\end{align*}
+		\begin{align*}
+			f_2 : k^{b_2} &\to k^{a_2}\\
+			\vw &\mapsto A_2 \vw
+		\end{align*}
+		So erhalten wir das Tensorprodukt von Abbildungen:
+		\begin{align*}
+			f_1 \tensor f_2 : (k^{b_1}) \tensor (k^{b_2}) \to (k^{a_1}) \tensor (k^{a_2})
+		\end{align*}
+		Wir betrachten in den Räumen $k^i$ die Standardbasen und in den Tensorprodukten die lexikographisch angeordneten Produktbasen $B_b$, $B_a$. Die darstellende Matrix
+		\[\Mat{B_a}{B_b}{f_1 \tensor f_2} \in \text{Mat}((a_1, a_2) \times (b_1, b_2))\]
+		Wird $A_1 \tensor A_2$ geschrieben und als \textbf{Tensorprodukt} oder \tbf{Kroneckerprodukt} von Matrizen bezeichnet.
+	\end{definition}
+	\begin{proposition}
+		Seien $f_1 : U_1 \to V_1$, $f_2 : U_2 \to V_2$ linear, alle Räume endlichdimensional. Seien angeordnete Basen $B_{U_1}, B_{U_2}, B_{V_1}, B_{V_2}$ gegeben. Seien $B_{U_1 \times U_2}$ und $B_{V_1 \times V_2}$ die lexikographisch angeordneten Produktbasen. Dann gilt:
+		\begin{align*}
+			\Mat{B_{U_1 \times U_2}}{B_{V_1 \times V_2}}{(f_1 \tensor f_2)} = \Mat{B_{U_1}}{B_{V_1}}{f_1} \tensor \Mat{B_{U_2}}{B_{V_2}}{f_2}
+		\end{align*}
+	\end{proposition}
+	\section{Rechenregeln für Tensorprodukte}
+	\begin{theorem}
+		Sei $V$ ein Vektorraum und $(U_i)_{i \in I}$ eine Familie von Vektorräumen. Dann existiert folgender kanonischer isomorphismus:
+		\[\left(\bigoplus_{i \in I} U_i\right) \tensor V \simeq \bigoplus_{i \in I} \left(U_i \tensor V\right)\]
+	\end{theorem}
+	\begin{theorem}
+		Seien $A,B,C$ Vektorräume. Dann existiert folgender kanonischer Isomorphismus:
+		\[(A \tensor B) \tensor C \simeq A \tensor (B \tensor C)\]
+		Das Tensorprodukt ist also assoziativ.
+	\end{theorem}
+	\begin{definition}
+		Haben wir ein Tensorprodukt von mehr als zwei Räumen bezeichnen wir die Elemente der Menge
+		\[R = \left\{\bigotimes_{i \in I} \vv_i \mid \vv_i \in V_i\right\} \subseteq \bigotimes_{i \in I} V_i\]
+		als reine Tensoren. Genau wie im Fall mit zwei Räumen bilden diese Elemente ein Erzeugendensystem des Raums $\bigotimes_{i \in I} V_i$.
+	\end{definition}
+	\begin{theorem}
+		Seien $(v_2^1),, \hdots, (v_j^n)$ Erzeugendensysteme von $V_1, \hdots, V_n$. Dann bilden die zugehörigen reinen Tensoren ein Erzeugendensystem des Tensorproduktraums $\bigotimes V_i$. Handelt es sich um eine Menge von Basen, bilden die reinen Tensoren eine Basis des Tensorproduktraums.
+	\end{theorem}
+	\begin{theorem}
+		Die Tensorproduktabbildung 
+		\begin{align*}
+			\tau : V_1 \times \hdots \times V_n &\to V_1 \otimes \hdots \otimes V_n\\
+					(\vv_1, \hdots, \vv_n) &\mapsto \vv_1 \tensor \hdots \tensor \vv_n 
+		\end{align*}
+		ist \textbf{multilinear}.
+	\end{theorem}
+	\begin{theorem}
+		Das mehrfache Tensorprodukt erfüllt die analoge universelle Eigenschaft zum doppelten Tensorprodukt, für multilineare Abbildungen statt bilinearen Abbildungen.
+	\end{theorem}
+	Das schönste Beispiel einer Multilinearen Abbildung ist die Determinante:
+	\begin{align*}
+		\text{det} : (\bR^n)^n &\to \bR\\
+					(\vv_1, \hdots, \vv_n) &\mapsto \text{det}(\vv_1, \hdots, \vv_n)
+	\end{align*}
+	Gemäß der universellen Eigenschaft des Tensorprodukts kommutiert das folgende Diagramm:
+	% https://q.uiver.app/#q=WzAsNCxbMCwwLCIoXFxtYXRoYmJ7Un1ebilebiJdLFsyLDIsIlxcbWF0aGJie1J9Il0sWzAsMiwiKFxcbWF0aGJie1J9Xm4pXm4iXSxbMiwwLCJcXGJpZ290aW1lc1xcbWF0aGJie1J9Xm4iXSxbMCwyLCIiLDIseyJsZXZlbCI6Miwic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFsyLDEsIlxcdGV4dHtkZXR9IiwyXSxbMCwzLCJcXHRhdSJdLFszLDEsIlxcZXhpc3RzISBcXGV0YSJdXQ==
+	\[\begin{tikzcd}
+		{(\mathbb{R}^n)^n} && {\bigotimes\mathbb{R}^n} \\
+		\\
+		{(\mathbb{R}^n)^n} && {\mathbb{R}}
+		\arrow["\tau", from=1-1, to=1-3]
+		\arrow[equals, from=1-1, to=3-1]
+		\arrow["{\exists! \eta}", from=1-3, to=3-3]
+		\arrow["{\text{det}}"', from=3-1, to=3-3]
+	\end{tikzcd}\]
+	Die Determinante lässt sich also auch als lineare Abbildung aus dem Tensorprodukt nach $\bR$ definieren.
+\end{section}
 \end{chapter}
 
 %

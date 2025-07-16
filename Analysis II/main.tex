@@ -48,6 +48,16 @@
 \newcommand{\vz}{\vec{0}}
 \newcommand{\zz}{\vec{z}}
 
+\newcommand{\tbA}{\mathbf{A}}
+\newcommand{\tbB}{\mathbf{B}}
+\newcommand{\tbC}{\mathbf{C}}
+\newcommand{\tbD}{\mathbf{D}}
+\newcommand{\tbE}{\mathbf{E}}
+\newcommand{\tbY}{\mathbf{Y}}
+\newcommand{\tbZ}{\mathbf{Z}}
+
+\renewcommand{\tr}{\text{tr}}
+
 \newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
 \newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
 
@@ -942,10 +952,54 @@ Da $\varphi^{-1}$ stetig ist, ist das Urbild $(\varphi^{-1})^{-1}(U') = \varphi(
 \begin{proof}
  hi :D
 \end{proof}
-
 \clearpage
 [...]
 \clearpage
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\chapter{Gewöhnliche Differentialgleichungen}
+Gewöhnliche Differentialgleichungen, auf englisch \textit{ordinary differential equations} (\textit{ODEs}) beschreiben zeitabhngige Prozesse. Sie sind nützlich für die modellierung zahlreicher Prozesse in verschiedenen Gebieten der Wissenschaft.
+\section{Existenztheorie}
+\begin{definition}
+	Für $f : \bR^{n+1} \to \bR$ nennen wir eine Gleichung der Form
+	\begin{align*}
+		y^{(n)}(t) = f(t, y(t), y'(t), \hdots, y^{(n-1)}(t))
+	\end{align*}
+eine \textit{explizite Differntialgleichung n-ter Ordnung}. Ist zusätzlich
+\[y^{(i)}(t_0) = y_{i-1}\]
+für $(t_0, y_0, y_1, \hdots y_{n-1}) \in \bR^{n+1}$ gegeben, spricht man von einem \textit{Anfangswertproblem.}
+\end{definition}
+\begin{definition}
+	Sei $I$ ein Intervall. Eine Funktion $y : I \to \bR$ heißt \textit{Lösung} von (2.1) im Intervall $I$, falls $y$ in $I$ $n$-mal differenzierbar ist und
+	\[y^{(n)}(t) = f(t, y(t), y'(t), \hdots, y^{(n-1)}(t))\]
+	für alle $t \in I$ erfüllt ist.
+\end{definition}
+Wir erlauben hier jede Art von Intervall, egal ob offen, halboffen, oder geschlossen.
+\begin{definition}
+	Sei $F : \omega \subseteq \bR^{n+1} \to \bR^n$. Wir nennen das Gleichungssystem
+	\[Y'(t) = F(t, Y(t))\]
+	ein \textit{System von Differentialgleichungen 1. Ordnung}. Für $F = (f_1, \hdots, f_n)$ und $Y = (y_1, \hdots, y_n)$ lässt sich das System komponentenweise schreiben als:
+	\begin{align*}
+		y_1'(t) &= f_1(t, y_1(t), \hdots, y_n(t))\\
+		&\hspace{6pt}\vdots\\
+		y_n'(t) &= f_n(t, y_1(t), \hdots, y_n(t))\\
+	\end{align*}
+	Ergänzt man das System durch die Bedingung $Y(t_0) = Y_0$ erhalten wir komponentenweise:
+	\begin{align*}
+		y_1(t_0) &= y_1^0\\
+		&\hspace{6pt}\vdots\\
+		y_n(t_0) &= y_n^0\\
+	\end{align*}
+	Für ein $(t_0, y_1^0, \hdots, y_n^0) \in \Omega$ und sprechen wieder von einem \textit{Anfangswertproblem}.
+\end{definition}
 \begin{lemma}
  Erfülle $F$ die Vorraussetzung $(S)$, sei außerdem $y_i (a,b) \to \bR^n$ eine Lösung des Gleichungssystems $Y'(t) = F(t,Y(t))$. Weiter existiere der Grenzwert $\lim_{t \to^+ b} Y(t) := y_1$ und es gelte $(b,y_1) \in \Omega$. Dann existiert $\delta > 0$, sodass man die Lösung $y$ zu einer Lösung auf dem Intervall $(a, b+\delta]$ fortsetzen kann.
 \end{lemma}
@@ -953,9 +1007,244 @@ Da $\varphi^{-1}$ stetig ist, ist das Urbild $(\varphi^{-1})^{-1}(U') = \varphi(
  Seien $A,B \in \bR^{n+1}$. Wir definieren zwischen den beiden Mengen folgendermaßen eine Abstandsfunktion: \begin{align*}
   \text{dist}(A,B) := \inf_{x \in A, y \in B} \norm{X - Y}                                                                                                   
  \end{align*}
+\clearpage
+[big gap here oops]
+\clearpage
+\begin{lemma}
+	Seien $I,J$ offene Intervalle, sei $f : J \times I \to \bR$ durch $f(t,y) = h(t)g(y)$ gegeben, wobei $g : I \to \bR$, $g \neq 0$, $h : J \to \bR$ stetig sind. Falls $\varphi : (\alpha, \beta) \subseteq J \to I$ eine Lösung von (3.1) ist, existiert $c \in \bR : \forall t \in (\alpha, \beta)$
+	\[\varphi(t) = G^{-1}(H(t) + c)\]
+\end{lemma}
+\begin{theorem}
+	Erfülle $f$ die Vorraussetzung des letzten Lemmas. Dann existiert $\forall (t_0, y_0) \in J \times I$ eine eindeutige maximale Lösung $y : J_0 \to I$ von (3.1) mit $y(t_0) = y_0$. Diese Lösung ist von der Form
+	\[y(t) = G^{-1}(H(t)),\]
+	wobei \[G(y) = \int_{y_0}^y \frac{1}{g(x)} dx, y \in I,\] \[H(t) = \int_{t_0}^{t}h(s) ds, t \in J\] ist. 
+\end{theorem}
 \end{definition}
-
+\begin{beispiel}
+	Sei $y'(t) = 2t(1 + y^2)$ mit Anfangsbedingung $y(t_0) = y_0$, wobei $(t_0, y_0 \in \bR^2)$.
+	Dann gilt:
+	\[
+		g(y) = 1 + y^2, \quad h(t) = 2t
+	\]
+	\begin{align*}
+		G(y) &= \int_{y_0}^y \frac{1}{1+x^2} dx \\
+			 &= \arctan y - \arctan y_0\\
+			 &:= \arctan y - c_0
+	\end{align*}
+	\begin{align*}
+		H(t) &= \int_{t_0}^t 2s\ ds\\
+			 &= t^2 - t_0^2
+	\end{align*}
+	\begin{align*}
+		\text{Bild}(G) = \left(-\frac{\pi}{2} - c_0, \frac{\pi}{2} - c_0\right), \quad c_0 \in \left(-\frac{\pi}{2},\frac{\pi}{2}\right)
+	\end{align*}
+	\begin{enumerate}
+		\item $-t_0^2 > -\frac{\pi}{2} - c_0$
+		\[\alpha := \sqrt{\frac{\pi}{2} - c_0 + t_0^2}\]
+		\[H^{-1}(\text{Bild}(G)) = (-\alpha, \alpha)\]
+		\[y(t) = \tan(t^2 - t_0^2 + \arctan(y_0))\]
+		\item $-t_0^2 \leq -\frac{\pi}{2} - c_0$
+		\[\alpha = \sqrt{-\frac{\pi}{2} - c_0 + t_0^2}\]
+		\[\beta := \sqrt{\frac{\pi}{2} - c_0 + t_0^2}\]
+		\[H^{-1}(\text{Bild}(G)) = (-\beta, -\alpha) \cup (\alpha, \beta)\]
+		OBdA $t_0 \in (\alpha, \beta)$, dann
+		\[y(t) = \tan(t^2 - t_0^2 - \arctan(y_0))\]
+	\end{enumerate}
+\end{beispiel}
+\clearpage
+\section{Lineare Gleichungen}
+Angenommen, wir haben eine Funktion $f(t, y)$ der Form
+\[f(t,y) = h(t)y + p(t)\]
+Es gilt:
+\[h, p : I = (a,b) \to \bR\]
+Wobei nach Annahme $h, p$ stetig sind und $f : I \times \bR \to \bR$ die Vorraussetzung (S) erfüllt.
+\newpar
+Wenn $p(t) = 0$ nennen wir die Differentialgleichung $y' = f(t,y)$ \textbf{homogen}, ansonsten nennen wir sie \textbf{inhomogen}.
+\newpar
+\[y' = h(t)y + p(t) \Leftrightarrow y'(t) - h(t)y(t) = p(t)\]
+Wir suchen nun das Urbild von $p \in C^0(I)$ bezüglich
+\[L : C^1(I) \to C^0(U) : y \mapsto y' - hy\]
+\[(L(y))(t) := y'(t) - h(t)y(t)\]
+Es gilt:
+\[L(\alpha y + \beta z) = \alpha L(y) + \beta(L(z))\]
+Also ist $L$ ein linearer Operator!
+\newpar
+[...]
+\clearpage
+\begin{lemma}
+	Sei $I = (a,b)$ und für $f : I \times \bR \to \bR$ gelte
+	\[f(t,y) = h(t)y + p(t)\]
+	Wobei $p, h$ auf $I$ stetig sind. Seien Lösungen $y_1, y_2$ der inhomogenen Gleichung und $y_0$ Lösung der homogenen Gleichung. Dann gilt:
+	\begin{enumerate}
+		\item[(i)] $y_1 - y_2$ ist Lösung der homogenen Gleichung
+		\item[(ii)] $y_1 + y_0$ ist Lösung der inhomogenen Gleichung
+	\end{enumerate}
+\end{lemma}
+\begin{lemma}
+	Sei $y_2$ eine Lösung der inhomogenen Gleichung und $y_0$ eine Lösung der homogenen Gleichung. So existiert eine Lösung $y_1$ der inhomogenen Gleichung, sodass
+	\[y_2 = y_0 + y_1\]
+\end{lemma}
+	\textbf{Variation der Konstanten:} 
+	\[y(t) = c(t) e^{H(t)}\]
+	\[y'(t) = c'(t) e^{H(t)} + c(t)e^{H(t)}h(t)\]
+	Damit $y$ eine Lösung von (3.1) ist muss gelten:
+	\[y'(t) = p(t) + h(t)y(t)\]
+	Also:
+	\[c'(t) = p(t)e^{-H(t)}\]
+	Also ist $c$ eine Stammfunktion von $pe^{-H}$.
+\begin{theorem}
+	Sei $I = (a,b)$, für $f : I \times \bR \to \bR$ gelte
+	\[f(t,y) = h(t)y + p(t)\]
+	$p,h$ stetig. Dann existert für alle $(t_0, y_0) \in I \times \bR$ eine eindeutige, maximale Lösung
+	\[y : I \to \bR\]
+	von (3.1) mit $y(t_0) = y_0$. Diese Lösung hat folgende Form:
+	\[y(t) = e^{[H(t)]}\left(y_0 + \int_{t_0}^t p(s) e^{-H(s)} ds\right)\]
+	Wobei
+	\[H(t) = \int_{t_0}^t h(s) ds\]
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+		y(t_0) = e^{H(t_0)} (y_0 + 0) = y_0
+	\end{align*}
+	Rechnungen liefern, dass $y : I \to \bR$ maximal ist. Seien $y_1, y_2$ eine maximale Lösung mit $y_i(t_0) = y_0$. $\overline{y} := y_1 - y_2$ ist eine Lösung der homogenen Gleichung mit $y(t_0) = 0$, also $\overline{y}(t) = 0$, also $y_1 = y_2$.
+\end{proof}
 %
+%
+%
+%
+%
+%
+%
+\clearpage
+\chapter{Systeme Linearer Differentalgleichungen}
+Wir suchen nach Lösungen von Gleichungssystemen der Form:
+\[Y'(t) = \tbf{A}(t) Y(t) + \tbf{B}(t)\]
+Wobei $\tbf{A}, \tbf{B}$ Matrizen sind.
+\newpar
+Sei $I = (a,b)$ und sei $F(t,Y) := \tbA(t) Y + \tbB(t)$. $F$ ist bezüglich $Y$ lokal Lipschitzstetig, also existiert eine eindeutige maximale Lösung mit $Y(t_0) = Y_0$.
+\begin{lemma}
+	\tbf{Lemma von Gronwall:}\\
+	Sei $J$ ein Intervall, $t_0 \in J$, $\alpha, \beta \in [0, \infty)$. Ferner sei $x : J \to [0, \infty)$ stetig und erfülle
+	\[x(t) \leq \alpha + \beta \abs{\int_{t_0}^t x(s) ds}\]
+	Für $t \in J$. Dann gilt
+	\[x(t) \leq \alpha e^{\beta \abs{t - t_0}}\]
+\end{lemma}
+\begin{proof}
+	Sei $t \geq t_0$, $t \in J$. Sei
+	\[h(s) := \beta e^{\beta(t_0 - s)}\int_{t_0}^s x(\tau) d\tau\]
+	mit $s \in [t_0, t]$. Sei
+	\begin{align*}
+		h'(s) &= \beta e^{\beta(t_0 - s)} (-1)\beta \int_{t_0}^s x(\tau) d\tau + \beta e^{\beta(t_0 - s)} x(s)\\
+			  &= - \beta h(s) + \beta e^{\beta(t_0 - s)} x(s)\\
+			  &\leq - \beta h(s) + \beta e^{\beta(t_0 - s)} \left(\alpha + \beta \abs{\int_{t_0}^s x(\tau) d\tau}\right)\\
+			  &= - \beta h(s) + \alpha \beta e^{\beta(t_0 - s)} + \beta h(s)\\
+			  &= \alpha \beta e^{\beta(t_0 - s)}
+	\end{align*}
+	\begin{align*}
+		\int_{t_0}^t h'(s) ds = h(t) - h(t_0) = h(t) = \beta e^{\beta(t_0 - s)}\int_{t_0}^s x(\tau) d\tau
+	\end{align*}
+	\begin{align*}
+		\int_{t_0}^t \frac{d}{ds}(-\alpha e^{B(t_0 - s)}) ds &= -\alpha e^{\beta(t_0 - t)} + \alpha\\
+		\implies \beta e^{\beta(t_0 - s)}\int_{t_0}^t x(\tau) &\leq \alpha -\alpha e^{\beta(t_0 - t)}
+	\end{align*}
+	\begin{align*}
+		\beta \int_{t_0}^t x(s) ds &\leq \alpha e^{\beta(t - t_0)} - \alpha\\
+		\implies \alpha + \beta \int_{t_0}^t x(s) ds &\leq \alpha e^{\beta(t - t_0)}\\
+		\implies x(t) &\leq \alpha e^{\beta(t - t_0)}
+	\end{align*}
+\end{proof}
+\begin{theorem}
+	Seien $\tbA, \tbB$ stetig Funktionen auf $I = (a,b)$. Dann ist jede maximale Lösung des dazugehörigen Differentialsystems auf ganz $(a,b)$ definiert.
+\end{theorem}
+\begin{proof}
+	Sei eine maximale Lösung gegeben durch:
+	\begin{align*}
+		Y : (\alpha, \beta) \to \bR^n
+	\end{align*}
+	Wobei $Y(t_0) = Y_0, t_0 \in (\alpha, \beta)$. Da $Y$ eine maximale Lösung ist existiert der Limes
+	\[\lim_{t \to^+ \beta} Y(t)\] 
+	nicht. Sei $(\alpha, \beta) \subsetneq (a,b)$, OBdA $\beta < b$. Sei für $n \in \bN$:
+	\[K_n := \{(t,Y) \in \bR^{n+1} \mid t \in [t_0, \beta], \norm{Y} \leq n\}\]
+	Da diese Menge kompakt ist und $Y$ eine maximale Lösung ist, ist
+	\[G^+ = \{(t,z) \in \overline{\text{graph}(Y)} \mid t \geq t_0\}\]
+	keine kompakte Teilmenge.
+	\begin{align*}
+		\exists \tau_n \in [t_0, \beta) : \norm{Y(\tau_n)} = n\\
+		\implies \lim_{n \to \infty} \norm{Y(\tau_n)} = \infty
+	\end{align*}
+	\begin{align*}
+		n(T) &:= \norm{Y(t)} t \in (\alpha, \beta)\\
+		\delta &:= \max_{t \in [t_0, \beta]} \norm{\tbA(t)}_{\bR^{n \times m}} < \infty\\
+		\gamma &:= \max_{t \in [t_0, \beta]} \norm{\tbB(t)}_{\bR^{n}} < \infty\\
+	\end{align*}
+	Da $Y$ eine Lösung ist, ist:
+	\begin{align*}
+		Y(t) = Y(t_0) + \int_{t_0}^t \tbA(s)Y(s) + \tbB(s) ds t \in [t_0, \beta)
+	\end{align*}
+\end{proof}
+[...]
+\clearpage
+\begin{definition}
+	Wir nennen die Matrix $\tbY$, welche das System linearer Differentialgleichungen beschreibt, die \textbf{Fundamentalmatrix} des Systems.
+\end{definition}
+\begin{lemma}
+	Es gilt $\tbY' = \tbA \tbY$.
+\end{lemma}
+\begin{definition}
+	Wir definieren $\tbZ(t) = \tbY(t) \tbY^{-1}(t_0)$.
+\end{definition}
+\begin{definition}
+	Sei $I = (a,b), A : I \to \bR^{n \times n}$ stetig. Sei $\tbY$ eine Fundamentalmatrix eines homogenen Systems linearer Differentialgleichungen. Wir nennen
+	\[W(t) := \det{\tbY(t)}\]
+	die \tbf{Wronski-Determinante}.
+\end{definition}
+\begin{theorem}
+	Sei $I = (a,b), \tbA : I \to \bR^{n \times n}$ stetig. Sei $\tbY$ eine Fundamentalmatrix eines homogenen Systems linearer Differentialgleichungen. Dann gilt
+	\[W(t) = W(t_0) e^{\int_{t_0}^t \tr(\tbA(s)) ds}\]
+	für $t \in I$, wobei die Spur $\tr(\tbA)$ einer quadratischen Matrix als die Summe der Diagonaleinträge definiert ist.
+\end{theorem}
+\begin{proof}
+	Es gilt $\tr(A) \in \bR$, $W(t) \in \bR$. Wir betrachten also eine skalare Gleichung. Gemäß Satz (3.8?) aus Kapitel 12 gilt diese Formel genau dann, wenn
+	\[W'(t) = \tr(\tbA(t))\]
+	Wir benötigen also eine Formel für die Ableitung der Determinante. Für $\tbB = (b_{ij})$ gilt
+	\[\det \tbB = \sum_{\sigma \in S_n} \text{sgn}(\sigma) b_{1\sigma(1)} \cdot \hdots \cdot b_{n\sigma(n)}\]
+	Somit gilt:
+	\[(\det \tbB)' = \sum_{i=1}^n \sum_{\sigma \in S_n} \text{sgn}(\sigma) b_{1\sigma(1)} \cdot \hdots \cdot b_{i \sigma(i)}' \cdot \hdots \cdot b_{n\sigma(n)}\]
+	(insert black magic here)
+	\newpar
+	Es folgt:
+	\[W(t) = \det \tbY(t) = \det \tbZ(t) \det \tbY(t_1) = \det \tbZ(t) W(t_1)\]
+	und somit:
+	\[W'(t) = (\det \tbZ(t))' W(t_1)\]
+	Mit der Formel der Ableitung der Determinante gilt:
+	\begin{align*}
+		(\det \tbZ(t_1))' &= \sum_{i = 1}^n \det (Z_1(t_1), \hdots, Z_i'(t_1), \hdots, Z_n(t_1))\\
+						  &= \sum_{i = 1}^n \det (E_1(t_1), \hdots, \tbA(t_1)E_i, \hdots, E_n(t_1))\\
+						  &= \sum_{i = 1}^n a_{ii}(t_1)\\
+						  &= \tr \tbA(t_1)
+	\end{align*}
+	Es gilt folglich:
+	\[W'(t) = \tr \tbA(t_1)W(t_1)\]
+\end{proof}
+\begin{corollary}
+	Die Wronski-Determinante einer Fundamentalmatrix ist überall ungleich Null.
+\end{corollary}
+\section{Systeme mit konstanten A}
+Wir betrachten Systeme der Form:
+\[Y'(t) = \tbA Y(t)\]
+Wir betrachten dabei die lineare Abbildung:
+\[A : \bR^n \to \bR^n : Y \mapsto \tbA Y\]
+Also $\tbA = M_{E}^{E}(A)$. Aus der Linearen Algebra ist bekannt, dass:
+\[M^{B}_B(A) = M_B^E(id) M_E^E(A) M_E^B(id)\]
+Wobei $M_E^B(id) := \tbB$ und $M_B^E := \tbB^{-1}$. Also:
+\[M_B^B(A) = \tbB^{-1} \tbA \tbB := \tbD\]
+\[Z(t) := \tbB^{-1}Y(T) \Leftrightarrow \tbB Z(t) = Y(t)\]
+Falls $Y$ eine Lösung des Systems mit Konstante ist, gilt:
+\[Z'(t) = \tbB^{-1}Y'(t) = \tbB^{-1}\tbA Y(t) = \tbB^{-1}\tbA\tbB Z(t) = \tbD Z(t)\]
+\begin{theorem}
+	Wenn $\tbA$ symmetrisch ist, können wir die Matrix diagonalisieren und erhalten eine besonders simple Lösung der Form:
+	\[\tbY = \tbB \tbZ = (B_1 e^{\lambda_1 t}, \hdots, B_n e^{\lambda_n t})\]
+\end{theorem}
 %
 %
 %
