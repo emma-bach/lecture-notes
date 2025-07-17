@@ -69,6 +69,7 @@
 \lhead{Emma Bach}
 \rhead{\today}
 
+\NewDocumentEnvironment{nalign}{}{\equation\aligned}{\endaligned\endequation}
 
 \begin{document}
 % \newtheorem{codename}{printedname}[countedwith]
@@ -76,8 +77,6 @@
 \newtheorem{theorem}[lemma]{Satz}
 \newtheorem{proposition}[lemma]{Proposition}
 \newtheorem{corollary}[lemma]{Korollar}
-
-
 
 \theoremstyle{definition}
 \newtheorem{definition}[lemma]{Definition}
@@ -87,6 +86,7 @@
 \newtheorem{question}[lemma]{Frage}
 \newtheorem{application}[lemma]{Anwendung}
 \newtheorem{konsequenz}[lemma]{Konsequenz}
+
 %
 %
 %
@@ -965,8 +965,51 @@ Da $\varphi^{-1}$ stetig ist, ist das Urbild $(\varphi^{-1})^{-1}(U') = \varphi(
 %
 %
 %
+%
+%
+%
+%
+%
 \chapter{Gewöhnliche Differentialgleichungen}
-Gewöhnliche Differentialgleichungen, auf englisch \textit{ordinary differential equations} (\textit{ODEs}) beschreiben zeitabhngige Prozesse. Sie sind nützlich für die modellierung zahlreicher Prozesse in verschiedenen Gebieten der Wissenschaft.
+Gewöhnliche Differentialgleichungen, auf Englisch \textit{ordinary differential equations} (\textit{ODEs}) beschreiben zeitabhängige Prozesse. Sie sind nützlich für die Modellierung zahlreicher Prozesse in verschiedenen Gebieten der Wissenschaft.
+\section{Motivation}
+Wir wollen die Fischpopulation in einem See modellieren. Wir bezeichnen die Anzahl an Fischen zum Zeitpunkt $t$ mit $y(t)$. Wie viele Fische dürfen die Menschen am See fangen, ohne dass die Fischpopulation ausstirbt?
+\newpar
+Wir führen folgende Größen ein:
+\begin{itemize}
+	\item Die Geburtenrate $G(t)$. Wir nehmen an, dass diese proportional zur Größe der Fischpopulation ist, also
+	\[G(t) = b y(t).\]
+	\item Die natürliche Todesrate $T(t)$. Auch hier gehen wir von Proportionalität zur Population aus:
+	\[T(t) = m y(t).\]
+	\item Die Fischfangrate $H(t)$.
+\end{itemize}
+Wir erhalten nun die Gleichung:
+\[y'(t) = (b-m)y(t) - H(t)\]
+Wir nehmen außerdem an, dass $(b-m) := a > 0$. Diese Größe kann durch Beobachtungen gemessen werden, $H(t)$ ist kontrollierbar. Zu einem gegebenen Anfangszeitpunkt $t_0$, an dem die Fischpopulation $y(t_0) = y_0$ beträgt, können die Menschen nun berechnen, wie viele Fische sie fangen dürfen.
+\newpar
+Wir betrachten als erstes die einfachstmögliche Situation, in der die Fischfangrate $H(t)$ zeitunabhängig konstant bleibt, also $H(t) = H \in \bR$. Wir erhalten so unser erstes Modell:
+\begin{nalign}
+	\label{eq:simplefishmodel}
+	y' &= ay - H\\
+	y(t_0) &= y_0\\
+\end{nalign}
+Da die Ableitung proportional zur Funktion selbst ist eine Exponentialgleichung eine naheliegende Lösung. Eine rigorose Herleitung dieser Intuition folgt später. Mit diesem Wissen können wir jedoch bereits eine "how would you come up with that"-Herleitung durchführen: 
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+
 \section{Existenztheorie}
 \begin{definition}
 	Für $f : \bR^{n+1} \to \bR$ nennen wir eine Gleichung der Form
@@ -1115,6 +1158,16 @@ Also ist $L$ ein linearer Operator!
 %
 %
 %
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
 \clearpage
 \chapter{Systeme Linearer Differentalgleichungen}
 Wir suchen nach Lösungen von Gleichungssystemen der Form:
@@ -1229,7 +1282,7 @@ Sei $I = (a,b)$ und sei $F(t,Y) := \tbA(t) Y + \tbB(t)$. $F$ ist bezüglich $Y$ 
 \begin{corollary}
 	Die Wronski-Determinante einer Fundamentalmatrix ist überall ungleich Null.
 \end{corollary}
-\section{Systeme mit konstanten A}
+\section{Systeme mit Konstantem A}
 Wir betrachten Systeme der Form:
 \[Y'(t) = \tbA Y(t)\]
 Wir betrachten dabei die lineare Abbildung:

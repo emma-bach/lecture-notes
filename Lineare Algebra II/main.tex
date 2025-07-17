@@ -2124,8 +2124,142 @@ Da die Matrix symmetrisch ist, existiert eine Orthonormalbasis aus Eigenvektoren
 		\arrow["{\text{det}}"', from=3-1, to=3-3]
 	\end{tikzcd}\]
 	Die Determinante lässt sich also auch als lineare Abbildung aus dem Tensorprodukt nach $\bR$ definieren.
+	\begin{definition}
+		Sei $V$ ein $k$-Vektorraum, sei $n \in \bN$. Wir definieren:
+		\begin{align*}
+			V^{\tensor n} = 
+			\begin{cases}
+				k & n = 0\\
+				\overset{\underbrace{V \tensor \hdots \tensor V}}{n \text{ mal}} & n > 0\\
+			\end{cases}
+		\end{align*}
+	\end{definition}
+	\begin{proposition}
+		Gegeben $a, b > 0$, dann gibt es genau eine bilineare Abbildung
+		\[m_{ab} : V^{\tensor a} \times V^{\tensor b} \to V^{\tensor(a + b)}\]
+		sodas für alle reinen Tensoren gilt:
+		\begin{align*}
+			m_{ab} (\vv_1 \tensor \hdots \tensor \vv_a, \vw_1 \hdots \vw_b)
+			= \vv_1 \tensor \hdots \tensor \vv_a \tensor \vw_1 \hdots \vw_b
+		\end{align*}
+	\end{proposition}
+	\begin{proposition}
+		Gegeben $a = 0$, $b > 0$, dann gibt es genau eine bilineare Abbildung
+		\[m_{0b} : V^0 \tensor V^b \to V^b\]
+		sodass für alle reinen Tensoren gilt:
+		\[m_{ab} (\lambda, \vw_1, \hdots, \vw_b) = \lambda \vw_1 \tensor \hdots \tensor \vw_b\]
+		Analog für $a > 0$, $b = 0$ und $a = b = 0$.
+	\end{proposition}
+	\begin{definition}
+		Ein $k$-Vektorraum $W$ zusammen mit einer bilinearen Abbildung 
+		\[m : W \times W \to W\] 
+		wird als \textbf{$k$-Algebra} bezeichnet.
+	\end{definition}
+	\begin{definition}
+		Wir nennen eine Algebra:
+		\begin{itemize}
+			\item kommutativ, falls
+			\[\forall \vv, \vw \in W : m(\vv, \vw) = m(\vw, \vv)\]
+			\item assoziativ, falls
+			\[\forall \vv, \vw, \vu \in W : m(\vv, m(\vw, \vu)) = m(m(\vv, \vw), \vu)\]
+			\item "mit Eins", falls $\ve \in W$ existiert, sodass
+			\[\forall \vw \in W m(\ve, \vw) = m(\vw, \ve) = \vw\]
+		\end{itemize}
+	\end{definition}
+	\begin{proposition}
+		Sei $V$ ein $k$-Vektorraum. Das Tensorprodukt $V \tensor V$ bildet mit der Abbildung $m$ eine assoziative $k$-Algebra mit Eins, bekannt als die \textbf{Tensoralgebra}.
+	\end{proposition}
 \end{section}
 \end{chapter}
+\chapter{Die aüßere Algebra}
+\begin{definition}
+	Seien $V,W$ $k$-Vektorräume und $n \in \bN$ eine natürliche Zahl. Eine multilineare Abbildung
+	\[s : V^n \to W\]
+	heißt \textit{alternierend}, falls für alle Tupel $(\vv_1, \hdots, \vv_n)$ mit mindestens zwei identischen Einträgen $\vv_i = \vv_j$ gilt, dass
+	\[s(\vv_1, \hdots, \vv_n) = 0\]
+\end{definition}
+\begin{lemma}
+	Sei $s$ eine alternierende multilineare Abbildung und $\sigma = (ij)$ eine Transposition, so ist
+	\[s(\vv_1, \hdots, \vv_n) = -s(\vv_{\sigma(1)}, \hdots, \vv_{\sigma(n)})\]
+	Also ändert sich das Vorzeichen, wenn man zwei der Argumente vertauscht.
+\end{lemma}
+\begin{proof} (Im Fall $n = 3$):
+	\begin{align*}
+		s(\vv_1, \vv_2, \vv_3) &= s(\vv_1, \vv_2, \vv_3) + s(\vv_1, \vv_2, \vv_1)\\
+							   &= s(\vv_1, \vv_2, \vv_1 + \vv_3)
+	\end{align*}
+	\begin{align*}
+		s(\vv_3, \vv_2, \vv_1) &= s(\vv_3, \vv_2, \vv_1) + s(\vv_3, \vv_2, \vv_3)\\
+		&= s(\vv_3, \vv_2, \vv_1 + \vv_3)
+	\end{align*}
+	\begin{align*}
+		s(\vv_1, \vv_2, \vv_1 + \vv_3) + s(\vv_3, \vv_2, \vv_1 + \vv_3) &= 0\\
+		\implies s(\vv_1, \vv_2, \vv_3) + s(\vv_3, \vv_2, \vv_1) &= 0\\
+		\implies s(\vv_1, \vv_2, \vv_3) &= -s(\vv_3, \vv_2, \vv_1)
+	\end{align*}
+\end{proof}
+\begin{lemma}
+	Für jede Permutation $\sigma \in S_n$ und alle Tupel $(\vv_1, \hdots, \vv_n) \in V^n$ gilt:
+	\[s(\vv_{\sigma(1)}, \hdots, \vv_{\sigma(n)}) = \text{sgn}(\sigma) \cdot s(\vv_1, \hdots, \vv_n)\]
+\end{lemma}
+\begin{definition}
+	Sei $V$ ein $k$-Vektorraum, $n \in \bN$. Ein $n$-faches äußeres Produkt (auch "Dachprodukt" oder "wedge product") ist ein Vektorraum $T$ zusammen mit eine alternierenden multilinearen Abbildung $\tau : V^n \to T$, sodass für jede alternierende multilineare Abbildung $s: V^n \to W$ eine eindeutige lineare Abbildung $\eta : T \to W$ existiert, sodass
+	\[s = \eta \circ \tau\]
+	Also kommutiert das folgende Diagramm:
+	% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWXm4iXSxbMCwyLCJWXm4iXSxbMywwLCJUIl0sWzMsMiwiVyJdLFsxLDMsInMgXFx0ZXh0eyBhbHRlcm5pZXJlbmQgbXVsdGlsaW5lYXJ9Il0sWzIsMywiXFxleGlzdHMhIFxcZXRhIFxcdGV4dHsgbGluZWFyfSJdLFswLDIsIlxcdGF1IFxcdGV4dHsgYWx0ZXJuaWVyZW5kIG11bHRpbGluZWFyfSIsMl0sWzAsMSwiIiwwLHsibGV2ZWwiOjIsInN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XV0=
+	\[\begin{tikzcd}
+		{V^n} &&&& T \\
+		\\
+		{V^n} &&&& W
+		\arrow["{\tau \text{ alternierend multilinear}}"', from=1-1, to=1-5]
+		\arrow["{id}", from=1-1, to=3-1]
+		\arrow["{\exists! \eta \text{ linear}}", from=1-5, to=3-5]
+		\arrow["{s \text{ alternierend multilinear}}", from=3-1, to=3-5]
+	\end{tikzcd}\]
+\end{definition}
+\begin{lemma}
+	Äußere Produkt existieren und sind eindeutig bis auf kanonischen Isomorphismus.
+\end{lemma}
+\begin{definition}
+	Wir schreiben $T$ als
+	\[\bigwedge^n V\]
+	und $\tau(\vv_1, \hdots, \vv_n) \in \bigwedge^n V$ als:
+	\[\vv_1 \wedge \hdots \wedge \vv_n\]
+\end{definition}
+\begin{definition}
+	Ein Element $t \in \bigwedge^n V$ heißt \textit{reines Dach}, wenn $\vv_1, \hdots, \vv_n \in V$ existieren, sodass $t = \vv_1 \wedge \hdots \wedge \vv_n$.
+\end{definition}
+\begin{proposition}
+	Jedes Element des Dachproduktraums ist eine endliche Summe reiner Dächer. 
+\end{proposition}
+\begin{proposition}
+	Die Verdachung von Erzeugendensystemen der Basisräume bildet ein Erzeugendensystems des Dachproduktraums.
+\end{proposition}
+\begin{theorem}
+	Die Verdachung von Basen der Basisrume bildet \ul{keine} Basis des Dachproduktraums!
+\end{theorem}
+\begin{proof}
+	Sei $V = \bR^3$ mit Standardbasis. Dann ist
+	\[\{\ve_i \wedge \ve_j \mid i,j \in \{1,2,3\}\}\]
+	ein Erzeugendensystem von $\bigwedge^2 V$. Allerdings folgt aus der Definition über alternierende Abbildungen, dass $\ve_i \wedge \ve_i = 0$ und $\ve_i \wedge \ve_j = -\ve_j \wedge \ve_i$. Also bildet das System keine Basis.
+\end{proof}
+\begin{proposition}
+	Sei $(\vb_i)$ eine Basis eines Vektorraums $V$. Die Menge
+	\[\{\vb_{i_1} \wedge \hdots \wedge \vb_{i_n} \mid i_{k} < i_{k+1}\}\]
+	bildet eine Basis von $\bigwedge^2 V$.
+\end{proposition}
+\noindent Es folgt, dass der Dachproduktraum eine deutlich niedrigere Dimension als der Tensorproduktraum hat!
+\begin{lemma}
+	Sei $\dim V = a$. Dann ist
+	\[\dim \bigwedge^n V = \binom{a}{n}\]
+\end{lemma}
+\begin{corollary}
+	Sei $\dim V = a$.
+	\begin{itemize}
+		\item Es gilt $\text{dim }\bigwedge^a V = 1$.
+		\item Sei $n > a$. Dann ist $\bigwedge^n V = \{0\}$.
+	\end{itemize} 
+\end{corollary}
 
 %
 %
