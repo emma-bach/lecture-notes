@@ -59,6 +59,8 @@
 \newcommand{\tensor}{\otimes}
 \newcommand{\Hom}{\text{Hom}}
 
+\newcommand{\inv}{\text{inv}}
+
 \renewcommand*\contentsname{Inhalt}
 \renewcommand*\proofname{Beweis\newline}
 
@@ -2260,7 +2262,42 @@ Da die Matrix symmetrisch ist, existiert eine Orthonormalbasis aus Eigenvektoren
 		\item Sei $n > a$. Dann ist $\bigwedge^n V = \{0\}$.
 	\end{itemize} 
 \end{corollary}
-
+\section{Die Determinante}
+\begin{theorem}
+	Sei $V$ ein $n$-dimensionaler $k$-Vektorraum. Die Determinante kann alternativ definiert werden als die Abbildung:
+	\begin{align*}
+		d : V &\to k\\
+			f &\mapsto \tr(\bigwedge^n f)
+	\end{align*}
+\end{theorem}
+Wir betrachten den Fall $d_m : f \mapsto \tr(\bigwedge^m f)$. Sei $f$ beliebig. Es gilt:
+\begin{itemize}
+	\item $d_0(f) = 1$
+	\item $d_1(f) = \tr(f)$
+	\item $\hdots$
+	\item $d_n(f) = \det(f)$
+\end{itemize}
+Dies sieht den Koeffizienten des charakteristischen Polynoms $\chi_f$ verdächtig ähnlich...
+\section{Invariantentheorie}
+Wie viele Funktionen $GL_n \to GL_n$ gibt es, welche unter ähnlichen Matrizen invariant sind?
+Wir wissen, dass es mindestens $n$ "Basisinvarianten" gibt:
+\begin{itemize}
+	\item $\inv_0 = \tr(\bigwedge^0 f) = 1$
+	\item $\inv_1 = \tr(\bigwedge^1 f) = \tr(f)$
+	\item $\inv_2 = \tr(\bigwedge^2 f)$
+	\item $\hdots$
+	\item $\inv_n = \tr(\bigwedge^n f) = \det(f)$
+\end{itemize}
+\begin{theorem}
+	Alle Polynome in der Menge $(\inv_i)_{i \in (0,n)}$ sind ebenfalls Invarianten. Genauer: Betrachte die Abbildung
+	\begin{align*}
+		\tau : k[x_0, \hdots, x_n] &\to \text{Invarianten}\\
+		f(x_0, \hdots, x_n) &\mapsto f(\inv_0, \hdots, \inv_n)
+	\end{align*}
+\end{theorem}
+\begin{theorem}{\textbf{\emph{Hauptsatz der Invariantentheorie:}}}
+	Die Abbildung $\tau$ ist ein Isomorphismus zwischen dem Ring $k[x_0, \hdots, x_n]$ und dem Ring der Invarianten. Dementsprechend geben diese Polynome den gesamten Raum der Invarianten.
+\end{theorem}
 %
 %
 %
