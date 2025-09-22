@@ -3,8 +3,8 @@ Various Lecture Notes I have made over the years, mostly written in LaTeX for ex
 
 ## Mathematics:
 ### In German:
-- <a href="https://github.com/emma-bach/lecture-notes/blob/main/Analysis%20II/main.pdf">Analysis II, SS25</a>
-- <a href="https://github.com/emma-bach/lecture-notes/blob/main/Lineare%20Algebra%20II/main.pdf">Lineare Algebra II, SS25</a>
+- <a href="https://github.com/emma-bach/lecture-notes/blob/main/Analysis/Analysis%20II%20(live%20notes)/main.pdf">Analysis II, SS25</a>
+- <a href="https://github.com/emma-bach/lecture-notes/blob/main/Lineare%20Algebra/Lineare%20Algebra%20II%20(live%20notes)/main.pdf">Lineare Algebra II, SS25</a>
 
 ## Computer Science:
 ### In English:
