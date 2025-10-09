@@ -96,6 +96,33 @@
 %
 %
 %
+\chapter{Lineare Gleichungssysteme}
+\begin{definition}
+	Eine \tbf{$n \times m$ - Matrix} ist formell eine Abbildung aus der Produktmenge $\{1, \hdots, n\} \times \{1, \hdots m\}$ in eine Menge $M$, in der Regel einen Körper. Wir schreiben die Menge der $n \times m$-Matrizen über einem Körper $K$ als 
+	\begin{align*}
+		\text{Mat}(n \times m, K)
+	\end{align*}
+	Ist $A \in \text{Mat}(n \times m, K)$ schreiben wir den Koeffizienten $A(i,j)$ in der Regel als $A_{ij}$ oder $a_{ij}$.
+\end{definition}
+\begin{theorem}
+	Ist die Lösungsmenge eines Linearen Gleichungssystems nichtleer, so erhalten wir alle Lösungen, indem wir zu einer Lösung des Systems beliebige Lösungen des zugehörigen Homogenen Systems addieren.
+\end{theorem}
+\chapter{Vektorräume}
+\begin{definition}
+	Ein Vektorraum $(V, K, +, \cdot)$ ist ein Tupel aus einer Menge $V$, einem Körper $K$, einer Abbildung $+ : V \times V \to V$ (genannt \tbf{Vektoraddition}), und einer Abbildung $\cdot : K \times V \to V$ (genannt \tbf{Skalarmultipliation}), sodass folgende Axiome gelten:
+	\begin{itemize}
+		\item $(V, +)$ ist eine abelsche (also kommutative) Gruppe
+		\item $\cdot$ erfüllt folgende Rechenregeln:
+		\begin{enumerate}
+			\item Distributivität über die Addition:
+			\begin{align*}
+				\forall \lambda \in K, \forall v,w \in V:\\
+				\lambda(v + w) = \lambda v + \lambda w
+			\end{align*}
+		\end{enumerate}
+	\end{itemize}
+\end{definition}
+\chapter{(...)}
 \chapter{Wiederholung}
 \section{Notation}
 \begin{itemize}

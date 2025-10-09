@@ -1,0 +1,2500 @@
+\documentclass{report}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage[titles]{tocloft}
+\usepackage[titletoc]{appendix}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{pdfpages}
+\usepackage{bm}
+\usepackage{tikz-cd}
+\usepackage{physics}
+\usepackage{placeins}
+
+%hyperref should be last apparently
+\usepackage{hyperref}
+
+\renewcommand\cftsecdotsep{\cftdot}
+\renewcommand\cftsubsecdotsep{\cftdot}
+\renewcommand\epsilon{\varepsilon}
+
+% Starts a new paragraph without indentation
+% and with an empty line between paragraphs
+\newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
+\newcommand{\trans}{\twoheadrightarrow}
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+
+\newcommand{\Hess}[1]{\text{Hess}(#1)}
+
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bQ}{\mathbb{Q}}
+\newcommand{\bR}{\mathbb{R}}
+
+\newcommand{\ve}{\vec{e}}
+\newcommand{\vh}{\vec{h}}
+\newcommand{\vv}{\vec{v}}
+\newcommand{\vw}{\vec{w}}
+\newcommand{\vx}{\vec{x}}
+\newcommand{\vy}{\vec{y}}
+\newcommand{\vz}{\vec{0}}
+\newcommand{\zz}{\vec{z}}
+
+\newcommand{\tbA}{\mathbf{A}}
+\newcommand{\tbB}{\mathbf{B}}
+\newcommand{\tbC}{\mathbf{C}}
+\newcommand{\tbD}{\mathbf{D}}
+\newcommand{\tbE}{\mathbf{E}}
+\newcommand{\tbY}{\mathbf{Y}}
+\newcommand{\tbZ}{\mathbf{Z}}
+
+\newcommand{\an}{(a_n)_{n \in \bN}}
+\newcommand{\bn}{(b_n)_{n \in \bN}}
+\newcommand{\sn}{(s_n)_{n \in \bN}}
+
+\renewcommand{\tr}{\text{tr}\ }
+\newcommand{\rang}{\text{rang}\ }
+
+\newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
+\newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
+
+\renewcommand*\contentsname{Inhalt}
+\renewcommand*\proofname{Beweis}
+
+\pagestyle{fancy} %allows headers
+
+\lhead{Emma Bach}
+\rhead{\today}
+
+\NewDocumentEnvironment{nalign}{}{\equation\aligned}{\endaligned\endequation}
+
+\begin{document}
+% \newtheorem{codename}{printedname}[countedwith]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{theorem}[lemma]{Satz}
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{corollary}[lemma]{Korollar}
+
+\theoremstyle{definition}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{beispiel}[lemma]{Beispiel}
+\newtheorem{beobachtung}[lemma]{Beobachtung}
+\newtheorem{anmerkung}[lemma]{Anmerkung}
+\newtheorem{question}[lemma]{Frage}
+\newtheorem{application}[lemma]{Anwendung}
+\newtheorem{konsequenz}[lemma]{Konsequenz}
+
+\newenvironment{proofsketch}{\begin{proof}[Beweisskizze]\renewcommand*{\qedsymbol}{\("\square"\)}}{\end{proof}}
+
+%
+%
+%
+\include{title}
+\tableofcontents
+\thispagestyle{fancy}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\chapter{Metrische und Topologische Räume}
+\section{Folgen}
+\begin{definition}
+	Eine Folge ist eine Abbildung $\bN \to M$ in eine beliebige Menge $M$, in der Regel in die Reellen Zahlen. Für eine Folge $a$ schreibt man in der Regel "$a_n$" statt "$a(n)$".
+\end{definition}
+\begin{definition}
+	Sei $(a_n)_{n \in \bN}$ eine Folge. $a \in \bR$ heißt \textbf{Grenzwert} von $(a_n)_{n \in \bN}$, falls
+	\begin{align*}
+		\forall \epsilon \in \bR^+ : \exists n_0 \in \bN : \forall n \geq n_0 : \abs{a_n - a} \leq \epsilon
+	\end{align*}
+\end{definition}
+\begin{definition}
+	Eine Folge heißt \textbf{konvergent}, falls die Folge einen Grenzwert hat. Sie heißt \textit{Nullfolge}, falls der Grenzwert $0$ ist.
+\end{definition}
+\begin{theorem}
+	Der Grenzwert einer Folge ist eindeutig.
+\end{theorem}
+\begin{proof}
+	Angenommen, eine Folge $a_n$ hat zwei Grenzwerte $a \neq b$. So gilt für $\epsilon = \frac{1}{2}(a-b)$, dass $n_1, n_2 \in \bN$ existieren, sodass für alle $n \geq n_1$ (bzw. $n > n_2$)
+	\begin{align*}
+		\abs{a_n - a} < \epsilon
+	\end{align*}
+	und
+	\begin{align*}
+		\abs{a_n - b} < \epsilon
+	\end{align*}
+	Wählen wir nun $n_3 = \max(n_1, n_2)$, So gilt für alle $n \geq n_3$:
+	\begin{align*}
+		\abs{a-b} &= \abs{a - a_n - (b - a_n)}\\
+		&\leq \abs{a - a_n} + \abs{b - a_n}\\
+		&< 2\epsilon\\
+		&=\abs{a-b}
+	\end{align*}
+	Also $\abs{a-b} < \abs{a-b}$, was ein Widerspruch ist.
+\end{proof}
+\begin{theorem}
+	Jede konvergente Folge ist beschränkt.
+\end{theorem}
+\begin{proof}
+	Sei $a_n$ eine Folge, welche gegen den Grenzwert $a$ konvergiert. So gilt per Definition von Konvergenz für ein beliebiges $\epsilon \in \bR^+$
+	\begin{align*}
+		\exists N \in \bN : \forall n \geq N : \abs{a_n - a} \leq \epsilon
+	\end{align*}
+	Es folgt:
+	\begin{itemize}
+		\item Alle $a_n$ mit $n \geq N$ sind höchstens $\epsilon$ von $a$ entfernt, also endlich.
+		\item Die Menge $a_n$ $n < N$ ist endlich, ist also durch ihr Maximum und ihr Minimum beschränkt:
+		\begin{align*}
+			\min\{a_k \mid k < N\} \leq a_n \leq \max\{a_k \mid k < n\}
+		\end{align*}
+	\end{itemize} 
+	Somit sind alle Folgenglieder beschränkt, also ist die gesamte Folge beschränkt.
+\end{proof}
+\begin{theorem}
+	\label{theorem:increasingandboundedsequence}
+	Jede begrenzte, monoton steigende Folge ist konvergent.
+\end{theorem}
+\begin{theorem}
+	\label{theorem:rechenregelnfürfolgen}
+	Seien $\an$ und $\bn$ konvergent mit Grenzwerten $a$ und $b$. So gilt:
+	\begin{itemize}
+		\item $(a_n + b_n)_{n \in \bN}$ ist konvergent mit Grenzwert $a + b$
+		\item $(a_n b_n)_{n \in \bN}$ ist konvergent mit Grenzwert $ab$
+		\item Für $\lambda \in \bR$ ist $(\lambda a_n)_{n \in \bN}$ konvergent mit Grenzwert $\lambda a$.
+		\item Falls $a \neq 0$ ist $(\frac{1}{a_n})_{n \in \bN}$ konvergent mit Grenzwert $\frac{1}{a}$.
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+	\phantom{}
+	\begin{enumerate}
+		\item
+		\item $(a_n b_n)_{n \in \bN}$ ist konvergent mit Grenzwert $ab$:
+		\begin{align*}
+			\abs{a_n b_n - ab} = \abs{a_n b_n - a_n b + a_n b - a b} \leq \abs{a_n}\abs{b_n - b} + \abs{b}\abs{a_n - a}
+		\end{align*}
+		Da die Folgen $a_n$ und $b_n$ konvergieren sind sie Beschränkt mit Schranke $C$:
+		\begin{align*}
+			\abs{a_n}\abs{b_n - b} + \abs{b}\abs{a_n - a} \leq C(\abs{b_n - b} + \abs{a_n - a})
+		\end{align*}
+		Durch die Konvergenz von $b_n$ und $a_n$ finden wir nun $\delta$, sodass 
+		\begin{align*}
+			C(\abs{b_n - b} + \abs{a_n - a}) \leq C\left(\frac{\epsilon}{2C} + \frac{\epsilon}{2C}\right) = \epsilon
+		\end{align*}
+		\item
+		\item
+	\end{enumerate}	
+\end{proof}
+\begin{theorem}
+	Seien $\an$ und $\bn$ konvergent mit Grenzwerten $a$ und $b$. Sei außerdem $\forall n \in \bN : a_n \leq b_n$. So ist auch $a \leq b$.
+\end{theorem}
+\begin{theorem}
+	Seien $\an$ und $\bn$ konvergent mit Grenzwerten $a$ und $b$. Sei außerdem $\forall n \in \bN : a_n < b_n$. So ist immer noch $a \leq b$.
+\end{theorem}
+\begin{definition}
+	Eine Folge $\an$ heißt \textbf{bestimmt divergent gegen $\infty$}, geschrieben
+	\begin{align*}
+		\lim_{n \to \infty} a_n = \infty
+	\end{align*}
+	Falls
+	\begin{align*}
+		\forall c \in \bR : \exists n_0 \in \bN : \forall n \geq n_0 : a_n > c
+	\end{align*}
+\end{definition}
+\begin{definition}
+	Eine Zahl heißt \textbf{Häufungspunkt} oder \textbf{Häufungswert} einer Folge, wenn sie der Grenzwert einer Teilfolge ist.
+\end{definition}
+\begin{theorem}
+	\emph{\textbf{Bolzano-Weierstraß:}} Jede beschränkte Folge in $\bR$ besitzt eine konvergente Teilfolge.
+\end{theorem}
+\begin{proofsketch}
+	Beweis durch Intervallhalbierung: Wähle Intervall $[s,S]$, sodass $s$ das Infimum und $S$ das Supremum ist. Wähle bei Halbierung das Intervall, welches unendlich viele Folgenglieder enthält.
+\end{proofsketch}
+\begin{theorem}
+	Hat eine beschränkte Folge genau einen Häufungswert, so konvergiert sie gegen diesen Häufungswert.
+\end{theorem}
+\begin{definition}
+	Eine Folge heißt \textbf{Cauchy-Folge}, falls 
+	\begin{align*}
+		\forall \epsilon \in \bR : \exists n_0 \in \bN : \forall m, n \geq n_0 : \abs{a_m - a_n} < \epsilon
+	\end{align*}
+\end{definition}
+\begin{theorem}
+	Jede Cauchyfolge in $\bR$ ist konvergent.
+\end{theorem}
+\noindent
+Dieser Satz ist je nach verwendeter Konstruktion der reellen Zahlen entweder ein Axiom oder folgt aus den Axiomen.
+\begin{theorem}
+	Jede konvergente Folge in $\bR$ ist Cauchy.
+\end{theorem}
+\begin{proof}
+	Angenommen, eine Folge $a_n : \bN \to \bR$ konvergiert. So gilt:
+	\begin{align*}
+		\lim_{n \to \infty} a_n = a \Leftrightarrow \forall \epsilon \in \bR^+ : \exists n_0 \in \bN : \forall n \geq n_0 : \abs{a_n - a} < \epsilon
+	\end{align*}
+	Sei nun $n_0 \in \bN$ und $m , n > n_0$ mit $\abs{a_m - a} < \frac{\epsilon}{2}$ und $\abs{a_n - a} < \frac{\epsilon}{2}$. Nun gilt 
+	\begin{align*}
+		\abs{a_m - a_n} \leq \abs{a_m - a} + \abs{a_n - a} < \epsilon,
+	\end{align*}
+	also ist $a_n$ Cauchy.
+\end{proof}
+\begin{corollary}
+	Jede monoton wachsende, beschränkte Folge ist Cauchy.
+\end{corollary}
+\begin{proof}
+	Jede monoton wachsende beschränkte Folge ist konvergent, also Cauchy.
+\end{proof}
+\begin{definition}
+	Gegeben eine beschränkte Folge $\an$ nennen wir den Grenzwert der oberen Schranken der Folge den \textbf{Limes superior}:
+	\begin{align*}
+		\limsup_{n \to \infty} a_n = \lim_{n \to \infty} \left(\sup_{m \geq n} a_m\right)
+	\end{align*}
+	Analog definieren wir für untere Schranken den \textbf{Limes inferior}:
+	\begin{align*}
+		\liminf_{n \to \infty} a_n = \lim_{n \to \infty} \left(\inf_{m \geq n} a_m\right)
+	\end{align*}
+\end{definition}
+\begin{theorem}
+	Es gilt $\limsup_{n \to \infty} a_n \leq a$ gdw. für alle $\epsilon \in \bR$ die Menge $\{k \in \bN \mid a_k \geq a + \epsilon\}$ endlich ist.
+\end{theorem}
+\begin{theorem}
+	Es gilt $\limsup_{n \to \infty} a_n \geq a$ gdw. für alle $\epsilon \in \bR$ die Menge $\{k \in \bN \mid a_k \geq a - \epsilon\}$ unendlich ist.
+\end{theorem}
+\begin{theorem}
+	Sei $\an$ eine beschränkte Folge. So ist $\limsup a_n$ der größte und $\liminf a_n$ der kleinste Häufungswert der Folge.
+\end{theorem}
+\begin{corollary}
+	Die Folge $\an$ konvergiert genau dann, wenn sie beschränkt ist mit $\limsup a_n = \liminf a_n$.
+\end{corollary}
+\begin{definition}
+	Sei $M \subset \bR$. Eine Zahl $a \in \bR \cup -\infty$ heißt \tbf{Infimum} der Menge $M$, wenn:
+	\begin{enumerate}
+		\item $\forall x \in M : a \leq x$
+		\item $\forall a < a' : \exists x \in M : x < a'$
+	\end{enumerate}
+\end{definition}
+\begin{definition}
+	Sei $M \subset \bR$. Eine Zahl $a \in \bR \cup \infty$ heißt \tbf{Supremum} der Menge $M$, wenn:
+	\begin{enumerate}
+		\item $\forall x \in M : x \leq a$
+		\item $\forall a' < a : \exists x \in M : a' < x$
+	\end{enumerate}
+\end{definition}
+\begin{theorem}
+	Sei $M$ nichtleer. So gibt es Folgen $x_n, y_n \in M$, sodass
+	\begin{align*}
+		\lim_{n \to \infty} x_n = \inf M
+	\end{align*}
+	und 
+	\begin{align*}
+		\lim_{n \to \infty} y_n = \sup M
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Im Fall einer nach oben unbeschränkten Menge lässt sich trivial eine Folge finden, welche gegen $\sup M = \infty$ konvergiert, eben so für das Infimum im Fall einer nach unten unbeschränkten Menge.
+	\newpar
+	Sei nun $a_1 \in M$ und $b_1 \geq M$. Wir konstruieren nun durch sukzessives Halbieren des Intervalls $[a_1, b_1]$ eine Intervallschachtelung, welche gegen das Supremum konvergiert:
+	\begin{align*}
+		I_{n+1} = [a_{n+1}, b_{n+1}] = 
+		\begin{cases}
+			[(a_n + b_n)/2, b_n] & [(a_n + b_n)/2, b_n] \cap M \neq \emptyset\\
+			[a_n, (a_n + b_n)/2] &\\
+		\end{cases}
+	\end{align*}
+\end{proof}
+\begin{corollary}
+	Jede Menge $M \subset \bR$ hat genau ein Supremum und genau ein Infimum.
+\end{corollary}
+\begin{proof}
+	In der vorherigen Intervallschachtelung ist jedes Intervall Obermenge eines Intervalls in $M$. Da also das Supremum und das Infimum in der Intervallschachtelung enthalten sind, sind die auch in $M$ enthalten.
+\end{proof}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\section{Stetigkeit}
+\begin{definition}
+	\ul{\textbf{Stetigkeit in Topologischen Räumen:}} Seien $X, Y$ Topologische Räume. Eine Funktion $f : X \to Y$ heißt \textbf{stetig}, wenn das Urbild jeder offener Menge offen ist.
+\end{definition}
+\begin{theorem}
+	\ul{\textbf{$\epsilon$-$\delta$-Kriterium:}} Seien $M, N$ Metrische Räume mit Metriken $d_M$ und $d_N$. Eine Funktion $f : M \to N$ heißt \textbf{stetig} an einem Punkt $p \in M$, wenn:
+	\begin{align*}
+		\forall \epsilon \in \bR^+ : \exists \delta \in \bR^+ : d_M(x,p) < \delta \implies d_N(f(x), f(p)) < \epsilon
+	\end{align*}
+	Die Funktion ist genau dann stetig im Topologischen Sinne, wenn das $\epsilon-\delta$-Kriterium an allen Punkten erfüllt ist.
+\end{theorem}
+\begin{anmerkung}
+	Im Fall einer Funktion $\bR \to \bR$ also:
+	\begin{align*}
+		\forall \epsilon \in \bR^+ : \exists \delta \in \bR^+ : \abs{x - p} < \delta \implies \abs{f(x), - f(p)} < \epsilon
+	\end{align*}
+\end{anmerkung}
+\begin{proofsketch}
+	Left as an exercise to the reader :) (I'll get back to it)
+\end{proofsketch}
+\begin{definition}
+	\ul{\textbf{Folgenstetigkeit:}} Eine Folge $x_k$ heißt \tbf{folgenstetig}, wenn:
+	\begin{align*}
+		\lim_{k \to \infty} x_k = x_0 \implies \lim_{k \to \infty} f(x_k) = f(x_0)
+	\end{align*}
+\end{definition}
+\begin{theorem}
+	Jede stetige Funktion ist folgenstetig.
+\end{theorem}
+\begin{proof}
+	Sei $\lim_{k \to \infty} x_k = x_0$. \newpar
+	Wähle zu $\epsilon \in \bR^+$ ein $\delta \in \bR^+$, sodass $\forall x \in D$ mit $\abs{x - x_0} < \delta$:
+	\begin{align*}
+		\abs{f(x) - f(x_0)} < \epsilon
+	\end{align*}
+	Da die Aussage $\forall x \in D$ mit $\abs{x - x_0} < \delta$ gilt, gilt sie insbesondere für $x_k$ mit groß genugem $k$.
+\end{proof}
+\begin{theorem}
+	Jede folgenstetige Funktion in $\bR$ ist stetig.
+\end{theorem}
+\begin{proof}
+	Angenommen, $f$ sei folgenstetig, aber nicht stetig. \newpar
+	Dann gibt es ein $\epsilon > 0$, sodass für kein $\abs{x_k - x_0} < \delta \in \bR^+$ die Bedingung
+	\begin{align*}
+		\abs{f(x) - f(x_0)} < \epsilon
+	\end{align*}
+	erfüllt ist.\newpar
+	Wählen wir nun $\delta_k = \frac{1}{k}$ mit $k \in \bN$, so gibt es jeweils ein $x_k \in D$ mit $\abs{x_k - x_0} < \frac{1}{k}$, aber $\abs{f(x_k) - f(x_0)} \geq \epsilon$. Dies ist ein Widerspruch zur Folgenstetigkeit.
+\end{proof}
+\begin{theorem}
+	Die Verkettung stetiger Funktionen ist stetig.
+\end{theorem}
+\begin{proof}
+	Durch Folgenstetigkeit. 
+	\begin{align*}
+		\lim_{x \to x_0} g(f(x)) = g\left(\lim_{x \to x_0} f(x)\right) = g(f(x_0))
+	\end{align*}
+\end{proof}
+\begin{theorem}
+	Das Produkt stetiger Funktionen ist stetig.
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+		\lim_{x \to x_0} f(x)g(x) = \lim_{x \to x_0} f(x) \lim_{x \to x_0} g(x) = f(x_0)g(x_0)
+	\end{align*}
+\end{proof}
+\begin{theorem}
+	Das Inverse einer stetigen Funktion ist stetig.
+\end{theorem}
+\begin{proofsketch}
+	Monotone Surjektionen auf kompakte Mengen sind stetig.
+\end{proofsketch}
+\begin{theorem}
+	Eine Funktion $f = (f_1, \hdots, f_n)$ ist genau dann an einem Punkt $p$ stetig, wenn dort alle Komponentenfunktionen $f_i$ stetig sind.
+\end{theorem}
+\begin{theorem}
+	\emph{\textbf{Zwischenwertsatz:}} Gegeben $a < b$ in $\bR$ nimmt eine stetige Funktion $f : [a,b] \to \bR$ jeden Wert zwischen $f(a)$ und $f(b)$ an.
+\end{theorem}
+\begin{proof}
+	Sei $z \in [f(a), f(b)]$ und
+	\begin{align*}
+		p = \sup \{x \in [a,b] : f(p) \leq z\}.
+	\end{align*}
+	Zu zeigen ist $f(p) = z$. Angenommen, $f(p) < z$. Da $z \leq f(b)$ folgt $p < b$. Sei nun $\epsilon = z - f(p)$. Aufgrund der Stetigkeit von $f$ existiert ein $\delta$, sodass für $q := p + \delta$ sowohl $p < q$ als auch $f(p) \leq z$ gelten. Somit war $p$ kein Supremum, was ein Widerspruch ist.
+\end{proof}
+\begin{corollary}
+	Das Bild eines Intervalles unter einer Stetigen Funktion ist ebenfalls ein Intervall.
+\end{corollary}
+\begin{theorem}
+	Ist das Bild einer monotonen Abbildung $f$ : $\bR \subset D \to \bR$ ein Intervall in $\bR$, so ist $f$ stetig.
+\end{theorem}
+\begin{corollary}
+	Ist eine Funktion $f : [a,b] \to \bR$ streng monoton und stetig, so ist auch die Umkehrfunktion streng monoton und stetig.
+\end{corollary}
+\begin{proof}
+	Die Umkehrfunktion ist klar monoton (sonst könnte man sie nicht erneut invertieren, um die ursprüngliche Funktion zu erhalten). Außerdem ist ihr Bild das Intervall $[a,b]$. Somit ist die Umkehrfunktion stetig.
+\end{proof}
+\begin{theorem}
+	\emph{\textbf{Existenz von Extremalstellen auf Kompakta:}} Jede stetige Funktion auf einem nichtleeren Kompaktum hat ein Maximum und ein Minimum.\\
+	\textbf{Alternativ:} Jede stetige Funktion auf einem nichtleeren Kompaktum nimmt das Supremum und Infimum ihrer Funktionswerte als Funktionswert an.\\
+	\textbf{Also:}
+	\begin{align*}
+		\forall f : D \to \bR : \exists x_0, x_1 \in D : f(x_0) = \inf_{x \in D} f(x), \quad f(x_1) = \sup_{x \in D} f(x)
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Wir zeigen die Aussage über das Infimum, das Supremum folgt dann analog. Setze 
+	\begin{align*}
+		\alpha = \inf_{x \in D} f(x) \in [-\infty,\infty)
+	\end{align*}
+	Nach Definition des Infimums gibt es eine Folge $x_k \in D$ mit $f(x_k) \to a$. Da $D$ beschränkt ist, ist die Folge beschränkt. Nach Satz von Bolzano-Weierstraß gibt es eine Teilfolge $x_{k_j}$, welche gegen einen Wert $x_0 \in D$ konvergiert.
+	\newpar
+	Wir wissen, dass $f(x_{k_j})$ gegen $f(x_0)$ konvergiert (dies ist genau die Folgenstetigkeit von $f$). Aus der Eindeutigkeit des Grenzwerts folgt nun $f(x_0) = \alpha$.
+\end{proof}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\chapter{Reihen}
+\begin{definition}
+	Sei $\an$ eine Folge. Wir nennen die Zahl
+	\begin{align*}
+		s_n := \sum_{k = 1}^n a_k
+	\end{align*}
+	Die \textbf{$n$-te Partialsumme} der Folge. Wir nennen Folgen der Form $\sn$ unendliche Reihen und schreiben solche auch als
+	\begin{align*}
+		\sum_{k = 1}^\infty a_k.
+	\end{align*}
+	Ist die Folge $\sn$ konvergent, bezeichnet dieser Ausdruck außerdem den Grenzwert der Folge. Per Definition ist
+	\begin{align*}
+		\sum_{k = 1}^\infty a_k = s \Leftrightarrow \lim_{n \to \infty} \sum_{k = 1}^n a_k = s
+	\end{align*}
+\end{definition}
+\newpar
+Gemäß Satz \ref{theorem:rechenregelnfürfolgen} können \textbf{konvergente} Reihen wie intuitiv erwartet addiert, skalarmultipliziert etc. werden.
+\section{Konvergenzkriterien}
+\begin{theorem} 
+	\textbf{\emph{Nullfolgentest:}} Ist eine Reihe $\displaystyle \sum_{k = 1}^\infty a_k$ 		konvergent, so folgt $\displaystyle \lim_{k \to \infty} a_k = 0$.
+\end{theorem}
+\begin{theorem} 
+	\textbf{\emph{Konvergenzkriterium von Cauchy:}} Eine Reihe $\displaystyle \sum_{n = 1}^\infty a_k$ ist genau dann konvergent, wenn 
+	\begin{align*}
+		\forall \epsilon \in \bR^+ : \exists n_0 \in \bN : \forall n,m > n_0 : \abs{\sum^m_{k = n} a_k} < \epsilon
+	\end{align*}	
+\end{theorem}
+\begin{proof}
+	Dies ist genau die Bedingung, dass die Reihe eine Cauchyfolge ist.
+\end{proof}
+\begin{theorem} 
+	\textbf{\emph{Reihen mit positiven Gliedern:}} Falls $\forall k \in \bN : a_k > 0$, so konvergiert die Reihe $\sum_{k = 1}^\infty a_k$ genau dann, wenn die Folge ihrer Partialsummen nach oben beschränkt ist.
+\end{theorem}
+\begin{proof}
+	Die Folge der Partialsummen ist dann monoton steigend und beschränkt, also konvergent nach \ref{theorem:increasingandboundedsequence}
+\end{proof}
+\begin{theorem} \textbf{\emph{Leibnizkriterium:}}
+	Sei $a_k$ eine reelle, monoton fallende Nullfolge. So ist die Reihe 
+	$\sum_{k = 1}^\infty (-1)^k a_k$ konvergent. Es gilt außerdem:
+	\begin{align*}
+		0 \leq (-1)^n \sum_{k = n}^\infty (-1)^k a_k \leq a_n
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Sei $S_n$ die $n$-te Partialsumme.
+	\begin{itemize}
+		\item Es gilt $S_{n+2} - S_n = a_{2n+2} - a_{2n+1} \leq 0$, also ist die Folge der Partialsummen mit geradem Index streng monoton fallend.
+		\item Es gilt $S_{n+1} - S_{n-1} = -a_{2n+1} + a_{2n} \geq 0$, also ist die Teilfolge der Partialsummen mit ungeradem Index streng monoton steigend.
+		\item Es gilt außerdem $S_1 \leq S_{2n+1} \leq S_{2n} \leq S_0$, also ist die gerade Partialsummen nach unten beschränkt und die ungeraden Partialsummen sind nach oben beschränkt.
+		\item Zuletzt gilt auch noch $S_{n+1} - S_n \to 0$, da beides Nullfolgen sind, also konvergieren beide Teilfolgen gegen den gleichen Grenzwert, also konvergiert die gesamte Reihe gegen diesen Grenzwert.
+	\end{itemize}
+\end{proof}
+\begin{theorem}
+	\emph{\textbf{Majorantenkriterium:}} Gilt $\abs{a_k} \leq c_k \in [0, \infty)$ und $\sum_{k=0}^\infty c_k < \infty$, so konvergiert die Reihe $\sum_{k=0}^\infty a_k$ absolut.
+\end{theorem}
+\begin{theorem}
+	\emph{\textbf{Quotientenkriterium:}} Gibt es ein $\theta \in [0,1)$ und ein $n \in \bN$ sodass 
+	\begin{align*}
+		\forall k \geq n : \frac{\abs{a_{k+1}}}{\abs{a_k}} \leq \theta,
+	\end{align*}
+	so konvergiert die Reihe $\sum_{k=0}^\infty a_k$ absolut.
+\end{theorem}
+\begin{theorem}
+	Eine äquivalente Bedingung ist $\limsup \abs{\frac{a_{n+1}}{a_n}} < 1$.
+\end{theorem}
+\begin{proof}
+	Per Induktion gilt 
+	\begin{align*}
+		\forall k \geq n : \abs{a_k} \leq \theta^{k-n} \abs{a_n}.
+	\end{align*}
+	\newpar
+	Es folgt 
+	\begin{align*}
+		\sum_{k = n}^\infty \abs{a_k} &\leq \sum_{k = n}^\infty \theta^{k-n} \abs{a_n}\\
+		&= \abs{a_n} \sum_{k = n}^\infty \theta^{k-n}\\
+		&= \abs{a_n} \cdot \frac{1}{1-\theta}
+	\end{align*}
+\end{proof}
+\begin{beispiel}
+	Wir betrachten die Reihe
+	\begin{align*}
+		\sum_{k=1}^\infty a_k := \sum_{k=1}^\infty \frac{k}{e^k}
+	\end{align*}
+	Der Quotiententest liefert für $k \geq 10$:
+	\begin{align*}
+		\abs{\frac{a_{k+1}}{a_k}} = \abs{\frac{(k + 1)e^k}{ke^{k+1}}} = \abs{\frac{k + 1}{ke}} < \frac{1}{2}
+	\end{align*}
+	Also konvergiert die Reihe absolut. (Die Abschätzung ist hier natürlich sehr grob.)
+\end{beispiel}
+\begin{theorem}
+	\emph{\textbf{Wurzelkriterium:}} Gibt es ein $\theta \in [0,1)$ und ein $n \in \bN$ sodass 
+	\begin{align*}
+		\forall k \geq n : \sqrt[k]{\abs{a_k}} \leq \theta,
+	\end{align*}
+	so konvergiert die Reihe $\sum_{k=0}^\infty a_k$ absolut.
+\end{theorem}
+\begin{anmerkung}
+	Existiert ein $n \in \bN$, sodass
+	\begin{align*}
+		\forall k \geq n : \frac{\abs{a_{k+1}}}{\abs{a_k}} \geq 1
+	\end{align*}
+	oder
+	\begin{align*}
+		\forall k \geq n : \sqrt[k]{\abs{a_k}} \geq 1,
+	\end{align*}
+	so ist die Reihe offensichtlich nicht Cauchy, divergiert also.
+\end{anmerkung}
+\begin{theorem}
+	Eine absolut konvergente Reihe kann beliebig umgeordnet werden, ohne den Grenzwert zu verändern.
+\end{theorem}
+
+
+\chapter{Eindimensionale Ableitungen}
+\section{Differenzierbarkeitsbegriffe im Mehrdimensionalen}
+\subsection{Totale Differenzierbarkeit}
+\begin{definition}
+	Eine Abbildung $f : \bR^n \supset \Omega \to \bR^m$ heißt \tbf{total differenzierbar} oder einfach \tbf{differenzierbar} am Punkt $p \in \Omega$, falls eine lineare Abbildung $Df(p) : \bR^n \to \bR^n$ gibt, sodass
+	\begin{align*}
+		\lim_{h \to 0} \frac{f(p + h) - f(p) - Df(p)(h)}{\abs{h}} = 0											
+	\end{align*}
+	Existiert ein solches $Df(p)$, nennen wir es das \tbf{Differential} von $f$ am Punkt $p$. Existiert eine solche Abbildung für alle Punkte $p \in \Omega$, so nennen wir die Abbildung $Df : \bR^n \supset \Omega \to L(\bR^n, \bR^m)$ \tbf{*das* Differential} von $f$.
+\end{definition}
+
+\subsection{Partielle Differenzierbarkeit}
+\begin{definition}
+	Die \tbf{partielle Ableitung} einer Funktion $f : \bR^n \supset \omega \to \bR^m$ ist die eindimensionale Ableitung entlang einer der Koordinatenachsen:
+	\begin{align*}
+		\partial_j f(x) &= \left(\frac{d}{dh} f(x + he_j)\right)(0)\\
+		&= \lim_{h \to 0} \frac{f(x + he_j) - f(x)}{h}
+	\end{align*}
+\end{definition}
+\section{Ableitungsregeln}
+\subsection{Kettenregel}
+\begin{theorem}
+	Es gilt
+	\begin{align*}
+		D(g \circ f)(x_0) = Dg(f(x_0))Df(x_0)
+	\end{align*}
+\end{theorem}
+\subsection{Produktregel}
+\subsection{Quotientenregel}
+\subsection{Ableitung von Umkehrfunktionen}
+\begin{theorem}
+	Sei $I \in \bR$ ein mehrpunktiges Intervall und $f : I \to \bR$ streng monoton, stetig auf $I$ und differenzierbar bei $p$. So ist die Umkehrfunktion $f^{-1} : f(I) \to \bR$ differenzierbar bei $q = f(p)$ mit:
+	\begin{align*}
+		(f^{-1})'(q) = \frac{1}{f'(f^{-1}(q))}
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Kettenregel:
+	\begin{align*}
+		f(f^{-1}(q)) &= q\\
+		\implies (f(f^{-1}(q)))' &= 1\\
+		\implies (f^{-1})'(q) \cdot f'(f^{-1}(q)) &= 1\\
+		\implies (f^{-1})'(q) &= \frac{1}{f'(f^{-1}(q))}
+	\end{align*}
+\end{proof}
+\section{Der Mittelwertsatz}
+\begin{theorem}
+	Nimmt eine Funktion $f : (a,b) \to \bR$ an einem Punkt $p$ ein Maximum oder Minimum an, so gilt $f'(p) = 0$.
+\end{theorem}
+\begin{theorem}
+	\emph{\textbf{Satz von Rolle:}} Sei $f : [a,b] \to \bR$ stetig auf dem kompakten Intervall $[a,b]$ und differenzierbar auf dem offenen Intervall $(a,b)$. Gilt dann $f(a) = f(b)$, so gibt es $p \in (a,b)$ mit $f'(p) = 0$.
+\end{theorem}
+\begin{proof}
+	Im Abschnitt über Stetigkeit haben wir bewiesen, dass es Punkte $p,q \in [a,b]$ gibt, an denen $f$ sein Maximum und Minimum annimmt. Ist einer dieser Punkte in $(a,b)$ folgt der Satz trivial. Liegen die Punkte $p$ und $q$ hingegen am Rand, so folgt aus $f(a) = f(b)$, dass $p = q$ ist, und die Funktion somit konstant.
+\end{proof}
+\begin{theorem}
+	\emph{\textbf{Mittelwertsatz:}} Sei $f : [a,b] \to \bR$ stetig auf dem kompakten Intervall $[a,b]$ und differenzierbar auf dem offenen Intervall $(a,b)$. So existiert ein $p \in (a,b)$, sodass
+	\begin{align*}
+		f'(p) = \frac{f(b) - f(a)}{b - a}
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Man wende den Satz von Rolle auf die Funktion
+	\begin{align*}
+		g : [a,b] &\to \bR\\
+		x &\mapsto f(x) - f(a) - (x - a)\frac{f(b) - f(a)}{b - a}
+	\end{align*}
+	an.
+\end{proof}
+%
+%
+%
+
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\chapter{Integration}
+\section{Treppen- und Regelfunktionen}
+\begin{definition}
+	Eine Funktion $f \in B([a,b])$ (eine beschränkte Funktion mit Definitionsbereich $[a,b]$) heißt \textbf{Treppenfunktion}, falls es Punkte $a = x_0 < x_1 < \hdots < x_n = b$ gibt, sodass $f$ auf jedem offenen Teilintervall $(x_k, x_{k+1})$ konstant ist. Wir nennen dann $(x_0, \hdots, x_n)$ eine \tbf{zu $f$ gehörige Unterteilung von $[a,b]$}. Die Menge aller Treppenfunktionen auf dem Intervall $[a,b]$ schreiben wir $T([a,b])$.
+\end{definition}
+\begin{definition}
+	Eine Funktion $f : [a,b] \to \bR$ heißt \textbf{Regelfunktion}, falls es eine Folge $f_n$ von Treppenfunktionen gibt, welche Gleichmäßig gegen $f$ konvergiert. Die Menge aller Treppenfunktionen auf dem Intervall $[a,b]$ schreiben wir $R([a,b])$. 
+\end{definition}
+\begin{theorem}
+	Sei $f_n$ eine Funktionenfolge, welche gleichmäßig gegen eine Funktion $f$ konvergiert. Hat jedes $f_n$ überall einseitige Grenzwerte, so auch $f$.
+\end{theorem}
+\begin{theorem}
+	Eine Funktion $f : [a,b] \to \bR$ ist genau dann eine Regelfunktion, wenn für alle $c \in [a,b]$ die einseitigen Grenzwerte
+	\begin{align*}
+		\liminf_{x \to c} f(x) \text{ und } \limsup_{x \to c} f(x)
+	\end{align*}
+	existieren.
+\end{theorem}
+\begin{corollary}
+	\label{corollary:stetig->regel}
+	Jede stetige Funktion ist eine Regelfunktion.
+\end{corollary}
+\section{Integration von Treppenfunktionen}
+\begin{definition}
+	Sei $f$ eine Regelfunktion. Sei eine Unterteilung $x_0 < \hdots < x_n$ gegeben, sodass $f$ auf dem offenen Intervall $(x_i, x_{i+1})$ den Wert $c_i$ annimmt. Wir nennen die Zahl
+	\begin{align*}
+		I(f) := \sum_{i=0}^n c_i(x_{i+1} - x_i)
+	\end{align*}
+	Das \textbf{Integral} von $f$ über $[a,b]$ und schreiben auch $I(f) = \int_a^b f(x) dx = \int_a^b f$
+\end{definition}
+\begin{lemma}
+	Der Wert von $I(f)$ ist unabhängig von der Wahl der Unterteilung.
+\end{lemma}
+\noindent Betrachte hierfür die gemeinsame Verfeinerung, bei der alle Zwischenpunkte aus zwei verschiedenen Unterteilungen vorkommen.
+\clearpage
+\begin{theorem} Die Abbildung $I(f)$ ist ein \textbf{lineares Funktional}, es gilt also:
+	\label{theorem:treppenintegrallinearesfunktional}
+	\begin{enumerate}
+		\item $\displaystyle \forall f,g \in T([a,b]) : \int_a^b f + g = \int_a^b f + \int_a^b g$
+		\item $\displaystyle \forall f \in T([a,b]) : \forall \lambda \in \bR : \int_a^b (\lambda f) = \lambda \int_a^b f$
+	\end{enumerate}
+	Die Abbildung ist außerdem Monoton, es gilt also:
+	\begin{enumerate}
+		\item[3.] $\displaystyle \forall f,g \in T([a,b]) : \left(\forall x : f(x) \leq g(x) \implies \int_a^b f \leq \int_a^b g\right)$
+	\end{enumerate}
+	Ferner gelten folgende obere Schranken für den Betrag der Abbildung:
+	\begin{enumerate}
+		\item[4.] $\displaystyle \forall f,g \in T([a,b]) : \abs{\int_a^b f} \leq \int_a^b \abs{f} \leq (b-a)\norm{f}$
+	\end{enumerate}
+\end{theorem}
+\section{Integration von Regelfunktionen}
+\begin{definition}
+	Sei $f$ eine Regelfunktion auf $[a,b]$ und sei $(t_n)_{n \in \bN}$ eine Folge von Treppenfunktionen, welche gleichmäßig gegen $f$ konvergiert. Wir definieren das Integral von $f$ als:
+	\begin{align*}
+		\int_a^b f(x) dx = \lim_{n \to \infty} \int_a^b t_n(x) dx
+	\end{align*}
+\end{definition}
+\begin{theorem}
+	Der gesuchte Grenzwert existiert für jede Regelfunktion.
+\end{theorem}
+\begin{proof}
+	Sei $\epsilon \in \bR^+$. Per Definition konvergiert die Folge $(t_n)_{n \in \bN}$ gleichmäßig gegen $f$, also existiert ein $n_0 \in \bN$, sodass
+	\begin{align*}
+		\forall n \geq n_0 : \norm{t_n - f} < \frac{\epsilon}{2(b-a)}
+	\end{align*}
+	Für $m, n \geq n_0$ gilt nun unter Anwendung der Dreiecksungleichung:
+	\begin{align*}
+		\norm{t_m - t_n} \leq \norm{t_m - f} + \norm{t_n - f} < \frac{\epsilon}{2(b-a)} + \frac{\epsilon}{2(b-a)} = \frac{\epsilon}{(b-a)}
+	\end{align*}
+	Gemäß \ref{theorem:treppenintegrallinearesfunktional} folgt:
+	\begin{align*}
+		\abs{\int_a^b t_m - \int_a^b t_n} 
+		&= \abs{\int_a^b (t_m - t_n)} 
+		& (\ref{theorem:treppenintegrallinearesfunktional}.1)\\
+		&\leq (b-a)\norm{t_m - t_n} 
+		& (\ref{theorem:treppenintegrallinearesfunktional}.4)\\ 
+		&< (b-a)\frac{\epsilon}{(b-a)}\\
+		&= \epsilon
+	\end{align*} 
+	Also ist 
+	\begin{align*}
+		I_t := \left(\int_a^b t_n(x) dx\right)_{n \in \bN}
+	\end{align*}
+	eine Cauchyfolge reeller Zahlen, also konvergent.
+\end{proof}
+\begin{theorem}
+	Das Integral ist unabhängig von der Wahl der Folge $(t_n)_{n \in \bN}$ der Treppenfunktionen.
+\end{theorem}
+\begin{proof}
+	Sei $(u_n)_{n \in \bN}$ eine weitere Folge in $T([a,b])$, welche gleichmäßig gegen $f$ konvergiert. Sei $\epsilon \in \bR^+$. Durch die gleichmäßige Konvergenz gegen $f$ existieren $n_1, n_2 \in \bN$, sodass:
+	\begin{align*}
+		\forall n \geq n_1 : \norm{f - t_n} < \frac{\epsilon}{2(a-b)}
+	\end{align*}
+	und 
+	\begin{align*}
+		\forall n \geq n_2 : \norm{f - u_n} < \frac{\epsilon}{2(a-b)}
+	\end{align*}
+	Für $n_0 = \max{n_1, n_2}$ gilt also
+	\begin{align*}
+		\forall n \geq n_0 : \norm{t_n - u_n} \leq \norm{t_n - f} + \norm{u_n - f} < \frac{\epsilon}{b-a}
+	\end{align*}
+	Analog zum vorherigen Beweis folgt durch \ref{theorem:treppenintegrallinearesfunktional}
+	\begin{align*}
+		\abs{\int_a^b t_n - \int_a^b u_n} \leq (a,b)\norm{t_n - u_n} < \epsilon
+	\end{align*}
+	Also konvergiert die Folge $\displaystyle \left(\int_a^b t_n - \int_a^b u_n \right)_{n \in \bN}$ gegen Null, also ist
+	\begin{align*}
+		\lim_{n \to \infty} \int_a^b t_n = \lim_{n \to \infty}\int_a^b u_n
+	\end{align*}
+\end{proof}
+\begin{theorem}
+	Genau wie im Fall der Treppenfunktionen ist das Integral einer Regelfunktion ebenfalls ein beschränktes monotones lineares Funktional.
+\end{theorem}
+\begin{anmerkung}
+	Es gilt desweiteren:
+	\begin{enumerate}
+		\item $\displaystyle \int_a^b 1 = b - a$
+		\item $\displaystyle \forall f \in T([a,b]) : \forall z \in [a,b] : \int_a^b f = \int_a^z f + \int_z^b f$
+	\end{enumerate}
+	Gemeinsam mit Linearität und Monotonizität, welche im Vorherigen Satz bewiesen wurden, definieren diese Vorschriften die Integralabbildung bereits eindeutig.
+\end{anmerkung}
+\begin{theorem}
+	Sei $(f_n)_{n \in \bN}$ eine Folge von Regelfunktionen, welche gleichmäßig gegen eine Funktion $f$ konvergieren. Dann ist $f$ eine Regelfunktion und es gilt
+	\begin{align*}
+		\int_a^b f = \lim_{n \to \infty} \int_a^b f_n
+	\end{align*}
+\end{theorem}
+\begin{theorem}
+	\emph{\textbf{Mittelwertsatz der Integralrechnung:}} Seien $f,g \in R([a,b])$, sei $f$ stetig und $g(x) \geq 0$. Dann existiert ein $c \in [a,b]$, sodass:
+	\begin{align*}
+		\int_a^b fg = f(c) \int_a^b g
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Nach dem Satz von Weierstrass (Extremwertsatz) nimmt die stetige Funktion $f$ auf dem Intervall $[a,b]$ ein Minimum $m$ und ein Maximum $M$ an. Aus $m \leq f(x) \leq M$ und $g(x) \geq 0$ folgt $mg(x) \leq f(x)g(x) \leq Mg(x)$, also auch:
+	\begin{align*}
+		m \int_a^b g(x) dx \leq \int_a^b f(x)g(x) dx \leq M \int_a^b g(x) dx
+	\end{align*}
+	Also ist $\displaystyle \int_a^b f(x)g(x) dx = \alpha \int_a^b g(x) dx$ für eine Zahl $\alpha \in [m,M]$. Da $\alpha$ also zwischen den Extremwerten von $f$ liegt gibt es gemäß Zwischenwertsatz eine Zahl $c \in [a,b]$ mit $f(c) = \alpha$.
+\end{proof}
+\begin{corollary}
+	Sei $f \in R([a,b])$ und sei $f$ stetig Dann existiert ein $c \in [a,b]$, sodass:
+	\begin{align*}
+		\int_a^b f = f(c) (a-b)
+	\end{align*}
+\end{corollary}
+\begin{proof}
+	Dies ist der vorherige Satz im Fall $g(x) = 1$.
+\end{proof}
+\section{Hauptsatz der Integralrechnung}
+\begin{definition}
+	Sei $f : [a,b] \to \bR$. Eine Funktion $F : [a,b] \to \bR$ heißt \textbf{Stammfunktion} von $f$, falls \begin{align*}
+		\frac{d}{dx} F(x) = f(x)
+	\end{align*}
+\end{definition}
+\begin{lemma}
+	Seien $F$ und $G$ Stammfunktionen einer Funktion $f$. So gilt $\exists c \in \bR : G(x) = F(x) + c$.
+\end{lemma}
+\begin{proof}
+	Es gilt $F' = G' = f$, also
+	\begin{align*}
+		(F - G)' = F' - G' = 0.
+	\end{align*}
+	Somit ist die Funktion $F - G$ konstant.
+\end{proof}
+\begin{theorem}
+	\emph{\textbf{Hauptsatz der Integralrechnung:}} Sei $f : [a,b] \to \bR$ eine stetige Funktion, also insbesondere eine Regelfunktion. Definiere die Funktion
+	\begin{align*}
+		F(x) := \int_a^x f(t) dt
+	\end{align*}
+	So ist $F$ eine Stammfunktion von $f$.
+	(Achtung: $a$ ist keine beliebige Konstante, sondern der kleinste Punkt im Definitionsbereich!)
+\end{theorem}
+\begin{proof}
+	\textbf{Beweis nach Růžička:} Sei $x \in [a,b]$. Sei $h \in \bR$ mit $x + h \in [a,b]$. Dann gilt:
+	\begin{align*}
+		\abs{F(x+h) - F(x) - f(x)h} &= \abs{\int_a^{x+h}f(t)dt - \int_a^{x}f(t)dt - f(x)h}\\
+		&= \abs{\int_x^{x+h}f(t)dt - f(x)h}\\
+		&= \abs{\int_x^{x+h}f(t)dt - \int_x^{x+h} f(x) dt}\\
+		&= \abs{\int_x^{x+h}(f(t) - f(x)) dt}\\
+		&\leq \int_x^{x+h}\abs{f(t) - f(x)} dt &\ref{theorem:treppenintegrallinearesfunktional}\\
+	\end{align*}
+	Sei nun $\epsilon \in \bR^+$. Da $f$ stetig und auf dem Kompaktum $[a,b]$ definiert ist, ist $f$ gleichmäßig stetig. Also existiert ein $\delta \in \bR^+$, sodass
+	\begin{align*}
+		\forall x,t \in [a,b] : \abs{t - x} < \delta \implies \abs{f(t) - f(x)} < \epsilon.
+	\end{align*}
+	Ist nun $\abs{t-x} \leq \delta$, also $\abs{h} \leq \delta$, folgt
+	\begin{align*}
+		\int_x^{x+h}\abs{f(t) - f(x)} dt \leq \int_x^{x+h}\epsilon dt = \abs{h}\epsilon
+	\end{align*}
+	Also:
+	\begin{align*}
+		&\abs{F(x+h) - F(x) - f(x)h} \leq \abs{h}\epsilon\\
+		\implies &\lim_{h \to 0} \abs{F(x+h) - F(x) - f(x)h} = 0\\
+		\implies &\lim_{h \to 0} F(x+h) - F(x) - f(x)h = 0\\
+		\implies &\lim_{h \to 0} \frac{F(x+h) - F(x)}{h} - f(x) = 0\\
+		\implies &\lim_{h \to 0} \frac{F(x+h) - F(x)}{h} = f(x) \\
+	\end{align*}
+	Also ist $f$ die Ableitung von $F$.
+\end{proof}
+\begin{proof}
+	\textbf{Beweis per Mittelwertsatz:} (Dieser Beweis ist übersichtlicher, aber nur, weil die ganze Arbeit an den Mittelwertsatz und den Satz von Rolle abgegeben wurden. Vermutlich also für die mündliche Prüfung also weniger gut geeignet.)
+	Wir betrachten die Ableitung von $F$. Es gilt:
+	\begin{align*}
+		\frac{F(x+h) - F(x)}{h} &= \frac{1}{h} \left(\int_a^{x+h} f(t) dt - \int_a^{x} f(t) dt\right)\\
+		&= \frac{1}{h} \int_x^{x+h} f(t) dt\\ 
+	\end{align*}
+	Nach dem Mittelwertsatz der Integralrechnung existiert nun ein $c_h \in [x,x+h]$, sodass 
+	\begin{align*}
+		\int_x^{x+h} f(t) dt = (x + h - x) f(c) \implies \frac{1}{h} \int_x^{x+h} f(t) dt = f(c)
+	\end{align*}
+	Da $c \in [x,x+h]$ folgt $\displaystyle \lim_{h \to 0} c_h = x$, da $f$ stetig ist folgt $\displaystyle \lim_{h \to 0} f(c_h) = f(x)$. Also gilt:
+	\begin{align*}
+		\lim_{h \to 0} \frac{F(x+h) - F(x)}{h} = \lim_{h \to 0} f(c_h) = f(x)
+	\end{align*}
+\end{proof}
+\subsection{Partielle Integration}
+\begin{theorem}
+	Es gilt
+	\begin{align*}
+		\int_a^b f'(x) g(x) dx = \left[f(x) g(x)\right]_a^b - \int_a^b f(x) g'(x) dx
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Folgt direkt aus dem Hauptsatz der Integralrechnung und der Produktregel:
+	\begin{align*}
+		(f(x)g(x))' &= f'(x)g(x) + f(x)g'(x)\\
+		\implies \int_a^b (f(x)g(x))' dx &= \int_a^b \left(f'(x)g(x) + f(x)g'(x)\right) dx\\
+		\implies [f(x)g(x)]_a^b &= \int_a^b f'(x)g(x) dx + \int_a^b f(x)g'(x) dx\\
+		\implies \int_a^b f'(x)g(x) dx &=  [f(x)g(x)]_a^b - \int_a^b f(x)g'(x) dx\\
+	\end{align*}
+\end{proof}
+\begin{anmerkung}
+	Ich persönlich finde folgende äquivalente Schreibweise einfacher anzuwenden:
+	\begin{align*}
+		\int_a^b f(x) g(x) dx = \left[F(x) g(x)\right]_a^b - \int_a^b F(x) g'(x) dx
+	\end{align*}
+\end{anmerkung}
+\begin{beispiel}
+	Ein sehr häufig anwendbarer Trick ist die partielle Integration einer Funktion durch Multiplikation mit der konstanten Einsfunktion, z.B:
+	\begin{align*}
+		\int \ln(x) dx &= \int 1 \cdot \ln(x) dx\\
+		&= x \ln(x) - \int x \cdot \frac{1}{x} dx\\ 
+		&= x \ln(x) - \int 1 dx\\
+		&= x \ln(x) - x\\ 
+	\end{align*}
+\end{beispiel}
+\begin{beispiel}
+	Im Fall $f = g$ erhält man durch partielle Integration das gleiche Integral ein zweites Mal und kann daraufhin die Gleichung durch Umstellen lösen:
+	\begin{align*}
+		\int f'(x) f(x) dx &= f(x)f(x) - \int f(x) f'(x) dx\\
+		\implies 2 \int f'(x) f(x) dx &= f(x)^2\\
+		\implies \int f'(x) f(x) dx &= \frac{1}{2} f(x)^2
+	\end{align*}
+	Diese Formel hat zahlreiche direkte Anwendungen:
+	\begin{itemize}
+		\item $\displaystyle \int \frac{\ln x}{x} dx = \frac{1}{2} \ln(x)^2$
+		\item $\displaystyle \int \sin(x)\cos(x) dx = \frac{1}{2} \sin(x)^2 = -\frac{1}{2} \cos(x)^2$
+	\end{itemize}
+\end{beispiel}
+\subsection{Integration durch Substitution}
+\chapter{Potenzreihen}
+\begin{definition}
+	Eine \tbf{Potenzreihe} ist eine Reihe der Form 
+	\begin{align*}
+		\sum_{k=0}^\infty a_k x^k,
+	\end{align*}
+	wobei $a_k$ eine Folge ist.
+\end{definition}
+\begin{theorem}
+	Der \tbf{Konvergenzradius} einer Potenzreihe ist das Supremum der Beträge von $x$, für die die Potenzreihe konvergiert.
+\end{theorem}
+\begin{theorem}
+	Jede Potenzreihe ist auf jedem Kompaktum innerhalb des Konvergenzradius absolut konvergent.
+\end{theorem}
+\begin{theorem}
+	Potenzreihen sind innerhalb des Potenzradius unendlich oft differenzierbar.
+\end{theorem}
+\section{Taylorreihen}
+\begin{theorem}
+	Ist $f : I \to \bR$ auf dem Intervall $I$ $(n+1)$-mal differenzierbar, so gibt es für alle $x \in I$ ein $\xi \in [p,x]$ mit:
+	\begin{align*}
+		f(x) = \sum_{v = 0}^n \frac{f^{v}(p)}{v!}(x - p)^v + \frac{f^{(n+1)}(\xi)}{(n + 1)!}(x-p)^{n+1}
+	\end{align*}
+\end{theorem}
+Diese Darstellung ist bekannt als die \textit{Lagrange-Darstellung des Restglieds}.
+\begin{proofsketch}
+	Durch den verallgemeinerten Mittelwertsatz.
+\end{proofsketch}
+\begin{theorem}
+	Ist $f^{(n+1)}$ zusätzlich auf $I$ stetig, so gilt die direkte Formel:
+	\begin{align*}
+		f(x) = \sum_{v = 0}^n \frac{f^{v}(p)}{v!}(x - p)^v + \frac{1}{n!}\int_p^x(x-t)^nf^{(n+1)}(t)dt
+	\end{align*}
+\end{theorem}
+Diese Darstellung ist bekannt als die \textit{Integraldarstellung des Restglieds}.
+\begin{proof}
+	Wiederholtes partielles Integrieren der Lagrange-Darstellung.
+\end{proof}
+\section{Die Exponentialfunktion}
+\begin{definition}
+	Wir definieren die Exponentialfunktion $\exp : \bR \to \bR$ als die Potenzreihe:
+	\begin{align*}
+		\exp(x) = \sum_{k=1}^\infty \frac{1}{k!}x^k
+	\end{align*}
+\end{definition}
+\begin{theorem}
+	Der Konvergenzradius der Exponentialfunktion ist unendlich.
+\end{theorem}
+\begin{proof}
+	Das Quotientenkriterium gibt uns:
+	\begin{align*}
+		\lim_{k \to \infty} \frac{x^{k+1}k!}{x^k(k+1)!} = \lim_{k \to \infty} \frac{x}{k} = 0,
+	\end{align*}
+	also ist das Quotientenkriterium unabhängig von $x$ immer erfüllt, also ist der Konvergenzradius unendlich.
+\end{proof}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+
+
+
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+
+\chapter{Der Euklidische Raum}
+
+\begin{lemma}
+ Sei $(V, \scalar{\_}{\_})$ ein euklidischer Vektorraum. Dann wird durch
+ \begin{align*}
+  \norm{u} = \sqrt{\scalar{u}{u}}
+ \end{align*}
+auf $V$ eine Norm erklärt. Diese bezeichnet man als die durch das Skalarprodukt induzierte Norm.
+\end{lemma}
+\begin{definition}
+ Seu $(V, \scalar{\_}{\_})$ ein euklidischer Vektorraum, Die Vektoren $u, v \in V$ heißen \tbf{orthogonal}, wenn \begin{align*}
+   \scalar{u}{v} = 0                                                                                                                 
+ \end{align*}
+ ist. Für $u, v \in V \setminus \{0\}$ Wird die reelle Zahl
+ \begin{align*}
+  \phi = \arccos \frac{\scalar{u}{v}}{\norm{u}\ \norm{v}}
+ \end{align*}
+ als der Winkel zwischen $u$ und $v$ bezeichnet.
+\end{definition}
+\begin{anmerkung}
+ Es gilt
+ \begin{align*}
+  \frac{\abs{\scalar{u}{v}}}{\norm{u}\ \norm{v}} \leq 1
+ \end{align*}
+\end{anmerkung}
+\begin{lemma}
+\label{lemma:normequiv}
+ Für $X = (x_1, \hdots, x_n) \in \bR^n$ sei
+ \begin{align*}
+  \norm{X}_{\max} := \max\{\abs{x_1}, \hdots, \abs{x_n}\}
+ \end{align*}
+ Dann ist $||\_||_{\max}$ eine Norm auf $\bR^n$ und es gilt
+ \begin{align*}
+  \norm{X}_{\max} \leq \norm{X} \leq \sqrt{n}\norm{X}_{\max}
+ \end{align*}
+\end{lemma}
+\begin{theorem}
+Die Menge $\bQ^n$ der Punkte mit rational Koordinaten ist dicht in $\bR^n$.
+\end{theorem}
+\begin{proof}
+Sei $X \in \bR^n$ und $\epsilon \in \bR^+$. Da $\bQ$ dicht in $\bR$ ist gilt
+\begin{align*}
+ \forall i \in \{1, \hdots, n\} : \exists y_i \in \bQ : \abs{x_i - y_i} \leq \frac{\epsilon}{\sqrt{n}}
+\end{align*}
+Durch Lemma \ref{lemma:normequiv} folgt:
+\begin{align*}
+ \norm{x-y} \leq \sqrt{n}\norm{X - Y} < \epsilon
+\end{align*}
+\end{proof}
+\begin{theorem}
+\label{theorem:componentcauchy}
+ Sei $(X_k)_{k \in \bN}$ eine Folge aus $\bR^n$. Sei $X_k = (x_1^{(k)}, \hdots, x_n^{(k)})$. Dann gilt:
+ \begin{align*}
+  \lim_{k \to \infty} X_k = X \Leftrightarrow \forall i : \lim_{k \to \infty} x_i^{(k)} = x_i
+ \end{align*}
+ Insbesondere ist $X_k$ eine Cauchyfolge, wenn die Komponenten Cauchyfolgen sind.
+\end{theorem}
+\begin{proof}
+ $X_k \to X$, $i \in \{1, \hdots, n\}$, $\epsilon \in \bR^+$. Dann gilt
+ \begin{align*}
+  \exists k_o \in \bN : \forall k \geq k_0 : \norm{X_k - X} \leq \epsilon \implies \forall i : \abs{x_i^{(k)} - x_i} < \epsilon \implies \lim_{k \to \infty} x_i^{(k)} = x_i
+ \end{align*}
+ Und umgekehrt:
+ \begin{align*}
+  \forall i : x_i^{(k)} \to x_i, \epsilon \in \bR^+ \implies \exists k_0^i \in \bN : \forall k \geq k_0^i \abs{x_i^{(k)} - x_i} \leq \frac{\epsilon}{\sqrt{n}}
+ \end{align*}
+ \[
+  k_0 := \max\{k_0^n, \hdots, k_0^n\} \implies \forall k \geq k_0 : \abs{x_i^{(k)} - x_i} < \frac{\epsilon}{\sqrt{n}} \implies \norm{X_k - X} \leq \sqrt{n}\norm{X_k - X} < \epsilon
+ \]
+\end{proof}
+\begin{theorem}
+ Für konvergente Folgen $(X_k),(Y_k) \in \bR^n$, $(\lambda_k) \in \bR$ gilt:
+\begin{align}
+ \lim_{k \to \infty} (X_k + Y_k) = \lim_{k \to \infty} X_k + \lim_{k \to \infty} Y_k\\
+ \lim_{k \to \infty} \lambda_k X_k = \left(\lim_{k \to \infty} \lambda_k\right)\left(\lim_{k \to \infty}
+ X_k\right)\\
+ \lim_{k \to \infty} \scalar{X_k}{Y_k} = \scalar{\lim_{k \to \infty} X_k}{\lim_{k \to \infty} Y_k}
+\end{align}
+\end{theorem}
+\begin{theorem}
+ $\bR^n$ ist vollständig.
+\end{theorem}
+\begin{proof}
+Ist $X_k$ eine Cauchyfolge in $\bR^n$, so sind nach Satz \ref{theorem:componentcauchy} alle Teilfolgen Cauchy in $\bR$. Also:
+\begin{align*}
+ \exists x_i \in \bR : x_i^{(k)} \to x_i \implies \exists X \in \bR^n : X_k \to X
+\end{align*}
+\end{proof}
+\begin{theorem}
+\emph{\textbf{(Bolzano-Weierstrass:)}} Jede beschränkte Folge in $\bR^n$ besitzt eine konvergente Teilfolge.
+\end{theorem}
+\begin{proof}
+ Sei $(X_k)$ eine beschränkte Folge in $\bR^n$. Nach \ref{lemma:normequiv} müssen die Komponentenfolgen ebenfalls beschränkt sein. Nach dem eindimensionalen Fall des Satzes von Bolzano-Weierstrass existieren also konvergente Teilfolgen der Koordinatenfolgen. Angenommen, die konvergente Teilfolge der ersten Komponente ist gegeben durch $x_1^{(k_n)} \to x_1$. So ist $x_2^{(k_n)}$ ebenfalls eine beschränkte Teilfolge, also existiert eine Teilfolge $x_2^{(k_n)_m}$ welche in den ersten beiden Komponenten konvergiert. Führt man dieses Verfahren induktiv fort, erhält man eine konvergente Teilfolge von $(X_k)$.
+\end{proof}
+\begin{theorem}
+ Sei $(A_i)_{i \in \bN}$ eine Folge abgeschlossener beschränkter nichtleerer Teilmengen des $\bR^n$, sodass $A_1 \supseteq A_2 \supseteq \hdots$ Dann ist $\bigcap_{i \in \bN} \neq \emptyset$
+\end{theorem}
+\begin{proof}
+ $A_i \neq \emptyset \implies \exists X_i \in A$ sd. $(X_i)_{i \in \bN}$ eine Folge ist. Da $A_i$ beschränkt ist ist $(X_i)_{i \in \bN}$ beschränkt, also hat $X_i$ eine konvergente Teilfolge $X_{i_k}$ mit Limes $X$. Es gilt $X_{i_k} \in A_{i_k} \subseteq A_i$, also ist $X$ ein Berührpunkt von $A_i$, also $X \in A_i$.
+\end{proof}
+\begin{theorem}
+ Jede abgeschlossene beschränkte Teilmenge des $\bR^n$ ist kompakt.
+\end{theorem}
+\begin{proof}
+ Analog zur eindimensionalen Version, wobei statt Intervallen $[a_i,b_i]$ Hyperwürfel $[a_i^{(1)}, b_i^{(1)}] \times \hdots \times [a_i^{(n)}, b_i^{(n)}]$ genutzt werden müssen.
+\end{proof}
+\begin{theorem}
+\label{theorem:allnormsequiv}
+ Seien $\norm{\_}_1$ und $\norm{\_}_2$ Normen auf $\bR^n$. So existieren $k, K \in \bR^+$ mit
+ \begin{align*}
+  \forall X \in \bR^n : k\norm{X}_1 \leq \norm{X}_2 \leq K\norm{X}_1
+ \end{align*}
+\end{theorem}
+\begin{proof}
+Diese Normenäquivalenz bildet eine Äquivalenzrelation. Es reicht also, zu zeigen, dass jede Norm $||\_||_2$ äquivalent zu einer spezifischen Norm $\norm{\_}_1$ ist. Wir wählen $\norm{\_}_{\max}$.\\
+Sei $(E_i)$ die Standardbasis des $\bR^n$. Wir definieren:
+\begin{align*}
+ K := \norm{E_1}_2 + \hdots + \norm{E_n}_2
+\end{align*}
+Dann gilt:
+\begin{align*}
+ \norm{X}_2 &= \norm{x_1 E_1 + \hdots + x_n E_n}\\
+         &\leq \abs{x_1}\norm{E_1}_2 + \hdots + \abs{x_n} \norm{E_n}_2\\
+         &\leq \norm{X}_{\max} K \quad ^\text{[citation needed]}
+\end{align*}
+Es bleibt die Rückrichtung zu zeigen. 
+\begin{lemma}
+ $f(X) := \norm{X}_2$ ist stetig.
+\end{lemma}
+\begin{proof}
+\begin{align*}
+ \abs{\norm{X}_2 - \norm{Y}_2} \leq \norm{X - Y}_2 \leq K\norm{X - Y}_{\max} \leq K \norm{X - Y}
+\end{align*}
+Also ist $\norm{\_}_2$ stetig bezüglich der euklidischen Norm $\norm{\_}$.
+\end{proof}
+Wir definieren nun:
+\begin{align*}
+ A := \{X \in \bR^n \mid ||X||_{\max} = 1\}
+\end{align*}
+Diese Menge ist beschränkt. Wir wollen Zeigen, dass sie außerdem abgeschlossen ist. Sei $X_i \to X$, $X_i \in A$. Es gilt:
+\begin{align*}
+  \abs{\norm{X_i}_{\max} - \norm{X}_{\max}} \leq \norm{X_i - X}_{\max} \leq \norm{X_i - X}
+\end{align*}
+Also konvergiert jede Menge, also ist $A$ kompakt, also auch abgeschlossen. Dementsprechend muss $f$ auf $A$ ein Minimum $k$ annehmen. Wir wissen $f \geq 0$, also ist$k \geq 0$. Es gilt sogar $k > 0$, da keiner der Vektoren in $A$ der Nullvektor ist. Nun gilt also $\forall X \in A : ||X||_2 \geq k$. Wir definieren:
+\begin{align*}
+ \lambda := \frac{1}{\norm{X}_{\max}}
+\end{align*}
+\begin{align*}
+ \norm{\lambda X}_{\max} = \abs{\lambda} \norm{X}_{\max} = 1 
+\end{align*}
+\begin{align*}
+ |\lambda| \norm{X}_2 = \norm{\lambda X}_2 \geq k \implies \norm{X_2} \geq k \norm{X}_{\max}
+\end{align*}
+\end{proof}
+\begin{anmerkung}
+ Im unendlichdimensionalen Fall gilt Satz \ref{theorem:allnormsequiv} nicht.
+\end{anmerkung}
+%
+%
+%
+%
+%
+%
+%
+%
+
+%
+%
+%
+%
+\section{Abbildungen und Koordinatenfunktionen auf $\bR^n$}
+In diesem Abschnitt betrachten wir Funktionen $F: \bR^n \to \bR^k$. Betrachten wir zuerst den Spezialfall Linearer Funktionen, also $\forall X,Y \in \bR^n : \forall \lambda, \mu \in \bR : F(\lambda X + \mu Y) = \lambda F(X) + \mu F(Y)$.
+\newpar
+Sei $(E_i)$ die Standardbasis des $\bR^n$ und sei $(E_i')$ die Standardbasis des $\bR^k$. Nun gilt:
+\begin{align*}
+ F(E_j) = \sum_{i=1}^k a_{ij} E_i'
+\end{align*}
+Daraus erhalten wir Koeffizienten $a_{ij}$, welche eine Matrix bilden. Umgekehrt können wir aus den Koeffizienten die Abbildung $F$ rekonstruieren, indem wir definieren:
+\begin{align*}
+ F(X) &= F\left(\sum_{j=1}^n x_j E_j\right) \\
+ &= \sum x_j F(E_j) \\
+ &= \sum_{j=1}^n x_j \sum_{i=1}^k a_{ij} E_i'\\
+ &= \sum_{i=1}^k \left(\sum_{j=1}^n a_{ij} x_j\right) E_i'
+\end{align*}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\newpage
+[missing stuff here]
+\newpage
+\begin{definition}
+ Wir bezeichnen als $p_i : M \to k$ die Projektion eines Vektors auf die $i$-te Komponente.
+\end{definition}
+\begin{theorem}
+\label{theorem:componentwisecontinuous}
+ Sei $M$ ein metrischer Raum, $F : M \to \bR^n$ eine Abbildung und $x \in M$. Dann ist $F$ stetig in $x$ genau dann, wenn $p_i \circ F$ stetig für alle $i$ ist.
+\end{theorem}
+\begin{proof}
+\begin{enumerate}
+ \item $p_i$ ist stetig. Ist also $F$ stetig folgt direkt, dass auch $p_i \circ F$ stetig ist.
+ \item Angenommen, $p_i \circ F$ ist stetig $\forall i$, $\epsilon \in \bR^+$. Da $p_i \circ F$ stetig ist existiert eine Umgebung $U_i$ von $x$, sodass $|f_i(x) - f_i(y)| < \frac{\epsilon}{\sqrt{n}} \forall y \in U_i$. Ebenso für die anderen Komponenten. Nun gilt:
+ \begin{align*}
+  \norm{F(y) - F(x)} \leq \sqrt{n} \norm{F(x) - F(y)}_{\max} \leq \epsilon
+ \end{align*}
+\end{enumerate} 
+\end{proof}
+Analog gilt das Selbe für Stetigkeit auf $M$, gleichmäßige Stetigkeit, etc.
+\begin{definition}
+ Sei $M \subseteq \bR^n$, $F : M \to \bR^k$ eine Abbildung, $x_0$ ein Häufungspunkt, $y \in \bR^k$. Dann definieren wir:
+ \begin{align*}
+  \lim_{x \to x_0} F(x) = y \Leftrightarrow \forall \epsilon \in \bR^+ : \exists \delta \in \bR^+ : \forall x \in M \setminus \{x_0\} : \norm{x - x_0} \leq \delta \implies \norm{F(x) - y} < \epsilon
+ \end{align*}
+ $F$ ist stetig in $x_0$ genau dann, wenn $\lim_{x \to x_0} F(x) = F(x_0)$.
+\end{definition}
+\begin{theorem}
+ Sei $M \subseteq \bR^n$, $F : M \to \bR^k$ eine Abbildung, $X_0 \in M$ ein Häufungspunkt, $Y \in \bR^k$ und $f_i = p_i \circ F$. Dann gilt:
+ \begin{align*}
+  \lim_{X \to X_0} F(X) = Y \Leftrightarrow \forall i : \lim_{X \to X_0} f_i(X) = y_i
+ \end{align*}
+\end{theorem}
+\begin{proof}
+ Analog zu Beweis \ref{theorem:componentwisecontinuous}.
+\end{proof}
+\begin{corollary}
+ \begin{align*}
+  F(X) \to Y, G(X) \to Z \implies F(X) + G(X) \to Y + Z
+ \end{align*}
+\end{corollary}
+\section{Mehrdimensionale Ableitungen}
+	\begin{beispiel}
+	 Sei $f : M \to \bR$ definiert auf einer offenen Menge $M \subseteq \bR^n$.
+	 \begin{align*}
+	  f(X) = f(x_1, \hdots, x_n) \text{ bzgl. der Standardbasis }
+	 \end{align*}
+	 Wir können aber auch $X = \sum x_i' E_i'$ bezüglich einer beliebigen anderen Basis darstellen. Also:
+	 \begin{align*}
+	  f(X) = f(x_1, \hdots, x_n) = g(x_1', \hdots, x_n')
+	 \end{align*}
+	 Da $f$ in der Regel nicht linear ist, ist ein solcher Basiswechsel sehr viel komplizierter als in der Linearen Algebra! Wo möglich ist es also besser, über $f(X)$ zu reden.
+	\end{beispiel}
+	\begin{definition}
+	 Sei $f : \bR^n \to \bR$, $\overline{X} \in M$. Betrachte die Abbildung \[t \to f(\overline{x}_1, \hdots \overline{x}_{i-1}, t, \overline{x}_{i+1}, \hdots, \overline{x}_n),\] welche eine Mehrdimensionale Funktion $f(x_1, \hdots x_n)$ auf eine eindimensionale Funktion $f(t)$ abbildet. \ul{Achtung:} Wir nehmen hier implizit eine Darstellung bezüglich der Standardbasis an!
+	\end{definition}
+	\begin{beispiel}
+	 Betrachte folgende Funktion:
+	 \begin{align*}
+	  f(x,y) = \begin{cases}
+	            \frac{xy}{x^2 + y^2} & (x,y) \neq (0,0)\\
+	            0 & (x,y) = (0,0)\\
+	           \end{cases}
+	 \end{align*}
+	 $f$ ist an $(0,0)$ partiellen differenzierbar, die Partiellen Ableitungen sind $0$. Allerdings gilt \begin{align*}
+	  \forall x : f(x,x) = \frac{1}{2}
+	 \end{align*}
+	 Also ist $f$ an $0$ nicht stetig! Es existieren also Funktionen, die an einem Punkt partiell Differenzierbar sind, an dem sie nicht stetig sind.
+	\end{beispiel}
+	\ul{Idee:} Fordere partielle Differenzierbarkeit bezüglich jeder möglichen Basis, also partielle Differenzierbarkeit in jedem Vektor.
+	\begin{beispiel}
+	 \begin{align*}
+	  f(x,y) = \begin{cases}
+	            \frac{x^2y}{x^4 + y^2} & (x,y) \neq (0,0)\\
+	            0 & (x,y) = (0,0)\\
+	           \end{cases}
+	 \end{align*}
+	 Wir betrachten die ``Linearisierung'' $t \to f(t, \alpha t)$. Einsetzen liefert:
+	 \begin{align*}
+	  f(t, \alpha t) = \frac{\alpha t}{t^2 + a^2}
+	 \end{align*}
+	 Diese Funktion ist differenzierbar, also ist $f$ differenzierbar bezüglich beliebiger Basen. Das reicht jedoch immer noch nicht:
+	 \begin{align*}
+	  f(a, a^2) = \frac{a^2a^2}{a^4+a^4} = \frac{1}{2}
+	 \end{align*}
+	 Also ist $f$ immer noch nicht stetig - es ist stetig für Folgen, welche den Nullpunkt durch Geraden erreichen, aber nicht, wenn wir durch kompliziertere Pfade gegen den Nullpunkt gehen.
+	\end{beispiel}
+	\newpar
+	Wir wollen die Begriffe aus der Analysis I über Stetigkeit und Ableitbarkeit retten, also brauchen wir einen komplizierteren Ableitungsbegriff.
+	\section{Differenzierbarkeit}
+	Sei $f$ eine beliebige Funktion $\bR \to \bR$. Die Ableitung gibt uns die Tangente der Funktion an einem beliebigen Punkt, also die beste affine Approximation der Funktion an diesem Punkt.
+	\begin{definition}
+	 Eine Funktion $F : \bR^n \to \bR^k$ heißt \tbf{affin}, wenn es eine Lineare Funktion $L : \bR^n \to \bR^k$ und eine Konstante $Z \in \bR^k$ gibt, sodass:
+	 \begin{align*}
+	  F(X) = L(X) + Z
+	 \end{align*}
+	\end{definition}
+	\newpar
+	Sei $g : \bR \to \bR$ affin, also $g(x) = cx + t$ für $c,t \in \bR$. Sei $f : \bR \to \bR$. Wir wollen eine beliebige Funktion $f$ an der Stelle $x_0$ approximieren. Für eine gute Approximation wollen wir $f(x_0) = g(x_0)$, also erhalten wir:
+	\begin{align*}
+	 g(x) = c(x - x_0) + f(x_0).
+	\end{align*}
+	Schreibe $x = x_0 + h$ und lasse $h$ gegen $0$ gehen.
+	\begin{align*}
+	 h \to f(x_0 + h) - g(x_0 + h) = f(x_0 + h) - f(x_0) - ch
+	\end{align*}
+	Wir sagen, die Approximation ist gut, wenn $f(x_0 + h) - f(x_0) - ch$ schneller gegen $0$ geht als $h$ selbst, also:
+	\begin{align}
+	\label{eq:goodapprox}
+	 \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0) - ch}{h} = 0
+	\end{align}
+	Was äquivalent ist zu:
+	\begin{align*}
+	 c = \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h}\\
+	\end{align*}
+	Wir sagen also, $f$ ist in $x_0$ differenzierbar, genau dann, wenn eine lineare Abbildung $L$ existiert, sodass:
+	\begin{align*}
+	 \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0) - L(h)}{h} = 0
+	\end{align*}
+	Diese geometrische Intuition, nach der die Ableitung die beste affine Approximation der Funktion an einem gegebenen Punkt ist, können wir auf den $\bR^n$ übertragen. Analog zu der Interpretation affiner Funktionen als Geraden in $\bR$, also der Ableitung als das Finden einer Tangentengeraden auf dem Funktionengraph, sucht man beim Ableiten einer Mehrdimensionalen Funktion eine Tangenten(hyper-)ebene auf dem Funktionengraph.
+	\begin{definition}
+	 Sei $M \subset \bR^n$ offen, $F : M \to \bR^k$ eine Abbildung, sei $X_0 \in M$. Die Abbildung $F$ heißt \tbf{differenzierbar} am Punkt $X_0$, wenn es eine Lineare Abbildung $L : \bR^n \to \bR^k$ gibt, sodass:
+	 \begin{align*}
+	  \lim_{H \to 0} \frac{F(X_0 + H) - F(X_0) - L(H)}{\norm{H}} = 0.
+	 \end{align*}
+	 Wir nennen sie das \tbf{Differenzial von $F$ im Punkt $X_0$} und notieren sie als $DF_{X_0}$. $F$ heißt differenzierbar, wenn sie differenzierbar an jedem Punkt $X \in M$ ist.
+	\end{definition}
+	\begin{anmerkung}
+		Im Fall $n = m = 1$ (also bei eindimensionaler Urbild- und Bildmenge) sind lineare Abbildungen $\bR \to \bR$ genau durch Multiplikation mit einer Konstanten $c \in \bR$ gegeben. In diesem Fall vereinfacht sich die Bedingung zu:
+		\begin{align*}
+			\exists c \in \bR : \lim_{h \to 0} \frac{f(p + h) - f(p) - ch}{\abs{h}} &= 0\\
+			\implies \exists c \in \bR : \lim_{h \to 0} \frac{f(p + h) - f(p)}{\abs{h}} &= \lim_{h \to 0}-\frac{ch}{\abs{h}}\\
+			\implies \exists c \in \bR : \lim_{h \to 0} \frac{f(p + h) - f(p)}{\abs{h}} &= c\\								
+		\end{align*}
+		Was genau die Definition von Differenzierbarkeit im Eindimensionalen ist.
+	\end{anmerkung}
+	\begin{anmerkung}
+		Ist die Funktion $F$ linear, so ist sie durch Matrixmultiplikation $f : x \to Ax$ gegeben und es gilt trivial für alle $x$ $DF_x = A$.
+	\end{anmerkung}	
+	\begin{anmerkung}
+	 Differenzierbarkeit kann analog über die Eigenschaften des Restglieds $R(X, X_0)$ definiert werden: Sei
+	 \begin{align*}
+	  f(X) = f(X_0) + D f_{X_0}(X - X_0) + R(X, X_0).
+	 \end{align*}
+	 Dann ist $f$ genau dann differenzierbar, wenn:
+	 \begin{align*}
+	  \lim_{X \to X_0} \frac{R(X, X_0)}{\norm{X - X_0}} = 0
+	 \end{align*}
+	
+	\end{anmerkung}
+
+	\begin{theorem}
+	 	Gibt es ein Differential, ist es eindeutig bestimmt.
+	\end{theorem}
+	\begin{proof}
+		 Seien $L_1, L_2$ Differentiale. Es folgt:
+		 \begin{align*}
+		  \lim_{H \to 0} \frac{L_1(H) - L_2(H)}{\norm{H}} = 0
+		 \end{align*}
+		 Sei $X \in \bR^n \setminus \{0\}$. Dann gilt:
+		 \begin{align*}
+		  \lim_{t \to 0} \frac{L_1(tX) - L_2(tX)}{\norm{tX}} = 0
+		 \end{align*}
+		 %also:
+		 \begin{align*}
+		  \implies \frac{L_1(X) - L_2(X)}{\norm{X}} = 0
+		 \end{align*}
+		 %also:
+		 \begin{align*}
+		  \implies L_1(X) - L_2(X) = 0
+		 \end{align*}
+		 also sind die beiden Differentiale identisch.
+	\end{proof}
+	\begin{anmerkung}
+	 	Unserer Differenzierbarkeitsbegriff wird insbesonders in der älteren Literatur oft als \tbf{totale Differenzierbarkeit} bezeichnet.
+	\end{anmerkung}
+	\begin{theorem}
+	 	Ist $F: M \to \bR^k$ an einem Punkt $X_0$ differenzierbar, so ist $F$ an diesem Punkt stetig.
+	\end{theorem}
+	\begin{proof}
+ 		Sei $F$ differenzierbar. Da die Differenzierbarkeit über den Limes des Differentialquotienten definiert ist folgt direkt:
+		 \begin{align*}
+		  \forall \epsilon \in \bR^+ : \exists \delta_1 \in \bR^+ : \forall H \in M : (X_0 + H \in M) \wedge (0 \leq \norm{H} \leq \delta_1)\\ 
+		  \implies \frac{\norm{F(X_0 + M) - F(X_0) - DF_{X_0}(H)}}{\norm{H}} \leq \frac{\epsilon}{2}\\
+		  \implies \norm{F(X_0 + M) - F(X_0) - DF_{X_0}(H)} \leq \frac{\epsilon}{2}\norm{H}\\
+		 \end{align*}
+ 		Da $DF_{X_0}$ eine lineare Abbildung ist ist $DF_{X_0}$ gleichmäßig stetig, also gilt:
+	 \begin{align*}
+	  \exists \delta_2 \in \bR^+ : \norm{H} < \delta_2 \implies \norm{DF_{X_0}(H)} \leq \frac{\epsilon}{2} 
+	 \end{align*}
+	 Also gilt für $\norm{H} \leq \delta := \min\{\delta_1, \delta_2, 1\}$
+	 \begin{align*}
+	  &\norm{F(X_0 + H) - F(X_0)}\\
+	  = &\norm{F(X_0 + H) - F(X_0) - DF_{X_0}(H) + DF_{X_0}(H)}\\
+	  \leq &\norm{F(X_0 + H) - F(X_0) - DF_{X_0}(H)} + \norm{DF_{X_0}(H)}\\
+	  \leq &\frac{\epsilon}{2}\norm{H} + \frac{\epsilon}{2}\\
+	  \leq &\epsilon
+	 \end{align*}
+	
+	\end{proof}
+
+	\begin{theorem}
+		 Sind $F$ und $G$ differenzierbar, so auch $F + G$, und es gilt
+		 \begin{align*}
+		  D(F + G)_{X_0} = DF_{X_0} + DG_{X_0}
+		 \end{align*}
+	\end{theorem}
+	\begin{proof}
+		\begin{align*}
+		 &\lim_{H \to 0} \frac{(F+G)(X_0 + H) - (F + G)(X_0) - (DF_{X_0} + DG_{X_0})}{\norm{H}}\\
+		 = &\lim_{H \to 0} \frac{F(X_0 + H) - F(X_0) - DF_{X_0}}{\norm{H}} + \lim_{H \to 0} \frac{G(X_0 + H) - G(X_0) - DG_{X_0}}{\norm{H}}\\
+		 = &0\\
+		\end{align*}
+	\end{proof}
+
+	\begin{theorem}
+	\ul{\tbf{Kettenregel:}} Seien $M \subseteq \bR^n$, $N \subseteq \bR^n$ offen, seien $F: M \to N$, $G : N \to \bR^m$ Abbildungen, sei $X_0$
+	\end{theorem}
+	\begin{proof}
+	 Sei $F(X_0) = Y_0, F(X_0 + H) - F(X_0) = Z$, $H \in \bR^n \setminus \{0\}$, $X_0 + H \in M$.
+	 \begin{align*}
+	    &\frac{1}{\norm{H}} ((G \circ F)(X_0 + H) - (G \circ F)(X_0) - DG_{F(X_0)} \circ DF_{X_0}(H))\\
+	    =&\frac{1}{\norm{H}}(G(Y_0 + Z_H) - G(Y_0) - DG_{Y_0}(Z_H))\\
+	    =&\frac{1}{\norm{H}}(DG_{Y_0}(F(X_0 + H) - F(X_0)) - DG_{Y_0}(DF_{X_0}(H)))\\
+	    =&\frac{1}{\norm{H}}DG_{Y_0}((F(X_0 + H) - F(X_0)) - DF_{X_0}(H))\\
+	 \end{align*}
+	 \begin{align*}
+	  \lim_{H \to 0}\frac{1}{\norm{H}}DG_{Y_0}((F(X_0 + H) - F(X_0)) - DF_{X_0}(H)) = DG_{Y_0}(0) = 0\\
+	 \end{align*}
+	 \begin{align*}
+	  \frac{1}{\norm{H}}(G(Y_0 + Z_H) - G(Y_0) - DG_{Y_0}(Z_H)) = 
+	  \begin{cases}
+	    0 & Z_H = 0\\
+	    \frac{1}{\norm{H}}(G(Y_0 + Z_H) - G(Y_0) - DG_{Y_0}(Z_H)) & Z_H \neq 0 
+	  \end{cases}
+	 \end{align*}
+	 Der Term zweite Term in $Z_H \neq 0$ geht gegen $0$ für $H \to 0 \implies Z_H = F(X_0 + H) - F(X_0) \to 0$
+	 \begin{align*}
+	  \frac{\norm{Z_H}}{\norm{H}} &= \frac{\norm{F(X_0 + H) - F(X_0)}}{\norm{H}} \\
+	  &= \frac{\norm{DF_{X_0}(H) - R(X_0, H)}}{\norm{H}}\\ 
+	  &\leq \frac{\norm{DF_{X_0}(H)}}{\norm{H}} + \frac{\norm{R(X_0, H)}}{\norm{H}}\\
+	  &\leq \frac{\norm{DF_{X_0}(H)}}{\norm{H}} + \frac{\norm{R(X_0, H)}}{\norm{H}}\\
+	  &\overset{???}{\leq} \frac{\norm{DF_{X_0}}\norm{H}}{\norm{H}} + \frac{\norm{R(X_0, H)}}{\norm{H}}\\
+	  &= \norm{DF_{X_0}} + \frac{\norm{R(X_0, H)}}{\norm{H}}\\
+	  &\leq c\\
+	 \end{align*}
+	\end{proof}
+	\begin{theorem}
+	 Seien $I \subseteq \bR$, $N \subseteq \bR^k$ offen, seien $F : I \to N$, $G : N \to \bR^n$ Abbildungen.
+	 \newpar
+	 Ist $F$ differenzierbar in $t_0 \in I$ und $G$ differenzierbar in $F(t_0)$, so gilt:
+	 \begin{align*}
+	  (G \circ F)'(t_0) = DG_{F(t_0)} (F'(t_0))
+	 \end{align*}
+	\end{theorem}
+	\begin{proof}
+	 Gemät Kettenregel gilt $D(G \circ F) = DG_{F(t_0)} \circ DF_{t_0}$. Nun gilt:
+	 \begin{align*}
+	  h(G \circ F)'(t_0) &= h D(G \circ F)_{t_0} (1)\\ &= D(G \circ F)_{t_0}(h)\\ &= DG_{F(t_0)}(DF_{t_0}(h))\\
+	  &= h DG_{F(t_0)}(F'(t_0))
+	 \end{align*}
+	\end{proof}
+	\newpar
+	Mittelwertsatz: $f : [x,y] \to \bR$, dann $\exists y : f(y) - f(x) = f'(z)(y-x)$. Im Allgemeinen ist dieser im Mehrdimensionalen Fall leider falsch.
+	\newpar
+	Betrachte allerdings die folgende Ungleichung, welche die Wichtigste Konsequenz des Mittelwertsatzes ist: $\abs{f(y) - f(x)} \leq \abs{f'(z)}\abs{y-x} \leq c \abs{y-x}$. Diese kann im Allgemeinen erhalten werden.
+	\newpar
+	$F : M \subset \bR^n \to \bR^k$ $X,Y \in M$. Sei $[X,Y] = \{(1- \lambda)X + \lambda Y\}$ die Verbindungslinie zwischen den beiden Vektoren.
+	\begin{theorem}
+	 Sei $M \subseteq \bR^n$ offen, $X,Y \in M$ mit $[X,Y] \subseteq M$. Die Abbildung $F : M \to \bR^k$ sei stetig in $M$ und differenzierbar in den Punkten $(1-\lambda)X + \lambda Y$ mit $\lambda \in (0,1)$. Gilt
+	 \begin{align*}
+	  \forall \lambda \in (0,1) : \forall (1-\lambda)X + \lambda Y : \norm{DF_Z} \leq c 
+	 \end{align*}
+	 so gilt auch
+	 \begin{align*}
+	  \norm{F(Y) - F(X)} \leq c\norm{Y - X}
+	 \end{align*}
+	 \begin{proof}
+	  Angenommen $G : [0,1] \to \bR^k$ ist stetig auf $[0,1]$ und differenzierbar auf $(0,1)$. So gilt 
+	  \begin{align*}
+	  \forall t \in (0,1) : \norm{G'(t)} \leq c
+	  \end{align*}
+	 \newpar
+	 Sei $\epsilon \in \bR^+$ und 
+	 \begin{align*}
+	  A := \{t \in [0,1] \mid \norm{G(t) - G(0)} \leq (c + \epsilon) t + \epsilon\}
+	 \end{align*}
+	 Da $G$ stetig in $0$ ist gilt $[0, \tau] \subseteq A$.
+	 \newpar
+	 Sei $s = \sup A$. Es gilt $0 < s \leq 1$, also ist $G$ stetig in $s$.
+	 \newpar
+	 Da $t \in A \implies t \leq s$ 
+	 \begin{align*}
+	  \norm{G(t) - G(0)} \leq (c + \epsilon) t + \epsilon \to s
+	  \implies \norm{G(s) - G(0)} \leq (c + \epsilon) s + \epsilon
+	 \end{align*}
+	 also $s \in A$. Angenommen, $s < 1$. Dann gilt $\exists h > 0 : s + h < 1$.
+	 \begin{align*}
+	  \norm{\frac{G(s + h) - G(s)}{h} - G'(s)} \leq \epsilon
+	 \end{align*}
+	 \begin{align*}
+	  \implies \norm{\frac{G(s + h) - G(s)}{h}} \leq \epsilon +  G'(s) \leq c + \epsilon
+	 \end{align*}
+	 \begin{align*}
+	  \norm{G(s + h) - G(0)} &\leq \norm{G(s + h) - G(s)} + \norm{G(s) - G(0)}\\
+	                         &\leq (c + \epsilon) h + (c + \epsilon) s + \epsilon\\
+	                         &\leq (c + \epsilon)(s + h) + \epsilon\\
+	 \end{align*}
+	 Daraus folgt $s + h \in A$. Da $s$ das Supremum ist ist dies ein Widerspruch. Also gilt $h = 1$.
+	 \begin{align*}
+	  \forall \epsilon \in \bR^+ : \norm{G(1) - G(0)} \leq &c + \epsilon + \epsilon = c + 2 \epsilon\\
+	  \implies &\norm{G(1) - G(0)} \leq c
+	 \end{align*}
+	 Sei $F$ wie im Satz. Sei $K : [0,1] \to \bR^n : t \to (1-t)X + tY$. Diese Abbildung ist affin, also differenzierbar. Es gilt $K'(t) = Y - X$. $F \circ K$ ist diffbar in $(0,1)$
+	 \begin{align*}
+	  D(F \circ K)_t = DF_{K(t)} \circ DK_t
+	 \end{align*}
+	 \begin{align*}
+	  (F \circ K)'(t) = DF_{K(t)}(K'(t)) = DF_{K(t)}(Y-X)
+	 \end{align*}
+	 \begin{align*}
+	  \norm{(F \circ K)'(t)} = \norm{DF_{K(t)}(Y - X)} \leq \norm{DF_{K(t)}}\norm{Y - X} \leq c \norm{Y - X}
+	 \end{align*}
+	 Mit $G := F \circ K$ und $c := c\norm{Y - X}$
+	 \begin{align*}
+	  \norm{F(Y) - F(X)} \leq c\norm{Y - X}
+	 \end{align*}
+	
+	 \end{proof}
+	\end{theorem}
+	[missing stuff - gradients]
+	\begin{definition}
+	 Eine Funktion $f$ heißt \tbf{partiell differenzierbar}, wenn für jede Koordinatenachse $i$ die Partielle Ableitung $\forall i \in \{0, \hdots, n\} : \partial_i f : M \subseteq \bR \to \bR : X \to \delta_i f(X)$ existiert.
+	\end{definition}
+	\begin{theorem}
+	 Ist $f: M \to \bR$ in einer Umgebung von $X_0$ partiell differenzierbar und sind die partiellen Ableitungen in $X_0$ stetig, so ist $f$ in $X_0$ differenzierbar.
+	\end{theorem}
+\begin{proof}
+ Sei $U$ ein offener Ball um $X_0$, welcher vollständig in $M$ enthalten ist. Sei $H \in \bR^n$, sodass $X_0 + H \in U$. Nun gilt:
+ \begin{align*}
+  f(X_0 + H) - f(X_0) &= \sum_{i=1}^n (f(x_1, \hdots, x_{i-1}, \hdots, x_i + h_i, x_{i+1} + h_{i+1} , \hdots, x_n + h_n))\\
+  &- \sum_{i=1}^n (f(x_1, \hdots, x_{i-1}, \hdots, x_i, x_{i+1} + h_{i+1} , \hdots, x_n + h_n))\\
+ \end{align*}
+ Die Summenglieder sind partielle Ableitung. Nach Mittelwertsatz erhalten wir:
+ \begin{align*}
+  \sum_{i=1}^n h_1 \partial_i f(x_1, \hdots x_{i-1}, x_i + c_ih_i, x_{i+1}, \hdots, x_n)\ c_i \in (0,1)\\
+ \end{align*}
+ Nun gilt:
+ \begin{align*}
+  &\frac{1}{\norm{H}} \abs{f(X_0 + H) - f(X_0) - \scalar{\grad f(X_0)}{H}}\\
+  =&\frac{1}{\norm{H}} \abs{\sum_{i=1}^n h_1 \partial_i f(x_1, \hdots x_{i-1}, x_i + c_ih_i, x_{i+1} + h_{i+1}, \hdots, x_n + h_n) - \partial_i(f(x_0, \hdots, x_n))} \\
+  \leq&\abs{\sum_{i=1}^n \partial_i f(x_1, \hdots x_{i-1}, x_i + c_ih_i, x_{i+1} + h_{i+1}, \hdots, x_n + h_n) - \partial_i(f(x_0, \hdots, x_n))} \to 0\\
+ \end{align*}
+\end{proof}
+ Sei $M \subseteq \bR^n$ offen, $X_0 \in M$, $F: M \to \bR^k$. Seien $\forall i \in \{1, \hdots, n\} f: M \to \bR^n \to \bR$ Koordinatenfunktionen.
+ \begin{align*}
+  F(X) = (f_1(X), \hdots, f_k(X)) = \sum_{i=1}^k f_i(X)E_i'
+ \end{align*}
+ \begin{align}
+  Y = F(X) \Leftrightarrow \forall i : y_i = f_i(x_1, \hdots, x_n)
+ \end{align}
+\begin{theorem}
+Die Abbildung $F$ ist genau dann differenzierbar in $X_0$, wenn alle Koordinatenfunktionen $f_i$ in $X_0$ differenzierbar sind. Ist das der Fall, gilt:
+\begin{align*}
+ DF_{X_0}(H) = \sum_{i=1}^k (Df_i)_{X_0}(H)E_i' \forall H \in \bR^n 
+\end{align*}
+\end{theorem}
+\begin{proof}
+ $L : \bR^n \to \bR^n$ linear. Dann
+ \begin{align*}
+  \lim_{H \to 0} \frac{F(X_0 + H) - F(X_0) - L(H)}{\norm{H}} = 0 \Leftrightarrow \lim_{H \to 0} \frac{f_i(X_0 + H) - f_i(X_0) - (D_i \circ L)(H)}{\norm{H}} = 0
+ \end{align*}
+ \end{proof}
+ Wir wollen nun das Differential bezüglich der Standardbasis übersichtlich darstellen. Es gilt:
+ \begin{align*}
+  L(E_j) = \sum_{i=1}^k a_{ij} E_i'\\
+  DF_{X_0} = \sum_{i=1}^k \partial_j f_i(X_0) E_j'
+ \end{align*}
+ Die Koeffizienten der Darstellenden Matrix sind also identisch mit den Partiellen Ableitungen.
+\begin{theorem}
+ Sei $F : M \to \bR^k$ differenzierbar in $X_0 \in M$. Dann wir das Differential $DF_{X_0}$ bezüglich der Standardbasis in $\bR^n$ und $\bR^k$ beschrieben als die $k \times n$-Matrix
+ \begin{align*}
+  JF(X_0) = (\delta_j f_i(X_0))_{1 \leq i \leq n, 1 \leq j \leq k}
+ \end{align*}
+ Sie heißt die Funktionalmatrix oder Jacobimatrix von $F$ in $X_0$. Falls $k = n$ wird die Determinante dieser Matrix als Funktionaldeterminante oder Jacobideterminante von $F$ in $X_0$ bezeichnet.
+\end{theorem}
+\newpar
+[missing stuff]
+\newpar
+\begin{theorem}
+ Ist $r \geq 2$ und $f \in C^r(M)$, so sind die partiellen Ableitungen von $f$ bis zur Ordnung $r$ unabhängig von der Reihenfolgen es gilt also:
+ \begin{align*}
+  \partial_1 \hdots \partial_r f = \partial_{\sigma(1)} \hdots \delta_\sigma(r) f
+ \end{align*}
+\end{theorem}
+\begin{theorem}
+ \emph{\tbf{Taylor-Formel}}: Sei $g: [-\epsilon, h] \to \bR$ $\epsilon, h > 0$.
+ Sei $g$ $(k+1)$- mal differenzierbar. Dann gilt:
+ \begin{align*}
+  \exists c \in (0,h) : g(h) = \sum_{j = 0}^k \frac{1}{j!} g^{(j)} (0) h^j + \frac{1}{(k+1)!} g^{(k+1)}(c) h^{k+1}
+ \end{align*}
+ Sei $f : M \to \bR$ $M \subseteq \bR^n$ offen, $x_0 \in M$. Sei $k \in \bN$, $f \in C^k(M)$ mit partielle differenzierbaren partiellen Ableitungen $k$-ter Ordnung, $H \in \bR^n : [x_0, x_0+H] \subseteq M$. Sei $g(t) := f(x_0 + tH)$. Dann gilt für $r \in \{1, \hdots, k+1\}$:
+ \begin{align*}
+  g^{(r)}(t) = \sum_{i_1, \hdots i_r}^n \delta{i_1} \hdots \delta{i_r} f(X_0 + tH) h_{i_1} \hdots h_{i_r}
+ \end{align*}
+ \begin{align*}
+  g(1) = \sum_{r=0}^k \frac{1}{r!} g^{(r)}(0) + \frac{1}{(k+1)!} g^{(k+1)}(c)
+ \end{align*}
+\end{theorem}
+\begin{theorem}
+ \emph{\tbf{Mehrdimensionale Taylorformel:}} Sei $M \subseteq \bR^n$ offen, $X_0 \in M$, $H \in \bR^n$ mit $[X_0, X_0 + h] \subseteq M$, $k \in \bN$, $f \in C^k(M)$, sodass die partiellen Ableitungen der Ordnung $k$ in $M$ differenzierbar sind. Dann $\exists c \in (0,1)$, sodass:
+ \begin{align*}
+  f(X_0 + h) = f(X_0) + \sum_{r=1}^k \frac{1}{r!} \sum_{i_1, \hdots i_r = 1}^n \delta{i_1} \hdots \delta{i_r} f(X_0 + tH) h_{i_1} \hdots h_{i_r} + \frac{1}{(k+1)!}  \sum_{i_1, \hdots i_r = 1}^n \delta{i_1} \hdots \delta{i_r} f(X_0 + cH) h_{i_1} \hdots h_{i_r}
+ \end{align*}
+ Kompakter für $k = 2$:
+ \begin{align*}
+  f(X_0 + H) = f(X_0) + \scalar{\grad f(X_0)}{H} + \frac{1}{2} \sum_{i,j=1}^n \partial_i \partial_j f(X_0) h_i h_h + R(X_0, h)
+ \end{align*}
+ \begin{align*}
+  R(X_0, H) = \frac{1}{6}\sum_{i,j,k=1}^n \delta_i \delta_j \delta_k f(Y) h_i h_j h_k \quad Y \in [X_0, X_0 + H]
+ \end{align*}
+ Falls die dritten Ableitungen auf der Verbindungslinie beschränkt sind gilt:
+ \begin{align*}
+  \lim_{H \to 0} \frac{R(X_0; H)}{\norm{H}^2} = 0
+ \end{align*}
+\end{theorem}
+\begin{theorem}
+ Sei $f : M \to \bR$ zweimal partiell differenzierbar in $X_0$. Dann heißt die durch
+ \begin{align*}
+  Q(f,X_0;H) := \sum_{i,j=1}^n \delta_i \delta_j f(X_0) h_i h_j
+ \end{align*}
+ definierte Funktion $Q(f,X_0;H$ die \tbf{Hesse-Form} von $f$ im Punkt $X_0$ und die dadurch definierte Matrix
+ \begin{align*}
+  \Hess{f, X_0}_{ij} = (\partial_i \partial_j f(X_0))
+ \end{align*}
+ heißt die \tbf{Hesse-Matrix} von $f$ in $X_0$.
+\end{theorem}
+\clearpage
+[...]
+\clearpage
+\begin{lemma}
+ Sei $M \subseteq \bR^n$ offen, $F : M \to \bR^n$ eine $C^1$-Abbildung, sei $L : \bR^n \to \bR^n$ eine lineare Abbildung, sei $X, Y \in M$ mit $[X, Y] \subseteq M$. Dann gilt:
+ \begin{align*}
+  \norm{F(X) - F(Y) - L(X-Y)} \leq \norm{X - Y} \cdot \max_{Z \in [X,Y]} \norm{DF_Z - L}
+ \end{align*}
+\end{lemma}
+\begin{proof}
+ \begin{align*}
+  G(X) := F(X) - L(X) \quad X \in M
+ \end{align*}
+ \begin{align*}
+  DG_Z = DF_Z - L
+ \end{align*}
+ Dann muss für $F \in C^1$ folgende Funktion stetig sein:
+ \begin{align*}
+  Z \to \norm{DF_Z - L}
+ \end{align*}
+ Zusätzlich ist $[X,Y]$ kompakt, also existiert das Maximum
+ \begin{align*}
+  \max_{Z \in [X,Y]} \norm{DF_Z - L} := c
+ \end{align*}
+ Gemäß Mittelwertsatz ist nun
+ \begin{align*}
+  \norm{F(X) - F(Y) - L(X-Y)} \leq c \norm{X - Y}
+ \end{align*}
+\end{proof}
+\begin{theorem}
+ Sei $M \subseteq R^n$ offen. Sei $\vx_0 \in M$. Sei $F : M \to \bR^n$ eine $C^r$-Abbildung ($r \in \bN_1$). Sei das Differential $DF_{\vx_0}$ regulär, also $\det JF(\vx_0) \neq 0$. Dann existiert eine offene Umgebung $U \subseteq M$ von $ \vx_0$, sodass folgendes gilt:
+ \begin{enumerate}
+  \item die Einschränkung $F|_U$ ist injektiv
+  \item die Bildmenge $F(U) := V$ ist offen
+  \item die Umkehrabbildung $(F|_U)^{-1} : V \to U$ ist $C^r$. 
+ \end{enumerate}
+\end{theorem}
+\begin{proof}
+ Sei $I$ die Identitätsabbildung des $\bR^n$. Sei $U(0, \alpha) := \{\vx \in \bR^n \mid \vx < \alpha\}$.
+ \newpar
+ \ul{Annahmen}: $\vx_0 = 0$, $F(0) = 0$ (Erfüllbar durch Verschieben), $DF_0 = I$ (Erfüllbar durch invertierbare Lineare Abbildung der Funktion?)
+ \newpar
+ $\vx \to \norm{DF_{\vx} - I}$ ist stetig mit $\norm{DF_0 - I} = 0$. Also gilt
+ \begin{align*}
+  \forall \epsilon > 0 : \exists \alpha > 0 : \forall \vx \in U_\alpha : \norm{DF_{\vx} - I} \leq \epsilon
+ \end{align*}
+ Nach 4.3 folgt:
+ \begin{align*}
+  \forall \vx, \vy \in U_\alpha : \norm{F(\vx) - F(\vy) - (\vx-\vy)} \leq \epsilon \norm{\vx - \vy}
+ \end{align*}
+ \begin{align*}
+  \norm{\vx - \vy} &\leq \norm{\vx - \vy - (F(\vx) - F(\vy))} + \norm{F(\vx) - F(\vy)}\\
+  &\leq \epsilon \norm{\vx - \vy} + \norm{F(\vx) - F(\vy)}\\
+ \end{align*}
+ also:
+ \begin{align*}
+  (1- \epsilon)\norm{\vx - \vy} \leq \norm{F(\vx) - F(\vy)}
+ \end{align*}
+ Also ist $\norm{F(\vx) - F(\vy)} = 0$ gdw. $\vx = \vy$, also folgt Injektivität.
+ \newpar
+ \begin{lemma}
+  $U_{(1-\epsilon)\alpha} \subseteq F(U_\alpha)$
+ \end{lemma}
+ \begin{proof}
+  Sei $\vy \in U_{(1-\epsilon)\alpha}$. Wir suchen $\vx \in U_\alpha : \vy = F(\vx)$. Wir wollen den Banchschen Fixpunktsatz anwenden. Dafür definieren wir $\phi : \overline{U_\alpha} \to \bR^n$ als:
+  \begin{align*}
+   \phi(\vx) := \vy - F(\vx) + \vx
+  \end{align*}
+  Sei nun $X \in \overline{U_\alpha}$. Dann gilt:
+  \begin{align*}
+   \norm{\phi(\vx)} &\leq \norm{\vy} + \norm{F(\vx) - \vx}\\
+                    &\leq \norm{\vy} + \epsilon \norm{\vx}\\
+                    &< (1-\epsilon)\alpha + \epsilon \alpha\\
+                    &= \alpha\\
+  \end{align*}
+  Sei $X,Z \in \overline{U_\alpha}$. Nun gilt:
+  \begin{align*}
+   \norm{\phi(\vx) - \phi(\zz)} &= \norm{F(\vx) - \vx - (F(\zz) - \zz)}\\
+                                &\leq \epsilon \norm{\vx - \zz}
+  \end{align*}
+  Gemäß Banachschem Fixpunktsatz existert also genau ein $X \in \overline{U_\alpha}$, sodass $\phi(\vx) = \vx$, also $F(\vx) = \vy$. Da $\phi(\vx) < \alpha$ gilt auch $\vx \in U_\alpha$.
+ \end{proof}
+ Sei nun $V : U_{(1 - \epsilon) \alpha}$ und $U := F^{-1}(V)$. Gemäß Lemma ist $U$ eine Obermenge von $V$, also ist $U$ eine offene Umgebung von $0$. Wir wissen bereits, dass $F|_U$ injektiv ist. Sei also nun $G : V \to U$ die Umkehrabbildung von $F|_U$.
+ \begin{lemma}
+  $G$ ist in $0$ differenzierbar.
+ \end{lemma}
+ \begin{proof}
+ Sei $\epsilon' \in \bR^+$. So existiert ein $\alpha' \in \bR^+$, sodass $U_{\alpha'} \in M$ und
+ \begin{align*}
+  \norm{F(\vx) - \vx} \leq \frac{\epsilon'}{1 + \epsilon'} \norm{\vx} \quad \forall \vx \in U_{\alpha'}
+ \end{align*}
+ \begin{align*}
+  \norm{\vx} &\leq \norm{\vx - F(\vx)} + \norm{F(\vx)}\\
+             &\leq \frac{\epsilon'}{1 + \epsilon'} \norm{\vx} + \norm{F(\vx)}
+ \end{align*}
+ also:
+ \begin{align*}
+  \norm{\vx} \leq (1 + \epsilon') \norm{F(\vx)} \quad \forall \vx \in U_{\alpha'}
+ \end{align*}
+ Sei nun $\vh \in V$ mit $\norm{\vh} < \alpha'(1 - \epsilon)$. Sei $\vx := G(\vh)$. Gemäß Lemma ist $V \subseteq F(U_\alpha)$, also $G(V) \subseteq G(F(U_\alpha))$, also $U \subseteq U_\alpha$, also $\vx \in U$ (?)
+ \newpar
+ Gemäß vorheriger Überlegungen haben wir
+ \begin{align*}
+  \norm{X} \leq \frac{1}{1 - \epsilon} \norm{F(\vx)} = \frac{1}{1 - \epsilon} \norm{\vh} < \alpha' 
+ \end{align*}
+ Wir betrachten nun endlich den Differentialquotienten:
+ \begin{align*}
+  \norm{G(\vh) - \vh} &= \norm{\vx - F(\vx)}\\
+                      &\overset{(*)}{\leq} \frac{\epsilon*}{1 + \epsilon'}\norm{\vx}\\
+                      &\leq \epsilon'\norm{F(\vx)}\\
+                      &\leq \epsilon' \norm{\vh}
+ \end{align*}
+ also:
+ \begin{align*}
+  \frac{\norm{G(\vh) - \vh}}{\norm{\vh}} \leq \epsilon'
+ \end{align*}
+ für alle $0 < \norm{\vh} < \min \{\alpha(1 - \epsilon), \alpha' (1 - \epsilon)\}$, also ist $G$ in $0$ differenzierbar mit $DG_0 = I$.
+ \end{proof}
+ Was ist nun, wenn die Vorraussetzungen $\vx = 0$, $F(0) = 0$, $DF_0 = I$ nicht gelten?
+ \newpar
+ Wir definieren lineare Translationsabbildungen $T_{\zz} : \bR^n \to \bR^n$ $\vx \to \vx + \zz$. Sei nun:
+ \begin{itemize}
+  \item $L : DF_{\vx_0}$,
+  \item $M' := (L \circ T_{-\vx_0})(M)$,
+  \item $F'(\vx) := T_{-F(\vx_0} \circ F \circ T_{\vx_0} \circ L^{-1}(\vx)$
+ \end{itemize}
+ Die Differentiale sind $DL = L$ und $DT_Z = I$. Nun gilt:
+ \begin{align*}
+  DF'_{0} = I \circ DF_{\vx_0} \circ I \circ (DF_{\vx_0})^{-1} = I
+ \end{align*}
+ Also $F'(0) = 0$, $0 \in M'$. $F'$ ist also umkehrbar und die Umkehrabbildung ist differenzierbar in $0$. Für die Ursprüungliche Abbildung gilt $F = T_{T_{\vx_0}} \circ F' \circ L \circ T_{-\vx_0}$.
+\end{proof}
+\begin{definition}
+ Sei $F : M \subseteq \bR^n \to \bR^n$ eine $C^r$-Funktion mit regulären Differentialen. Eine solche Abbildung nennt man einen $C^r$-Diffeomorphismus.
+\end{definition}
+\clearpage
+[...]
+\clearpage
+\begin{theorem}
+ \emph{\tbf{(Implizite Funktion):}}  Sei $k < n$, $M \subseteq \bR^n$ offen, $F \in C^r : M \to \bR^k$, sei $N = \{\vx \in M \mid F(\vx) = 0\}$. Sei $\vx_0 \in N$ und $DF_{\vx_0}$ vom Rang $k$. 
+ 
+ \noindent Dann gibt es nach passender Identifizierung von $\bR^n$ mit $\bR^{n-k} \times \bR^k$ eine offene Umgebung $U \subseteq M$ von $\vx_0$, eine offene Menge $V \subseteq \bR^{n-k}$ und eine Abbildung $G \in C^r : V \to \bR^k$, sodass $N \cap U$ der Graph von $G$ ist.
+\end{theorem}
+\begin{proof}
+ $DF_{\vx_0}$ hat Rang $k$. Es gilt also $k$ linear unabhängige Spalten. OBDA seien dies die letzten $k$ Spalten. Die ersten $(n-k)$ Basisvektoren bilden eine Basis des $\bR^{n-k}$, ebenso bilden die letzten $k$ Vektoren eine Basis des $\bR^k$. Wir haben somit eine Identifikation $\bR^n \simeq \bR^{n-k} \times \bR^k$ erhalten, sodass wir $\vx \in \bR^n$ abbilden auf $\vx = (\vx',\vx'')$. Wir definieren folgende Funktion:
+ \begin{align*}
+  \phi : M \times \bR^k &\to \bR^{n-k} \times \bR^k\\
+  (\vx', \vx'') &\to (\vx', F(\vx', \vx''))
+ \end{align*}
+ Da $F, \times \in C^r$ ist $\phi$ ebenfalls in $C^r$. Für die Jakobimatrix gilt:
+ \begin{align*}
+  J \phi = 
+  \begin{pmatrix}
+    1 & \hdots & 0 & 0 & \hdots & 0\\
+    \vdots & \ddots & \vdots\\
+  \end{pmatrix}
+ \end{align*}
+ 
+ [WIP]
+ 
+ Nach dem Satz der Inversen Funktion existiert eine Umgebung $U_0$ von $\vx_0$, sodass auf dieser Umgebung eine Umkehrabbildung $\psi$ existiert. Und so weiter :)
+\end{proof}
+\begin{anmerkung}
+ Seien $A$, $B$ Mengen. Es existieren folgende Funktionen: 
+ \begin{itemize}
+  \item Das Produkt $A \times B$
+  \item Die Projektion $\pi_1 : A \times B \to A$ auf die erste Komponente
+  \item Die Projektion $\pi_2 : A \times B \to B$ auf die zweite Komponente
+  \item Die kanonische Injektion $i : A \to A \times B : a \to (a,0)$
+ \end{itemize}
+\end{anmerkung}
+\begin{theorem}
+ \emph{\tbf{Über lokal surjektive Abbildungen:}} Sei $k < n$. Sei $M \subseteq \bR^n$ offen, $F : M \to \bR^k$ eine Abbildung der Klasse $C^r$, $r \in \bN_1$. Sei $X_0 \in M$ und $F$ in $X_0$ vom Rang $k$, also $DF_{X_0}$ surjektiv. Dann gibt es eine offene Umgebung $U$ von $X_0$ in $M$, eine offene Menge $V$ in $\bR^{n-k}$, und einen $C^r$-Diffeomorphismus $h : U \to V \times F(u)$, sodass das folgende Diagramm kommutiert:
+ \begin{figure}[h!]
+ \centering
+    \begin{tikzcd}[row sep = huge, column sep = huge]
+    U
+    \arrow[r, "h"]
+    \arrow[dr, "F"]
+    & V \times F(u)
+    \arrow[d, "\pi_2"] \\
+    &  F(u)
+    \end{tikzcd}
+\end{figure}
+\end{theorem}
+	\begin{proof}
+		Nach Vorraussetzung hat $JF(X_0)$ $k$ unabhängige Spalten. Seien dies OBdA die letzten Spalten. Wir interpretieren $\bR^n = \bR^k \times \bR^{n-k}$ und definieren $\pi_1 : \bR^n \to \bR^{n-k}$ und $\pi_2 : \bR^n \to \bR^k$ als die dazugehörigen kanonischen Projektionen. Sei $\varphi$ folgende Funktion:
+		\begin{align*}
+		 \varphi : M &\to \bR^{n-k} \times \bR^k\\
+		 X &\to (\pi_1(X), F(X))
+		\end{align*}
+		Es gilt $F \in C^r$ und $\pi_1 \in C^r$, also auch $\varphi \in C^r$. Gemäß des Satzes der inversen Funktion existiert also eine Umgebung $\varphi \in C^r$, auf der $\varphi$ ein $C^r$ Diffeomorphismus (also $C^r$ und invertierbar).
+		\newpar
+		Da $\varphi^{-1}$ stetig ist, ist das Urbild $(\varphi^{-1})^{-1}(U') = \varphi(U')$ offen. Es enthält also eine offene Umgebung von $\varphi(X_0) = (\pi_1(X_0), F(X_0))$ der Form $V \times X$, also ist $V$ offen in $\bR^{n-k}$. Wir setzen $U := \varphi^{-1}(V \times W)$ und $h = \varphi \mid_U$. Dann ist $F(U) = W$, und für $X \in U$ gilt $h(X) = (\pi_1(X), F(X))$, also $\pi_2 \circ h = F$.
+		\end{proof}
+		\noindent Im Fall $k > n$ erhalten wir lokale Injektivität statt lokaler Surjektivität:
+		\begin{theorem}
+		 \emph{\tbf{Über lokal injektive Abbildungen:}} Sei $k > n$. Sei $M \subseteq \bR^n$ offen, sei $F : M \to \bR^k$ eine $C^r$-Abbildung. Sei $X_0 \in M$ und $F$ in $X_0$ vom Rang $n$ (und damit das Differential $DF_{X_0}$ injektiv). Sei $i$ die kanonische Injektion.
+		 \newpar
+		 Dann gibt es eine offene Umgebung $U$ von $X_0$ in $M$, eine offene Umgebung $V$ von $0$ in $\bR^{k-n}$, eine offene Umgebung $W$ von $F(X_0)$ in $\bR^k$, und einen $\bC^r$-Diffeomorphismus $h : U \times V \to W$, sodass das folgende Diagramm kommutiert:
+		 \FloatBarrier
+		 \begin{figure}[h!]
+		 \centering
+		    \begin{tikzcd}[row sep = huge, column sep = huge]
+		    U
+		    \arrow[r, "i"]
+		    \arrow[dr, "F"]
+		    & V \times F(u)
+		    \arrow[d, "h"] \\
+		    &  F(u)
+		    \end{tikzcd}
+		\end{figure}
+	\end{theorem}
+	\FloatBarrier
+	\begin{proof}
+	 	hi :D
+	\end{proof}
+\clearpage
+[...]
+\clearpage
+%
+%
+%
+%
+%
+%
+%
+\chapter{Diffeomorphismen}
+In diesem Kapitel geht es um die lokale Lösbarkeit von nichtlinearen Gleichungen. 
+\newpar
+Sei $\Omega \in \bR^n$ offen und $f \in \bC^1(\Omega, \bR^m)$. Sei $y \in \bR^m$ gegeben. Uns interessieren nun Lösungen der Gleichung $f(x) = y$. Intuitiv ist dann $m$ die Anzahl der Gleichungen und $n$ die Anzahl der Unbekannten.
+\newpar
+Angenommen, wir haben bereits eine Lösung $x_0$ der Gleichung $f(x) = y_0$. Uns interessiert nun:
+\begin{enumerate}
+	\item Hat die Gleichung $f(x) = y$ auch für andere Werte von $y$ nahe an $y_0$ Lösungen? Falls ja, sind diese nahe an $x_0$?
+	\item Ist $x_0$ die einzige Lösung von $f(x) = y_0$ in einer Umgebung von $x_0$?
+	\item Falls nein, wie sieht die Lösungsmenge $f^{-1}(y_0)$ nahe bei $x_0$ aus?
+\end{enumerate}
+Falls $f$ affin ist, gilt $f(x) = y \Leftrightarrow A(x - x_0) = y - y_0$, und die Lineare Algebra gibt uns folgende Antworten:
+\begin{enumerate}
+	\item Es gibt genau dann eine Lösung für alle $y \in \bR^m$, wenn 
+	\begin{align*}
+		\rang A = m.
+	\end{align*}
+	\item Es gibt höchstens eine Lösung $x \in \bR^n$, wenn 
+	\begin{align*}
+		\ker A = \{0\}.
+	\end{align*} Dies ist äquivalent zu 
+	\begin{align*}
+		\rang A = n.
+	\end{align*}
+	\item $f^{-1}\{y_0\}$ ist ein affiner Unterraum des $\bR^n$ mit Dimension $n - \rang A$.
+\end{enumerate}
+Da das Differential $Df(x_0)$ einer Abbildung $f \in C^1(\Omega, \bR^m)$ an einem gegebenen Punkt $x_0 \in \Omega$ eine lineare Abbildung ist, hoffen wir nun, einige dieser Erkenntnisse über lineare Funktionen auf die allgemeinere Klasse der differenzierbaren Funktionen übertragen zu können.
+\newpar
+Wir wollen hierfür die Funktion durch das Differential linear approximieren. Das Restglied für eine solche Approximation mit Abstand $\xi \in \bR^n$ ist dann genau die Differenz zwischen dem Tatsächlichen Wert und dem approximierten Wert, also:
+\begin{align*}
+	R_f(\xi) = f(x_0 + \xi) - (f(x_0) + Df(x_0)\xi)
+\end{align*}
+Für unsere Gleichung gilt nun:
+\begin{align*}
+	f(x) = y \Leftrightarrow Df(x_0) \cdot (x - x_0) + R_f(\xi) \cdot (x - x_0) = y - y_0
+\end{align*}
+Es wurde also einfach ein Restglied zur Gleichung für affine Funktionen hinzugefügt. Es hilft, im Kopf zu behalten, dass der affine Fall genau der Fall ist, in dem die Approximation exakt und somit das Restglied $0$ ist. 
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\chapter{Implizite Funktionen}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\chapter{Gewöhnliche Differentialgleichungen}
+\section{Anfangswertprobleme}
+\subsection{Natürliches Wachstum}
+Wir sprechen von \tbf{natürlichem Wachstum} wenn die Wachstums- oder Zerfallgeschwindigkeit proportional zum Wert der Funktion ist, also:
+\begin{align*}
+	x(t_0) = x_0, \qquad x' = \alpha x
+\end{align*}
+Die Lösung ist
+\begin{align*}
+	x(t) &= x_0 e^{\alpha(t - t_0)}
+\end{align*}	
+was oft vereinfacht geschrieben wird als:
+\begin{align*}
+	x(t) &= x_0 e^{\alpha(t - t_0)}\\
+	&= \left(\frac{x_0}{e^{\alpha t_0}}\right) e^{\alpha t}\\
+	&:= ce^{\alpha t}
+\end{align*}
+Ntürliches Wachstum tritt z.B. beim radioaktiven Zerfall oder in der Zinsrechnung auf.
+\subsection{Logistisches Wachstum}
+Beim Logistischen Wachstum wird eine zusätzliche "Sterberate" hinzugefügt:
+\begin{align*}
+	x(t_0) = x_0, \qquad x' = \alpha x - \beta x^2
+\end{align*}
+Die Lösung hier ist bereits deutlich komplizierter:
+\begin{align*}
+	x(t) = \frac{1}{\frac{\beta}{\alpha} + \left( \frac{1}{x_0} - \frac{\beta}{\alpha}\right) e^{-\alpha(t - t_0)}}
+\end{align*}
+Durch den Faktor $e^{-\alpha(t - t_0)}$ konvergiert die Lösung für $t \to \infty$ gegen $\frac{\alpha}{\beta}$.
+\subsection{Lotka-Volterra-Modell}
+Ein bekanntest Modell für Systeme von Raub- und Beutetieren ist das Modell von Lotka-Volterra. Wir betrachten eine Population $x(t)$ an Beutetieren und $y(t)$ von Raubtieren, sodass bei einer zu großen Raubtierpopulation die Wachstumsrate der Beutetierpopulation sinkt und bei einer zu kleinen Beutetierpopulation die Raubtierpopulation sinkt:
+\begin{align*}
+	x(t_0) &= x_0, \qquad x' = (\alpha - \beta y)x\\
+	y(t_0) &= y_0, \qquad y' = (-\gamma + \delta x)y
+\end{align*}
+Eine besonders simple Lösung ist $x_0 = \frac{\delta}{\gamma}$, $y_0 = \frac{\alpha}{\beta}$ - in diesem Fall bleiben beide Populationen konstant.
+\newpar
+Im allgemeinen sind die Lösungen dieses Modells sind periodisch, eine allgemeine Lösungsformel lässt sich aber bereits nicht mehr analytisch durch Elementarfunktionen darstellen. Immerhin sind sie ohne größere Probleme sehr genau numerisch approximierbar.
+\newpar
+Wir wollen nun den Begriff des Anfangswertproblems formalisieren und unsere Lösungsmethoden verallgemeinern.
+\begin{definition}
+	Sei $G \subset \bR \times \bR^n$ offen und $f : G \to \bR^n$ stetig (in kürzerer Notation: $f \in C^0(G, \bR^n)$
+	\newpar
+	Eine stetig differenzierbare Funktion $x : I \to \bR^n$ (kurz: $x \in C^1(I, \bR^n)$) ist eine \tbf{Lösung der Differentialgleichung} $x' = f(\cdot, x)$, falls
+	\begin{align*}
+		\forall t \in I : x'(t) = f(t, x(t))
+	\end{align*}
+	Gilt außerdem $x(t_0) = x_0$, so ist $x$ eine \tbf{Lösung des dazugehörigen Anfangswertproblems}.
+\end{definition}
+\begin{definition}
+	Falls die Funktion $f$ zeitunabhängig ist (also unabhängig von ihrer ersten Komponente) nennen wir die zugehörige Differentialgleichung \tbf{autonom}.
+\end{definition}
+\newpar
+Die drei zentralen Fragen sind nun:
+\begin{enumerate}
+	\item Existert eine Lösung des Anfangswertproblems?
+	\item Falls eine Lösung existiert, ist sie eindeutig?
+	\item Wie hängt die Lösung von $x_0$ und $f$ ab?
+\end{enumerate}
+Die dritte Frage sprengt leider den Rahmen einer Grundlagenvorlesung Analysis. Die ersten beiden Fragen können wir jedoch bald befriedigend beantworten.
+\newpar
+Es stellt sich zum Beispiel heraus, dass selbst bei simplen Anfangswertproblemen die Stetigkeit von $f$ nicht ausreicht, um die Eindeutigkeit der Lösungsmenge zu gewährleisten:
+\begin{beispiel}
+	Sei $f(t,x) = 2\sqrt{\abs{x}}$. Dann hat das Anfangsproblem
+	\begin{align*}
+		x(0) &= 0\\
+		x' &= f(\cdot, x)
+	\end{align*}
+	unendlich viele Lösungen in $\bC^1(\bR, \bR)$, nämlich:
+	\begin{align*}
+		x_{\alpha, \beta}(t) = 
+		\begin{cases}
+			-(t - \alpha)^2 & t < \alpha\\
+			0 & t \in [\alpha, \beta]\\
+			(t - \beta)^2 & t > \beta\\
+		\end{cases}
+	\end{align*}
+	für beliebige $\alpha \in \bR^-, \beta \in \bR^+$.
+\end{beispiel}
+\begin{theorem}
+	Hiii!!! 'w'
+\end{theorem}
+\begin{lemma}
+	Sei $f \in \bC^0(G, \bR^n)$ und $(t_0, x_0) \in G$. 
+	\newpar
+	Dann sind die folgenden Aussagen quivalent:
+	\begin{enumerate}
+		\item $x \in \bC^1(I, \bR^n)$ ist eine Lösung des Anfangswertproblems
+		\begin{align*}
+			x(t_0) &= x_0,\\ \forall t \in I : x'(t) &= f(t,x(t)),
+		\end{align*}
+		\item $x \in \bC^0(I, \bR^n)$ erfüllt die Gleichung
+		\begin{align*}
+			\forall t \in I : x(t) = x_0 + \int_{t_0}^t f(s, x(s)) ds.
+		\end{align*}
+	\end{enumerate} 
+\end{lemma}
+\noindent 
+Das folgende Beispiel zeigt, dass wir im Allgemeinen nur eine zeitlich lokale Lösung erwarten können:
+\begin{beispiel}
+	Das Anfangswertproblem 
+	\begin{align*}
+		x(0) &= 1,\\
+		x' &= x^2 
+	\end{align*}
+	Hat auf $(-\infty, 1)$ die Lösung $x(t) = \frac{1}{1-t}$. Diese Lösung hat jedoch bei $t = 1$ eine Singularität und ist somit nicht fortsetzbar.
+\end{beispiel}
+\begin{theorem}
+	\emph{\tbf{Kurzzeitexistenzsatz von Picard-Lindelöf:}} \\\noindent Sei $f \in \bC^0(G, \bR^n)$ mit $D_x f \in \bC^0(G, \bR^{n \times n})$. Sei $(t_0, x_0) \in G$.
+	\newpar
+	Dann existiert ein $\delta > 0$, sodass das Anfangswertproblem
+	\begin{align*}
+		x(t_0) &= x_0,\\
+		\forall t \in [t_0-\delta, t_0 + \delta] : x'(t) &= f(t, x(t))
+	\end{align*}
+	eine eindeutige Lösung besitzt.
+\end{theorem}
+\begin{proof}
+	Banachscher Fixpunktsatz :)
+\end{proof}
+Gewöhnliche Differentialgleichungen, auf Englisch \textit{ordinary differential equations} (\textit{ODEs}) beschreiben zeitabhängige Prozesse. Sie sind nützlich für die Modellierung zahlreicher Prozesse in verschiedenen Gebieten der Wissenschaft.
+\section{Motivation}
+Wir wollen die Fischpopulation in einem See modellieren. Wir bezeichnen die Anzahl an Fischen zum Zeitpunkt $t$ mit $y(t)$. Wie viele Fische dürfen die Menschen am See fangen, ohne dass die Fischpopulation ausstirbt?
+\newpar
+Wir führen folgende Größen ein:
+\begin{itemize}
+	\item Die Geburtenrate $G(t)$. Wir nehmen an, dass diese proportional zur Größe der Fischpopulation ist, also
+	\[G(t) = b y(t).\]
+	\item Die natürliche Todesrate $T(t)$. Auch hier gehen wir von Proportionalität zur Population aus:
+	\[T(t) = m y(t).\]
+	\item Die Fischfangrate $H(t)$.
+\end{itemize}
+Wir erhalten nun die Gleichung:
+\[y'(t) = (b-m)y(t) - H(t)\]
+Wir nehmen außerdem an, dass $(b-m) := a > 0$. Diese Größe kann durch Beobachtungen gemessen werden, $H(t)$ ist kontrollierbar. Zu einem gegebenen Anfangszeitpunkt $t_0$, an dem die Fischpopulation $y(t_0) = y_0$ beträgt, können die Menschen nun berechnen, wie viele Fische sie fangen dürfen.
+\newpar
+Wir betrachten als erstes die einfachstmögliche Situation, in der die Fischfangrate $H(t)$ zeitunabhängig konstant bleibt, also $H(t) = H \in \bR$. Wir erhalten so unser erstes Modell:
+\begin{nalign}
+	\label{eq:simplefishmodel}
+	y' &= ay - H\\
+	y(t_0) &= y_0\\
+\end{nalign}
+Da die Ableitung proportional zur Funktion selbst ist eine Exponentialgleichung eine naheliegende Lösung. Eine rigorose Herleitung dieser Intuition folgt später. Mit diesem Wissen können wir jedoch bereits eine "how would you come up with that"-Herleitung durchführen: 
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+
+\section{Existenztheorie}
+\begin{definition}
+	Für $f : \bR^{n+1} \to \bR$ nennen wir eine Gleichung der Form
+	\begin{align*}
+		y^{(n)}(t) = f(t, y(t), y'(t), \hdots, y^{(n-1)}(t))
+	\end{align*}
+eine \textit{explizite Differntialgleichung n-ter Ordnung}. Ist zusätzlich
+\[y^{(i)}(t_0) = y_{i-1}\]
+für $(t_0, y_0, y_1, \hdots y_{n-1}) \in \bR^{n+1}$ gegeben, spricht man von einem \textit{Anfangswertproblem.}
+\end{definition}
+\begin{definition}
+	Sei $I$ ein Intervall. Eine Funktion $y : I \to \bR$ heißt \textit{Lösung} von (2.1) im Intervall $I$, falls $y$ in $I$ $n$-mal differenzierbar ist und
+	\[y^{(n)}(t) = f(t, y(t), y'(t), \hdots, y^{(n-1)}(t))\]
+	für alle $t \in I$ erfüllt ist.
+\end{definition}
+Wir erlauben hier jede Art von Intervall, egal ob offen, halboffen, oder geschlossen.
+\begin{definition}
+	Sei $F : \omega \subseteq \bR^{n+1} \to \bR^n$. Wir nennen das Gleichungssystem
+	\[Y'(t) = F(t, Y(t))\]
+	ein \textit{System von Differentialgleichungen 1. Ordnung}. Für $F = (f_1, \hdots, f_n)$ und $Y = (y_1, \hdots, y_n)$ lässt sich das System komponentenweise schreiben als:
+	\begin{align*}
+		y_1'(t) &= f_1(t, y_1(t), \hdots, y_n(t))\\
+		&\hspace{6pt}\vdots\\
+		y_n'(t) &= f_n(t, y_1(t), \hdots, y_n(t))\\
+	\end{align*}
+	Ergänzt man das System durch die Bedingung $Y(t_0) = Y_0$ erhalten wir komponentenweise:
+	\begin{align*}
+		y_1(t_0) &= y_1^0\\
+		&\hspace{6pt}\vdots\\
+		y_n(t_0) &= y_n^0\\
+	\end{align*}
+	Für ein $(t_0, y_1^0, \hdots, y_n^0) \in \Omega$ und sprechen wieder von einem \textit{Anfangswertproblem}.
+\end{definition}
+\begin{lemma}
+ Erfülle $F$ die Vorraussetzung $(S)$, sei außerdem $y_i (a,b) \to \bR^n$ eine Lösung des Gleichungssystems $Y'(t) = F(t,Y(t))$. Weiter existiere der Grenzwert $\lim_{t \to^+ b} Y(t) := y_1$ und es gelte $(b,y_1) \in \Omega$. Dann existiert $\delta > 0$, sodass man die Lösung $y$ zu einer Lösung auf dem Intervall $(a, b+\delta]$ fortsetzen kann.
+\end{lemma}
+\begin{definition}
+ Seien $A,B \in \bR^{n+1}$. Wir definieren zwischen den beiden Mengen folgendermaßen eine Abstandsfunktion: \begin{align*}
+  \text{dist}(A,B) := \inf_{x \in A, y \in B} \norm{X - Y}                                                                                                   
+ \end{align*}
+\clearpage
+[big gap here oops]
+\clearpage
+\begin{lemma}
+	Seien $I,J$ offene Intervalle, sei $f : J \times I \to \bR$ durch $f(t,y) = h(t)g(y)$ gegeben, wobei $g : I \to \bR$, $g \neq 0$, $h : J \to \bR$ stetig sind. Falls $\varphi : (\alpha, \beta) \subseteq J \to I$ eine Lösung von (3.1) ist, existiert $c \in \bR : \forall t \in (\alpha, \beta)$
+	\[\varphi(t) = G^{-1}(H(t) + c)\]
+\end{lemma}
+\begin{theorem}
+	Erfülle $f$ die Vorraussetzung des letzten Lemmas. Dann existiert $\forall (t_0, y_0) \in J \times I$ eine eindeutige maximale Lösung $y : J_0 \to I$ von (3.1) mit $y(t_0) = y_0$. Diese Lösung ist von der Form
+	\[y(t) = G^{-1}(H(t)),\]
+	wobei \[G(y) = \int_{y_0}^y \frac{1}{g(x)} dx, y \in I,\] \[H(t) = \int_{t_0}^{t}h(s) ds, t \in J\] ist. 
+\end{theorem}
+\end{definition}
+\begin{beispiel}
+	Sei $y'(t) = 2t(1 + y^2)$ mit Anfangsbedingung $y(t_0) = y_0$, wobei $(t_0, y_0 \in \bR^2)$.
+	Dann gilt:
+	\[
+		g(y) = 1 + y^2, \quad h(t) = 2t
+	\]
+	\begin{align*}
+		G(y) &= \int_{y_0}^y \frac{1}{1+x^2} dx \\
+			 &= \arctan y - \arctan y_0\\
+			 &:= \arctan y - c_0
+	\end{align*}
+	\begin{align*}
+		H(t) &= \int_{t_0}^t 2s\ ds\\
+			 &= t^2 - t_0^2
+	\end{align*}
+	\begin{align*}
+		\text{Bild}(G) = \left(-\frac{\pi}{2} - c_0, \frac{\pi}{2} - c_0\right), \quad c_0 \in \left(-\frac{\pi}{2},\frac{\pi}{2}\right)
+	\end{align*}
+	\begin{enumerate}
+		\item $-t_0^2 > -\frac{\pi}{2} - c_0$
+		\[\alpha := \sqrt{\frac{\pi}{2} - c_0 + t_0^2}\]
+		\[H^{-1}(\text{Bild}(G)) = (-\alpha, \alpha)\]
+		\[y(t) = \tan(t^2 - t_0^2 + \arctan(y_0))\]
+		\item $-t_0^2 \leq -\frac{\pi}{2} - c_0$
+		\[\alpha = \sqrt{-\frac{\pi}{2} - c_0 + t_0^2}\]
+		\[\beta := \sqrt{\frac{\pi}{2} - c_0 + t_0^2}\]
+		\[H^{-1}(\text{Bild}(G)) = (-\beta, -\alpha) \cup (\alpha, \beta)\]
+		OBdA $t_0 \in (\alpha, \beta)$, dann
+		\[y(t) = \tan(t^2 - t_0^2 - \arctan(y_0))\]
+	\end{enumerate}
+\end{beispiel}
+\clearpage
+\section{Lineare Gleichungen}
+Angenommen, wir haben eine Funktion $f(t, y)$ der Form
+\[f(t,y) = h(t)y + p(t)\]
+Es gilt:
+\[h, p : I = (a,b) \to \bR\]
+Wobei nach Annahme $h, p$ stetig sind und $f : I \times \bR \to \bR$ die Vorraussetzung (S) erfüllt.
+\newpar
+Wenn $p(t) = 0$ nennen wir die Differentialgleichung $y' = f(t,y)$ \textbf{homogen}, ansonsten nennen wir sie \textbf{inhomogen}.
+\newpar
+\[y' = h(t)y + p(t) \Leftrightarrow y'(t) - h(t)y(t) = p(t)\]
+Wir suchen nun das Urbild von $p \in C^0(I)$ bezüglich
+\[L : C^1(I) \to C^0(U) : y \mapsto y' - hy\]
+\[(L(y))(t) := y'(t) - h(t)y(t)\]
+Es gilt:
+\[L(\alpha y + \beta z) = \alpha L(y) + \beta(L(z))\]
+Also ist $L$ ein linearer Operator!
+\newpar
+[...]
+\clearpage
+\begin{lemma}
+	Sei $I = (a,b)$ und für $f : I \times \bR \to \bR$ gelte
+	\[f(t,y) = h(t)y + p(t)\]
+	Wobei $p, h$ auf $I$ stetig sind. Seien Lösungen $y_1, y_2$ der inhomogenen Gleichung und $y_0$ Lösung der homogenen Gleichung. Dann gilt:
+	\begin{enumerate}
+		\item[(i)] $y_1 - y_2$ ist Lösung der homogenen Gleichung
+		\item[(ii)] $y_1 + y_0$ ist Lösung der inhomogenen Gleichung
+	\end{enumerate}
+\end{lemma}
+\begin{lemma}
+	Sei $y_2$ eine Lösung der inhomogenen Gleichung und $y_0$ eine Lösung der homogenen Gleichung. So existiert eine Lösung $y_1$ der inhomogenen Gleichung, sodass
+	\[y_2 = y_0 + y_1\]
+\end{lemma}
+	\textbf{Variation der Konstanten:} 
+	\[y(t) = c(t) e^{H(t)}\]
+	\[y'(t) = c'(t) e^{H(t)} + c(t)e^{H(t)}h(t)\]
+	Damit $y$ eine Lösung von (3.1) ist muss gelten:
+	\[y'(t) = p(t) + h(t)y(t)\]
+	Also:
+	\[c'(t) = p(t)e^{-H(t)}\]
+	Also ist $c$ eine Stammfunktion von $pe^{-H}$.
+\begin{theorem}
+	Sei $I = (a,b)$, für $f : I \times \bR \to \bR$ gelte
+	\[f(t,y) = h(t)y + p(t)\]
+	$p,h$ stetig. Dann existert für alle $(t_0, y_0) \in I \times \bR$ eine eindeutige, maximale Lösung
+	\[y : I \to \bR\]
+	von (3.1) mit $y(t_0) = y_0$. Diese Lösung hat folgende Form:
+	\[y(t) = e^{[H(t)]}\left(y_0 + \int_{t_0}^t p(s) e^{-H(s)} ds\right)\]
+	Wobei
+	\[H(t) = \int_{t_0}^t h(s) ds\]
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+		y(t_0) = e^{H(t_0)} (y_0 + 0) = y_0
+	\end{align*}
+	Rechnungen liefern, dass $y : I \to \bR$ maximal ist. Seien $y_1, y_2$ eine maximale Lösung mit $y_i(t_0) = y_0$. $\overline{y} := y_1 - y_2$ ist eine Lösung der homogenen Gleichung mit $y(t_0) = 0$, also $\overline{y}(t) = 0$, also $y_1 = y_2$.
+\end{proof}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\clearpage
+\chapter{Systeme Linearer Differentalgleichungen}
+Wir suchen nach Lösungen von Gleichungssystemen der Form:
+\[Y'(t) = \tbf{A}(t) Y(t) + \tbf{B}(t)\]
+Wobei $\tbf{A}, \tbf{B}$ Matrizen sind.
+\newpar
+Sei $I = (a,b)$ und sei $F(t,Y) := \tbA(t) Y + \tbB(t)$. $F$ ist bezüglich $Y$ lokal Lipschitzstetig, also existiert eine eindeutige maximale Lösung mit $Y(t_0) = Y_0$.
+\begin{lemma}
+	\tbf{Lemma von Gronwall:}\\
+	Sei $J$ ein Intervall, $t_0 \in J$, $\alpha, \beta \in [0, \infty)$. Ferner sei $x : J \to [0, \infty)$ stetig und erfülle
+	\[x(t) \leq \alpha + \beta \abs{\int_{t_0}^t x(s) ds}\]
+	Für $t \in J$. Dann gilt
+	\[x(t) \leq \alpha e^{\beta \abs{t - t_0}}\]
+\end{lemma}
+\begin{proof}
+	Sei $t \geq t_0$, $t \in J$. Sei
+	\[h(s) := \beta e^{\beta(t_0 - s)}\int_{t_0}^s x(\tau) d\tau\]
+	mit $s \in [t_0, t]$. Sei
+	\begin{align*}
+		h'(s) &= \beta e^{\beta(t_0 - s)} (-1)\beta \int_{t_0}^s x(\tau) d\tau + \beta e^{\beta(t_0 - s)} x(s)\\
+			  &= - \beta h(s) + \beta e^{\beta(t_0 - s)} x(s)\\
+			  &\leq - \beta h(s) + \beta e^{\beta(t_0 - s)} \left(\alpha + \beta \abs{\int_{t_0}^s x(\tau) d\tau}\right)\\
+			  &= - \beta h(s) + \alpha \beta e^{\beta(t_0 - s)} + \beta h(s)\\
+			  &= \alpha \beta e^{\beta(t_0 - s)}
+	\end{align*}
+	\begin{align*}
+		\int_{t_0}^t h'(s) ds = h(t) - h(t_0) = h(t) = \beta e^{\beta(t_0 - s)}\int_{t_0}^s x(\tau) d\tau
+	\end{align*}
+	\begin{align*}
+		\int_{t_0}^t \frac{d}{ds}(-\alpha e^{B(t_0 - s)}) ds &= -\alpha e^{\beta(t_0 - t)} + \alpha\\
+		\implies \beta e^{\beta(t_0 - s)}\int_{t_0}^t x(\tau) &\leq \alpha -\alpha e^{\beta(t_0 - t)}
+	\end{align*}
+	\begin{align*}
+		\beta \int_{t_0}^t x(s) ds &\leq \alpha e^{\beta(t - t_0)} - \alpha\\
+		\implies \alpha + \beta \int_{t_0}^t x(s) ds &\leq \alpha e^{\beta(t - t_0)}\\
+		\implies x(t) &\leq \alpha e^{\beta(t - t_0)}
+	\end{align*}
+\end{proof}
+\begin{theorem}
+	Seien $\tbA, \tbB$ stetig Funktionen auf $I = (a,b)$. Dann ist jede maximale Lösung des dazugehörigen Differentialsystems auf ganz $(a,b)$ definiert.
+\end{theorem}
+\begin{proof}
+	Sei eine maximale Lösung gegeben durch:
+	\begin{align*}
+		Y : (\alpha, \beta) \to \bR^n
+	\end{align*}
+	Wobei $Y(t_0) = Y_0, t_0 \in (\alpha, \beta)$. Da $Y$ eine maximale Lösung ist existiert der Limes
+	\[\lim_{t \to^+ \beta} Y(t)\] 
+	nicht. Sei $(\alpha, \beta) \subsetneq (a,b)$, OBdA $\beta < b$. Sei für $n \in \bN$:
+	\[K_n := \{(t,Y) \in \bR^{n+1} \mid t \in [t_0, \beta], \norm{Y} \leq n\}\]
+	Da diese Menge kompakt ist und $Y$ eine maximale Lösung ist, ist
+	\[G^+ = \{(t,z) \in \overline{\text{graph}(Y)} \mid t \geq t_0\}\]
+	keine kompakte Teilmenge.
+	\begin{align*}
+		\exists \tau_n \in [t_0, \beta) : \norm{Y(\tau_n)} = n\\
+		\implies \lim_{n \to \infty} \norm{Y(\tau_n)} = \infty
+	\end{align*}
+	\begin{align*}
+		n(T) &:= \norm{Y(t)} t \in (\alpha, \beta)\\
+		\delta &:= \max_{t \in [t_0, \beta]} \norm{\tbA(t)}_{\bR^{n \times m}} < \infty\\
+		\gamma &:= \max_{t \in [t_0, \beta]} \norm{\tbB(t)}_{\bR^{n}} < \infty\\
+	\end{align*}
+	Da $Y$ eine Lösung ist, ist:
+	\begin{align*}
+		Y(t) = Y(t_0) + \int_{t_0}^t \tbA(s)Y(s) + \tbB(s) ds t \in [t_0, \beta)
+	\end{align*}
+\end{proof}
+[...]
+\clearpage
+\begin{definition}
+	Wir nennen die Matrix $\tbY$, welche das System linearer Differentialgleichungen beschreibt, die \textbf{Fundamentalmatrix} des Systems.
+\end{definition}
+\begin{lemma}
+	Es gilt $\tbY' = \tbA \tbY$.
+\end{lemma}
+\begin{definition}
+	Wir definieren $\tbZ(t) = \tbY(t) \tbY^{-1}(t_0)$.
+\end{definition}
+\begin{definition}
+	Sei $I = (a,b), A : I \to \bR^{n \times n}$ stetig. Sei $\tbY$ eine Fundamentalmatrix eines homogenen Systems linearer Differentialgleichungen. Wir nennen
+	\[W(t) := \det{\tbY(t)}\]
+	die \tbf{Wronski-Determinante}.
+\end{definition}
+\begin{theorem}
+	Sei $I = (a,b), \tbA : I \to \bR^{n \times n}$ stetig. Sei $\tbY$ eine Fundamentalmatrix eines homogenen Systems linearer Differentialgleichungen. Dann gilt
+	\[W(t) = W(t_0) e^{\int_{t_0}^t \tr(\tbA(s)) ds}\]
+	für $t \in I$, wobei die Spur $\tr(\tbA)$ einer quadratischen Matrix als die Summe der Diagonaleinträge definiert ist.
+\end{theorem}
+\begin{proof}
+	Es gilt $\tr(A) \in \bR$, $W(t) \in \bR$. Wir betrachten also eine skalare Gleichung. Gemäß Satz (3.8?) aus Kapitel 12 gilt diese Formel genau dann, wenn
+	\[W'(t) = \tr(\tbA(t))\]
+	Wir benötigen also eine Formel für die Ableitung der Determinante. Für $\tbB = (b_{ij})$ gilt
+	\[\det \tbB = \sum_{\sigma \in S_n} \text{sgn}(\sigma) b_{1\sigma(1)} \cdot \hdots \cdot b_{n\sigma(n)}\]
+	Somit gilt:
+	\[(\det \tbB)' = \sum_{i=1}^n \sum_{\sigma \in S_n} \text{sgn}(\sigma) b_{1\sigma(1)} \cdot \hdots \cdot b_{i \sigma(i)}' \cdot \hdots \cdot b_{n\sigma(n)}\]
+	(insert black magic here)
+	\newpar
+	Es folgt:
+	\[W(t) = \det \tbY(t) = \det \tbZ(t) \det \tbY(t_1) = \det \tbZ(t) W(t_1)\]
+	und somit:
+	\[W'(t) = (\det \tbZ(t))' W(t_1)\]
+	Mit der Formel der Ableitung der Determinante gilt:
+	\begin{align*}
+		(\det \tbZ(t_1))' &= \sum_{i = 1}^n \det (Z_1(t_1), \hdots, Z_i'(t_1), \hdots, Z_n(t_1))\\
+						  &= \sum_{i = 1}^n \det (E_1(t_1), \hdots, \tbA(t_1)E_i, \hdots, E_n(t_1))\\
+						  &= \sum_{i = 1}^n a_{ii}(t_1)\\
+						  &= \tr \tbA(t_1)
+	\end{align*}
+	Es gilt folglich:
+	\[W'(t) = \tr \tbA(t_1)W(t_1)\]
+\end{proof}
+\begin{corollary}
+	Die Wronski-Determinante einer Fundamentalmatrix ist überall ungleich Null.
+\end{corollary}
+\section{Systeme mit Konstantem A}
+Wir betrachten Systeme der Form:
+\[Y'(t) = \tbA Y(t)\]
+Wir betrachten dabei die lineare Abbildung:
+\[A : \bR^n \to \bR^n : Y \mapsto \tbA Y\]
+Also $\tbA = M_{E}^{E}(A)$. Aus der Linearen Algebra ist bekannt, dass:
+\[M^{B}_B(A) = M_B^E(id) M_E^E(A) M_E^B(id)\]
+Wobei $M_E^B(id) := \tbB$ und $M_B^E := \tbB^{-1}$. Also:
+\[M_B^B(A) = \tbB^{-1} \tbA \tbB := \tbD\]
+\[Z(t) := \tbB^{-1}Y(T) \Leftrightarrow \tbB Z(t) = Y(t)\]
+Falls $Y$ eine Lösung des Systems mit Konstante ist, gilt:
+\[Z'(t) = \tbB^{-1}Y'(t) = \tbB^{-1}\tbA Y(t) = \tbB^{-1}\tbA\tbB Z(t) = \tbD Z(t)\]
+\begin{theorem}
+	Wenn $\tbA$ symmetrisch ist, können wir die Matrix diagonalisieren und erhalten eine besonders simple Lösung der Form:
+	\[\tbY = \tbB \tbZ = (B_1 e^{\lambda_1 t}, \hdots, B_n e^{\lambda_n t})\]
+\end{theorem}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\appendix
+\chapter{Sammlung von Reihen und ihren Grenzwerten}
+\section{Geometrische Summe}
+\begin{align*}
+	\sum_{k = 0}^n q^k = \frac{1 - q^{n+1}}{1 - q}
+\end{align*}
+Also für $|q| < 1$:
+\begin{align*}
+	\sum_{k = 0}^\infty q^k = \frac{1}{1 - q}
+\end{align*}
+\section{Standardbeispiel für Teleskopsummen}
+\begin{align*}
+	\sum_{k = 1}^\infty \frac{1}{k(k+1)} &= \lim_{n \to \infty} \sum_{k = 1}^n\frac{1}{k(k+1)}\\
+	&= \lim_{n \to \infty }\sum_{k = 1}^n \left(\frac{1}{k} - \frac{1}{k+1}\right) ^*\\
+	&= \lim_{n \to \infty } 1 - \frac{1}{n + 1}\\
+	&= 1
+\end{align*}
+$^*$ Die Umformung der Brüche funktioniert folgendermaßen:
+\begin{align*}
+	\frac{1}{k(k+1)} = \frac{k+1}{k(k+1)} - \frac{k}{k(k+1)} = \frac{1}{k} - \frac{1}{k+1}
+\end{align*}
+\section{Wichtige Taylorreihen}
+\subsection{Exponentialfunktion}
+\begin{align*}
+	e^x = \sum_{k = 0}^\infty \frac{x^k}{k!} \quad \left( = \lim_{n \to \infty} \left(1 + \frac{x}{n}\right)^n \right)
+\end{align*}
+\subsection{Sinus und Kosinus}
+\begin{align*}
+	\cos(x) &= \sum_{k=0}^\infty \frac{(-1)^k}{(2k)!}x^{2k}\\
+	\sin(x) &= \sum_{k=0}^\infty \frac{(-1)^k}{(2k+1)!}x^{2k+1}\\
+\end{align*}
+Aus diesen Reihen folgt direkt die Eulersche Formel $e^{ix} = \cos(x) + i\sin(x)$:
+\begin{align*}
+	e^{ix} &= \sum_{k = 0}^\infty \frac{(ix)^k}{k!}\\
+	&= \sum_{k = 0}^\infty \frac{(ix)^{2k}}{(2k)!} + \sum_{k = 0}^\infty \frac{(ix)^{2k+1}}{(2k+1)!}\\
+	&= \sum_{k = 0}^\infty \frac{i^{2k}}{(2k)!}x^{2k} + \sum_{k = 0}^\infty \frac{i^{2k+1}}{(2k+1)!}x^{2k+1}\\
+	&= \sum_{k = 0}^\infty \frac{i^{2k}}{(2k)!}x^{2k} + i \sum_{k = 0}^\infty  \frac{i^{2k}}{(2k+1)!}x^{2k+1}\\
+	&= \sum_{k = 0}^\infty \frac{(i^2)^k}{(2k)!}x^{2k} + i \sum_{k = 0}^\infty \frac{(i^2)^k}{(2k+1)!}x^{2k+1}\\
+	&= \sum_{k = 0}^\infty \frac{(-1)^k}{(2k)!}x^{2k} + i \sum_{k = 0}^\infty \frac{(-1)^k}{(2k+1)!}x^{2k+1}\\
+	&= \cos(x) + i \sin(x)
+\end{align*}
+\subsection{Logarithmus}
+Da $\ln(x)$ eine Singularität am Punkt $x = 0$ hat, Entwickeln wir stattdessen am Punkt $x = 1$ und erhalten:
+\begin{align*}
+	\ln(1+x) = \sum_{k=1}^\infty (-1)^{k+1} \frac{x^k}{k}
+\end{align*}
+\chapter{Sammlung von Stammfunktionen}
+\section{Inverse Trigonometrie}
+\begin{align*}
+	\arcsin(x) &= \int \frac{1}{\sqrt{1-x^2}} dx\\
+	\arccos(x) &= - \int \frac{1}{\sqrt{1-x^2}} dx\\
+	\arctan(x) &= \int \frac{1}{1+x^2} dx\\
+\end{align*}
+Für die Herleitung sind die Ableitungsformel für Umkehrfunktionen und die Identität 
+\begin{align*}
+	\sin(x)^2 &+ \cos(x)^2 = 1\\
+	\implies \sin(x) = \sqrt{1 - \cos(x)^2}&, \qquad \cos(x) = \sqrt{1 - \sin(x)^2}
+\end{align*} nötig.
+
+\section{Hyperbolische Trigonometrie}
+\begin{align*}
+	\sinh(x) &= \frac{e^x - e^{-x}}{2}\\
+	\cosh(x) &= \frac{e^x + e^{-x}}{2}\\
+	\tanh(x) &= \frac{\sinh(x)}{\cosh(x)}\\
+\end{align*}
+\end{document}
