@@ -39,6 +39,8 @@
 \newcommand{\bQ}{\mathbb{Q}}
 \newcommand{\bR}{\mathbb{R}}
 
+\newcommand{\cP}{\mathcal{P}}
+
 \newcommand{\ve}{\vec{e}}
 \newcommand{\vh}{\vec{h}}
 \newcommand{\vv}{\vec{v}}
@@ -115,66 +117,199 @@
 %
 %
 %
-\chapter{Metrische und Topologische Räume}
-\section{Folgen}
+\chapter{Zahlen}
+\section{Die natürlichen Zahlen}
+\section{Die rationalen Zahlen}
+\section{Die reellen Zahlen}
+\section{Algebraische Grundbegriffe}
+\chapter{Topologie}
+In den meisten Anfängervorlesungen über Analysis ist der einzige relevante Topologische / Metrische Raum der Raum $(\bR, \abs{-})$ der Reellen Zahlen mit der Absolutbetragsmetrik $d(x,y) = \abs{x-y}$. Falls du nicht daran interessiert bist, tiefer in die Theorie einzutauchen und die betrachteten Konzepte in voller Allgemeinheit aufzunehmen, kannst du dieses Kapitel dementsprechend auch fürs Erste überspringen und in jedem Satz in den darauffolgenden Kapiteln die Wörter "Topologischer Raum" und "Metrischer Raum" durch "$\bR$" und die Funktion "$d(x,y)$" durch "$\abs{x - y}$" ersetzen.
+\newpar
+Spätestens ab dem Kapitel über den Euklidischen Raum $\bR^n$ entsprechen die Notizen eher einer Vorlesung "Analysis II" - ab diesem Punkt werden auch andere Metrische Räume als $\bR$ relevant, und es lohnt es sich, die Grundlagen nachzuholen.
+\section{Metrische und Topologische Räume}
 \begin{definition}
-	Eine Folge ist eine Abbildung $\bN \to M$ in eine beliebige Menge $M$, in der Regel in die Reellen Zahlen. Für eine Folge $a$ schreibt man in der Regel "$a_n$" statt "$a(n)$".
+	Eine \tbf{Metrik} auf einer Menge $M$ ist eine Abbildung $d : M \times M \to \bR$, welche für alle $x,y,z \in M$ folgende Eigenschaften erfüllt sind:
+	\begin{enumerate}
+		\item $d(x,y) = 0$ genau dann, wenn $x = y$
+		\item \ul{\tbf{Symmetrie:}} $d(x,y) = d(y,x)$
+		\item \ul{\tbf{Dreiecksungleichung:}} $d(x,y) \leq d(x,z) + d(z,y)$
+	\end{enumerate}
+	Ist $d$ eine Metrik auf einer Menge $M$, so nennen wir das Paar $(M,d)$ einen \tbf{Metrischen Raum}.
 \end{definition}
-\begin{definition}
-	Sei $(a_n)_{n \in \bN}$ eine Folge. $a \in \bR$ heißt \textbf{Grenzwert} von $(a_n)_{n \in \bN}$, falls
+\noindent Ein Metrischer Raum ist eine Menge, auf der \tbf{Abstände} zwischen den Elementen definiert werden können. Der Abstand von $x \in M$ und $y \in M$ ist dann genau $d(x,y)$.
+\begin{theorem}
+	Sei $(M,d)$ ein Metrischer Raum und $x,y \in M$. So gilt \ul{\tbf{Positivität:}} $d(x,y) \geq 0$
+\end{theorem}
+\begin{proof}
 	\begin{align*}
-		\forall \epsilon \in \bR^+ : \exists n_0 \in \bN : \forall n \geq n_0 : \abs{a_n - a} \leq \epsilon
+		0 = d(x,x) \leq d(x,y) + d(y,x) = d(x,y) + d(x,y) = 2d(x,y)
 	\end{align*}
+	Also auch $d(x,y) \geq 0$.
+\end{proof}
+\begin{definition}
+	Sei $(M,d)$ ein Metrischer Raum. Wir nennen eine Teilmenge $\Omega \subseteq M$ \tbf{offen}, falls für jedes $x \in \Omega$ ein $\epsilon \in \bR_{> 0}$ existiert, sodass auch alle $y \in M$ mit $d(x,y) \leq \epsilon$ in $\Omega$ enthalten sind.
 \end{definition}
 \begin{definition}
-	Eine Folge heißt \textbf{konvergent}, falls die Folge einen Grenzwert hat. Sie heißt \textit{Nullfolge}, falls der Grenzwert $0$ ist.
+	Gegeben einen Punkt $x \in M$ und eine positive reelle Zahl $\epsilon \in \bR_{> 0}$ nennen wir eine solche Menge $\{y \mid d(x,y) < \epsilon\}$ auch den \tbf{$\epsilon$-Ball um $y$} und schreiben sie $B_\epsilon(p)$. Die Zahl $\epsilon$ gibt uns also den "Radius" des Balls.
+\end{definition}
+\begin{definition}
+	Sei $T$ eine beliebige Menge und $\tau \in \cP(M)$. Wir nennen $\tau$ eine \tbf{Topologie} und das Paar $(T,\tau)$ einen \tbf{Topologischen Raum}, falls folgende Eigenschaften erfüllt sind:
+	\begin{enumerate}
+		\item $\emptyset \in \tau$
+		\item $M \in \tau$ 
+		\item Der Durchschnitt endlich vieler Mengen aus $\tau$ ist ebenfalls in $\tau$.
+		\item Die Vereinigung endlich vieler Mengen aus $\tau$ ist ebenfalls in $\tau$.
+	\end{enumerate}
 \end{definition}
 \begin{theorem}
-	Der Grenzwert einer Folge ist eindeutig.
+	Jeder Metrische Raum bildet zusammen mit den System seiner offenen Teilmengen einen Topologischen Raum.
+\end{theorem}
+\noindent Ein Topologischer Raum ist ein Raum, in dem definiert ist, welche Elemente "nah aneinander liegen". Somit macht es intuitiv hoffentlich Sinn, dass Metrische Räume Topologische Räume sind.
+\newpar
+Allerdings gibt es auch Topologische Räume, auf denen keine Metriken existieren. In solchen Räumen kann man zwar erkennen, dass manche Punkte näher aneinanderliegen als andere, kann aber den Punkten keine exakten Abstände zuordnen.
+\begin{definition}
+	Ist $(T, \tau)$ ein Topologischer Raum, so nennen wir die Elemente der Topologie allgemein immer \tbf{offene Teilmengen}, selbst wenn der Topologische Raum kein Metrischer Raum ist. Ist $U$ eine offene Menge und $x \in U$, nennen wir $U$ auch eine \tbf{Umgebung von $x$}.
+\end{definition}
+\begin{definition}
+	Sei $(T, \tau)$ ein Topologischer Raum. Wir nennen $T$ \tbf{Hausdorff}, falls es für jedes Paar $x, y \in T$ mit $x \neq y$ disjunkte Umgebungen gibt, also $\exists U \ni x, V \ni y : U \cap V = \emptyset$
+\end{definition}
+\begin{theorem}
+	\label{theorem:metricspaceishausdorff}
+	Jeder Metrische Raum ist Hausdorff.
+\end{theorem}
+\begin{proof}
+	Da für $x \neq y$ per Definition $d(x,y) \neq 0$ gilt, reicht es, Bälle um $x$ und $y$ zu wählen, deren Radius kleiner als $d(x,y)$ ist. $y$ liegt nicht in $U = \{p \mid d(x,p) < \frac{1}{2}d(x,y)\}$ und umgekehrt.
+\end{proof}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\section{Normierte Vektorräume}
+Viele wichtige Metrische Räume sind Vektorräume, auf denen eine Norm definiert ist, also eine Funktion, welche den Vektoren Längen zuordnet. Ich werde hier in aller Kürze die Definitionen und einige relevante Eigenschaften wiederholen. Die allgemeine Theorie der Vektorräume ist enorm wichtig und wird in der Linearen Algebra genauer behandelt.
+\newpar
+Intuitiv ist ein Vektorraum ein Raum, dessen Elemente sich unter Addition und Skalierung wie Vektoren im $\bR^n$ verhalten. Diese Intuition wird durch folgende Definition formalisiert:
+\begin{definition}
+	Ein Vektorraum $V$ über einem Körper $K$ ist ein Tupel $(V, K, +, \cdot)$, sodass $(V, +)$ eine abelsche Gruppe bildet und sodass $\cdot$ eine Abbildung $K \times V \to V$ ist, welche für $a,b \in K$ und $\vv,\vw \in V$ die folgenden Axiome erfüllt:
+	\begin{enumerate}
+		\item $a(\vv + \vw) = a\vv + a\vw$
+		\item $(a+b)\vv = a\vv + b\vv$
+		\item $(ab) \cdot \vv = a (b \cdot \vv)$
+		\item $1_K \vv = \vv$			
+	\end{enumerate}
+\end{definition}
+\noindent Die vier zusätzlich gegebenen Axiome entsprechen der Vorraussetzung, dass $\cdot$ ein Ringhomomorphismus $K \to \text{End}(V)$ ist. Falls dies mehr Verwirrung als Klarheit schafft, kann man sich aber natürlich auch einfach die Axiome merken.
+\begin{definition}
+	Sei $V$ ein Vektorraum über einem Körper $K$. Eine \tbf{Norm} auf $V$ ist eine Funktion $\norm{-} : V \to \bR$, welche für $\lambda \in K$ und $\vv, \vw \in V$ folgenden Eigenschaften hat:
+	\begin{enumerate}
+		\item \ul{\tbf{Positivität:}} $\norm{\vv} \geq 0$
+		\item \ul{\tbf{Halblinearität:}} $\norm{\lambda\vv} = \lambda \norm{\vv}$
+		\item \ul{\tbf{Dreiecksungleichung:}} $\norm{\vv + \vw} \leq \norm{\vv} + \norm{\vw}$
+	\end{enumerate}
+\end{definition}
+\begin{theorem}
+	Gegeben eine Norm $\norm{-} : V \to \bR$ bildet $d(\vv,\vw) = \norm{\vv - \vw}$ eine Metrik auf $V$.
+\end{theorem}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\section{Folgen}
+\begin{definition}
+	Eine Folge ist eine Abbildung $\bN \to T$ in einen Topologischen Raum $(T, \tau)$. Für eine Folge $a$ schreibt man in der Regel "$a_n$" statt "$a(n)$".
+\end{definition}
+\begin{definition}
+	Sei $\an$ eine Folge in einem Topologischen Raum $(T, \tau)$. Wir nennen ein Element $a \in T$ den \textbf{Grenzwert} von $\an$, falls man für jede beliebige offene Umgebung $U$ von $a$ ein Folgenglied $a_{n_0}$ mit $n_0 \in \bN$ finden kann, sodass alle darauf folgenden Folgenglieder in $U$ enthalten sind. Als Formel:
+	\begin{align*}
+		\exists N \in \bN : n \geq N \Rightarrow a_n \in U
+	\end{align*}
+	Eine Folge, die einen Grenzwert hat, heißt \textbf{konvergent}.
+\end{definition}
+\begin{theorem}
+	Sei $(a_n)_{n \in \bN}$ eine Folge in einem Metrischen Raum $(M, d)$. $a \in M$ ist genau dann ein Grenzwert von $(a_n)_{n \in \bN}$, falls
+	\begin{align*}
+		\forall \epsilon \in \bR_{> 0} : \exists n_0 \in \bN : \forall n \geq n_0 : d(a_n, a) \leq \epsilon
+	\end{align*}
+\end{theorem}
+\begin{theorem}
+	Der Grenzwert einer Folge in einem Metrischen Raum ist eindeutig.
 \end{theorem}
 \begin{proof}
 	Angenommen, eine Folge $a_n$ hat zwei Grenzwerte $a \neq b$. So gilt für $\epsilon = \frac{1}{2}(a-b)$, dass $n_1, n_2 \in \bN$ existieren, sodass für alle $n \geq n_1$ (bzw. $n > n_2$)
 	\begin{align*}
-		\abs{a_n - a} < \epsilon
+		d(a_n - a) < \epsilon
 	\end{align*}
 	und
 	\begin{align*}
-		\abs{a_n - b} < \epsilon
+		d(a_n - b) < \epsilon
 	\end{align*}
 	Wählen wir nun $n_3 = \max(n_1, n_2)$, So gilt für alle $n \geq n_3$:
 	\begin{align*}
-		\abs{a-b} &= \abs{a - a_n - (b - a_n)}\\
-		&\leq \abs{a - a_n} + \abs{b - a_n}\\
+		d(a-b) &= d(a - a_n - (b - a_n))\\
+		&\leq d(a - a_n) + d(b - a_n)\\
 		&< 2\epsilon\\
-		&=\abs{a-b}
+		&= d(a-b)
 	\end{align*}
-	Also $\abs{a-b} < \abs{a-b}$, was ein Widerspruch ist.
+	Also $d(a-b) < d(a-b)$, was ein Widerspruch ist.
 \end{proof}
 \begin{theorem}
-	Jede konvergente Folge ist beschränkt.
+	Der Grenzwert einer Folge in einem Hausdorff-Raum $T$ ist eindeutig.
 \end{theorem}
 \begin{proof}
-	Sei $a_n$ eine Folge, welche gegen den Grenzwert $a$ konvergiert. So gilt per Definition von Konvergenz für ein beliebiges $\epsilon \in \bR^+$
+	Angenommen, die Folge $a_n$ konvergiert gegen $a \in T$. Sei $b \in T$ beliebig, sodass $a \neq b$. So existiert eine Umgebung $U \ni a$ und eine Umgebung $V \ni b$ mit $U \cap V = \emptyset$. Nach der Definition von Konvergenz nach $a$ muss ein $n_0 \in \bN$ existieren, sodass alle $a_n$ ab $a_{n_0}$ in $U$ enthalten sind. Für konvergenz gegen $V$ müssten nun ab einem Gewissen Punkt alle Folgenglieder außerdem in $V$ enthalten sein. Aber $U \cap V = \emptyset$, also kann es kein Folgenglied geben, welches in beiden Umgebungen enthalten ist. Also konvergiert die Folge nicht gegen $b$.
+\end{proof}
+\noindent Die Version für Metrische Räume folgt natürlich gemäß Satz \ref{theorem:metricspaceishausdorff} aus der Version für Hausdorff-Räume. Ich persönlich finde den allgemeineren Beweis deutlich übersichtlicher, und hoffe, dieses Beispiel dient als gute Rechtfertigung dafür, warum ich in diesen Notizen gerne Sätze in voller Metrischer / Topologischer Allgemeinheit formuliere und beweise.
+\begin{definition}
+	Eine Folge $\an$ in einem Metrischen Raum $M$ heißt \tbf{beschränkt}, falls sie in einem $\epsilon$-Ball in $M$ enthalten ist, also wenn:
 	\begin{align*}
-		\exists N \in \bN : \forall n \geq N : \abs{a_n - a} \leq \epsilon
+		\exists m \in M : \exists \epsilon \in \bR_{> 0} : \forall n \in \bN : a_n \in B_\epsilon(m)
+	\end{align*}
+\end{definition}
+\begin{definition}
+	Der \tbf{Durchmesser} einer Folge $\an$ ist die Reelle Zahl $D = \sup(d(a_n,a_m) \mid n,m \in \bN)$.
+\end{definition}
+\begin{theorem}
+	Eine Folge ist genau dann beschränkt, wenn ihr Durchmesser endlich ist.
+\end{theorem}
+\begin{proof}
+	Sei $a_k$ ein beliebiges Folgenglied. So ist die gesamte Folge im Ball $B_D(a_k)$ enthalten.
+\end{proof}
+\begin{theorem}
+	Jede konvergente Folge in einem Metrischen Raum ist beschränkt.
+\end{theorem}
+\begin{proof}
+	Sei $a_n$ eine Folge, welche gegen den Grenzwert $a$ konvergiert. So gilt per Definition von Konvergenz für ein beliebiges $\epsilon \in \bR_{> 0}$:
+	\begin{align*}
+		\exists n_0 \in \bN : \forall n \geq n_0 : d(a_n - a) \leq \epsilon
 	\end{align*}
 	Es folgt:
 	\begin{itemize}
-		\item Alle $a_n$ mit $n \geq N$ sind höchstens $\epsilon$ von $a$ entfernt, also endlich.
-		\item Die Menge $a_n$ $n < N$ ist endlich, ist also durch ihr Maximum und ihr Minimum beschränkt:
+		\item Alle $a_n$ mit $n \geq n_0$ sind im Ball $B_\epsilon(a)$ enthalten.
+		\item Die Menge $\{a_n \mid n < n_0\}$ ist endlich, also existiert ein maximaler Abstand zu $a$:
 		\begin{align*}
-			\min\{a_k \mid k < N\} \leq a_n \leq \max\{a_k \mid k < n\}
+			\forall n < n_0 : a_n \in B_{\max(d(a,a_1), \hdots, d(a,a_{n_0})}(a)
 		\end{align*}
 	\end{itemize} 
-	Somit sind alle Folgenglieder beschränkt, also ist die gesamte Folge beschränkt.
+	Nehmen wir nun das Maximum der beiden Radien, so ist die gesamte Folge im entstehenenden Ball enthalten, also begrenzt.
 \end{proof}
 \begin{theorem}
 	\label{theorem:increasingandboundedsequence}
-	Jede begrenzte, monoton steigende Folge ist konvergent.
+	Jede begrenzte, monoton steigende Folge in einem geordneten Körper $K$ ist konvergent.
 \end{theorem}
 \begin{theorem}
 	\label{theorem:rechenregelnfürfolgen}
-	Seien $\an$ und $\bn$ konvergent mit Grenzwerten $a$ und $b$. So gilt:
+	Seien $\an$ und $\bn$ konvergent Folgen in eine Körper $K$ und $a$ und $b$ die dazugehörigen Grenzwerte. So gilt:
 	\begin{itemize}
 		\item $(a_n + b_n)_{n \in \bN}$ ist konvergent mit Grenzwert $a + b$
 		\item $(a_n b_n)_{n \in \bN}$ ist konvergent mit Grenzwert $ab$
@@ -284,14 +419,14 @@ Dieser Satz ist je nach verwendeter Konstruktion der reellen Zahlen entweder ein
 	Die Folge $\an$ konvergiert genau dann, wenn sie beschränkt ist mit $\limsup a_n = \liminf a_n$.
 \end{corollary}
 \begin{definition}
-	Sei $M \subset \bR$. Eine Zahl $a \in \bR \cup -\infty$ heißt \tbf{Infimum} der Menge $M$, wenn:
+	Sei $M \subset \bR$. Eine Zahl $a \in \bR \cup \{-\infty\}$ heißt \tbf{Infimum} der Menge $M$, wenn:
 	\begin{enumerate}
 		\item $\forall x \in M : a \leq x$
 		\item $\forall a < a' : \exists x \in M : x < a'$
 	\end{enumerate}
 \end{definition}
 \begin{definition}
-	Sei $M \subset \bR$. Eine Zahl $a \in \bR \cup \infty$ heißt \tbf{Supremum} der Menge $M$, wenn:
+	Sei $M \subset \bR$. Eine Zahl $a \in \bR \cup \{\infty\}$ heißt \tbf{Supremum} der Menge $M$, wenn:
 	\begin{enumerate}
 		\item $\forall x \in M : x \leq a$
 		\item $\forall a' < a : \exists x \in M : a' < x$
