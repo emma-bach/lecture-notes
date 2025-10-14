@@ -1,0 +1,195 @@
+\documentclass{report}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage[titles]{tocloft}
+\usepackage[titletoc]{appendix}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{placeins}
+\usepackage{tikz-cd} % commutative diagrams
+\usepackage{physics} % \abs and \norm macros
+
+%hyperref should be last apparently
+\usepackage{hyperref}
+
+\renewcommand\cftsecdotsep{\cftdot}
+\renewcommand\cftsubsecdotsep{\cftdot}
+\renewcommand\epsilon{\varepsilon}
+
+% Starts a new paragraph without indentation
+% and with an empty line between paragraphs
+\newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
+\newcommand{\trans}{\twoheadrightarrow}
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bQ}{\mathbb{Q}}
+\newcommand{\bR}{\mathbb{R}}
+
+\newcommand{\cB}{\mathcal{B}}
+
+\renewcommand{\va}{\vec{a}}
+\renewcommand{\vb}{\vec{b}}
+\newcommand{\vc}{\vec{c}}
+\newcommand{\ve}{\vec{e}}
+\newcommand{\vF}{\vec{F}}
+\newcommand{\vp}{\vec{p}}
+\newcommand{\vs}{\vec{s}}
+\renewcommand{\vu}{\vec{u}}
+\newcommand{\vv}{\vec{v}}
+\newcommand{\vw}{\vec{w}}
+\newcommand{\vW}{\vec{W}}
+\newcommand{\vx}{\vec{x}}
+\newcommand{\vy}{\vec{y}}
+\newcommand{\vz}{\vec{0}}
+
+\newcommand{\veta}{\vec{\eta}}
+
+\newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
+\newcommand{\Matnn}{\text{Mat}(n \times n)}
+\newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\Id}{\text{Id}}
+\newcommand{\SO}{\mathcal{SO}}
+
+\newcommand{\tensor}{\otimes}
+\newcommand{\Hom}{\text{Hom}}
+
+\newcommand{\inv}{\text{inv}}
+
+\renewcommand*\contentsname{Inhalt}
+\renewcommand*\proofname{Beweis\newline}
+
+\pagestyle{fancy} %allows headers
+
+\lhead{Emma Bach}
+\rhead{\today}
+
+
+\begin{document}
+	% \newtheorem{codename}{printedname}[countedwith]
+	\newtheorem{lemma}{Lemma}[chapter]
+	\newtheorem{theorem}[lemma]{Satz}
+	\newtheorem{proposition}[lemma]{Proposition}
+	\newtheorem{corollary}[lemma]{Korollar}
+	
+	
+	
+	\theoremstyle{definition}
+	\newtheorem{definition}[lemma]{Definition}
+	\newtheorem{beispiel}[lemma]{Beispiel}
+	\newtheorem{beobachtung}[lemma]{Beobachtung}
+	\newtheorem{anmerkung}[lemma]{Anmerkung}
+	\newtheorem{question}[lemma]{Frage}
+	\newtheorem{application}[lemma]{Anwendung}
+	\newtheorem{konsequenz}[lemma]{Konsequenz}
+	%
+	%
+	%
+	\include{title}
+	\tableofcontents
+	\thispagestyle{fancy}
+	\chapter{Mechanische Grundlagen}
+	Annahme: Vektorraum $\bR^3$
+	\begin{itemize}
+		\item \tbf{Skalare Größen}: $\bR^3 \to \bR$
+		\item \tbf{Vektorwertige Größen}: $\bR^3 \to \bR^3$
+		\item Gekrümmte Bewegung vereinfacht als \tbf{Weg-Zeit-Diagramm} $s(t)$. Steile Tangente $\to$ hohe Geschwindigkeit.
+		\item Notation für Ableitungen: 
+		\begin{align*}
+			v(t_a) = \frac{ds}{dt}\mid_{t_a}
+		\end{align*}
+		\item In dieser Vorlesung meist Approximation der Ableitung durch Differenzenquotienten.
+	\end{itemize}
+	\section{Bewegung}
+	\begin{itemize}
+		\item Keine Bewegung: $s(t) = c$
+		\item Gleichförmige Bewegung: $s(t) = vt = v(t - t_0) + s_0$,\newpar
+			  Spezialfall Kreisbewegung: 
+			  $
+			  \begin{pmatrix}
+			  		x(t)\\
+			  		y(t)
+		  	   \end{pmatrix} = r \begin{pmatrix}
+		  	   		\cos(\omega t)\\
+		  	   		\sin(\omega t)
+	  	   	   \end{pmatrix}$
+		\item Gleichmäßige Beschleuningung: $s(t) = \frac{1}{2}at^2$
+	\end{itemize}
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[scale=0.3]{images/zentripetalkraft.png}
+		\caption{Herleitung der Zentripetalbeschleunigung durch ähnliche Dreiecke}
+		\label{zentripetalbeschleunigung}
+	\end{figure}
+	In Abbildung \ref{zentripetalbeschleunigung} ist dargestellt, wie man bei einer gleichmäßigen Kreisbewegung die Zentripetalbeschleunigung durch eine Konstruktion ähnlicher Dreiecke bestimmt werden kann: Die Geschwindigkeit ist konstant, und gleichzeitig immer orthogonal zum Radiusvektor. Es folgt also:
+	\begin{align*}
+		\frac{\Delta v}{v} = \frac{\Delta s}{r}
+	\end{align*}
+	Es folgt:
+	\begin{align*}
+		\frac{\Delta v}{\Delta t \cdot v} = \frac{\Delta s}{\Delta t \cdot r} = \frac{v}{r}
+	\end{align*}
+	\FloatBarrier
+	\subsection{Newtonsche Gesetze}
+	\begin{enumerate}
+		\item[\tbf{1.}] \tbf{Newtonsches Axiom: Trägheitsprinzip} - Körper, auf die keine Kraft wirkt, bewegen sich geradlinig mit konstanter Geschwindigkeit (möglicherweise Geschwindigkeit $0$).
+		\item[\tbf{2.}] \tbf{Newtonsches Axiom: Aktionsprinzip} - Die Änderung der Bewegung unter Einwirkung einer bewegenden Kraft ist proportional zu der Kraft und geschieht in Richtung dieser:
+		\begin{align*}
+			\vF = m \cdot \va
+		\end{align*}
+		\item[\tbf{3.}] \tbf{Newtonsches Axiom: Reaktionsprinzip} -  Übt ein Körper $A$ auf einen anderen Körper $B$ eine Kraft $\vF_{A \to B}$ aus (\textit{actio}), so wirkt eine gleich große, entgegengesetzte Kraft $\vF_{B \to A}$ von $B$ auf $A$. (\textit{reactio}):
+		\begin{align*}
+			\vF_{A \to B} = - \vF{A \to B}
+		\end{align*}
+	\end{enumerate}
+	Die Kraft, welche auf einen Körper wirkt, ist die Summe aller Teilkräfte, die von allen Quellen aus auf den Körper wirken. Wirken auf einen Körper also exakt entgegengesetzte Kräfte, so befindet sich der Körper im \tbf{Kräftegleichgewicht} und bewegt sich nicht.
+	\subsection{Druck}
+	Der auf eine Fläche einwirkende Druck ist das Ergebnis einer Kraft $\vF$, die auf eine Fläche $A$ wirkt:
+	\begin{align*}
+		\vp = \frac{\vF}{A}
+	\end{align*}
+	Die Einheit des Drucks ist $\text{Pa} = \frac{\text{N}}{\text{m}^2} = \frac{\text{kg}}{\text{m} \cdot \text{s}^2}$
+	\subsection{Arbeit}
+	\tbf{Arbeit} misst den Transfer an kinetischer Energie, der innerhalb eines mechanischen Systems stattfindet, wenn eine Kraft $\vF(t)$ eine Masse über einen Weg $\vs(t)$ bewegt.
+	\newpar
+	Ist die Kraft konstant und der Weg geradlinig, wird die Arbeit einfach durch das Skalarprodukt gemessen:
+	\begin{align*}
+		W = \vF \cdot \vs
+	\end{align*}
+	Im Allgemeinen muss man einen Kurvenintegral der Kraft entlang des Weges berechnen:
+	\begin{align*}
+		W = \int_{t_0}^{t_1} \vF d\vs = \int_{t_0}^{t_1} \vF(t) \cdot \vv(t) dt
+	\end{align*}
+	\subsection{Energie}
+		\begin{align*}
+		W = \Delta  E
+	\end{align*}
+	z.B:
+	\begin{itemize}
+		\item Potentielle Energie: $W = m \cdot g \cdot \Delta h$ $\to$ $E_{pot} = m \cdot g \cdot h$
+		\item Kinetische Energie: $E_{kin} = \frac{1}{2}mv^2$
+		\item Thermische Energie: $Q = m \cdot c \cdot \Delta T$, wobei $c$ die Wärmekapazität gibt.
+	\end{itemize}
+	Energie und Arbeit werden beide in Joule angegeben.
+	\subsection{Leistung}
+	Die Leistung ist die Änderung der Energie pro Zeit:
+	\begin{align*}
+		P(t) = \frac{dE}{dt}
+	\end{align*}
+	Somit hängt Leistung auch mit Arbeit zusammen:
+	\begin{align*}
+		P(t) = \frac{dW}{dt} = \frac{d}{dt} \int_{t_0}^{t_1} \vF(t) \cdot \vv(t) dt = \vF(t) \cdot \vv(t)
+	\end{align*}
+	\chapter{Thermodynamik}
+	\chapter{Physik der Erde}
+\end{document}

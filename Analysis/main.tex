@@ -1,5 +1,5 @@
 \documentclass{report}
-\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[a4paper,margin=1.5in]{geometry}
 \usepackage{fancyhdr}
 \usepackage[titles]{tocloft}
 \usepackage[titletoc]{appendix}
@@ -39,7 +39,13 @@
 \newcommand{\bQ}{\mathbb{Q}}
 \newcommand{\bR}{\mathbb{R}}
 
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cM}{\mathcal{M}}
 \newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
 
 \newcommand{\ve}{\vec{e}}
 \newcommand{\vh}{\vec{h}}
@@ -309,7 +315,7 @@ Intuitiv ist ein Vektorraum ein Raum, dessen Elemente sich unter Addition und Sk
 \end{theorem}
 \begin{theorem}
 	\label{theorem:rechenregelnfürfolgen}
-	Seien $\an$ und $\bn$ konvergent Folgen in eine Körper $K$ und $a$ und $b$ die dazugehörigen Grenzwerte. So gilt:
+	Seien $\an$ und $\bn$ konvergente Folgen in eine Körper $K$ und $a$ und $b$ die dazugehörigen Grenzwerte. So gilt:
 	\begin{itemize}
 		\item $(a_n + b_n)_{n \in \bN}$ ist konvergent mit Grenzwert $a + b$
 		\item $(a_n b_n)_{n \in \bN}$ ist konvergent mit Grenzwert $ab$
@@ -2557,6 +2563,89 @@ Falls $Y$ eine Lösung des Systems mit Konstante ist, gilt:
 	Wenn $\tbA$ symmetrisch ist, können wir die Matrix diagonalisieren und erhalten eine besonders simple Lösung der Form:
 	\[\tbY = \tbB \tbZ = (B_1 e^{\lambda_1 t}, \hdots, B_n e^{\lambda_n t})\]
 \end{theorem}
+\chapter{Maßtheorie}
+Maße formalisieren und generalisieren die intuitiven Begriffe von Längen, Volumen etc.
+\begin{itemize}
+	\item Eindimensionales Maß: Länge eines Intervalls.
+	\item Zweidimensionales Maß: Flächeninhalt eines Rechtecks.
+	\item Dreidimensionales Maß: Volumen eines Quaders.
+	\item etc.
+\end{itemize}
+Wie misst man nun beliebige Mengen? Gibt es für jede Menge ein sinnvolles "Volumen"?
+\newpar
+	Intuitiv sollte ein Maß auf $\bR^n$ eine Funktion
+	\begin{align*}
+		m : \cP(\bR^n) \to \bR_{\geq 0}
+	\end{align*}
+	sein, welche folgende Eigenschaften hat:
+	\begin{enumerate}
+		\item Es ist \tbf{bewegungsinvariant} - das Maß ist konstant unter orthogonalen Abbildungen.
+		\item Das Maß ist \tbf{zählbar additiv}:
+		\begin{align*}
+			m(\bigcup_{i}) A_i = \sum_{i} m(A_i) \quad A_i \cap A_j = \infty \quad i \neq j
+		\end{align*}
+		\item Das Maß des Einheitswürfels ist auf $1$ \tbf{normiert}:
+		\begin{align*}
+			m([0,1]^n) = 1
+		\end{align*}
+	\end{enumerate}
+Erlauben wir bei Bedingung $2$ nur endliche Vereinigungen, führt der Maßbegriff zum \tbf{Inhaltsproblem}, welches wiederum in Dimension $ \geq 3$ oder höher zum \tbf{Banach-Tarski-Paradox} führt und somit nicht lösbar ist.
+\newpar
+Erlauben wir jedoch auch unendliche Vereinigungen, erhalten wir das \tbf{Maßproblem}, dessen Unlösbarkeit in Dimension $\geq 1$ durch Lebesque gezeigt wurde.
+\newpar
+Es ist also leider nicht möglich, einen sinnvollen Maßbegriff in unserer idealisierten Form zu erhalten.
+\newpar
+Unser Ansatz ist nun, nur Mengen zu messen, welche im Grenzwert als zählbare Vereinigung von Rechtecken / Quadern / etc. (endliche Vereinigung von Intervallen) dargestellt werden kann.
+\begin{theorem}
+	Jede offene Menge ist als zählbare Vereinigung geschlossenerer Quader darstellbar.
+\end{theorem}
+\begin{definition}
+	Wir bezeichnen die Menge $\cM \subsetneq \cP(\bR^n)$ als die Menge der \tbf{messbaren Funktionen}.
+\end{definition}
+\section{$\sigma$-Algebren und Maße}
+\begin{definition}
+	Sei $X$ eine Menge und $\cP(X)$ die Potenzmenge. Ein \tbf{Mengensystem} $\cA \subseteq \cP(X)$ heißt \tbf{$\sigma$-Algebra}, falls folgendes gilt:
+	\begin{enumerate}
+		\item $X \in \cA$
+		\item $A \in \cA \implies X \setminus A \in \cA$
+		\item $\forall i \in \bN : A_i \in \cA \implies \bigcup_{i \in \bN} A_i \in \cA_i$
+	\end{enumerate}
+	Das Paar $(X, \cA)$ heißt \tbf{messbarer Raum}.
+\end{definition}
+\begin{theorem}
+	Es gilt außerdem:
+	\begin{enumerate}
+		\item $\forall i \in \bN : A_i \in \cA \implies \bigcap_{i \in \bN} A_i \in \cA$
+		\item $\emptyset \in \cA$
+		\item $\forall A, B \in \cA : A \setminus B \in \cA$
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+		\bigcap_{i \in \bN} A_i = X \setminus \left(\bigcup_{i \in \bN} (X \setminus A_i)\right)
+	\end{align*}
+	\begin{align*}
+		\emptyset = X \setminus X
+	\end{align*}
+	\begin{align*}
+		A \setminus B = A \cap (X \setminus B)
+	\end{align*}
+\end{proof}
+\noindent Die Potenzmenge $\cP(X)$ selbst ist bereits eine $\sigma$-Alebgra. Ebenso ist die Menge $\{\emptyset, X\}$ bereits eine $\sigma$-Algebra. Später werden wir zeigen, dass die Menge der \tbf{messbaren Mengen} eine $\sigma$-Algebra bilden und dass die offenen Mengen ein Teilsystem der messbaren Mengen bilden.
+\begin{theorem}
+	Jeder zählbar unendliche Durchschnitt von $\sigma$-Algebren ist wieder eine $\sigma$-Algebra.
+\end{theorem}
+\begin{proof}
+	Proof by trying every necessary condition and realizing it works.
+\end{proof}
+\begin{definition}
+	Für ein Mengensystem $\cE\subseteq \cP(X)$ heißt
+	\begin{align*}
+		\sigma(\cE_i) = \bigcap \left\{\cA \mid \cA \text{ ist $\sigma$-Algebra und } \cE \subseteq \cA \right\}
+	\end{align*}
+	die von $\cE$ \tbf{erzeugte}
+\end{definition}
+\chapter{Integrationstheorie}
 %
 %
 %
