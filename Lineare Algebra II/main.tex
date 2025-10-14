@@ -1311,4 +1311,13 @@ Aber es muss bedacht werden, dass zwingende Bedingung für eine Basis ist, dass 
 Es stellt sich heraus, dass die Hamel-Basis aus \ref{satz:basisfunktionen} nur dank Auswahlaxiom existiert und nicht explizit dargestellt werden kann. Lockern wir den traditionellen Basisbegriff, um zählbar unendliche Linearkombinationen zu erlauben, erhalten wir den Begriff der Schauder-Basis. Die Funktionen $\delta_{ij}$ reichen jedoch immer noch nicht als Schauder-Basis des Raums $f: \bR \to \bR$, sondern nur für den Folgenraum $f: \bN \to \bR$. 
 \newpar
 Da sich der Begriff der Linearkombination auf keine sinnvolle Weise auf überabzählbare Mengen erweitern lässt bleibt man an diesem Punkt leider stecken, es existiert leider keine explizit angebbare Basis des Raums $f: \bR \to \bR$. :(
+\[\begin{tikzcd}
+	A && B \\
+	\\
+	{\mathbb{C}(A, -)} && {C(B,-)}
+	\arrow["{f \in \mathbb{C}(A,B)}", from=1-1, to=1-3]
+	\arrow["{\mathcal{Y}}"', dotted, tail reversed, from=1-1, to=3-1]
+	\arrow["{\mathcal{Y}}", dotted, tail reversed, from=1-3, to=3-3]
+	\arrow["{\mathcal{Y}(f)}"', from=3-1, to=3-3]
+\end{tikzcd}\]
 \end{document}
