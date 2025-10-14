@@ -1,8 +1,9 @@
 # lecture-notes
-Various Lecture Notes I have made over the years, mostly written in LaTeX for exam preparation.
+Notes taken in LaTeX during various lectures, exams and seminars.
 
 ## Mathematics:
 ### In German:
+- <a href="https://github.com/emma-bach/lecture-notes/blob/main/Algebra%20und%20Zahlentheorie/main.pdf">Algebra und Zahlentheorie, WS25/56</a>
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Analysis/main.pdf">Analysis I-III, SS25 + WS25/56</a>
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Lineare%20Algebra/main.pdf">Lineare Algebra I + II, SS25</a>
 
@@ -17,5 +18,9 @@ Various Lecture Notes I have made over the years, mostly written in LaTeX for ex
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Mathe%20II/mathe2Aufschrieb.pdf">Mathematik II für Studierende der Informatik, SS23</a>
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Optimierung/main.pdf">Optimierung, WS24/25</a>
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Stochastik/stochastikAufschrieb.pdf">Stochastik für Studierende der Informatik, SS24</a>
+
+## Physics:
+### In German:
+- <a href="https://github.com/emma-bach/lecture-notes/blob/main/Umweltphysik/main.pdf">Umweltphysik, WS25/56</a>
 
 
