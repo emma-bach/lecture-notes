@@ -1,0 +1,247 @@
+\documentclass{report}
+\usepackage[a4paper,margin=1.5in]{geometry}
+\usepackage{fancyhdr}
+\usepackage[titles]{tocloft}
+\usepackage[titletoc]{appendix}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{pdfpages}
+\usepackage{bm}
+\usepackage{tikz-cd}
+\usepackage{physics}
+\usepackage{placeins}
+
+%\usepackage{setspace}
+
+%\onehalfspacing
+
+%hyperref should be last apparently
+\usepackage{hyperref}
+
+\renewcommand\cftsecdotsep{\cftdot}
+\renewcommand\cftsubsecdotsep{\cftdot}
+\renewcommand\epsilon{\varepsilon}
+
+% Starts a new paragraph without indentation
+% and with an empty line between paragraphs
+\newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
+\newcommand{\trans}{\twoheadrightarrow}
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+
+\newcommand{\Hess}[1]{\text{Hess}(#1)}
+
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bQ}{\mathbb{Q}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bZ}{\mathbb{Z}}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+
+\newcommand{\ve}{\vec{e}}
+\newcommand{\vh}{\vec{h}}
+\newcommand{\vv}{\vec{v}}
+\newcommand{\vw}{\vec{w}}
+\newcommand{\vx}{\vec{x}}
+\newcommand{\vy}{\vec{y}}
+\newcommand{\vz}{\vec{0}}
+\newcommand{\zz}{\vec{z}}
+
+\newcommand{\tbA}{\mathbf{A}}
+\newcommand{\tbB}{\mathbf{B}}
+\newcommand{\tbC}{\mathbf{C}}
+\newcommand{\tbD}{\mathbf{D}}
+\newcommand{\tbE}{\mathbf{E}}
+\newcommand{\tbY}{\mathbf{Y}}
+\newcommand{\tbZ}{\mathbf{Z}}
+
+\newcommand{\an}{(a_n)_{n \in \bN}}
+\newcommand{\bn}{(b_n)_{n \in \bN}}
+\newcommand{\sn}{(s_n)_{n \in \bN}}
+
+\newcommand{\ggT}{\text{ggT}}
+\newcommand{\kgV}{\text{kgV}}
+
+\renewcommand{\tr}{\text{tr}\ }
+\newcommand{\rang}{\text{rang}\ }
+
+\newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
+\newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
+
+\renewcommand*\contentsname{Inhalt}
+\renewcommand*\proofname{Beweis}
+
+\pagestyle{fancy} %allows headers
+
+\lhead{Emma Bach}
+\rhead{\today}
+
+\NewDocumentEnvironment{nalign}{}{\equation\aligned}{\endaligned\endequation}
+
+\begin{document}
+
+% \newtheorem{codename}{printedname}[countedwith]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{theorem}[lemma]{Satz}
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{corollary}[lemma]{Korollar}
+
+\theoremstyle{definition}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{beispiel}[lemma]{Beispiel}
+\newtheorem{beobachtung}[lemma]{Beobachtung}
+\newtheorem{anmerkung}[lemma]{Anmerkung}
+\newtheorem{question}[lemma]{Frage}
+\newtheorem{application}[lemma]{Anwendung}
+\newtheorem{konsequenz}[lemma]{Konsequenz}
+
+\newenvironment{proofsketch}{\begin{proof}[Beweisskizze]\renewcommand*{\qedsymbol}{\("\square"\)}}{\end{proof}}
+
+%
+%
+%
+\include{title}
+\tableofcontents
+\thispagestyle{fancy}
+%
+%
+%
+%
+%
+\chapter{Primzahlen}
+\begin{definition}
+	$H \subseteq \bZ$ heißt Untergruppe von $\bZ$, wenn 
+	\begin{align*}
+		n \in H \implies -n \in H,
+	\end{align*} und 
+	\begin{align*}
+		m, n \in H \implies m + n \in H
+	\end{align*}
+\end{definition}
+\begin{theorem}
+	Es gibt eine Bijektion 
+	\begin{align*}
+		\bN &\leftrightarrow \{\text{\emph{Untergruppen von ($\bZ, + $)}}\}\\
+		n &\mapsto n\bZ
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Sei $H \subseteq \bZ$ eine Untergruppe. Entweder $H = \{0\} = 0\bZ$, oder $H \neq \{0\}$.
+	\newpar
+	Sei also $H \neq \{0\}$. Dann gibt es ein kleinstes Element $m$ der Menge $\{n \in H \mid n > 0\}$.
+	Aus den Untergruppenaxiomen folgt $m\bZ \subseteq H$. Gleichzeitig kann kein Element $n \notin m \bZ$ in $H$ enthalten sein, denn sonst wäre auch $r = n \mod m \neq 0$ in $H$ enthalten. Dann hätten wir aber $r < m$, was ein Widerspruch ist.
+	\newpar
+	Als Umkehrfunktion wählen wir das kleinste positive Element von $H$.
+\end{proof}
+\begin{definition}
+	Eine \tbf{Primzahl} ist eine natürliche Zahl $p \in \bN_{\geq 2}$, die nicht als Produkt zweier Zahlen $a,b < p$ geschrieben werden kann.
+\end{definition}
+\begin{theorem}
+	Es gibt unendlich viele Primzahlen.
+\end{theorem}
+\begin{proof}
+	Angenommen, es gäbe endlich viele Primzahlen. Sei also $p_1, \hdots, p_r$ eine vollständige Liste aller Primzahlen. Dann wäre aber
+	\begin{align*}
+		q = 1 + \prod_{i = 1}^{r} p_i
+	\end{align*}
+	durch keine Primzahl teilbar, also selbst eine Primzahl. Widerspruch!
+\end{proof}
+\begin{theorem}
+	Jede Zahl $n \in \bN$ kann als Produkt von Primzahlen geschrieben werden:
+	\begin{align*}
+		n = p_1 \cdot \hdots \cdot p_r \quad (r \geq 0)
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Der Fall $n = 1$ gilt per Konvention durch das leere Produkt.
+	\newpar
+	Sei $n \geq 2$ gegeben. Es gilt entweder:
+	\begin{itemize}
+		\item $n$ ist eine Primzahl.
+		\item $n$ ist von der Gestalt $n = a \cdot b$, mit $a,b < n$.
+	\end{itemize}
+	Der Satz folgt durch Induktion über die entstehende Baumstruktur - nach Induktionsannahme haben $a$ und $b$ eine Primfaktorzerlegung. Also hat auch $n$ eine Primfaktorzerlegung. 
+\end{proof}
+\begin{definition}
+	Der \tbf{größte gemeinsame Teiler} von $a,b \in \bZ$ mit $a \neq 0$ oder $b \neq 0$ ist die Zahl:
+	\begin{align*}
+		\ggT(a,b) = \max\{d \in \bN : d \mid a \wedge d \mid b\}
+	\end{align*}
+\end{definition}
+\begin{theorem}
+	\ul{\emph{Über den größten gemeinsamen Teiler}}: Seien $a,b \in \bZ$. So gibt es $r,s \in \bN$ mit 
+	\begin{align*}
+		\ggT(a,b) = ra + sb
+	\end{align*}
+	Gegeben $d \mid a$ und $d \mid b$ gilt außerdem $d \mid \ggT(a,b)$.
+\end{theorem}
+\begin{proof}
+	Die Menge
+	\begin{align*}
+		H := \{ra + sb \mid r,s \in \bZ\} = a\bZ + b\bZ
+	\end{align*}
+	bildet eine Untergruppe von $Z$, ist also eine Gruppe der Form $m \bZ$ mit $m > 0$. Da $a \in m\bZ$ und $b \in m\bZ$ ist $m$ ein gemeinsamer Teiler. Da $m$ ein Element in $H$ ist existiert außerdem per Definition eine Darstellung $m = r'a + s'b$. Es gilt also 
+	\begin{align*}
+		(d \mid a) \wedge (d \mid b) \implies d \mid r'a + s'b \implies d \mid m.
+	\end{align*}
+	\newpar
+	Aus $(d \mid a) \wedge (d \mid b) \implies d \mid m$ folgt nun, dass jeder Teiler von $a$ und $b$ $m$ teilt, also kann es keinen Teiler von $a$ und $b$ geben, welcher größer als $m$ ist.
+\end{proof}
+\noindent Die Existenz der Darstellung $\ggT(a,b) = ra + sb$ ist auch als das \tbf{Lemma von Bézout} oder die \tbf{Bézoutsche Identät} bekannt.
+\begin{lemma}
+	\ul{\emph{Lemma von Euklid:}} Sei $p$ eine Primzahl und $a,b \in \bZ$.
+	Dann gilt:
+	\begin{align*}
+		p \mid ab \implies (p \mid a) \vee (p \mid b)
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Es reicht zu Zeigen:
+	\begin{align*}
+		(p \nmid a) \wedge (p \mid ab) \implies p \mid b
+	\end{align*}
+	Aus $p \nmid a$ folgt $\ggT(p,a) = 1$. Nach dem Lemma von Bézout können wir also $1$ darstellen als:
+	\begin{align*}
+		1 = rp + sa
+	\end{align*}
+	also:
+	\begin{align*}
+		b = rpb + sab
+	\end{align*}
+	Es gilt trivial $p \mid prb$, außerdem gilt per Annahme $p \mid ab$. Es folgt $p \mid rpb + sab = b$.
+\end{proof}
+\begin{theorem}
+	\ul{\emph{Eindeutigkeit der Primfaktorzerlegung im Ring $\bZ$:}}
+	Sei $n \in \bN_{\geq 1}$ und
+	\begin{align*}
+		n = \prod_{i = 1}^r p_i = \prod_{i = 1}^s q_i
+	\end{align*}
+	wobei alle $q_i$ und $r_i$ Primzahlen sind. So gilt $r = s$ und es gilt eine Permutation $\sigma \in S_r$ mit $p_i = q_{\sigma(i)}$.
+\end{theorem}
+\noindent Äquivalente Formulierungen:
+\begin{itemize}
+	\item Falls die $p_i$ und $q_i$ Aufsteigend oder Absteigend sortiert sind, gilt $\forall i : p_i = q_i$
+	\item Es existiert eine Bijektion zwischen endlichen Multimengen von Primzahlen und $\bN_{\geq 1}$.
+\end{itemize} 
+\begin{proof}
+	Per Induktion folgt aus dem Lemma von Euklid schnell:
+	\begin{align*}
+		p_1 \mid p_1 \implies \bigvee_{i = 1}^s p_1 \mid q_i
+	\end{align*}
+	Also existiert ein $q_i$ mit $p_1 = q_i$. Teilen wir nun beide Seiten durch $p_1$, folgt die Aussage durch die Induktionsannahme.
+\end{proof}
+\end{document}

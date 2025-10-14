@@ -27,6 +27,7 @@
 \newcommand{\ttt}[1]{\texttt{#1}}
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\mc}[1]{\mathcal{#1}}
 
 \newcommand{\bC}{\mathbb{C}}
 \newcommand{\bF}{\mathbb{F}}
@@ -34,10 +35,12 @@
 \newcommand{\bQ}{\mathbb{Q}}
 \newcommand{\bR}{\mathbb{R}}
 
-%\newcommand{\va}{\vec{a}}
-%newcommand{\vb}{\vec{b}}
+\newcommand{\cB}{\mathcal{B}}
+
+\renewcommand{\vb}{\vec{b}}
 \newcommand{\vc}{\vec{c}}
 \newcommand{\ve}{\vec{e}}
+\newcommand{\vp}{\vec{p}}
 \renewcommand{\vu}{\vec{u}}
 \newcommand{\vv}{\vec{v}}
 \newcommand{\vw}{\vec{w}}
@@ -45,12 +48,21 @@
 \newcommand{\vy}{\vec{y}}
 \newcommand{\vz}{\vec{0}}
 
+\newcommand{\veta}{\vec{\eta}}
+
 \newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
 \newcommand{\Matnn}{\text{Mat}(n \times n)}
 \newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\Id}{\text{Id}}
+\newcommand{\SO}{\mathcal{SO}}
+
+\newcommand{\tensor}{\otimes}
+\newcommand{\Hom}{\text{Hom}}
+
+\newcommand{\inv}{\text{inv}}
 
 \renewcommand*\contentsname{Inhalt}
-\renewcommand*\proofname{Beweis}
+\renewcommand*\proofname{Beweis\newline}
 
 \pagestyle{fancy} %allows headers
 
@@ -84,6 +96,33 @@
 %
 %
 %
+\chapter{Lineare Gleichungssysteme}
+\begin{definition}
+	Eine \tbf{$n \times m$ - Matrix} ist formell eine Abbildung aus der Produktmenge $\{1, \hdots, n\} \times \{1, \hdots m\}$ in eine Menge $M$, in der Regel einen Körper. Wir schreiben die Menge der $n \times m$-Matrizen über einem Körper $K$ als 
+	\begin{align*}
+		\text{Mat}(n \times m, K)
+	\end{align*}
+	Ist $A \in \text{Mat}(n \times m, K)$ schreiben wir den Koeffizienten $A(i,j)$ in der Regel als $A_{ij}$ oder $a_{ij}$.
+\end{definition}
+\begin{theorem}
+	Ist die Lösungsmenge eines Linearen Gleichungssystems nichtleer, so erhalten wir alle Lösungen, indem wir zu einer Lösung des Systems beliebige Lösungen des zugehörigen Homogenen Systems addieren.
+\end{theorem}
+\chapter{Vektorräume}
+\begin{definition}
+	Ein Vektorraum $(V, K, +, \cdot)$ ist ein Tupel aus einer Menge $V$, einem Körper $K$, einer Abbildung $+ : V \times V \to V$ (genannt \tbf{Vektoraddition}), und einer Abbildung $\cdot : K \times V \to V$ (genannt \tbf{Skalarmultipliation}), sodass folgende Axiome gelten:
+	\begin{itemize}
+		\item $(V, +)$ ist eine abelsche (also kommutative) Gruppe
+		\item $\cdot$ erfüllt folgende Rechenregeln:
+		\begin{enumerate}
+			\item Distributivität über die Addition:
+			\begin{align*}
+				\forall \lambda \in K, \forall v,w \in V:\\
+				\lambda(v + w) = \lambda v + \lambda w
+			\end{align*}
+		\end{enumerate}
+	\end{itemize}
+\end{definition}
+\chapter{(...)}
 \chapter{Wiederholung}
 \section{Notation}
 \begin{itemize}
@@ -150,6 +189,7 @@ det \begin{pmatrix}
     = aei + bfg + cdh - ceg - bdi - afh
 \end{align*}
 %
+Die Determinante eines Endomorphismus $f : V \to V$ ist das Produkt der Eigenwerte (unter Beachtung der algebraischen Vielfachheiten!)
 %
 \section{Basiswechsel}
 Zu Beginn will ich einige relevante Sätze, Definitionen und Notationsstandards aus der Vorlesung ``Lineare Algebra I'' wiederholen.
@@ -245,6 +285,30 @@ Ein zentrales Ziel der Vorlesung ``Lineare Algebra II'' ist es, zu einer Matrix 
 \begin{align*}
  A = Mat_{B_1}^{B_1}(f) \text{ und } B = Mat_{B_2}^{B_2}(f)
 \end{align*}
+\begin{section}{Der Satz von Wünsch-dir-was}
+\begin{theorem}
+	Let $V$ and $W$ be vector spaces. Let $B_V$ and $V_W$ be bases. Then 
+\end{theorem}
+\begin{proof}
+	Sei $((\vb_i)_{i \in I})$ eine Basis von $V$. Dann induzieren wir eine eindeutige lineare Abbildung durch
+	\[g(f_1(\vb_i)) = f_2(\vb_i).\]
+\end{proof}
+\end{section}
+\clearpage
+\section{Universelle Eigenschaft des Quotientenraums}
+Wenn $W \subseteq \text{ker}(l)$ existiert genau ein $\eta$, sodass das folgende Diagramm kommutiert:
+\begin{figure}[h!]
+	% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWIl0sWzAsMiwiViJdLFsyLDAsIlYvVyJdLFsyLDIsIlQiXSxbMCwxLCJpZCIsMl0sWzEsMywibCIsMl0sWzAsMiwicSJdLFsyLDMsIlxcZXhpc3RzICEgXFxldGEiXV0=
+	\[\begin{tikzcd}
+		V && {V/W} \\
+		\\
+		V && W
+		\arrow["q", from=1-1, to=1-3]
+		\arrow["id"', from=1-1, to=3-1]
+		\arrow["{\exists ! \eta}", from=1-3, to=3-3]
+		\arrow["l"', from=3-1, to=3-3]
+	\end{tikzcd}\]
+\end{figure}
 %
 %
 %
@@ -528,7 +592,7 @@ Normierung wird einfach durch Skalarmultiplikation des Polynoms erreicht, ist al
  Minimalpolynome existieren.
 \end{theorem}
 \begin{proof}
- Gemäß Satz von Cayley-Hamilton gibt es mindestens ein Polynom, welches nicht das Nullpolynom ist und $f$ als Nullstelle hat. Also finde nichttriviales Polynom $p$ von minimalem Grad finden, welches $f$ als Nullstelle hat \footnote{Die Menge der Grade von Polynomen mit $f$ als Nullstelle ist eine nichtleere Teilmenge der Natürlichen Zahlen, hat also ein Minimum.}. Sei $a$ der Leitkoeffizient von $p$. Dann ist $a^{-1}p$ ein normiertes Polynom vom selben Grad mit $f$ als Nullstelle.
+ Gemäß Satz von Cayley-Hamilton gibt es mindestens ein Polynom, welches nicht das Nullpolynom ist und $f$ als Nullstelle hat. Also finde nichttriviales Polynom $p$ von minimalem Grad finden, welches $f$ als Nullstelle hat.\footnote{Die Menge der Grade von Polynomen mit $f$ als Nullstelle ist eine nichtleere Teilmenge der Natürlichen Zahlen, hat also ein Minimum.} Sei $a$ der Leitkoeffizient von $p$. Dann ist $a^{-1}p$ ein normiertes Polynom vom selben Grad mit $f$ als Nullstelle.
 \end{proof}
 \begin{theorem}
 Minimalpolynome sind eindeutig.
@@ -1271,6 +1335,1011 @@ Sei $(V, \scalar{\_}{\_})$ ein Euklidischer oder Unitärer Vektorraum.
  \end{align*}
 \end{proof}
 
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+
+\begin{theorem}
+ Eigenschaften des Orthogonalen Komplements:
+ \begin{enumerate}
+  \item Es gilt $U^\bot \cong U^0 := \{f \in V^* (= \textnormal{Hom}(V,k)) \mid U \subseteq \ker(f)\}$.
+  
+  Genauer: Sei $s : V \to V^*, \vv \to \scalar{\underline{\hphantom{v}}}{\vv}$. Dann gilt $s(U^\bot) = U^0$ und umgekehrt für die Inverse $s^{-1}$.
+  \item Es gilt $\dim U^\bot = \dim V - \dim U$
+  \item Es ist $V = U \oplus U^\bot$ (Also $U \cap U^\bot = \{0\}$ und $V = U + U^\bot$)
+  \item Es gilt $U = (U^\bot)^\bot$
+ \end{enumerate}
+\end{theorem}
+\begin{proof}
+ \hphantom{v}
+ \begin{enumerate}
+  \item
+  \item
+  \item Sei $v \in U \cap U^\bot$. Weil $v \in U^\bot$ ist, gilt $\forall u \in U : \scalar{v}{u} = 0$. Insbesondere gilt $\scalar{\vv}{\vv} = 0$, also $\vv = \vz$.
+ \newpar
+ Nach Dimensionalsformel dilt $\dim U + U^\bot = \dim U + \dim U^\bot - \dim (U \cap U^\bot)$, also $\dim U + \dim U^\bot = \dim U + (\dim V - \dim U) + 0 = \dim V$, also $\dim U + \dim U^\bot = \dim V$, also $U + U^\bot = V$.
+   \item Es gilt $\dim (U^\top)^\top = \dim V - \dim U^\bot = \dim V - (\dim V - \dim U) = \dim U$. Es gilt zusätzlich $\forall \vu \in (U^\bot)^\bot : \forall \vv \in U^\bot :\vu \bot \vv$, also $\vu \in V$.
+ \end{enumerate} 
+\end{proof}
+\begin{theorem}
+ Es gibt eine kanonische Identifikation, also einen kanonischen Isomorphismus, zwischen dem Quotientenvektorraum $V / U$ und dem Orthogonalraum $U^\bot$.
+\end{theorem}
+\begin{proof}
+ Wir vergleichen die Quotientenabbildung $q : V \to V / U$ mit der orthogonalen Projektion $\pi : V \to U^\bot$. Wir haben folgendes kommutatives Diagramm:
+ \begin{center}
+ \begin{tikzcd}[row sep = huge, column sep = huge]
+    V
+    \arrow[r, "q"]
+    \arrow[d, "id"]
+    & V / U
+    \arrow[d, "\eta"] \\
+    V
+    \arrow[r, "\pi"]
+    &  U^\bot
+\end{tikzcd}
+\end{center}
+\end{proof}
+\hspace{-20pt}
+Wobei $\eta$ gemäß universeller Eigenschaft eindeutig ist. Wir wissen, dass $\pi$ surjektiv ist, also ist $\pi$ auch injektiv. Also ist $id \circ \pi$ bijektiv, dementsprechend ist auch $q \circ \eta$ bijektiv, also ist insbesondere $\eta$ bijektiv.
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\section{Die adjungierte Abbildung}
+\ul{Situation:} Seien $(V, \scalar{\cdot}{\cdot}_V)$ und $(w, \scalar{\circ}{\circ})$ endlichdimensionale Euklidische Vektorräume mit Identifikationsabbildungen $s_v : V \to V^*$ und $s_w : W \to W^*$.
+\newpar
+\ul{Problem:} Sei $f : V \to W$ linear mit zugehöriger Rückzugsabbildung:
+\begin{align*}
+ f^* : W^* &\to V^*\\
+ (\varphi : W \to \bR) &\to \varphi \circ f
+\end{align*}
+Wir suchen nun eine Abbildung $f^{ad}$, durch die folgendes Diagramm kommutiert:
+\begin{center}
+ \begin{tikzcd}[row sep = huge, column sep = huge]
+    V
+    \arrow[d, "s_v"]
+    & W
+    \arrow[l, "f^{ad}"]
+    \arrow[d, "s_w"] \\
+    V^*
+    &  W^*
+    \arrow[l, "f^*"]\\
+\end{tikzcd}
+\end{center}
+\begin{theorem}
+Für die adjungierte Abbildung $f^{ad}$ gilt:
+ \begin{align*}
+ \forall \vv \in V, \vw \in W : \scalar{f(\vv)}{\vw}_W = \scalar{\vv}{f^{ad}(\vw)}_V
+\end{align*}
+\end{theorem}
+\begin{proof}
+ Per Definition ist:
+ \begin{align*}
+  f^{ad} = s_v^{-1}  \circ f^* \circ s_w\\
+  \Leftrightarrow s_v \circ f^{ad} = f^* \circ s_w\\
+ \end{align*}
+ Dies ist eine Gleichheit von Abbildungen $W \to V^*$. Sei also ein $\vw \in W$ gegebben. Dann ist
+ \begin{align*}
+  s_v \circ f^{ad}(\vw) = f^* \circ s_w(\vw) \in V^*
+ \end{align*}
+ Also $\forall \vv \in V$:
+ \begin{align*}
+  s_v \circ f^{ad}(\vw)(\vv) = f^* \circ s_w(\vw)(\vv)
+ \end{align*}
+ Per Definition von $s_v$ und $s_w$ ist dies genau:
+ \begin{align*}
+  \scalar{\vv}{f^{ad}(\vw)}_V = (\scalar{\cdot}{\vw}_W \circ f)(\vv) = \scalar{f(\vv)}{\vw}
+ \end{align*}
+\end{proof}
+\begin{proposition}
+ Diese Eigenschaft ist eine universelle Eigenschaft, welche $f^{ad}$ eindeutig festlegt.
+\end{proposition}
+\begin{proof}
+ Wenn $f^{ad}$ und $f^{ad}_2$ Abbildungen sind, welche die Identität erfüllen, gilt 
+ \begin{align*}
+  \scalar{\vv}{f^{ad}(\vw)} = \scalar{f(\vv)}{\vw} = \scalar{\vw}{f^{ad}_2(\vw)}
+ \end{align*}
+ \ul{Erinnerung:} Wenn $(\vv_i)$ eine Orthonormalbasis ist, dann gilt $\forall \vv \in V : \vv = \sum \scalar{\vv}{\vv_i} \vv_i$. Wenn also für $\vv, \vv' \in V$ $\forall i : \scalar{\vv}{\vv_i} = \scalar{\vv'}{\vv_i}$, dann $\vv = \vv'$. Per Definition der adjungierten Abbildungen gilt:
+ \begin{align*}
+  \scalar{\vv_i}{f^{ad}(\vw)} = \scalar{\vv_i}{f^{ad}_2(\vw)}
+ \end{align*}
+ Per universeller Eigenschaften folgt:
+ \begin{align*}
+  \scalar{\vv_i}{f^{ad}(\vw)} = \scalar{\vv_i}{f^{ad}_2(\vw)} = \scalar{f(\vv)}{\vw}
+ \end{align*}
+ Also $f^{ad}$ = $f^{ad}_2$.
+\end{proof}
+%
+%
+%
+%
+%
+%
+\clearpage
+[...]
+\clearpage
+\chapter{Orthogonale und unitäre Endomorphismen}
+\begin{definition}
+ Sei $V$ ein endlichdimensionaler euklidischer (bzw. unitärer) Vektorraum. Wir nennen einen Endomorphismus $f : V \to V$ euklidisch (bzw. unitär), falls für alle $\vv, \vw in V$ folgende Gleichung gilt:
+ \begin{align*}
+    \scalar{f(\vv)}{f(\vw)} = \scalar{\vv}{\vw}
+ \end{align*}
+ \end{definition}
+ \begin{lemma}
+  Ein Endomorphismus $f : V \to W$ ist orthogonal genau dann, wenn für alle $\vv \in V$ folgende Gleichung gilt:
+  \begin{align*}
+   \norm{f(\vv)} = \vv
+  \end{align*}
+ \end{lemma}
+ \begin{theorem}
+  Sei $f : V \to V$ orthogonal (bzw. unitär). Dann gilt folgendes:
+  \begin{enumerate}
+   \item Für alle Eigenwerte $\lambda$ von $f$ gilt $\abs{\lambda} = 1$.
+   \item $\abs{\det f} = 1$
+   \item Für alle $\vv, \vw \in V$ gilt:
+   \begin{align*}
+    \vv \bot \vw \Leftrightarrow f(\vv) \bot f(\vw)
+   \end{align*}
+   \item $f$ ist injektiv
+   \item $f$ ist ein isomorphismus mit orthogonaler (bzw. unitärer) Umkehrabbildung $f^{-1}$
+  \end{enumerate}
+ \end{theorem}
+ \begin{corollary}
+  Es sei $(V, \scalar{\_}{\_})$ ein endlichdimensionaler euklidischer (bzw. unitärer) Vektorraum. Dann bilden die orthogonalen (bzw. unitären) Abbildungen eine Untergruppe von $\text{Aut}(V)$. Wir nennen diese Gruppe die orthogonale Gruppe (bzw. unitäre Gruppe) von $V$.
+ \end{corollary}
+
+
+\section{Normalformen unitärer Endomorphismen}
+\begin{theorem}
+ Sei $V$ ein endlichdimensionaler euklidischer Vektorraum und $f : V \to V$ orthogonal. Dann gibt es eine angeordnete orthonormalbasis $\cB$, sodass
+ \begin{align*}
+  \Mat{\cB}{\cB}{f} = \begin{pmatrix}
+                       \Id_{a \times a} &  &  & \hdots & 0\\
+                        & \Id_{b \times b} &  & & \vdots\\
+                        &  & A_1 &  & \\
+                       \vdots &  &  & \ddots & \\
+                       0 & \hdots &   &  & A_k\\
+                      \end{pmatrix}
+ \end{align*}
+ Wobei $A_1, \hdots, A_k \in \SO_2$ (also zweidimensionale Drehmatrizen).
+\end{theorem}
+\begin{proof}
+ Folgt nach der nächsten Sektion zur Komplexifizierung, welche zur Vorbereitung des Beweises dient.
+\end{proof}
+\subsection{Komplexifizierung}
+Sei $V$ ein endlichdimensionaler reeller Vektorraum. Wir konstruieren einen komplexen Vektorraum $V^\bC$ wie folgt: Wir betrachten die Menge $V \times V$, mit folgenden Operationen:
+\begin{align*}
+ + :  (V \times V) \times (V \times V) &\to (V \times V)\\
+ ((\vv_1,\vw_1),(\vv_2, \vw_2)) &\to (\vv_1 + \vv_2, \vw_1 + \vw_2)\\
+\end{align*}
+\begin{align*}
+ \cdot : \bC \times (V \times V) &\to (V \times V)\\
+ ((a + ib), (\vv, \vw)) &\to (a\vv - b\vw, b\vv + a\vw)\\
+\end{align*}
+Wir schreiben die Elemente $\vv, \vw \in V^\bC$ suggestiv direkt als $\vv + i\vw$. Wir definieren zusätzlich die komplexe Konjugation:
+\begin{align*}
+ \overline{\cdot} : V \times V &\to V \times V\\
+                    (\vv, \vw) &\to (\vv, - \vw)
+\end{align*}
+Und die kanonische Inklusion:
+\begin{align*}
+ \cdot^\bC : V &\to V \times V\\
+                    \vv &\to (\vv, 0)
+\end{align*}
+Mithilfe der Abbildung $\cdot^\bC$ fassen wir $V$ als Teilmenge von $V^\bC$ auf. Gegeben $\vv \in V$ nennen wir $\vv^\bC \in V^\bC$ den komplexifizierten Vektor.
+\begin{lemma}
+ Gegeben eine Basis $\cB$ des $\bR$-Vektorraums $V$ ist die komplexifizierte Basis $\cB^\bC$ eine Basis des $\bC$-Vektorraums $V^\bC$.
+\end{lemma}
+\noindent
+Wir können nun lineare Abbildungen $f$ durch folgende Vorschrift komplexifizieren:
+\begin{align*}
+ f^\bC(\vb^\bC) = (f(\vb))^\bC
+\end{align*}
+\begin{lemma}
+ Sei $f : V \to V$ orthogonal. Dann gibt es einen Untervektorraum $U \subseteq V$, sodass $\dim U \in \{1,2\}$ und $f(U) \subseteq U$.
+\end{lemma}
+\begin{proof}
+ Angenommen, $f$ hat einen reellen Eigenwert $\lambda \in \bR$. So ist der gesuchte Raum durch den Raum gegeben, der durch einen dazugehörigen Eigenvektor aufgespannt wird.
+ \newpar
+ Falls kein reeller Eigenwert existiert, muss nach dem Fundamentalsatz der Analysis ein komplexer Eigenwert $(a + bi) := \lambda \in \bC \setminus \bR$ existieren. So ist $\overline{\lambda}$ ebenfalls eine Nullstelle des charakteristischen Polynoms, also ebenfalls ein Eigenwert:
+ \begin{align*}
+  \chi_f(\overline{\lambda}) &= \sum a_i \cdot \overline{\lambda}^i\\
+                             &= \sum a_i \cdot \overline{\lambda^i}\\
+                             &= \sum \overline{a_i} \cdot \overline{\lambda^i} \qquad (a_i \in \bR)\\
+                             &= \sum \overline{a_i \cdot \lambda^i}\\
+                             &= \overline{\chi_f(\lambda)}\\
+                             &= 0
+ \end{align*}
+ Wir wissen, dass $f^\bC$ einen komplexen Eigenvektor $\vv = (\vv_1, \vv_2)$ zum Eigenwert $\lambda \in \bC$ haben muss. Es gilt $f(\overline{\vv}) = \overline{f(\vv)}$, also ist $\overline{\vv}$ ein Eigenvektor zum Eigenwert $\overline{\lambda}$. $\vv$ und $\overline{\vv}$ sind Eigenvektoren zu unterschiedlichen Eigenwerten, also linear unabhängig. Es folgt, dass folgende Menge ebenfalls unabhängig ist:
+ \begin{align*}
+  \left\{\frac{1}{2}(\vv + \overline{\vv}), \frac{i}{2}(\vv - \overline{\vv})\right\} = \{(\vv_1,0),(\vv_2,0)\}
+ \end{align*}
+ Also ist $U = \text{span}(\vv_1, \vv_2)$ ein zweidimensionaler reeller Untervektorraum von $V$ mit den gewünschten Eigenschaften.
+\end{proof}
+\noindent
+Da orthogonale Abbildungen isomorphismen sind gilt sogar $f(U) = U$. Es folgt, dass $f|_U : U \to U$ ebenfalls orthogonal ist.
+\clearpage
+[...]
+\clearpage
+\begin{theorem}
+ THEOREM
+\end{theorem}
+\begin{proof}
+ Per Induktion über $n := \dim V$.
+ \begin{enumerate}
+  \item[(i)] Induktionsbasis: $n = 1$. In diesem Fall ist $f = \pm \Id_V$, also sind wir fertig durch Wahl einer beliebigen Orthonormalbasis (wobei ohnehin nur $\{+1\}$ oder $\{-1\}$ als Basis in Frage kommen)
+  \item[(ii)] Induktionsschritt: Sei $n > 1$ und sei die Behauptung für alle orthonormalen Endomorphismen von Vektorräumen kleinerer Dimensionen schon bewiesen.
+  \newpar
+  \ul{Fall 1}: $f$ hat einen reellen Eigenwert $\lambda$. Sei $\vu \in V$ ein Eigenvektor und sei $U = \langle \vu \rangle$. Dann gilt $f(U) = U$ und $f(U^\bot) = U^\bot$, $U^\bot$ hat Dimension $n - 1$. Jetzt ist $f \mid_{U^\bot}$ ein orthogonaler Endomorphismus von $U^\bot$, also gibt es per Induktionsannahme eine Orthonormalbasis $B = \vv_1, \hdots, \vv_{n-1} \in U^\bot$, sodass die Aussage gilt. Dann ist $B \cup \frac{1}{\norm{\vu}}\vu$ eine Orthonormalbasis von $V$. Nach Umsortieren ist es eine Basis mit den gesuchten Eigenschaften.
+  \newpar
+  \ul{Fall 2}: $f$ hat keinen reellen Eigenwert. Nach Vorbereitung 2 gibt es einen Untervektorraum $U \subseteq V$ mit $f(U) = U$ und $\dim U \in \{1,2\}$. Da $f$ keinen rellen Eigenwert hat, ist $\dim U \neq 1$, also $\dim U = 2$. Desweiteren kann $f \mid_U$ keine Spiegelung sein, sonst gäbe es ebenfalls einen reellen Eigenwert, also ist $f \mid_U$ eine Drehung ($\det (f \mid_U) = 1$) und für eine ONB $B_1 = \{\vv_1, \vv_2\}$ ist $\Mat{B_1}{B_1}{f \mid_U} \in \mathcal{SO}_2$. Wählen wir eine Basis $B_2 = (\vw_i)_{i \leq n-2}$ von $U^\bot$, so ist nach Induktionsannahme $B = B_1 \cup B_2$ eine Orthonormalbasis mit den gesuchten Eigenschaften.
+ \end{enumerate}
+\end{proof}
+\section{Selbstadjungierte Endomorphismen}
+\begin{definition}
+ Ein Endomorphismus $f : V \to V$ heißt selbstadjungiert, wenn $f = f^{ad}$, also:
+ \begin{align*}
+  \scalar{f(\vv)}{\vw} = \scalar{\vv}{f(\vw)}
+ \end{align*}
+\end{definition}
+\begin{beispiel}
+ Sei $V = \bR^n$ mit Standardskalarprodukt, $A \in \Matnn$, $f : \vv \to A \vv$. Die Abbildung $f$ ist selbstadjungiert gdw:
+ \begin{align*}
+  \scalar{f(\vv)}{\vw} = \scalar{\vv}{f(\vw)}
+  &\Leftrightarrow \scalar{A\vv}{\vw} = \scalar{\vv}{A \vw}\\
+  &\Leftrightarrow (A\vv)^\top \vw = \vv^\top A \vw\\
+  &\Leftrightarrow \vv^\top \cdot A^\top \cdot \vw = \vv^\top \cdot A \cdot \vw
+ \end{align*}
+ Durch $\vv, \vw = e_i, e_j$ erhält man direkt $A = A^\top$.
+\end{beispiel}
+\begin{beispiel}
+ Sei $V = \bC^n$ mit Standardskalarprodukt und $A = \text{Mat}(n \times n, \bC)$ mit dazugehörigem Endomorphismus $f$. Dann ist $f$ selbstadjungiert gdw. $A^\top = \overline{A}$, also $A$ Hermitsch.
+\end{beispiel}
+\begin{proposition}
+Sei $B$ eine Orthonormalbasis von $V$. Dann ist $f$ selbstadjungiert genau dann, wenn $\Mat{B}{B}{f}$ symmetrisch oder Hermitsch ist.
+\end{proposition}
+\begin{theorem}
+ Alle Eigenwerte einer selbstadjungierten Abbildung sind reell.
+\end{theorem}
+\begin{proof}
+ Für den Unitären Fall: Sei $f$ selbstadjungiert, $\lambda$ ein Eigenwert und $\vv \in V \setminus \{0\}$ ein zugehöriger Eigenvektor. Dann gilt:
+ \begin{align*}
+  \scalar{f(\vv)}{\vw} = \scalar{\lambda \vv}{\vv} = \lambda \scalar{\vv}{\vv}\\
+  \scalar{\vv}{f(\vv} = \scalar{\vv}{\lambda \vv} = \overline{\lambda} \scalar{\vv}{\vv}\\
+ \end{align*}
+ Es gilt $\scalar{\vv}{\vv} \neq 0$, also $\lambda = \overline{\lambda}$, also $\lambda \in \bR$.
+\end{proof}
+\begin{corollary}
+ Selbstadjungierte Endomorphismen sind diagonalisierbar.
+\end{corollary}
+\begin{theorem}
+ Für jede selbstadjungierte Abbildung $f$ existiert eine Orthonormalbasis aus Eigenvektoren von $f$.
+\end{theorem}
+\begin{proof}
+ Per Induktion über $n = \dim V$.
+ \begin{enumerate}
+  \item[(IB)] Sei $\vv \in V$ ein Eigenvektor mit Länge $1$. Dann ist $\{\vv\}$ die gesuchte Basis.
+  \item[(IV)] Sei $n > 1$. Sei die Aussage für selbstadjungierte Endomorphismen von Vektorräumen kleinerer Dimension bereits bewiesen. Wir wissen: es existiert ein reeller Eigenwert $\lambda$. Sei $\vu \in V$ ein zugehöriger Eigenvektor der Länge 1 und $U = \langle \vu \rangle$. Sei $\veta$ in $f(U^\bot)$. Wähle $\veta' \in U^\bot$, sodass $\veta = f(\veta')$.  Es gilt:
+  \begin{align*}
+   \scalar{f(\veta')}{\vu} = \scalar{\veta'}{f(\vu)} = \lambda\scalar{\veta'}{\vu} = 0
+  \end{align*}
+  Also $\scalar{\eta}{\vu} = 0$, also $\eta \in U^\bot$, also $f(U^\bot) \subseteq U^\bot$.
+  \newpar
+  \ul{Behauptung:} $f \mid_{U^\bot}$ ist selbstadjungiert. Da $\dim U^\bot < \dim V$ liefert die Induktionsannahme eine Orthonormalbasis $B = (\vv_i)_{i < n}$ von $U^\bot$. Dann ist $\vu \cup B$ eine gesuchte Basis.
+ \end{enumerate}
+\end{proof}
+\begin{proposition}
+ Sei $A \in \text{Mat}(n \times n, \bR)$ symmetrisch. Dann gibt es eine orthogonale Matrix $S$, sodass $SAS^{-1}$ diagonal ist.
+\end{proposition}
+\begin{section}{Hauptachsentransformation}
+ \begin{theorem}
+ \label{thrm:hauptachsen}
+  Sei $V$ ein endlichdimensionaler Vektorraum über $\bR$ oder $\bC$, sei $s : V \times V \to k$ eine symmetrische oder Hermitische Form. Weiter sei $\mc{A}$ eine angeordnete Basis von $V$ und $A = \text{Mat}_\mc{A}(s)$ die dazugehörige Matrix. Dann gibt es eine Basis $\mc{B} \subset V$, sodass:
+  \begin{enumerate}
+   \item Die Matrix $B = \text{Mat}_\mc{B}(s)$ diagonal ist,
+   \item Die Koordinatenwechselmatrix $S = \Mat{\mc{B}}{\mc{A}}{\text{Id}_V}$ orthogonal oder unitär ist,
+   \item Die Einträge der Diagonalmatrix $B$ relle Eigenwerte von $A$ sind.
+  \end{enumerate}
+ \end{theorem}
+ \begin{definition}
+   In dieser Situation nennen wir die Vektoren aus $\mc{B}$ die \tbf{Hauptachsen von $s$} und den Basiswechsel von $\mc{A}$ zu $\mc{B}$ die \tbf{Hauptachsentransformation}.
+ \end{definition}
+ \begin{theorem}
+  In der Situation von Satz \ref{hauptachsen} sind folgende Aussagen äquivalent:
+  \begin{enumerate}
+   \item Die Form $s$ ist positiv definit.
+   \item Alle Eigenwerte von $A$ sind größer als Null.
+  \end{enumerate}
+ \end{theorem}
+ \begin{subsection}{Anwendung - Rotation von Körpern im Raum}
+  Wir betrachten Lineare Bewegung / Translation, also einen Körper mit Masse $m$ der sich mit einer konstanten Geschwindigkeit $\vv$ bewegt. Der Impuls ist gegeben durch $\vp = m \cdot \vv$. Es stellt sich heraus, dass jeder Begriff der linearen Bewegung einen Analogen Begriff in der Rotation hat, z.B. Impuls $\leftrightarrow$ Drehimpuls - Bei symmetrischer Massenverteilung ist der Drehimpuls gegeben durch Trägheitsmoment $\cdot$ Drehgeschwindigkeit. Im Allgemeinen ist die Formel etwas komplizierter (Drehimpuls = Trägheitstensor $\cdot$ Drehgeschwindigkeit):
+  \begin{align*}
+   \vec{L} = \Theta \cdot \vec{\omega}
+  \end{align*}
+  Wobei die Richtung von $\vec{\omega}$ die Rotationsachse ist und die Länge der Rotationsgeschwindigkeit entspricht. In dieser spezifischen Situation ist der Trägheitstensor $\Theta$ einfach eine $3 \times 3$-Matrix - spezifischer handelt es sich um eine \textit{symmetrische} Matrix! Eine Beobachtung: Drehimpuls und Drehgeschwindigkeit zeigen genau dann in die selbe Richtung, wenn die Drehachse ein Eigenvektor des Trägheitstensors ist! Der sylvestersche Trägheitssatz sagt uns nun, dass es genau drei Richtungen gibt, in denen man ohne Umwucht drehen kann.
+ \end{subsection}
+ \begin{subsection}{Anwendung - Kovarianz}
+  Untersucht man gleichzeitig Zufallsvariablen $X_1, \hdots, X_n$, so bilden die Kovarianzen der Zufallsvariablen eine symmetrische \tbf{Kovarianzmatrix}:
+  \begin{align*}
+   A_{ij} = \text{Kov}(i,j), \quad A_{ii} = \text{Var}(i)
+  \end{align*}
+Da die Matrix symmetrisch ist, existiert eine Orthonormalbasis aus Eigenvektoren. Welche Bedeutung hat ein Eigenvektor der Kovarianzmatrix? Gegeben einen Vektor $\vv = (\lambda_1, \hdots, \lambda_n)^\top$, betrachte die Zufallsvariable $X_{\vv} = \sum \lambda_i X_i$. Zentrale Beobachtung: Die Kovarianzmatrix gibt ebenfalls die Kovarianz solcher Linearkombinationen aus Zufallsvariablen - Gegeben $\vv, \vw \in \bR^n$ gilt 
+  \begin{align*}
+   \text{Kov}(\vv, \vw) = \vv^\bot A \vw
+  \end{align*}
+ \end{subsection}
+ Die Hauptachsentransformation erlaubt uns nun, das Problem zu reduzieren, indem als Basis die ``Richtungen'' der Kovarianzen genommen werden, und die dazu orthogonalen Vektoren. Daraufhin können dann Achsen, entlang denen die Varianz gering ist, ignoriert werden, ohne die Daten zu sehr zu verfälschen.
+\end{section}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+\begin{chapter}{Multilineare Algebra}
+\begin{definition}
+ Seien $U, V, W$ Vektorräume. Eine \tbf{bilineare Abbildung} ist eine bilineare Abbildung $U \times V \to W$.
+\end{definition}
+\begin{definition}
+ Seien $V_1, \hdots, V_n, W$ Vektorräume. Eine \tbf{multilineare Abbildung} ist eine bilineare Abbildung $V_1 \times \hdots \times V_n \to W$.
+\end{definition}
+\noindent Ein Beispiel für eine Multilineare Abbildung ist die Determinante einer Matrix, aufgefasst als Funktion der Spalten (bzw. Zeilen) der Matrix.
+\begin{section}{Das Tensorprodukt}
+\begin{definition}
+ Sei $k$ ein Körper und $U, V$ zwei $k$-Vektorräume. Ein Tensorprodukt von $U$ und $V$ ist ein $k$-Vektorraum $T$ zusammen mit einer bilinearen Abbildung $\tau : U \times V \to T$, sodass es für alle bilinearen Abbildungen $s : U \times V \to W$ genau eine lineare Abbildung $\eta : T \to W$ gibt, sodass das folgende Diagramm kommutiert:
+ \begin{figure}[h!]
+    \centering
+    \begin{tikzcd}[row sep = huge, column sep = huge]
+    U \times V
+    \arrow[r, "\tau \text{ bilinear}"]
+    \arrow[d, "id"]
+    & T
+    \arrow[d, "\exists!\eta \text{ linear}"] \\
+    U \times V
+    \arrow[r, "s \text{ bilinear}"]
+    &  W
+    \end{tikzcd}
+ \end{figure}
+\end{definition}
+\begin{theorem}
+ $\eta$ ist ein Isomorphismus
+\end{theorem}
+\begin{proof}
+ Nach universeller Eigenschaft der Tensorprodukte existiert genau eine lineare Abbildung $\mu : T_2 \to T_1$, sodass das folgende Diagramm kommutiert:
+ \begin{figure}[h!]
+    \centering
+    \begin{tikzcd}[row sep = huge, column sep = huge]
+    U \times V
+    \arrow[r, "\tau_2 \text{ bilinear}"]
+    \arrow[d, "id"]
+    & T_2
+    \arrow[d, "\exists!\mu \text{ linear}"] \\
+    U \times V
+    \arrow[r, "\tau_1 \text{ bilinear}"]
+    &  T_1
+    \end{tikzcd}
+ \end{figure}
+ \newpar
+ \clearpage
+ \noindent Wir betrachten nun das folgende Diagramm:
+  \begin{figure}[h!]
+    \centering
+    \begin{tikzcd}[row sep = huge, column sep = huge]
+    U \times V
+    \arrow[r, "\tau_1 \text{ bilinear}"]
+    \arrow[d, "id"]
+    & T_1
+    \arrow[d, "\exists!\eta \text{ linear}"] \\
+    U \times V
+    \arrow[r, "\tau_2 \text{ bilinear}"]
+    \arrow[d, "id"]
+    & T_2
+    \arrow[d, "\exists!\mu \text{ linear}"] \\
+    U \times V
+    \arrow[r, "\tau_1 \text{ bilinear}"]
+    &  T_1
+    \end{tikzcd}
+ \end{figure}
+ \newpar
+ Da die obere Hälfte kommutiert gilt $\mu (\eta(\tau_1(v)) = \mu(\tau_2(v))$. Da die untere Hälfte kommutiert gilt $\mu(\tau_2(v))= \tau_1(v)$. Also kommutiert auch das kombinierte Diagramm.
+ \newpar
+ Das folgende Diagramm kommutiert trivial:
+ \begin{figure}[h!]
+    \centering
+    \begin{tikzcd}[row sep = huge, column sep = huge]
+    U \times V
+    \arrow[r, "\tau_1 \text{ bilinear}"]
+    \arrow[d, "id"]
+    & T_1
+    \arrow[d, "id"] \\
+    U \times V
+    \arrow[r, "\tau_1 \text{ bilinear}"]
+    &  T_1
+    \end{tikzcd}
+ \end{figure}
+ \newpar
+ Also gibt es zwei Abbildungen, welche das Diagramm kommutieren lassen: $id$ und $\mu \circ \eta$. Aufgrund der universellen Eigenschaft des Tensorprodukts $T_1$ ist die Abbildung, welche das Diagramm kommutieren lässt, aber eindeutig. Also gilt $\mu \circ \eta = id$. Der Beweis für $\eta \circ \mu = id$ folgt analog, wobei $T_2$ und $T_1$ vertauscht werden.
+ \end{proof}
+ \begin{theorem}
+  Tensorprodukte existieren.
+ \end{theorem}
+  Dieser Satz wird einiges an Arbeit benötigen. Wir führen zuerst neue Notation und einige Definitionen ein.
+  \newpar
+  \noindent \ul{\tbf{Katastrophale Notation:}} Da je zwei Tensorprodukträume isomorph sind redet man in der Literatur von ``dem Tensorprodukt'' als wäre es eindeutig. (das selbe Problem hat ``der'' Quotientenraum $V / U$). Man bezeichnet alle Tensorprodukte von $U$ und $V$ mit $U \otimes V$. Gegeben zwei Vektoren $\vu \in U$, $\vv \in V$ schreibt man statt $\tau(\vu, \vv)$ auch $\vu \otimes \vv \in U \otimes V$.
+  %
+  %
+  %
+  %
+  %
+  \subsection{Direkte Produkte}
+  \ul{Ziel:} Gegeben zwei Vektorräume $V, W$ existiert der Produktraum $V \times W$. Wir wollen dies für beliebig viele Faktoren.
+  \newpar
+  \ul{Konstruktion:} Wir formalisieren das Konzept einer Folge von Vektoren. Sei $I$ eine Menge. Sei $(V_i)_{i \in I}$ eine Familie von $k$-Vektorräumen. Dann betrachte
+  \begin{align*}
+   \prod_{i \in I} V_i &= \left\{(\vv_i)_{i \in I} \mid \forall i : \vv_i \in V_i\right\}\\
+   \bigoplus_{i \in I} V_i &= \left\{(\vv_i)_{i \in I} \mid \forall i : \vv_i \in V_i \text{ und nur endlich viele } \vv_i \neq \vz \right\}
+  \end{align*}
+  \ul{Einfach:} Auf $\prod V_i$ lässt sich durch komponentenweise Addition und Skalarmultiplikation eine $k$-Vektorraumstruktur definieren. Diesen Vektorraum nennen wir das \tbf{direkte Produkt} der Familie $(V_i)_{i \in I}$.
+  \newpar
+  Spezialfall: Es gibt einen Vektorraum $V$, sodass $\forall i : V_i = V$. In diesem Spezialfall schreibt man für das direkte Produkt auch $V^I$ (z.B. $\bR^\bN$ für Folgen reeller Zahlen).
+  \newpar
+  \begin{beobachtung}
+   In diesem Spezialfall ist das Produkt $\prod_{i \in I} v_i = V^I$ genau die Menge der Abbildungen $I \to V$. Hier sieht man explizit, dass $\bR^\bN$ die Menge der Abbildungen $\bN \to \bR$ sind.
+  \end{beobachtung}
+   \noindent Das direkte Produkt ist durch eine universelle Eigenschaft gegeben :D
+   
+   \begin{definition}
+    Sei ein Index $j \in I$ gegeben. Die Abbildung 
+    \begin{align*}
+            p_j : \prod_{i \in I} V_i &\to V_j\\
+            (\vv_i)_{i \in I} &\to \vv_j\\
+    \end{align*}
+    Ist eine lineare Abbildung, welche als die kanonische Projektion auf die $j$-te Komponente bezeichnet wird.
+   \end{definition}
+   \begin{theorem}
+    Sei $W$ ein $k$-Vektorraum und sei $(\varphi_i : W \to V_i)_{i \in I}$ eine Familie von linearen Abbildungen. Dann gibt es genau eine lineare Abbildung $\eta : W \to \prod_{i \in I} V_i$, sodass die folgenden Diagramme kommutieren:
+    \begin{figure}[h!]
+        \centering
+        \begin{tikzcd}[row sep = huge, column sep = huge]
+        W
+        \arrow[r, "\exists ! \eta"]
+        \arrow[d, "id"]
+        & \prod_{i \in I} V_i
+        \arrow[d, "p_j"] \\
+        W
+        \arrow[r, "\varphi_j"]
+        &  V_j
+        \end{tikzcd}
+    \end{figure}
+   \end{theorem}
+	\begin{definition}
+		Gegeben Index $j$, betrachte
+		\begin{align*}
+			\iota_j : V_j &\to \bigoplus_i V_i\\
+				  \vv &\mapsto 
+				  \begin{pmatrix}
+				  	\vv & i = j\\
+				  	\vz_{V_i} & i \neq j\\
+				  \end{pmatrix}_i
+		\end{align*}
+		\ul{Behauptung:} Diese Abbildung ist linear und injektiv.
+	\end{definition}
+	\begin{proposition}
+	Gegeben $\vv \in \bigoplus V_i$ haben wir
+	\begin{align*}
+		\vv = \sum_i \iota_i(p_i(\vv))
+	\end{align*}
+	\end{proposition}
+	\begin{theorem}
+		\textbf{Universelle Eigenschaft:} Gegeben einen $k$-Vektorraum $W$ und für jeden Index $i$ eine lineare Abbildung
+		\begin{align*}
+			\varphi_i : V_i \to W.
+		\end{align*}
+		Dann gibt es genau eine lineare Abbildung
+		\begin{align*}
+			\mu : \bigoplus V_i \to W,
+		\end{align*}
+	sodass für alle indizes $j$ das folgende Diagramm kommutiert:
+	\begin{figure}[h!]
+		\centering
+		\begin{tikzcd}[row sep = huge, column sep = huge]
+			V_j
+			\arrow[r, "\iota_j"]
+			\arrow[d, "id"]
+			& \bigoplus_{i \in I} V_i
+			\arrow[d, "\exists ! \mu"] \\
+			V_j
+			\arrow[r, "\varphi_j"]
+			&  W
+		\end{tikzcd}
+	\end{figure}
+	\end{theorem}
+	\begin{proof}
+		Seien zwei Abbildungen $\mu_1$, $\mu_2$ gegeben wie im Satz. Schreibe $\vv$ als Summe von Bildern der kanonischen Projektionen: \[\vv = \sum_i \iota_i(p_i(\vv))\]. Dann gilt:
+		\begin{align*}
+			\mu_1(\vv) &= \sum \mu_1(\iota_i(p_i(\vv)))\\
+					   &= \sum \varphi(p_i(\vv))\\
+					   &= \sum \mu_2(\iota_i(p_i(\vv)))\\
+					   &= \mu_2(\vv)
+		\end{align*}
+		Also ist die Eindeutigkeit Bewiesen. Existenz folgt durch:
+		\begin{align*}
+			\mu : \bigoplus V_i &\to W\\
+					\vv 		&\mapsto \sum_i \varphi_i(p_i(\vv))
+		\end{align*}
+	\end{proof}
+	\hspace{-16pt}\textbf{\ul{Anwendung:}} Es gibt einen kanonischen Isomorphismus zwischen
+	\begin{align*}
+		\left(\bigoplus V_i\right)^* \simeq \prod\left(V_i^*\right)
+	\end{align*}
+	Also ist $\left(\bigoplus V_i\right)^*$ gigantisch viel größer als der Raum $\bigoplus V_i$ selbst!
+	\begin{proof}\hphantom{hi}\newpar
+		\ul{Schritt 1: Konstruktion einer linearen Abbildung zwischen den Räumen.}
+		\begin{itemize}
+			\item[] Betrachte für alle indizes $j$ die kanonische Injektion $\iota_j$. Betrachte die dazugehörige Abbildung zwischen den Dualräumen:
+			\begin{align*}
+				(\iota_j)^* : \left(\bigoplus V_i\right)^* &\to V_j^*\\
+			\end{align*}
+			Die universelle Eigenschaft des Produkts von $V_j^*$ liefert eine eindeutige lineare Abbildung \[\eta : \left(\bigoplus V_i\right)^* \to V_j^*\].		
+		\end{itemize}
+		\ul{Schritt 2: Injektivität.}
+		\begin{itemize}
+			\item[] Sei $\varphi \in \ker(\eta)$. Zu zeigen ist, dass $\varphi$ die Nullabbildung ist. Erinnerung: Kann $\vv$ schreiben als Summe von Vektoren im Bild der Inklusionsabbildungen. Es genügt also 
+			\[\forall j : \forall \vv \in \Im{\iota_j} : \varphi(\vv) = 0\]
+			Sei also ein Index $j$ gegeben und sei $\vv = \iota_j (\vv_j)$ für ein geeignetes $\vv_j \in V_j$. Da das Diagramm kommutiert, ist $(\iota_j)^*(\varphi) = \varphi \circ \iota_j = 0$
+		\end{itemize}
+		\ul{Schritt 3: Surjektivität}
+		\begin{itemize}
+			\item Sei eine Familien von linearen Abbildungen $(f_i)_{i \in I \in \prod(V^*)}$ gegeben. Wir brauchen eine lineare Abbildung 
+			\[\varphi : \bigoplus V_i \to k\]
+			Eine mögliche Wahl ist:
+			\[(v_i)_{i \in I} \mapsto \sum_{i \in I} f_i(p_i((v_i)_{i \in I}))\]
+			Dass diese Abbildung die richtige ist folgt aus der Kommutativität des Diagramms (This proof is left as an exercise for the reader.) - Zu zeigen ist:
+			\[\eta(\varphi) = (f_i)_{i \in I}\]
+			Dazu verwendet man:
+			\[\eta(\varphi) = (f_i) \Leftrightarrow \forall j \in I : p_j(\eta(\varphi)) = p_j((f_i)_{i \in I})\]
+		\end{itemize}
+	\end{proof}
+\end{section}
+\begin{section}{Existenz des Tensorprodukts}
+	\ul{Situation:} Gegeben Körper $k$, zwei $k$-Vektorrume $U, V$ wollen wir einen Vektorraum $T$ und eine bilineare Abbildung $\tau : U \times V \to T$ finden, sodass das folgende Diagramm kommutiert:
+	 \begin{figure}[h!]
+		\centering
+		\begin{tikzcd}[row sep = huge, column sep = huge]
+			U \times V
+			\arrow[r, "\tau \text{ bilinear}"]
+			\arrow[d, "id"]
+			& T
+			\arrow[d, "\exists!\eta \text{ linear}"] \\
+			U \times V
+			\arrow[r, "s \text{ bilinear}"]
+			&  W
+		\end{tikzcd}
+	\end{figure}
+	\newpar
+	\ul{Konstruktion 1:} Betrachte den durch die Menge $U \times V$ frei erzeugten Vektorraum, also
+	\[T' = k^{(U \times V)}\]
+	Dieser ist identifiziert mit der Menge der Abbildungen $U \times V \to k$, die fast überall $0$ sind. Betrachte dazu
+	\begin{align*}
+		\tau' : U \times V &\to T'\\
+			(\vu, \vv) &\mapsto e_{\vu, \vv}
+	\end{align*}
+	Wobei $e_{\vu, \vv}$ die Abbildung ist, welche das Paar $(\vu, \vv)$ auf $1_k$ abbildet und alle anderen Paare auf $0_k$.
+	\newpar
+	\ul{Eigenschaft der Konstruktion:}
+	Sei $W$ irgendein Vektorraum und sei $s : U \times V \to W$ irgendeine bilineare Abbildung. Dann gibt es genau eine lineare Abbildung $\eta' : T' \to W$, sodass das Tensorproduktdiagramm kommutiert.
+	\begin{proof}
+		Diese Abbildung ist induziert durch $\eta'(e_{(\vu, \vv)}) = s(\vu, \vv)$. Professor Kebekus nennt dies den "Satz von Wünsch-dir-was".
+	\end{proof}
+	\noindent Ups, diese Konstruktion ist falsch! $\tau'$ ist nicht im geringsten bilinear!
+	\newpar
+	\ul{Überlegung:} Wenn $\tau'$ tatsächlich bilinear wäre, dann wäre
+	\[\tau'(\lambda \vu, \vv) = \lambda \tau'(\vu,\vv)\]
+	also:
+	\[e_{(\lambda \vu, \vv)} - \lambda \cdot e_{(\vu, \vv)}\]
+	etc.
+	\newpar
+	\ul{Reparatur:}
+	\newpar
+	Sei
+	\[M_1 = \left\{e_{(\vu_1 + \lambda \vu_2, \vv)} - e_{\vu_1, \vv} - \lambda e_{\vu_2 \vv} \mid \vu_1, \vu_2 \in U, \lambda \in k, \vv \in V\right\}\]
+	und
+	\[M_2 = \left\{e_{(\vu, \vv_1 - \lambda \vv_2)} - e_{\vu, \vv_1} - \lambda e_{\vu, \vv_2} \mid \vu_1, \vu_2 \in U, \lambda \in k, \vv \in V\right\}\]
+	Betrachte nun
+	\[T = T' / \langle M_1, M_2\rangle\]
+	\iffalse
+	und das Diagramm
+	\begin{figure}[h!]
+		% https://q.uiver.app/#q=WzAsMyxbMCwwLCJVIFxcdGltZXMgViJdLFsyLDAsIlQnIl0sWzQsMCwiVCJdLFswLDEsIlxcdGF1JyJdLFsxLDIsIlxcdGV4dHtxdW90fSJdLFswLDIsIlxcdGF1IiwyLHsiY3VydmUiOjV9XV0=
+		\[\begin{tikzcd}
+			{U \times V} && {T'} && T
+			\arrow["{\tau'}", from=1-1, to=1-3]
+			\arrow["\tau"', curve={height=30pt}, from=1-1, to=1-5]
+			\arrow["{\text{quot}}", from=1-3, to=1-5]
+		\end{tikzcd}\]
+	\end{figure}
+	\fi
+	und $\tau = \tau' \circ \text{quot}$. Die Quotientenabbildung teilt alles raus, was die bilinearität stört, also ist $\tau$ bilinear.
+	\newpar
+	Sei nun wieder ein Vektorraum $W$ und eine bilineare Abbildung $s : U \times V \to W$ gegeben. Die universelle Eigenschaft des Quotientenraums sagt, es existiert genau ein $\eta$, sodass das Quotientenraumdiagramm kommutiert, falls $\langle M_1, M_2 \rangle \subseteq \text{ker}(\eta')$. Das gilt, weil $s$ bilinear ist.
+	\newpar
+	Wir werden nun versuchen, das Tensorprodukt besser zu verstehen.
+	\newpar
+	\begin{definition}
+		Seien $U, V$ Vektorräume. Wir bezeichnen das Tensorprodukt mit $U \otimes V$. Die bilineare Abbildung $\tau$ bezeichnen wir mit $\otimes : U \times V \to U \otimes V$. Die Elemente von $U \otimes V$ werden als \textbf{Tensoren} bezeichnet. Elemente im Bild von $\oplus$ nennen wir \textbf{reine Tensoren}.
+	\end{definition}
+	\begin{lemma}
+		Der Tensor $\ve_1 \tensor \ve_1 + \ve_2 \tensor \ve_2$ ist nicht rein.
+	\end{lemma}
+	\begin{proof}
+		Angenommen, wir hätten
+		\begin{align*}
+			\ve_1 \tensor \ve_1 + \ve_2 \tensor \ve_2 = \vv \tensor \vw
+		\end{align*}
+	\end{proof}
+	\newpar
+	Reine Tensoren bilden im Allgemeinen keinen Untervektorraum.
+	\newpar
+	Für einen reinen Tensor $t$ ist die Darstellung $t = \vu \otimes \vv$ in der Regel nicht eindeutig. Das folgt zum Beispiel bereits aus der Bilinearität von $\otimes$:
+	\begin{align*}
+		(2\vu) \otimes \vv = \vu \otimes (2\vv) = 2(\vu \otimes \vv)
+	\end{align*}
+	Es gibt aber auch viele Beispiele, in denen sich die möglichen Vektoren auf keine Weise ähnlich sind. Die Frage, ob ein gegebener Tensor rein ist, ist im Allgemeinen schwierig.
+	\begin{theorem}
+		Sei $R \subseteq U \otimes V$ die Menge der reinen Tensoren. Dann gilt
+		\[\langle R \rangle = U \otimes V.\]
+		Also ist jedes Tensorprodukt eine Linearkombination reiner Tensoren.
+	\end{theorem}
+	\begin{proof}
+		\iffalse
+		\begin{figure}[h!]
+			% https://q.uiver.app/#q=WzAsNixbMCwwLCJVIFxcdGltZXMgViJdLFswLDIsIlUgXFx0aW1lcyBWIl0sWzMsMCwiVSBcXG90aW1lcyBWIl0sWzMsMiwiXFxsYW5nbGUgUiBcXHJhbmdsZSJdLFswLDQsIlUgXFx0aW1lcyBWIl0sWzMsNCwiVSBcXG90aW1lcyBWIl0sWzAsMSwiaWQiLDJdLFsxLDMsIlxcb3RpbWVzIDogVSBcXHRpbWVzIFYgXFx0byBcXGxhbmdsZSBSXFxyYW5nbGUiLDJdLFswLDIsIlxcb3RpbWVzIDogVSBcXHRpbWVzIFYgXFx0byBVIFxcdGltZXMgVVxcb3RpbWVzIFYiXSxbMiwzLCJcXGV4aXN0cyAhIFxcZXRhIl0sWzEsNCwiaWQiLDJdLFs0LDUsIlxcb3RpbWVzIiwyXSxbMyw1LCJJbmtsdXNpb24iLDIseyJzdHlsZSI6eyJ0YWlsIjp7Im5hbWUiOiJob29rIiwic2lkZSI6InRvcCJ9fX1dLFsyLDUsImlkIiwyLHsiY3VydmUiOi01fV1d
+			\[\begin{tikzcd}
+				{U \times V} &&& {U \otimes V} \\
+				\\
+				{U \times V} &&& {\langle R \rangle} \\
+				\\
+				{U \times V} &&& {U \otimes V}
+				\arrow["{\otimes : U \times V \to U \times U\otimes V}", from=1-1, to=1-4]
+				\arrow["id"', from=1-1, to=3-1]
+				\arrow["{\exists ! \eta}", from=1-4, to=3-4]
+				\arrow["id"', curve={height=-30pt}, from=1-4, to=5-4]
+				\arrow["{\otimes : U \times V \to \langle R\rangle}"', from=3-1, to=3-4]
+				\arrow["id"', from=3-1, to=5-1]
+				\arrow["Inklusion"', hook, from=3-4, to=5-4]
+				\arrow["\otimes"', from=5-1, to=5-4]
+			\end{tikzcd}\]
+		\end{figure}
+		\fi
+	\end{proof}
+	\begin{theorem}
+		Seien $(u_i)_{i \in I}$ und $(v_i)_{i \in J}$ Basen von $U$ und $V$. Dann ist 
+		\[(u_i \tensor v_j)_{(i,j) \in I \times J}\]
+		eine Basis des Tensorprodukts.
+	\end{theorem}
+	\begin{beispiel}
+		\begin{align*}
+			U^* \tensor V &\to \Hom(U,V)\\
+			\phi \tensor \vv &\mapsto (\vu \mapsto \phi(\vu) \vv)
+		\end{align*}
+		Dies ist eine lineare Abbildung zwischen Räumen der gleichen Dimension, also ein Isomorphismus! Der Raum $\Hom(U,V)$ ist also ein Tensorprodukt!
+	\end{beispiel}
+	\noindent Eine Konsequenz ist nun, dass Tensorprodukte endlichdimensionaler Räume als Matrizen betrachtet werden können! Genauer:
+	\begin{definition}
+		Sei $\dim U < \infty$ und $\dim V < \infty$. Seien $\vu_{1}, \hdots, \vu_{n}$ und $\vv_1, \hdots, \vv_m$ angeordnete Basen von $U$ und $V$. Wir betrachten die folgende \textit{lexikographisch angeordnete Produktbasis}:
+		\begin{align*}
+			\begin{array}{ccc}
+				\vu_1 \tensor \vv_1, & \hdots & \vu_1 \tensor \vv_m,\\
+				\vu_2 \tensor \vv_1, & \hdots & \vu_2 \tensor \vv_m,\\
+				\vdots & & \vdots\\
+				\vu_n \tensor \vv_1, & \hdots & \vu_n \tensor \vv_m,\\
+			\end{array}
+		\end{align*}
+	\end{definition}
+	\section{Tensorprodukte von Abbildungen und Matrizen}
+	\begin{definition}
+		Sei $f_1 : U_1 \to V_1$ und $f_2 : U_2 \to V_2$. Wir definieren folgende Abbildung:
+		\begin{align*}
+			U_1 \times U_2 \overset{f_1 \times f_2}{\longrightarrow} V_1 \times V_2 \overset{\tensor}{\longrightarrow}{V_1 \tensor V_2}
+		\end{align*}
+		Diese Abbildung ist bilinear! Also gibt es genau eine lineare Abbildung, sodass das folgende Diagramm kommutiert:
+		% https://q.uiver.app/#q=WzAsNCxbMCwwLCJVXzEgXFx0aW1lcyBVXzIiXSxbMiwwLCJVXzEgXFxvdGltZXMgVV8yIl0sWzIsMiwiVl8xIFxcb3RpbWVzIFZfMiJdLFswLDIsIlVfMSBcXHRpbWVzIFVfMiJdLFswLDEsIlxcdGF1X1UiXSxbMCwzLCIiLDIseyJsZXZlbCI6Miwic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFszLDIsIlxcdGF1X1YgXFxjaXJjIChmXzEgXFx0aW1lcyBmXzIpIiwyXSxbMSwyLCJcXGV4aXN0cyFcXGV0YSJdXQ==
+		\[\begin{tikzcd}
+			{U_1 \times U_2} && {U_1 \otimes U_2} \\
+			\\
+			{U_1 \times U_2} && {V_1 \otimes V_2}
+			\arrow["{\tau_U}", from=1-1, to=1-3]
+			\arrow[equals, from=1-1, to=3-1]
+			\arrow["{\exists!\eta}", from=1-3, to=3-3]
+			\arrow["{\tau_V \circ (f_1 \times f_2)}"', from=3-1, to=3-3]
+		\end{tikzcd}\]
+		Betrachte:
+		\begin{align*}
+			f_1 : k^{b_1} &\to k^{a_1}\\
+				  \vv &\mapsto A_1 \vv
+		\end{align*}
+		\begin{align*}
+			f_2 : k^{b_2} &\to k^{a_2}\\
+			\vw &\mapsto A_2 \vw
+		\end{align*}
+		So erhalten wir das Tensorprodukt von Abbildungen:
+		\begin{align*}
+			f_1 \tensor f_2 : (k^{b_1}) \tensor (k^{b_2}) \to (k^{a_1}) \tensor (k^{a_2})
+		\end{align*}
+		Wir betrachten in den Räumen $k^i$ die Standardbasen und in den Tensorprodukten die lexikographisch angeordneten Produktbasen $B_b$, $B_a$. Die darstellende Matrix
+		\[\Mat{B_a}{B_b}{f_1 \tensor f_2} \in \text{Mat}((a_1, a_2) \times (b_1, b_2))\]
+		Wird $A_1 \tensor A_2$ geschrieben und als \textbf{Tensorprodukt} oder \tbf{Kroneckerprodukt} von Matrizen bezeichnet.
+	\end{definition}
+	\begin{proposition}
+		Seien $f_1 : U_1 \to V_1$, $f_2 : U_2 \to V_2$ linear, alle Räume endlichdimensional. Seien angeordnete Basen $B_{U_1}, B_{U_2}, B_{V_1}, B_{V_2}$ gegeben. Seien $B_{U_1 \times U_2}$ und $B_{V_1 \times V_2}$ die lexikographisch angeordneten Produktbasen. Dann gilt:
+		\begin{align*}
+			\Mat{B_{U_1 \times U_2}}{B_{V_1 \times V_2}}{(f_1 \tensor f_2)} = \Mat{B_{U_1}}{B_{V_1}}{f_1} \tensor \Mat{B_{U_2}}{B_{V_2}}{f_2}
+		\end{align*}
+	\end{proposition}
+	\section{Rechenregeln für Tensorprodukte}
+	\begin{theorem}
+		Sei $V$ ein Vektorraum und $(U_i)_{i \in I}$ eine Familie von Vektorräumen. Dann existiert folgender kanonischer isomorphismus:
+		\[\left(\bigoplus_{i \in I} U_i\right) \tensor V \simeq \bigoplus_{i \in I} \left(U_i \tensor V\right)\]
+	\end{theorem}
+	\begin{theorem}
+		Seien $A,B,C$ Vektorräume. Dann existiert folgender kanonischer Isomorphismus:
+		\[(A \tensor B) \tensor C \simeq A \tensor (B \tensor C)\]
+		Das Tensorprodukt ist also assoziativ.
+	\end{theorem}
+	\begin{definition}
+		Haben wir ein Tensorprodukt von mehr als zwei Räumen bezeichnen wir die Elemente der Menge
+		\[R = \left\{\bigotimes_{i \in I} \vv_i \mid \vv_i \in V_i\right\} \subseteq \bigotimes_{i \in I} V_i\]
+		als reine Tensoren. Genau wie im Fall mit zwei Räumen bilden diese Elemente ein Erzeugendensystem des Raums $\bigotimes_{i \in I} V_i$.
+	\end{definition}
+	\begin{theorem}
+		Seien $(v_2^1),, \hdots, (v_j^n)$ Erzeugendensysteme von $V_1, \hdots, V_n$. Dann bilden die zugehörigen reinen Tensoren ein Erzeugendensystem des Tensorproduktraums $\bigotimes V_i$. Handelt es sich um eine Menge von Basen, bilden die reinen Tensoren eine Basis des Tensorproduktraums.
+	\end{theorem}
+	\begin{theorem}
+		Die Tensorproduktabbildung 
+		\begin{align*}
+			\tau : V_1 \times \hdots \times V_n &\to V_1 \otimes \hdots \otimes V_n\\
+					(\vv_1, \hdots, \vv_n) &\mapsto \vv_1 \tensor \hdots \tensor \vv_n 
+		\end{align*}
+		ist \textbf{multilinear}.
+	\end{theorem}
+	\begin{theorem}
+		Das mehrfache Tensorprodukt erfüllt die analoge universelle Eigenschaft zum doppelten Tensorprodukt, für multilineare Abbildungen statt bilinearen Abbildungen.
+	\end{theorem}
+	Das schönste Beispiel einer Multilinearen Abbildung ist die Determinante:
+	\begin{align*}
+		\text{det} : (\bR^n)^n &\to \bR\\
+					(\vv_1, \hdots, \vv_n) &\mapsto \text{det}(\vv_1, \hdots, \vv_n)
+	\end{align*}
+	Gemäß der universellen Eigenschaft des Tensorprodukts kommutiert das folgende Diagramm:
+	% https://q.uiver.app/#q=WzAsNCxbMCwwLCIoXFxtYXRoYmJ7Un1ebilebiJdLFsyLDIsIlxcbWF0aGJie1J9Il0sWzAsMiwiKFxcbWF0aGJie1J9Xm4pXm4iXSxbMiwwLCJcXGJpZ290aW1lc1xcbWF0aGJie1J9Xm4iXSxbMCwyLCIiLDIseyJsZXZlbCI6Miwic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFsyLDEsIlxcdGV4dHtkZXR9IiwyXSxbMCwzLCJcXHRhdSJdLFszLDEsIlxcZXhpc3RzISBcXGV0YSJdXQ==
+	\[\begin{tikzcd}
+		{(\mathbb{R}^n)^n} && {\bigotimes\mathbb{R}^n} \\
+		\\
+		{(\mathbb{R}^n)^n} && {\mathbb{R}}
+		\arrow["\tau", from=1-1, to=1-3]
+		\arrow[equals, from=1-1, to=3-1]
+		\arrow["{\exists! \eta}", from=1-3, to=3-3]
+		\arrow["{\text{det}}"', from=3-1, to=3-3]
+	\end{tikzcd}\]
+	Die Determinante lässt sich also auch als lineare Abbildung aus dem Tensorprodukt nach $\bR$ definieren.
+	\begin{definition}
+		Sei $V$ ein $k$-Vektorraum, sei $n \in \bN$. Wir definieren:
+		\begin{align*}
+			V^{\tensor n} = 
+			\begin{cases}
+				k & n = 0\\
+				\overset{\underbrace{V \tensor \hdots \tensor V}}{n \text{ mal}} & n > 0\\
+			\end{cases}
+		\end{align*}
+	\end{definition}
+	\begin{proposition}
+		Gegeben $a, b > 0$, dann gibt es genau eine bilineare Abbildung
+		\[m_{ab} : V^{\tensor a} \times V^{\tensor b} \to V^{\tensor(a + b)}\]
+		sodas für alle reinen Tensoren gilt:
+		\begin{align*}
+			m_{ab} (\vv_1 \tensor \hdots \tensor \vv_a, \vw_1 \hdots \vw_b)
+			= \vv_1 \tensor \hdots \tensor \vv_a \tensor \vw_1 \hdots \vw_b
+		\end{align*}
+	\end{proposition}
+	\begin{proposition}
+		Gegeben $a = 0$, $b > 0$, dann gibt es genau eine bilineare Abbildung
+		\[m_{0b} : V^0 \tensor V^b \to V^b\]
+		sodass für alle reinen Tensoren gilt:
+		\[m_{ab} (\lambda, \vw_1, \hdots, \vw_b) = \lambda \vw_1 \tensor \hdots \tensor \vw_b\]
+		Analog für $a > 0$, $b = 0$ und $a = b = 0$.
+	\end{proposition}
+	\begin{definition}
+		Ein $k$-Vektorraum $W$ zusammen mit einer bilinearen Abbildung 
+		\[m : W \times W \to W\] 
+		wird als \textbf{$k$-Algebra} bezeichnet.
+	\end{definition}
+	\begin{definition}
+		Wir nennen eine Algebra:
+		\begin{itemize}
+			\item kommutativ, falls
+			\[\forall \vv, \vw \in W : m(\vv, \vw) = m(\vw, \vv)\]
+			\item assoziativ, falls
+			\[\forall \vv, \vw, \vu \in W : m(\vv, m(\vw, \vu)) = m(m(\vv, \vw), \vu)\]
+			\item "mit Eins", falls $\ve \in W$ existiert, sodass
+			\[\forall \vw \in W m(\ve, \vw) = m(\vw, \ve) = \vw\]
+		\end{itemize}
+	\end{definition}
+	\begin{proposition}
+		Sei $V$ ein $k$-Vektorraum. Das Tensorprodukt $V \tensor V$ bildet mit der Abbildung $m$ eine assoziative $k$-Algebra mit Eins, bekannt als die \textbf{Tensoralgebra}.
+	\end{proposition}
+\end{section}
+\end{chapter}
+\chapter{Die Äußere Algebra}
+\begin{definition}
+	Seien $V,W$ $k$-Vektorräume und $n \in \bN$ eine natürliche Zahl. Eine multilineare Abbildung
+	\[s : V^n \to W\]
+	heißt \textit{alternierend}, falls für alle Tupel $(\vv_1, \hdots, \vv_n)$ mit mindestens zwei identischen Einträgen $\vv_i = \vv_j$ gilt, dass
+	\[s(\vv_1, \hdots, \vv_n) = 0\]
+\end{definition}
+\begin{lemma}
+	Sei $s$ eine alternierende multilineare Abbildung und $\sigma = (ij)$ eine Transposition, so ist
+	\[s(\vv_1, \hdots, \vv_n) = -s(\vv_{\sigma(1)}, \hdots, \vv_{\sigma(n)})\]
+	Also ändert sich das Vorzeichen, wenn man zwei der Argumente vertauscht.
+\end{lemma}
+\begin{proof} (Im Fall $n = 3$):
+	\begin{align*}
+		s(\vv_1, \vv_2, \vv_3) &= s(\vv_1, \vv_2, \vv_3) + s(\vv_1, \vv_2, \vv_1)\\
+							   &= s(\vv_1, \vv_2, \vv_1 + \vv_3)
+	\end{align*}
+	\begin{align*}
+		s(\vv_3, \vv_2, \vv_1) &= s(\vv_3, \vv_2, \vv_1) + s(\vv_3, \vv_2, \vv_3)\\
+		&= s(\vv_3, \vv_2, \vv_1 + \vv_3)
+	\end{align*}
+	\begin{align*}
+		s(\vv_1, \vv_2, \vv_1 + \vv_3) + s(\vv_3, \vv_2, \vv_1 + \vv_3) &= 0\\
+		\implies s(\vv_1, \vv_2, \vv_3) + s(\vv_3, \vv_2, \vv_1) &= 0\\
+		\implies s(\vv_1, \vv_2, \vv_3) &= -s(\vv_3, \vv_2, \vv_1)
+	\end{align*}
+\end{proof}
+\begin{lemma}
+	Für jede Permutation $\sigma \in S_n$ und alle Tupel $(\vv_1, \hdots, \vv_n) \in V^n$ gilt:
+	\[s(\vv_{\sigma(1)}, \hdots, \vv_{\sigma(n)}) = \text{sgn}(\sigma) \cdot s(\vv_1, \hdots, \vv_n)\]
+\end{lemma}
+\begin{definition}
+	Sei $V$ ein $k$-Vektorraum, $n \in \bN$. Ein $n$-faches äußeres Produkt (auch "Dachprodukt" oder "wedge product") ist ein Vektorraum $T$ zusammen mit eine alternierenden multilinearen Abbildung $\tau : V^n \to T$, sodass für jede alternierende multilineare Abbildung $s: V^n \to W$ eine eindeutige lineare Abbildung $\eta : T \to W$ existiert, sodass
+	\[s = \eta \circ \tau\]
+	Also kommutiert das folgende Diagramm:
+	% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWXm4iXSxbMCwyLCJWXm4iXSxbMywwLCJUIl0sWzMsMiwiVyJdLFsxLDMsInMgXFx0ZXh0eyBhbHRlcm5pZXJlbmQgbXVsdGlsaW5lYXJ9Il0sWzIsMywiXFxleGlzdHMhIFxcZXRhIFxcdGV4dHsgbGluZWFyfSJdLFswLDIsIlxcdGF1IFxcdGV4dHsgYWx0ZXJuaWVyZW5kIG11bHRpbGluZWFyfSIsMl0sWzAsMSwiIiwwLHsibGV2ZWwiOjIsInN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XV0=
+	\[\begin{tikzcd}
+		{V^n} &&&& T \\
+		\\
+		{V^n} &&&& W
+		\arrow["{\tau \text{ alternierend multilinear}}"', from=1-1, to=1-5]
+		\arrow["{id}", from=1-1, to=3-1]
+		\arrow["{\exists! \eta \text{ linear}}", from=1-5, to=3-5]
+		\arrow["{s \text{ alternierend multilinear}}", from=3-1, to=3-5]
+	\end{tikzcd}\]
+\end{definition}
+\begin{lemma}
+	Äußere Produkt existieren und sind eindeutig bis auf kanonischen Isomorphismus.
+\end{lemma}
+\begin{definition}
+	Wir schreiben $T$ als
+	\[\bigwedge^n V\]
+	und $\tau(\vv_1, \hdots, \vv_n) \in \bigwedge^n V$ als:
+	\[\vv_1 \wedge \hdots \wedge \vv_n\]
+\end{definition}
+\begin{definition}
+	Ein Element $t \in \bigwedge^n V$ heißt \textit{reines Dach}, wenn $\vv_1, \hdots, \vv_n \in V$ existieren, sodass $t = \vv_1 \wedge \hdots \wedge \vv_n$.
+\end{definition}
+\begin{proposition}
+	Jedes Element des Dachproduktraums ist eine endliche Summe reiner Dächer. 
+\end{proposition}
+\begin{proposition}
+	Die Verdachung von Erzeugendensystemen der Basisräume bildet ein Erzeugendensystems des Dachproduktraums.
+\end{proposition}
+\begin{theorem}
+	Die Verdachung von Basen der Basisrume bildet \ul{keine} Basis des Dachproduktraums!
+\end{theorem}
+\begin{proof}
+	Sei $V = \bR^3$ mit Standardbasis. Dann ist
+	\[\{\ve_i \wedge \ve_j \mid i,j \in \{1,2,3\}\}\]
+	ein Erzeugendensystem von $\bigwedge^2 V$. Allerdings folgt aus der Definition über alternierende Abbildungen, dass $\ve_i \wedge \ve_i = 0$ und $\ve_i \wedge \ve_j = -\ve_j \wedge \ve_i$. Also bildet das System keine Basis.
+\end{proof}
+\begin{proposition}
+	Sei $(\vb_i)$ eine Basis eines Vektorraums $V$. Die Menge
+	\[\{\vb_{i_1} \wedge \hdots \wedge \vb_{i_n} \mid i_{k} < i_{k+1}\}\]
+	bildet eine Basis von $\bigwedge^2 V$.
+\end{proposition}
+\noindent Es folgt, dass der Dachproduktraum eine deutlich niedrigere Dimension als der Tensorproduktraum hat!
+\begin{lemma}
+	Sei $\dim V = a$. Dann ist
+	\[\dim \bigwedge^n V = \binom{a}{n}\]
+\end{lemma}
+\begin{corollary}
+	Sei $\dim V = a$.
+	\begin{itemize}
+		\item Es gilt $\text{dim }\bigwedge^a V = 1$.
+		\item Sei $n > a$. Dann ist $\bigwedge^n V = \{0\}$.
+	\end{itemize} 
+\end{corollary}
+\section{Die Determinante}
+\begin{theorem}
+	Sei $V$ ein $n$-dimensionaler $k$-Vektorraum. Die Determinante kann alternativ definiert werden als die Abbildung:
+	\begin{align*}
+		d : V &\to k\\
+			f &\mapsto \tr(\bigwedge^n f)
+	\end{align*}
+\end{theorem}
+Wir betrachten den Fall $d_m : f \mapsto \tr(\bigwedge^m f)$. Sei $f$ beliebig. Es gilt:
+\begin{itemize}
+	\item $d_0(f) = 1$
+	\item $d_1(f) = \tr(f)$
+	\item $\hdots$
+	\item $d_n(f) = \det(f)$
+\end{itemize}
+Dies sieht den Koeffizienten des charakteristischen Polynoms $\chi_f$ verdächtig ähnlich...
+\section{Invariantentheorie}
+Wie viele Funktionen $GL_n \to GL_n$ gibt es, welche unter ähnlichen Matrizen invariant sind?
+Wir wissen, dass es mindestens $n$ "Basisinvarianten" gibt:
+\begin{itemize}
+	\item $\inv_0 = \tr(\bigwedge^0 f) = 1$
+	\item $\inv_1 = \tr(\bigwedge^1 f) = \tr(f)$
+	\item $\inv_2 = \tr(\bigwedge^2 f)$
+	\item $\hdots$
+	\item $\inv_n = \tr(\bigwedge^n f) = \det(f)$
+\end{itemize}
+\begin{theorem}
+	Alle Polynome in der Menge $(\inv_i)_{i \in (0,n)}$ sind ebenfalls Invarianten. Genauer: Betrachte die Abbildung
+	\begin{align*}
+		\tau : k[x_0, \hdots, x_n] &\to \text{Invarianten}\\
+		f(x_0, \hdots, x_n) &\mapsto f(\inv_0, \hdots, \inv_n)
+	\end{align*}
+\end{theorem}
+\begin{theorem}{\textbf{\emph{Hauptsatz der Invariantentheorie:}}}
+	Die Abbildung $\tau$ ist ein Isomorphismus zwischen dem Ring $k[x_0, \hdots, x_n]$ und dem Ring der Invarianten. Dementsprechend geben diese Polynome den gesamten Raum der Invarianten.
+\end{theorem}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
 %
 %
 %
