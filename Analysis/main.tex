@@ -26,6 +26,10 @@
 % Starts a new paragraph without indentation
 % and with an empty line between paragraphs
 \newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
+
+
+
+\newcommand{\symdiff}{\vartriangle}
 \newcommand{\trans}{\twoheadrightarrow}
 \newcommand{\ttt}[1]{\texttt{#1}}
 \newcommand{\tbf}[1]{\textbf{#1}}
@@ -43,10 +47,12 @@
 \newcommand{\cB}{\mathcal{B}}
 \newcommand{\cC}{\mathcal{C}}
 \newcommand{\cE}{\mathcal{E}}
+\newcommand{\cH}{\mathcal{H}}
 \newcommand{\cM}{\mathcal{M}}
 \newcommand{\cN}{\mathcal{N}}
 \newcommand{\cO}{\mathcal{O}}
 \newcommand{\cP}{\mathcal{P}}
+\newcommand{\cR}{\mathcal{R}}
 \newcommand{\cX}{\mathcal{X}}
 
 \newcommand{\ve}{\vec{e}}
@@ -72,6 +78,7 @@
 
 \renewcommand{\tr}{\text{tr}\ }
 \newcommand{\rang}{\text{rang}\ }
+\newcommand{\id}{\text{id}\ }
 
 \newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
 \newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
@@ -2584,7 +2591,7 @@ Wie misst man nun beliebige Mengen? Gibt es für jede Menge ein sinnvolles "Volu
 		\item Es ist \tbf{bewegungsinvariant} - das Maß ist konstant unter orthogonalen Abbildungen.
 		\item Das Maß ist \tbf{zählbar additiv}:
 		\begin{align*}
-			m(\bigcup_{i}) A_i = \sum_{i} m(A_i) \quad A_i \cap A_j = \infty \quad i \neq j
+			m \left(\bigcup_{i} A_i \right)= \sum_{i} m(A_i) \quad A_i \cap A_j = \infty \quad i \neq j
 		\end{align*}
 		\item Das Maß des Einheitswürfels ist auf $1$ \tbf{normiert}:
 		\begin{align*}
@@ -2604,9 +2611,35 @@ Unser Ansatz ist nun, nur Mengen zu messen, welche im Grenzwert als zählbare Ve
 \begin{definition}
 	Wir bezeichnen die Menge $\cM \subsetneq \cP(\bR^n)$ als die Menge der \tbf{messbaren Funktionen}.
 \end{definition}
-\section{$\sigma$-Algebren und Maße}
+\section{Mengensysteme}
+\subsection{Mengenringe}
 \begin{definition}
-	Sei $X$ eine Menge und $\cP(X)$ die Potenzmenge. Ein \tbf{Mengensystem} $\cA \subseteq \cP(X)$ heißt \tbf{$\sigma$-Algebra}, falls folgendes gilt:
+	Sei $X$ eine Menge. Ein Mengensystem $\cR \subseteq \cP(X)$ heißt \tbf{Mengenring}, falls:
+	\begin{enumerate}
+		\item $\emptyset \in \cR$
+		\item $\forall A,B \in \cR : A \symdiff B \in \cR$
+		\item $\forall A,B \in \cR : A \cap B \in \cR$
+	\end{enumerate}
+\end{definition}
+\noindent Mengenringe bilden einen kommutativen Ring im Sinne der Algebra, in dem $\vartriangle$ der Addition entspricht, $\cap$ der Multiplikation, und $\emptyset$ das Nullelement $0_{\cR}$. Falls $X \in \cR$, so ist es das Einselement $X = 1_{\cR}$.
+\begin{proposition}
+	Äquivalent kann ein Mengenring definiert werden als ein Mengensystem $\cR \subseteq \cP(X)$, welches folgende Bedingungen erfüllt:
+	\begin{enumerate}
+		\item $\emptyset \in \cR$
+		\item $\forall A,B \in \cR : A \setminus B \in \cR$
+		\item $\forall A,B \in \cR : A \cup B \in \cR$
+	\end{enumerate}
+\end{proposition}
+\begin{proposition}
+	Das System aller endlichen Teilmengen einer Menge $X$ bildet einen Mengenring.
+\end{proposition}
+\begin{proposition}
+	Sei $H$ die Menge der halboffenen Intervalle $[a,b)$. So bildet das System aller Mengen $A \subseteq \bR$, die sich als endliche Vereinigung solcher Intervalle darstellen lassen, einen Mengenring $\cH$.
+\end{proposition}
+\subsection{Mengenalgebren}
+\subsection{$\sigma$-Algebren}
+\begin{definition}
+	Sei $X$ eine Menge. Ein Mengensystem $\cA \subseteq \cP(X)$ heißt \tbf{$\sigma$-Algebra}, falls folgendes gilt:
 	\begin{enumerate}
 		\item $X \in \cA$
 		\item $A \in \cA \implies X \setminus A \in \cA$
@@ -2653,9 +2686,16 @@ Einige Beispiele für wichtige $\sigma$-Algebren:
 \begin{enumerate}
 	\item Ist $E \subseteq X$ und $\cE = \{E\}\}$, so gilt $\sigma(\cE) = \{\emptyset, E, X \setminus E, X\}$
 	\item Sei $(X, \cO)$ ein topologischer Raum, also $\cO$ das System der offenen Mengen. Die von $\cO$ erzeugte $\sigma$-Algebra heißt \tbf{Borel-$\sigma$-Algebra} $\cB(\cO)$, und ihre Elemente heißen \tbf{Borelmengen}. Im Fall des $\bR^n$ mit der kanonischen Topologie schreiben wir auch $\cB^n$.
-	\item 
-	\item 
-	\item
+	\item Sei $X$ eine beliebige nichtleere Menge, $\cC$ eine $\sigma$-Algebra auf einer Menge $Y$ und $f : X \to Y$ eine Abbildung. So ist
+	\begin{align*}
+		f^{-1}(\cC) := \{B \subseteq X : f(B) \in \cC\}
+	\end{align*}
+	eine $\sigma$-Algebra.
+	\item[3.1] Sei $X \subseteq Y$ und sei $\bC$ eine $\sigma$-Algebra auf $Y$. So nennen wir die durch die Identitätsabbildung $\id : X \to Y, x \to x$ induzierte $\sigma$-Algebra
+	\begin{align*}
+		\cC \mid_{X} := \id^{-1}(\cC) = \{\id^{-1}(C) \mid C \in \cC\} = \{X \cup A \mid A \in \cC\}
+	\end{align*}
+	auch die \tbf{Spur-$\sigma$-Algebra auf $X$} oder die \tbf{von $\cC$ auf $X$ induzierte $\sigma$-Algebra.}
 \end{enumerate}
 \begin{proposition}
 	Es ist konsistent mit ZF (Also der Standardaxiomatik der Mengenlehre, ausgenommen das Auswahlaxiom), dass jede Menge $M \in \cP(\bR)$ eine Borelmenge ist.
@@ -2678,6 +2718,19 @@ Somit sind Existenzbeweise von Mengen, welche nicht Borel sind, in der Regel nic
 	Vitalimengen sind nicht Borel.
 \end{proposition}
 \noindent Ein Beweis folgt (hoffentlich -w-) später.
+\newpar\newpar
+Nun fürs Erste zurück zu $\sigma$-Algebren.
+\begin{theorem}
+	Sei $X$ eine Menge und seien $\cE_i \subseteq \cP(X)$ Mengensysteme. So gilt:
+	\begin{align*}
+		\sigma\left(\bigcup_{i \in I} \cE_i \right) = \sigma\left(\bigcup_{i \in I} \sigma(\cE_i)\right)
+	\end{align*}
+	\begin{proof}
+		Es gilt $\cE_i \subseteq \sigma(\cE_i)$, also auch $\sigma\left(\bigcup_{i \in I} \cE_i \right) \subseteq \sigma\left(\bigcup_{i \in I} \sigma(\cE_i)\right)$.
+		\newpar
+		Umgekehrt gilt
+	\end{proof}
+\end{theorem}
 
 
 %
