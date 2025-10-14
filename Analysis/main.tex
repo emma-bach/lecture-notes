@@ -44,6 +44,8 @@
 \newcommand{\cC}{\mathcal{C}}
 \newcommand{\cE}{\mathcal{E}}
 \newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
 \newcommand{\cP}{\mathcal{P}}
 \newcommand{\cX}{\mathcal{X}}
 
@@ -2643,8 +2645,67 @@ Unser Ansatz ist nun, nur Mengen zu messen, welche im Grenzwert als zählbare Ve
 	\begin{align*}
 		\sigma(\cE_i) = \bigcap \left\{\cA \mid \cA \text{ ist $\sigma$-Algebra und } \cE \subseteq \cA \right\}
 	\end{align*}
-	die von $\cE$ \tbf{erzeugte}
+	die von $\cE$ \tbf{erzeugte} $\sigma$-Algebra.
 \end{definition}
+\noindent $\sigma(\cE)$ ist in jeder Sigma-Algebra, welche $\cE$ enthält, enthalten, also ist $\sigma(\cE)$ die kleinste $\sigma$-Algebra, welche $\cE$ enthält.
+\newpar
+Einige Beispiele für wichtige $\sigma$-Algebren:
+\begin{enumerate}
+	\item Ist $E \subseteq X$ und $\cE = \{E\}\}$, so gilt $\sigma(\cE) = \{\emptyset, E, X \setminus E, X\}$
+	\item Sei $(X, \cO)$ ein topologischer Raum, also $\cO$ das System der offenen Mengen. Die von $\cO$ erzeugte $\sigma$-Algebra heißt \tbf{Borel-$\sigma$-Algebra} $\cB(\cO)$, und ihre Elemente heißen \tbf{Borelmengen}. Im Fall des $\bR^n$ mit der kanonischen Topologie schreiben wir auch $\cB^n$.
+	\item 
+	\item 
+	\item
+\end{enumerate}
+\begin{proposition}
+	Es ist konsistent mit ZF (Also der Standardaxiomatik der Mengenlehre, ausgenommen das Auswahlaxiom), dass jede Menge $M \in \cP(\bR)$ eine Borelmenge ist.
+\end{proposition}
+Somit sind Existenzbeweise von Mengen, welche nicht Borel sind, in der Regel nichtkonstruktive Beweise, welche auf Feinheiten der Mengenlehre aufbauen. Das berühmteste Beispiel sind die sogenannten Vitalimengen, welche auch nach unseren späteren Verfeinerungen des Maßbegriffs noch Probleme bleiben werden.
+\begin{definition}
+	Eine \tbf{Vitalimenge} ist eine Teilmenge $V \subset [0,1]$, sodass für jede reelle Zahl $r$ genau eine Zahl $v \in V$ enthalten ist, sodass $v - r \in \bQ$.
+\end{definition}
+\begin{proposition}
+	Wird das Auswahlaxiom angenommen, existieren Vitalimengen.
+\end{proposition}
+\begin{proofsketch}
+	Die Rationalen Zahlen $\bQ$ bilden eine normale Untergruppe der reellen Zahlen $\bR$. Somit können wir die Quotientengruppe $\bR / \bQ$ bilden.
+	\newpar
+	$\bR / \bQ$ ist überabzählbar. Die Elemente von $\bR / \bQ$ sind disjunkte Mengen reeller Zahlen, welche die Form $\{r + \bQ \mid r \in \bR\}$ haben. Da $\bQ$ dicht in $\bR$ ist, ist auch jede Äquivalenzklasse dicht in $\bR$.
+	\newpar
+	Durch das Auswahlaxiom können wir nun aus jeder Äquivalenzklasse ein Element wählen, welches in $[0,1]$ liegt. Wir erhalten eine Vitalimenge.
+\end{proofsketch}
+\begin{proposition}
+	Vitalimengen sind nicht Borel.
+\end{proposition}
+\noindent Ein Beweis folgt (hoffentlich -w-) später.
+
+
+%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%
 \chapter{Integrationstheorie}
 %
 %
