@@ -24,7 +24,10 @@
 % Starts a new paragraph without indentation
 % and with an empty line between paragraphs
 \newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
+
 \newcommand{\trans}{\twoheadrightarrow}
+\renewcommand{\grad}{\vec{\nabla}}
+
 \newcommand{\ttt}[1]{\texttt{#1}}
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\ul}[1]{\underline{#1}}
@@ -44,7 +47,9 @@
 \newcommand{\ve}{\vec{e}}
 \newcommand{\vF}{\vec{F}}
 \newcommand{\vp}{\vec{p}}
+\newcommand{\vr}{\vec{r}}
 \newcommand{\vs}{\vec{s}}
+\newcommand{\vT}{\vec{T}}
 \renewcommand{\vu}{\vec{u}}
 \newcommand{\vv}{\vec{v}}
 \newcommand{\vw}{\vec{w}}
@@ -99,19 +104,17 @@
 	\tableofcontents
 	\thispagestyle{fancy}
 	\chapter{Mechanische Grundlagen}
+	\section{Grundlegende Größen der Physik}
 	Annahme: Vektorraum $\bR^3$
 	\begin{itemize}
 		\item \tbf{Skalare Größen}: $\bR^3 \to \bR$
 		\item \tbf{Vektorwertige Größen}: $\bR^3 \to \bR^3$
-		\item Gekrümmte Bewegung vereinfacht als \tbf{Weg-Zeit-Diagramm} $s(t)$. Steile Tangente $\to$ hohe Geschwindigkeit.
 		\item Notation für Ableitungen: 
 		\begin{align*}
 			v(t_a) = \frac{ds}{dt}\mid_{t_a}
 		\end{align*}
-		\item In dieser Vorlesung meist Approximation der Ableitung durch Differenzenquotienten.
-	\end{itemize}
-	\section{Bewegung}
-	\begin{itemize}
+		\item In dieser Vorlesung werden Ableitungen meist durch Differenzenquotienten approximiert. Wir differenziere solche Approximationen von den tatsächlichen Ableitung durch Verwendung des Symbols $\delta$ statt $d$.
+		\item Gekrümmte Bewegung vereinfacht als \tbf{Weg-Zeit-Diagramm} $s(t)$. Steile Tangente $\to$ hohe Geschwindigkeit.
 		\item Keine Bewegung: $s(t) = c$
 		\item Gleichförmige Bewegung: $s(t) = vt = v(t - t_0) + s_0$,\newpar
 			  Spezialfall Kreisbewegung: 
@@ -160,7 +163,7 @@
 	\end{align*}
 	Die Einheit des Drucks ist $\text{Pa} = \frac{\text{N}}{\text{m}^2} = \frac{\text{kg}}{\text{m} \cdot \text{s}^2}$
 	\subsection{Arbeit}
-	\tbf{Arbeit} misst den Transfer an kinetischer Energie, der innerhalb eines mechanischen Systems stattfindet, wenn eine Kraft $\vF(t)$ eine Masse über einen Weg $\vs(t)$ bewegt.
+	\tbf{Arbeit} misst den Transfer an Energie, der innerhalb eines Systems stattfindet, wenn eine Kraft $\vF(t)$ einen Körper (in der Mechanik eine Masse) über einen Weg $\vs(t)$ bewegt.
 	\newpar
 	Ist die Kraft konstant und der Weg geradlinig, wird die Arbeit einfach durch das Skalarprodukt gemessen:
 	\begin{align*}
@@ -180,7 +183,7 @@
 		\item Kinetische Energie: $E_{kin} = \frac{1}{2}mv^2$
 		\item Thermische Energie: $Q = m \cdot c \cdot \Delta T$, wobei $c$ die Wärmekapazität gibt.
 	\end{itemize}
-	Energie und Arbeit werden beide in Joule angegeben.
+	Energie und Arbeit werden beide in Joule angegeben. Einer der wichtigsten Sätze der Physik ist der Energieerhaltungssatz - die Menge an Energie in einem System ist immer konstant.
 	\subsection{Leistung}
 	Die Leistung ist die Änderung der Energie pro Zeit:
 	\begin{align*}
@@ -189,6 +192,142 @@
 	Somit hängt Leistung auch mit Arbeit zusammen:
 	\begin{align*}
 		P(t) = \frac{dW}{dt} = \frac{d}{dt} \int_{t_0}^{t_1} \vF(t) \cdot \vv(t) dt = \vF(t) \cdot \vv(t)
+	\end{align*}
+	\subsection{Impuls}
+	Der \tbf{Impuls} eines Körpers ist das Produkt aus Masse und Geschwindigkeit eines Körpers:
+	\begin{align*}
+		\vp = m \cdot \vv
+	\end{align*}
+	Die Änderrungsrate des Impulses eines Körpers ist durch die Gesamtkraft gegeben, die auf den Körper wirkt:
+	\begin{align*}
+		\vF = m \cdot \va = m \cdot \frac{d\vv}{dt} = \frac{d\vp}{dt}
+	\end{align*}
+	Der Gesamtimpuls innerhalb eines Systems ist ebenfalls konstant. Die Änderungsrate des Gesamtimpulses ist also $\frac{d\vp_{ges}}{dt} = 0$.
+	Durch die Impulserhaltung und das dritte Newtonsche Axiom folgt auch, dass die Summe der Kräfte innerhalb eines Systems $0$ sein muss:
+	\begin{align*}
+		\vF_{ges} = \sum_{i = 1}^n F_i = \sum_{i = 1}^n \frac{d\vp}{dt} = \frac{d\vp_{ges}}{dt} = 0
+	\end{align*}
+	\subsection{Drehmoment}
+	Ein \tbf{Drehmoment} (\tbf{Torque}) ist eine für Hebelsysteme relevante Kräfte, definiert als das Kreuzprodukt eines "Hebelvektors" $\vr$ mit einer Kraft $\vF$:
+	\begin{align*}
+		\vT = \vF \times \vr
+	\end{align*}
+	Die Einheit des Drehmoments ist somit $N \cdot m$.
+	\section{Umweltphysikalische Beispiele}
+	\subsection{Auftriebskraft}
+	Der Betrags der Auftriebskraft eines Körpers $K$ in einer Flüssigkeit ist gegeben durch:
+	\begin{align*}
+		F_{A} = (\rho_{Fluid} - \rho_K) \cdot g \cdot V
+	\end{align*}
+	Wobei $V$ der Teil des Volumens ist, welcher unter Wasser liegt.
+	Im tatsächlichen Kraftvektor wird die Richtung der Kraft dann durch die Richtung des Vektors zwischen dem Schwertkraftmittelpunkt des Systems und dem Schwerpunkt des Körpers gegeben. Bei schwimmenden Körpern herrscht am Schwerpunkt ein Kräftegleichgewicht zwischen der Auftriebskraft und der Schwerkraft.
+	\subsection{Staudruck und Luftwiderstand}
+	Der \tbf{Staudruck} eines Körpers ist die Erhöhung des Drucks am Staupunkt eines umströmten Körpers gegenüber dem statischen Druck eines Fluids, also der Druck, mit dem das Fluid gegen den Körper druckt.
+	\begin{align*}
+		p = \frac{1}{2} \cdot \rho \cdot \norm{\vv_\bot}^2
+	\end{align*}
+	Die dazugehörige \tbf{Staukraft} ist dann gegeben durch:
+	\begin{align*}
+		F_{Stau} = p \cdot A = \frac{1}{2} \cdot \rho \cdot A \cdot \norm{\vv_\bot}^2
+	\end{align*}
+	Zur Berechnung des Luftwiderstands an einem Körper wird dann ein Faktor $c_w$ hinzugefügt, welcher beschreibt, wie stark die Luft den Körper umfließen kann.
+	\begin{align*}
+		F_{Luft} = c_w F_{Stau} = c_w \cdot \frac{1}{2} \cdot \rho \cdot A \cdot \norm{\vv_\bot}^2
+	\end{align*}
+	Die Relativgeschwindigkeit $v$ eines Flugzeugs gegenüber der Luft wird durch die Bordinstrumente durch Umstellung dieser Formel nach $\norm{\vv_\bot}$ berechnet!
+	\begin{align*}
+		\frac{1}{2} \cdot \rho_{Luft} \cdot v^2 &= \rho_{Mess} \cdot g \cdot \Delta h\\
+		\implies v &= \sqrt{\frac{2 \cdot \rho_{Mess} \cdot g \cdot \Delta h}{\rho_{Luft}}}
+	\end{align*}
+	Dabei wird in einem Messrohr eine Messflüssigkeit mit Dichte $\rho_{Mess}$ durch den Staudruck um eine Höhe $\Delta h$ bewegt.
+	\subsection{Das Kontinuitätsgesetz}
+	Flüssigkeiten sind Näherungsweise inkompressibel, dementsprechend ist Volumen mal Flüssigkeit näherungsweise Konstant. Fließt also eine Flüssigkeit durch einen enger werdenden Behälter, wird sie schneller.
+	\begin{align*}
+		A(t) \cdot v(t) = const
+	\end{align*}
+	Luft ist deutlich weiter davon entfernt, inkompressibel zu sein, da aber trotzdem ein Widerstand gegen Kompression existiert kann man trotzdem qualitativ den selben Effekt beobachten.
+	\subsection{Die Bernoulli-Gleichung}
+	In fließendem Wasser gilt folgendes Energiegleichgewicht:
+	\begin{align*}
+		E_{kin} + E_{pot} = const + W
+	\end{align*}
+	$W$ ist hier die sogenannte "Volumenarbeit", die ein Teil des Fluids leistet, um vor ihm liegende Teile des Fluids auf höheren Druck zu komprimieren:
+	\begin{align*}
+		W = - F \cdot \Delta s = (p_2 - p_1) \cdot A \cdot \Delta s = (p_2 - p_1) \cdot \Delta V
+	\end{align*}
+	Wir erhalten letzendlich:
+	\begin{align*}
+		\frac{1}{2} \cdot \rho \cdot v^2 + \rho \cdot g \cdot h + p = const 
+	\end{align*}
+	Dies führt zum sogenannten "Hydrodynamischen Paradoxon" - an Orten mit höherer Flussgeschwindigkeit ist der Druck geringer. So funktionieren zum Beispiel sogenannte Wasserstrahlpumpen - wenn man durch ein Glasrohr, welches immer wieder dünner wird, Wasser laufen lässt, kann man durch ein seitliches Rohr einen Sog erzeugen. Dies ist außerdem ein Faktor dabei, warum starker Wind Dachziegel anheben kann.
+	\subsection{Hangabtriebskraft}
+	Wir betrachten die Bewegung eines Körpers mit Masse $m$ um einen Weg der Länge $\Delta s$ mit Höhenänderung $\Delta h$ entlang eines Höhengradienten $\nabla H$.
+	Für die Änderung der potentiellen Energie gilt $\Delta E_{pot} = m \cdot g \cdot \Delta h$. Diese Energieänderung ist genau die Arbeit $W$, welche durch die Hangabtriebskraft am Körper verrichtet wird:
+	\begin{align*}
+		W = \vF_H \cdot \Delta \vs = - \Delta E_{pot} = - m \cdot g \cdot \Delta h
+	\end{align*}
+	Wir erhalten:
+	\begin{align*}
+		\vF_H = -m \cdot g \cdot \frac{\Delta h}{\Delta \vs} \to -m\cdot g \cdot \frac{dh}{d\vs} = -m \cdot g \cdot \grad H
+	\end{align*}
+	\subsection{Gradientenkraft}
+	Durch den Druckgradienten der Atmosphäre entstehen Druckunterschied über beliebige Strecken $\Delta x$. Somit wirkt auf einen zum Gradienten orthogonalen Querschnitt $A$ eine Kraft von:
+	\begin{align*}
+		\Delta p &= \grad p \cdot \Delta \vx\\
+		\Delta \vF &= -\Delta p \cdot A = - \grad p \cdot \vx \cdot A
+	\end{align*}
+	Aus dieser Druckgradientenkraft folgt eine Beschleunigung der Luft im betrachteten Volumen $\Delta x \cdot A$. Für die entstehende Beschleunigung gilt dann:
+	\begin{align*}
+		\va = \frac{\Delta F}{m} = \frac{\Delta F}{\rho \cdot V} = \frac{\grad p \cdot \Delta x \cdot A}{\rho \cdot \Delta x \cdot A} = -\frac{1}{\rho} \grad p
+	\end{align*}
+	\section{Schwerkraft}
+	Die Schwerkraft zwischen zwei Massen $m_1$ und $m_2$ mit Abstand $r$ ist im Allgemeinen gegeben durch:
+	\begin{align*}
+		F_G = G \cdot \frac{m_1 \cdot m_2}{r^2}
+	\end{align*}
+	Ist $M$ die Erdmasse und $r$ der Erdradius, kann man so die Fallbeschleunigung $g$ auf einer Beliebigen Distanz $r$ vom Erdmittelpunkt berechnet werden:
+	\begin{align*}
+		m \cdot g &= G\frac{mM}{r^2}\\
+		\implies  g &= \frac{GM}{r^2}
+	\end{align*}
+	Wir können die Schwerkraft als Zentripetalkraft betrachten und so die Zeit berechnen, welche ein Satellit braucht, um einen Zentralkörper zu umrunden, und die Geschwindigkeit, die dabei erhalten werden muss. 
+	\newpar
+	Aus dem Gleichgewicht der Zentripetalkraft mit der Schwerkraft erhalten wir die Gleichgewichtsgeschwindigkeit:
+	\begin{align*}
+		F_z = m \cdot \frac{v^2}{r} = F_G
+		\implies v = \sqrt{\frac{GM}{r}}
+	\end{align*}
+	Wir können die Umlaufzeit nun bestimmen als:
+	\begin{align*}
+		v &= \sqrt{\frac{GM}{r}} = \omega r = \frac{2\pi}{T} r\\
+		\implies T &= 2\pi \sqrt{\frac{r^3}{GM}}
+	\end{align*}
+	\subsection{Arbeit gegen die Schwerkraft}
+	Angenommen, wir heben einen Körper mit Masse $m$ vom Abstand $R_0$ zur Erde auf den Abstand $R_0 + h$ an. So gilt:
+	\begin{align*}
+		W &= \int_{R_0}^{R_0 + h} F \cdot ds\\
+		  &= \int_{R_0}^{R_0 + h} G \frac{mM}{r^2} \cdot dR\\
+		  &= GmM \left(\frac{1}{R_0} - \frac{1}{R_0 + h}\right)
+	\end{align*}
+	\subsection{Barometrische Höhenformel}
+	Wie ändert sich der Atmosphärische Luftdruck mit steigender Höhe?
+	\newpar
+	Ist $m$ die Masse an Luft, $n$ die Anzahl der Luftmoleküle und $M$ die durchschnittliche molare Masse der Moleküle, so ist der Druck gegeben durch:
+	\begin{align*}
+		\rho = \frac{m}{V} = \frac{M \cdot n}{V}
+	\end{align*}
+	Für Luft gilt näherungsweise die Zustandsgleichung für ideale Gase $pV = nRT$, also:
+	\begin{align*}
+		\rho = \frac{1}{V} Mn = \frac{p}{nRT} Mn = \frac{M}{RT} p
+	\end{align*}
+	Für den Druckgradienten folgt:
+	\begin{align*}
+		dp &= - \frac{dF}{A} = -\frac{dm \cdot g}{A} = \frac{\rho \cdot g \cdot dV}{A} = -\rho \cdot g \cdot dh\\
+		\implies \frac{dp}{dh} &= -\rho \cdot g = -\frac{Mg}{RT} \cdot p
+	\end{align*}
+	Unter der Annahme, dass die Atmosphäre isotherm ist (in etwa konstante Temperatur hat), folgt
+	\begin{align*}
+		content...
 	\end{align*}
 	\chapter{Thermodynamik}
 	\chapter{Physik der Erde}

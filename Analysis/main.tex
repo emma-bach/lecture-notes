@@ -5,6 +5,9 @@
 \usepackage[titletoc]{appendix}
 \usepackage{tikz}
 \usepackage{xcolor}
+\usepackage[many]{tcolorbox}
+
+\usepackage[ddmmyyyy]{datetime}
 
 \usepackage{multicol}
 \usepackage{amsmath}
@@ -16,12 +19,18 @@
 \usepackage{physics}
 \usepackage{placeins}
 
+\usepackage{setspace}
+
+\renewcommand{\baselinestretch}{1.2} 
+
 %hyperref should be last apparently
 \usepackage{hyperref}
 
 \renewcommand\cftsecdotsep{\cftdot}
 \renewcommand\cftsubsecdotsep{\cftdot}
 \renewcommand\epsilon{\varepsilon}
+
+\newcommand{\theoremname}[1]{\emph{\tbf{\ul{#1}}}}
 
 % Starts a new paragraph without indentation
 % and with an empty line between paragraphs
@@ -34,25 +43,30 @@
 \newcommand{\ttt}[1]{\texttt{#1}}
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
 
 \newcommand{\Hess}[1]{\text{Hess}(#1)}
+\newcommand{\at}{\text{at}}
 
 \newcommand{\bC}{\mathbb{C}}
 \newcommand{\bF}{\mathbb{F}}
 \newcommand{\bN}{\mathbb{N}}
 \newcommand{\bQ}{\mathbb{Q}}
 \newcommand{\bR}{\mathbb{R}}
+\newcommand{\barR}{\ol{\mathbb{R}}}
 
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\cB}{\mathcal{B}}
 \newcommand{\cC}{\mathcal{C}}
 \newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
 \newcommand{\cH}{\mathcal{H}}
 \newcommand{\cM}{\mathcal{M}}
 \newcommand{\cN}{\mathcal{N}}
 \newcommand{\cO}{\mathcal{O}}
 \newcommand{\cP}{\mathcal{P}}
 \newcommand{\cR}{\mathcal{R}}
+\newcommand{\cT}{\mathcal{T}}
 \newcommand{\cX}{\mathcal{X}}
 
 \newcommand{\ve}{\vec{e}}
@@ -93,9 +107,8 @@
 
 \NewDocumentEnvironment{nalign}{}{\equation\aligned}{\endaligned\endequation}
 
-\begin{document}
 % \newtheorem{codename}{printedname}[countedwith]
-\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{lemma}{Lemma}[section]
 \newtheorem{theorem}[lemma]{Satz}
 \newtheorem{proposition}[lemma]{Proposition}
 \newtheorem{corollary}[lemma]{Korollar}
@@ -103,11 +116,22 @@
 \theoremstyle{definition}
 \newtheorem{definition}[lemma]{Definition}
 \newtheorem{beispiel}[lemma]{Beispiel}
+\newtheorem{example}[lemma]{Beispiel}
 \newtheorem{beobachtung}[lemma]{Beobachtung}
 \newtheorem{anmerkung}[lemma]{Anmerkung}
 \newtheorem{question}[lemma]{Frage}
 \newtheorem{application}[lemma]{Anwendung}
 \newtheorem{konsequenz}[lemma]{Konsequenz}
+
+\tcolorboxenvironment{proof}{
+	colback=black!5!white,
+	boxrule=0pt,
+	sharp corners,
+	breakable,
+	enhanced,
+}
+
+\begin{document}
 
 \newenvironment{proofsketch}{\begin{proof}[Beweisskizze]\renewcommand*{\qedsymbol}{\("\square"\)}}{\end{proof}}
 
@@ -132,6 +156,38 @@
 %
 %
 %
+\chapter{Grundlagen der Mengenlehre}
+\section{Die de-Morganschen Regeln}
+\begin{theorem}
+	Es gilt:
+	\begin{enumerate}
+		\item $X \setminus \bigcap_{i \in I} A_i = \bigcup_{i \in I} X \setminus A_i$
+		\item $X \setminus \bigcup_{i \in I} A_i = \bigcap_{i \in I} X \setminus A_i$
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	\phantom{}
+	\begin{enumerate}
+		\item 
+		\iffalse
+		Wir zeigen zuerst $X \setminus \bigcap_{i \in I} A_i \subseteq \bigcup_{i \in I} X \setminus A_i$:
+		\begin{align*}
+			x \in X \setminus \bigcap_{i \in I} A_i &\Leftrightarrow x \in X \wedge \left(\bigwedge_{i \in I} x \notin A_i\right)\\
+			&\Rightarrow x \in X \wedge  \exists j \in I : x \notin A_j\\
+			&\Rightarrow x \in X \setminus A_j\\
+			&\Rightarrow x \in \bigcup_{i \in I} X \setminus A_i
+		\end{align*}
+		Es fehlt nun nur noch $\bigcup_{i \in I} X \setminus A_i \subseteq X \setminus \bigcap_{i \in I} A_i$:\fi
+		\begin{align*}
+			x \in \bigcup_{i \in I} X \setminus A_i &\Leftrightarrow \bigvee_{i \in I} x \in X \wedge x \notin A_i\\
+			&\Leftrightarrow \exists j \in I : x \in X \wedge x \notin A_j\\
+			&\Leftrightarrow \exists j \in I : x \in X \setminus A_j\\
+			&\Leftrightarrow x \in X \setminus \bigcap_{i \in I} A_i
+		\end{align*}
+		\item \phantom{}
+		TODO
+	\end{enumerate}
+\end{proof}
 \chapter{Zahlen}
 \section{Die natürlichen Zahlen}
 \section{Die rationalen Zahlen}
@@ -704,7 +760,7 @@ Gemäß Satz \ref{theorem:rechenregelnfürfolgen} können \textbf{konvergente} R
 		&= \abs{a_n} \cdot \frac{1}{1-\theta}
 	\end{align*}
 \end{proof}
-\begin{beispiel}
+\begin{example}
 	Wir betrachten die Reihe
 	\begin{align*}
 		\sum_{k=1}^\infty a_k := \sum_{k=1}^\infty \frac{k}{e^k}
@@ -714,7 +770,7 @@ Gemäß Satz \ref{theorem:rechenregelnfürfolgen} können \textbf{konvergente} R
 		\abs{\frac{a_{k+1}}{a_k}} = \abs{\frac{(k + 1)e^k}{ke^{k+1}}} = \abs{\frac{k + 1}{ke}} < \frac{1}{2}
 	\end{align*}
 	Also konvergiert die Reihe absolut. (Die Abschätzung ist hier natürlich sehr grob.)
-\end{beispiel}
+\end{example}
 \begin{theorem}
 	\emph{\textbf{Wurzelkriterium:}} Gibt es ein $\theta \in [0,1)$ und ein $n \in \bN$ sodass 
 	\begin{align*}
@@ -825,7 +881,7 @@ Gemäß Satz \ref{theorem:rechenregelnfürfolgen} können \textbf{konvergente} R
 %
 %
 %
-\chapter{Integration}
+\chapter{Riemannintegration über reelle Intervalle}
 \section{Treppen- und Regelfunktionen}
 \begin{definition}
 	Eine Funktion $f \in B([a,b])$ (eine beschränkte Funktion mit Definitionsbereich $[a,b]$) heißt \textbf{Treppenfunktion}, falls es Punkte $a = x_0 < x_1 < \hdots < x_n = b$ gibt, sodass $f$ auf jedem offenen Teilintervall $(x_k, x_{k+1})$ konstant ist. Wir nennen dann $(x_0, \hdots, x_n)$ eine \tbf{zu $f$ gehörige Unterteilung von $[a,b]$}. Die Menge aller Treppenfunktionen auf dem Intervall $[a,b]$ schreiben wir $T([a,b])$.
@@ -1063,7 +1119,7 @@ Gemäß Satz \ref{theorem:rechenregelnfürfolgen} können \textbf{konvergente} R
 		\int_a^b f(x) g(x) dx = \left[F(x) g(x)\right]_a^b - \int_a^b F(x) g'(x) dx
 	\end{align*}
 \end{anmerkung}
-\begin{beispiel}
+\begin{example}
 	Ein sehr häufig anwendbarer Trick ist die partielle Integration einer Funktion durch Multiplikation mit der konstanten Einsfunktion, z.B:
 	\begin{align*}
 		\int \ln(x) dx &= \int 1 \cdot \ln(x) dx\\
@@ -1071,8 +1127,8 @@ Gemäß Satz \ref{theorem:rechenregelnfürfolgen} können \textbf{konvergente} R
 		&= x \ln(x) - \int 1 dx\\
 		&= x \ln(x) - x\\ 
 	\end{align*}
-\end{beispiel}
-\begin{beispiel}
+\end{example}
+\begin{example}
 	Im Fall $f = g$ erhält man durch partielle Integration das gleiche Integral ein zweites Mal und kann daraufhin die Gleichung durch Umstellen lösen:
 	\begin{align*}
 		\int f'(x) f(x) dx &= f(x)f(x) - \int f(x) f'(x) dx\\
@@ -1084,7 +1140,7 @@ Gemäß Satz \ref{theorem:rechenregelnfürfolgen} können \textbf{konvergente} R
 		\item $\displaystyle \int \frac{\ln x}{x} dx = \frac{1}{2} \ln(x)^2$
 		\item $\displaystyle \int \sin(x)\cos(x) dx = \frac{1}{2} \sin(x)^2 = -\frac{1}{2} \cos(x)^2$
 	\end{itemize}
-\end{beispiel}
+\end{example}
 \subsection{Integration durch Substitution}
 \chapter{Potenzreihen}
 \begin{definition}
@@ -1418,7 +1474,7 @@ Analog gilt das Selbe für Stetigkeit auf $M$, gleichmäßige Stetigkeit, etc.
  \end{align*}
 \end{corollary}
 \section{Mehrdimensionale Ableitungen}
-	\begin{beispiel}
+	\begin{example}
 	 Sei $f : M \to \bR$ definiert auf einer offenen Menge $M \subseteq \bR^n$.
 	 \begin{align*}
 	  f(X) = f(x_1, \hdots, x_n) \text{ bzgl. der Standardbasis }
@@ -1428,11 +1484,11 @@ Analog gilt das Selbe für Stetigkeit auf $M$, gleichmäßige Stetigkeit, etc.
 	  f(X) = f(x_1, \hdots, x_n) = g(x_1', \hdots, x_n')
 	 \end{align*}
 	 Da $f$ in der Regel nicht linear ist, ist ein solcher Basiswechsel sehr viel komplizierter als in der Linearen Algebra! Wo möglich ist es also besser, über $f(X)$ zu reden.
-	\end{beispiel}
+	\end{example}
 	\begin{definition}
 	 Sei $f : \bR^n \to \bR$, $\overline{X} \in M$. Betrachte die Abbildung \[t \to f(\overline{x}_1, \hdots \overline{x}_{i-1}, t, \overline{x}_{i+1}, \hdots, \overline{x}_n),\] welche eine Mehrdimensionale Funktion $f(x_1, \hdots x_n)$ auf eine eindimensionale Funktion $f(t)$ abbildet. \ul{Achtung:} Wir nehmen hier implizit eine Darstellung bezüglich der Standardbasis an!
 	\end{definition}
-	\begin{beispiel}
+	\begin{example}
 	 Betrachte folgende Funktion:
 	 \begin{align*}
 	  f(x,y) = \begin{cases}
@@ -1444,9 +1500,9 @@ Analog gilt das Selbe für Stetigkeit auf $M$, gleichmäßige Stetigkeit, etc.
 	  \forall x : f(x,x) = \frac{1}{2}
 	 \end{align*}
 	 Also ist $f$ an $0$ nicht stetig! Es existieren also Funktionen, die an einem Punkt partiell Differenzierbar sind, an dem sie nicht stetig sind.
-	\end{beispiel}
+	\end{example}
 	\ul{Idee:} Fordere partielle Differenzierbarkeit bezüglich jeder möglichen Basis, also partielle Differenzierbarkeit in jedem Vektor.
-	\begin{beispiel}
+	\begin{example}
 	 \begin{align*}
 	  f(x,y) = \begin{cases}
 	            \frac{x^2y}{x^4 + y^2} & (x,y) \neq (0,0)\\
@@ -1462,7 +1518,7 @@ Analog gilt das Selbe für Stetigkeit auf $M$, gleichmäßige Stetigkeit, etc.
 	  f(a, a^2) = \frac{a^2a^2}{a^4+a^4} = \frac{1}{2}
 	 \end{align*}
 	 Also ist $f$ immer noch nicht stetig - es ist stetig für Folgen, welche den Nullpunkt durch Geraden erreichen, aber nicht, wenn wir durch kompliziertere Pfade gegen den Nullpunkt gehen.
-	\end{beispiel}
+	\end{example}
 	\newpar
 	Wir wollen die Begriffe aus der Analysis I über Stetigkeit und Ableitbarkeit retten, also brauchen wir einen komplizierteren Ableitungsbegriff.
 	\section{Differenzierbarkeit}
@@ -2187,7 +2243,7 @@ Die drei zentralen Fragen sind nun:
 Die dritte Frage sprengt leider den Rahmen einer Grundlagenvorlesung Analysis. Die ersten beiden Fragen können wir jedoch bald befriedigend beantworten.
 \newpar
 Es stellt sich zum Beispiel heraus, dass selbst bei simplen Anfangswertproblemen die Stetigkeit von $f$ nicht ausreicht, um die Eindeutigkeit der Lösungsmenge zu gewährleisten:
-\begin{beispiel}
+\begin{example}
 	Sei $f(t,x) = 2\sqrt{\abs{x}}$. Dann hat das Anfangsproblem
 	\begin{align*}
 		x(0) &= 0\\
@@ -2203,7 +2259,7 @@ Es stellt sich zum Beispiel heraus, dass selbst bei simplen Anfangswertproblemen
 		\end{cases}
 	\end{align*}
 	für beliebige $\alpha \in \bR^-, \beta \in \bR^+$.
-\end{beispiel}
+\end{example}
 \begin{theorem}
 	Hiii!!! 'w'
 \end{theorem}
@@ -2612,7 +2668,7 @@ Unser Ansatz ist nun, nur Mengen zu messen, welche im Grenzwert als zählbare Ve
 	Wir bezeichnen die Menge $\cM \subsetneq \cP(\bR^n)$ als die Menge der \tbf{messbaren Funktionen}.
 \end{definition}
 \section{Mengensysteme}
-\subsection{Mengenringe}
+\subsection{Mengenringe und Mengenalgebren}
 \begin{definition}
 	Sei $X$ eine Menge. Ein Mengensystem $\cR \subseteq \cP(X)$ heißt \tbf{Mengenring}, falls:
 	\begin{enumerate}
@@ -2630,13 +2686,21 @@ Unser Ansatz ist nun, nur Mengen zu messen, welche im Grenzwert als zählbare Ve
 		\item $\forall A,B \in \cR : A \cup B \in \cR$
 	\end{enumerate}
 \end{proposition}
+\begin{definition}
+	Eine \tbf{Mengenalgebra} ist ein Mengenring, welcher die gesamte Menge $X$ enthält.
+\end{definition}
 \begin{proposition}
 	Das System aller endlichen Teilmengen einer Menge $X$ bildet einen Mengenring.
 \end{proposition}
 \begin{proposition}
+	Das System aller höchstens abzählbaren endlichen Teilmengen einer Menge $X$ bildet einen Mengenring.
+\end{proposition}
+\begin{proposition}
 	Sei $H$ die Menge der halboffenen Intervalle $[a,b)$. So bildet das System aller Mengen $A \subseteq \bR$, die sich als endliche Vereinigung solcher Intervalle darstellen lassen, einen Mengenring $\cH$.
 \end{proposition}
-\subsection{Mengenalgebren}
+\begin{proposition}
+	Sei $A \subseteq X$. So ist $\{\emptyset, A\}$ ein Mengenring, welcher genau dann eine Mengenalgebra ist, wenn $A = X$.
+\end{proposition}
 \subsection{$\sigma$-Algebren}
 \begin{definition}
 	Sei $X$ eine Menge. Ein Mengensystem $\cA \subseteq \cP(X)$ heißt \tbf{$\sigma$-Algebra}, falls folgendes gilt:
@@ -2666,7 +2730,7 @@ Unser Ansatz ist nun, nur Mengen zu messen, welche im Grenzwert als zählbare Ve
 		A \setminus B = A \cap (X \setminus B)
 	\end{align*}
 \end{proof}
-\noindent Die Potenzmenge $\cP(X)$ selbst ist bereits eine $\sigma$-Alebgra. Ebenso ist die Menge $\{\emptyset, X\}$ bereits eine $\sigma$-Algebra. Später werden wir zeigen, dass die Menge der \tbf{messbaren Mengen} eine $\sigma$-Algebra bilden und dass die offenen Mengen ein Teilsystem der messbaren Mengen bilden.
+\noindent Die Potenzmenge $\cP(X)$ selbst ist bereits eine $\sigma$-Algebra. Ebenso ist die Menge $\{\emptyset, X\}$ bereits eine $\sigma$-Algebra. Später werden wir zeigen, dass die Menge der \tbf{messbaren Mengen} eine $\sigma$-Algebra bilden und dass die offenen Mengen ein Teilsystem der messbaren Mengen bilden.
 \begin{theorem}
 	Jeder zählbar unendliche Durchschnitt von $\sigma$-Algebren ist wieder eine $\sigma$-Algebra.
 \end{theorem}
@@ -2728,12 +2792,652 @@ Nun fürs Erste zurück zu $\sigma$-Algebren.
 	\begin{proof}
 		Es gilt $\cE_i \subseteq \sigma(\cE_i)$, also auch $\sigma\left(\bigcup_{i \in I} \cE_i \right) \subseteq \sigma\left(\bigcup_{i \in I} \sigma(\cE_i)\right)$.
 		\newpar
-		Umgekehrt gilt
+		Umgekehrt gilt (TODO)
 	\end{proof}
 \end{theorem}
-
-
+\begin{theorem}
+	Jede $\sigma$-Algebra ist entweder endlich oder überabzählbar.
+\end{theorem}
+\begin{proof}
+	Wir definieren:
+	\begin{align*}
+		\at(x) := \bigcap \{A \in \cA : x \in A\}
+	\end{align*}
+	\begin{lemma}
+		Für jedes $x,y \in X$ gilt
+		\begin{align*}
+			\at(x) \cap \at(y) \neq \emptyset \implies \at(x) = \at(y)
+		\end{align*}
+	\end{lemma}
+	\begin{proof}
+		Angenommen, $\at(x) \neq \at(y)$. Dann existiert ein Element $A_x \in \cA$, in dem $x$ enthalten ist, aber nicht $y$. Dann ist $X \setminus A_x \in \at(y)$ und disjunkt von $A_x$. Dann gilt $\at(y) = \at(y) \cap X \setminus A_x$. Außerdem ist 
+		\begin{align*}
+			\at(x) = \bigcap \{A \in \cA : x \in A\} = \bigcap \{A \in \cA : x \in A\} \cap A_x = \at(x) \cap A_x.
+		\end{align*} Es folgt: 
+		\begin{align*}
+			\at(x) \cap \at(y) = \at(x) \cap A_x \cap X \setminus A_x \cap \at(y) = \emptyset
+		\end{align*}
+	\end{proof}
+	\begin{lemma}
+		Falls $\cA$ abzählbar ist, gilt für jedes $x \in X$ $\at(x) \in \cA$, und für jedes $A \in \cA$ $A = \bigcup_{x \in A} \at(x)$
+	\end{lemma}
+	\begin{proof}
+		Die erste Bedingung folgt daraus, dass die $\sigma$-Algebra unter abzählbaren Schnitten abgeschlossen ist. Es gilt $A \subseteq \bigcup_{x \in A} \at(x)$, da in jedem $\at(x)$ zumindest eine Menge enthalten ist, die $x$ enthält. Es gilt $\forall x : \at(x) \subseteq A$, da $x \in A$ und $\at(X)$ als Schnitt aller solcher Teilmengen definiert ist, somit gilt auch $\bigcup_{x \in A} \at(x) \subseteq A$.
+	\end{proof}
+	\noindent
+	Wir wollen nun diese Lemmas zum Widerspruch führen. Angenommen, $\cA$ ist nicht überabzählbar. Sei $B \subseteq \cA$ die Menge der Atome.
+	\begin{enumerate}
+		\item Angenommen, $B$ ist endlich. Dann besteht $\cA$ nach unserem zweiten Lemma höchstens aus jeder möglichen Kombination aus Atomen, wovon es endlich viele gibt, also ist auch $\cA$ endlich.
+		\item Angenommen, $B$ ist abzählbar. Dann können wir $B = \{B_i\}_{i \in \bN}$ schreiben. Definiere nun $B = \{\bigcup_{i \in I} B_i : I \subseteq \bN\}$. Diese Menge ist in Bijektion mit $\cP(\bN)$.
+	\end{enumerate}
+\end{proof}
+\section{Maße}
+\begin{definition}
+	Sei $\cA \subseteq \cP(X)$ eine $\sigma$-Algebra. Eine nichtnegative Funktion $\mu : \cA \to [0, \infty]$ heißt \tbf{Maß}, falls:
+	\begin{enumerate}
+		\item $\mu(\emptyset) = 0$
+		\item Für beliebige paarweise disjunkte $A_i \in \cA_i, i \in \bN$ gilt:
+		\begin{align*}
+			\mu\left(\bigcup_{i \in \bN} A_i\right) = \sum_{i \in \bN} \mu(A_i)
+		\end{align*}
+	\end{enumerate}
+	Das Tripel $(X, \cA, \mu)$ heißt dann \tbf{Maßraum}.
+\end{definition}
+\begin{definition}
+	Sei $(X, \cA, \mu)$ ein Maßraum. $\mu$ heißt \tbf{endlich}, falls $\mu(X) < \infty$, und \tbf{$\sigma$-endlich}, falls es eine Folge $(X_i) \subseteq \cA$ mit $\mu(X_i) < \infty$ gibt, sodass $X = \bigcup_{i \in \bN} X_i$.
+\end{definition}
+\begin{definition}
+	Sei $(X, \cA, \mu)$ ein Maßraum. Ist $\mu(X) = 1$, so wird $\mu$ \tbf{Wahrscheinlichkeitsmaß} genannt.
+\end{definition}
+\begin{definition}
+	Sei $X$ beliebig, $\cA = \cP(X)$, $x \in X$ beliebig. Das \tbf{Diracmaß} ist das Maß:
+	\begin{align*}
+		\delta_x(A) = \begin{cases}
+			0 & x \notin A\\
+			1 & x \in A\\
+		\end{cases}
+	\end{align*}
+\end{definition}
+\begin{definition}
+	Auf einer beliebigen Menge $X$ definieren wir das \tbf{Zählmaß} $\text{card}(A) : \cP(X) \to [0, \infty]$ durch:
+	\begin{align*}
+		\text{card}(A) = 
+		\begin{cases}
+			\abs{A} & \text{$A$ endlich}\\
+			\infty & \text{$A$ unendlich}
+		\end{cases}
+	\end{align*}
+\end{definition}
+\begin{definition}
+	\tbf{\ul{Einschränkungen von Maßen:}} Sei $(X, A, \mu)$ ein Maßraum, $M \in \cA$ und $A|_M \subseteq \cP(M)$ die von $\cA$ auf $M$ induzierte $\sigma$-Algebra. Wir können ein Maß $\mu|_M$ auf $\cA|_M$ definieren, da es für alle $B \in \cA|_M$ ein $A \in \cA$ mit $B = A \cap M$ gibt. Wir setzen also:
+	\begin{align*}
+		\mu|_M(B) = \mu(A \cap M)
+	\end{align*}
+\end{definition}
+\begin{definition}
+	Sei $\cA \subseteq \cP(X)$ eine $\sigma$-Algebra. Das \tbf{triviale Maß} ist gegeben durch:
+	\begin{align*}
+		\forall A \in \cA : \mu(A) = 0
+	\end{align*}
+\end{definition}
+\begin{theorem}
+	\ul{\tbf{\emph{Stetigkeitseigenschaften:}}} Sei $(X, \cA, \mu)$ ein Maßraum. Dann gelten für $A_i \subseteq \cA, i \in \bN$ folgende Aussagen:
+	\begin{enumerate}
+		\item Ist $A_i$ monoton wachsend, also $A_1 \subseteq A_2 \subseteq \hdots$, so folgt
+		\begin{align*}
+			\mu\left(\bigcup_{i \in \bN} A_i\right) = \lim_{i \to \infty} \mu(A_i)
+		\end{align*}
+		\item Ist $\mu(A_1) <\infty$ und $A_i$ monoton fallend, also $A_1 \supseteq A_2 \supseteq \hdots$, dann folgt:
+		\begin{align*}
+			\mu\left(\bigcap_{i \in \bN} A_i\right) = \lim_{i \to \infty} \mu(A_i)
+		\end{align*}
+		\item $\mu$ ist \tbf{$\sigma$-Subadditiv}:
+		\begin{align*}
+			\mu\left(\bigcup_{i \in \bN} A_i\right) \leq \sum_{i \in \bN} \mu(A_i)
+		\end{align*}
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	\phantom{}
+\begin{enumerate}
+	\item Wir definieren $\widetilde A_1 := A_1$ und $\widetilde A_k := A_j \setminus A_{k-1}$. So sind die $\widetilde A_k$ paarweise disjunkt. Es gilt:
+	\begin{align*}
+		\mu\left(\bigcup A_i \right) &= \mu\left(\bigcup \widetilde A_i\right)\\
+		 &= \sum_{i \in \bN} \mu(\widetilde A_i)\\
+		 &= \lim_{n \to \infty} \sum_{i = 1}^n \mu(\widetilde A_i)\\
+		 &= \lim_{n \to \infty} \mu\left(\bigcup_{i = 1}^n \widetilde A_i\right)\\
+		 &= \lim_{n \to \infty} \mu(A_n)
+	\end{align*}
+	\item Wir definieren $\widetilde A_k' := A_1 \setminus A_k$. Es gilt:
+	\begin{align*}
+		\mu(A_1) &= \mu(A_1 \cap A_k) + \mu(A_1 \setminus A_k)\\
+				 &= \mu(A_k) + \mu(A_k')
+	\end{align*}
+	Es folgt
+	\begin{align*}
+	\mu(A_1) - \mu(A_k) = \mu(A_k')
+	\end{align*}
+	Also auch:
+	\begin{align*}
+		\mu(A_1) - \lim_{k \to \infty} \mu(A_k) &= \lim_{k \to \infty} \mu(A_k')\\
+		&= \mu\left(\bigcup_{k \in \bN} A_k'\right)\\
+		&= \mu\left(A_1 \setminus \bigcap_{k \in \bN} A_k\right)\\
+		&= \mu\left(A_1\right) - \mu\left(\bigcap_{k \in \bN} A_k\right)
+	\end{align*}
+	\item
+\end{enumerate}
+\end{proof}
+\begin{proposition}
+	Das Zählmaß führt zu Gegenbeispielen zu $2.$ bei unendlichem $\mu(A_1)$.
+\end{proposition}
+\begin{definition}
+	Sei $(X, \cA, \mu)$ ein Maßraum. Jede Menge $A \in \cA$ mit $\mu(A) = 0$ heißt \tbf{Nullmenge}. Wir bezeichnen das System aller Nullmengen eines Maßes mit $\cN(\mu)$.
+	$\mu$ heißt \tbf{vollständig}, wenn jede Teilmenge einer Nullmenge ebenfalls in der $\sigma$-Algebra enthalten ist und ebenfalls Maß $0$ hat.
+\end{definition}
+\begin{proposition}
+	Das triviale Maß ist auf jeder $\sigma$-Algebra, welche nicht die Potenzmenge ist, nicht vollständig.
+\end{proposition}
+\begin{definition}
+	Sei $(X, \cA, \mu)$ ein Maßraum und $\cT_\mu$ die Mengen aller Teilmengen von Nullmengen in $\mu$. Wir definieren den \tbf{Abschluss} von $\cA$ als:
+	\begin{align*}
+		\overline{\cA_\mu} := \{A \cup N : A \in \cA, N \in \cT_\mu\}
+	\end{align*}
+	$\mu$ ist offensichtlich genau dann vollständig, wenn $\cT_\mu \subseteq \cA$. Wir definieren für $A \in \cA$ und $N \in \cT_\mu$ nun den Abschluss des Maßes als:
+	\begin{align*}
+		\overline{\mu}(A \cup N) := \mu(A)
+	\end{align*}
+\end{definition}
+\begin{theorem}
+	\ul{\emph{\tbf{Vervollständigung:}}} Sei $(X, \cA, \mu)$ ein Maßraum. Dann ist $\overline{\cA_\mu}$ eine $\sigma$-Algebra und $\overline{\mu}$ ein vollständiges Maß, welches auf $\cA$ mit $\mu$ übereinstimmt.
+\end{theorem}
+\begin{proof}
+	\phantom{}
+	\begin{enumerate}
+		\item $\cT_\mu$ ist unter abzählbaren Vereinigungen abgeschlossen, ebenso $\cA$. Also ist auch $\overline{\cA_\mu}$ unter abzählbaren Vereinigungen abgeschlossen.
+		\newpar
+		Sei $E \in \overline{\cA_\mu}$. Dann existieren ein $A \in \cA$, $N \in \cT_\mu$ und ein $B \in \cN(\mu)$, sodass $E = A \cup N$.
+		\newpar
+		Es gilt $B \setminus N \in \cT_\mu$. Nun gilt:
+		\begin{align*}
+			X \setminus E = (X \setminus (A \cup B)) \cup (B \setminus N)
+		\end{align*}
+		Da $(X \setminus (A \cup B)) \in \cA$ und $B \setminus N \in \cT_\mu$ gilt also $X \setminus E \in \overline{\cA_\mu}$. Also ist $\overline{\cA_\mu}$ eine $\sigma$-Algebra. \\\hfill\qed
+		\item coming soon :)
+	\end{enumerate}
+\end{proof}
+\begin{theorem}
+	Sei $(X, \cA, \mu)$ ein Maßraum und sei $(X, \ol{\cA_\mu}, \ol{\mu})$ dessen Vervollständigung. Sei $(X, \cB, \nu)$ ein weiterer vollständiger Maßraum mit $\cA \subseteq \cB$ und $\forall A \in \cA: \mu(A) = \nu(A)$. Dann ist $\ol{\cA_\mu} \subseteq \cB$ und $\forall A \in \ol{\cA_\mu} : \nu(A) = \ol{\mu}(A)$.
+\end{theorem}
+\begin{proof}
+	Aus $\cA \subseteq \cB$ und $\mu = \nu$ auf $\cA$ folgt direkt $\cN(\mu) \subseteq \cN(\nu)$, also auch $\cT_\mu \subseteq \cT_\nu$. Da $\nu$ vollständig ist, ist $\cT_\mu \subseteq \cT_\nu \subseteq \cB$, also auch $\ol{\cA_\mu} \subseteq \cB$.
+	\newpar
+	Da $\ol{\mu}$ auf $\ol{\cA_\mu}$ vollständig durch $\mu$ auf $\cA$ bestimmt ist, und $\mu = \nu$ auf $\cA$, folgt außerdem $\ol{\mu} = \nu$ auf $\ol{\cA_\mu}$.
+\end{proof}
+\section{Messbare Funktionen}
+\begin{definition}
+	Seien $(X, \cA)$ und $(Y, \cC)$ messbare Räume. Eine Abbildung $f : X \to Y$ heißt $\cA-\cC$-Messbar, falls
+	\begin{align*}
+		f^{-1}(\cC) \subseteq \cA,
+	\end{align*} 
+	also
+	\begin{align*}
+		\forall c \in \cC : f^{-1}(c) \in \cA.
+	\end{align*}
+\end{definition}
+\begin{proposition}
+	\phantom{}
+	\begin{enumerate}
+		\item Konstante Abbildungen sind messbar.
+		\item Sei $\bR$ mit der Borel-$\sigma$-Algebra versehen. Dann ist für jeden Messbaren Raum $(X, \cA)$ und jede Menge $E \in \cA$ die Indikatorfunktion $\chi_E$ messbar.
+		\item Die Komposition messbarer Funktionen ist messbar.
+	\end{enumerate}
+\end{proposition}
+\begin{proposition}
+	Das Finden nicht Borel-messbarer Funktionen ist ähnlich schwierig wie das Finden von Mengen, die nicht Borel sind. Alle praxisrelevanten Funktionen $\bR^n \to \bR^k$ sind Borel-messbar.
+\end{proposition}
+\begin{lemma}
+	Seien $(X, \cA)$, $(Y, \cC)$ messbare Räume. Sei $f : X \to Y$ eine Abbildung. Für beliebige Systeme $\cE \subseteq \cC$ gilt:
+	\begin{align*}
+		f^{-1}(\sigma(\cE)) = \sigma({f^{-1}(\cE)})
+	\end{align*}
+	Die Urbildbildung kommutiert also mit der Erzeugung von $\sigma$-Algebren.
+\end{lemma}
+\begin{proof}
+	\phantom{}
+	\begin{description}
+		\item[$\supseteq$ :] $f^{-1}(\sigma(\cE))$ ist wieder eine $\sigma$-Algebra. Es gilt außerdem $f^{-1}(\cE) \subseteq f^{-1}(\sigma(\cE))$. Da die erzeugte $\sigma$-Algebra die kleinstmögliche ist gilt also $\sigma(f^{-1}(\cE)) \subseteq f^{-1}(\sigma(\cE))$.
+		\item[$\subseteq$ :] 
+		\begin{align*}
+			\cF := \{F \subseteq Y \mid f^{-1}(F) \in \sigma(f^{-1}(\cE))\}
+		\end{align*}
+		ist wieder eine $\sigma$-Algebra.
+		Es gilt $\cE \subseteq \cF$, also $\sigma(\cE) \subseteq \cF$, also $f^{-1}(\sigma(\cE)) \subseteq \sigma(f^{-1}(\cE))$.
+	\end{description}
+\end{proof}
+\begin{corollary}
+	Seien $(X, \cA)$, $(Y, \cC)$ messbare Räume und sei $C = \sigma(\cE)$. Jede Abbildung $f : X \to Y$ mit $f^{-1}(\cE) \subseteq \cA$ ist $\cA$ - $\cC$-messbar.
+\end{corollary}
+\begin{proof}
+	\begin{align*}
+		f^{-1}(\cC) = f^{-1}(\sigma(\cE)) )  = \sigma(f^{-1}(\cE)) \subseteq \sigma(\cA) \subseteq \cA
+	\end{align*}
+\end{proof}
+\begin{corollary}
+	Stetige Funktionen $f : \bR^n \to \bR^k$ sind $\cB^n$ - $\cB^k$-messbar (Borel-messbar).
+\end{corollary}
+\begin{corollary}
+	Sei $X \neq \emptyset$, $(Y, \cC)$ ein messbarer Raum und $f : X \to Y$. Sei $f^{-1}(\cC)$ eine $\sigma$-Algebra. Dann ist $f$ $f^{-1}(\cC) - \cC$-messbar. $f^{-1}(\cC)$ ist außerdem die kleinste $\sigma$-Algebra, die $f$ messbar macht.y
+\end{corollary}
+\begin{corollary}
+	Analog für Familien $f_i$.
+\end{corollary}
+\begin{definition}
+	Wir definieren $0 \cdot \pm \infty = 0$.
+\end{definition}
+\noindent Die Multiplikation ist damit in den vier Punkten $(0, \pm \infty)$ und $(\pm \infty, 0)$ unstetig. Diese Erweiterung wird sich aber später für die Integration als sinnvoll erweisen - die Fläche der Nullfunktion über das unendliche Intervall $\bR$ soll schließlich $0$ sein.
+\begin{definition}
+	Sei $(X, \cA)$ ein messbarer Raum und $D \in \cA$. eine Funktion $f : D \to \ol{\bR}$ heißt \tbf{numerische Funktion}.
+\end{definition}
+\begin{lemma}
+	Sei $(X, \cA)$ ein messbarer Raum, $D \in \cA$ und $f : D \to \ol{\bR}$. Dann ist äquivalent:
+	\begin{enumerate}
+		\item $f$ ist $\cA$-messbar
+		\item Für jede offene Menge $U \subseteq \bR$ ist $f^{-1}(U) \in \cA$, $f^{-1}(\infty) \in A$ und $f^{-1}(- \infty) \in A$.
+		\item $\forall s \in \bR : \{f(x) \leq s\} \in A$
+		\item $\forall s \in \bR : \{f(x) < s\} \in A$
+		\item $\forall s \in \bR : \{f(x) \geq s\} \in A$
+		\item $\forall s \in \bR : \{f(x) > s\} \in A$
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	1. und 2. sind durch unsere Korrolare äquivalent. Aus 2. folgt 6., da $\{f > s\} = f^{-1}(s, \infty)  \cup f^{-1}(\infty)$. 3.-6. sind äquivalent, da
+	\begin{align*}
+		\{f(x) \leq s\} &= \bigcap_{k \in \bN} \{f(x) \leq s + \frac{1}{k}\}\\
+		\{f(x) > s\} &= D \setminus \{f(x) \leq s\}\\
+ 	\end{align*}
+ 	etc. Betrachte nun $f^{-1}((a,b)) = \{f(x) > a\} \cap \{f(x) < b\}\} \in \cA$. Wir behaupten nun, dass jede offene Menge in $\ol{\bR}$ durch abzählbar viele Intervalle generiert ist. Dadurch folgt dann aus 3.-6. auch 2.
+\end{proof}
+\begin{proposition}
+	Es reicht auch, die gegebenen Eigenschaften für $\bQ$ zu fordern.
+\end{proposition}
+\begin{lemma}
+	Sei $(X, \cA)$ ein messbarer Raum, $D \in \cA$, $f,g : D \to \ol{\bR}$ $\cA$-messbar. Dann sind die Mengen $\{f < g\}$ und $\{f \leq g\}$ messbar.
+\end{lemma}
+\begin{proof}
+	\begin{align*}
+	 	\{f < g\} &= \bigcup_{q \in \bQ} (\{f < q\} \cap \{g > q\})\\
+	 	\{f \leq g\} &= D \setminus \{g < f\}
+	\end{align*}
+\end{proof}
+\begin{definition}
+	Wir definieren in den folgenden Sätzen die Grenzwerte von Funktionenfolgen \tbf{punktweise}:
+	\begin{align*}
+		(\liminf_{k \to \infty} f_k)(x) = \liminf_{k \to \infty} f_k(x)
+	\end{align*}
+\end{definition}
+\begin{theorem}
+	Folgende Funktionen von messbaren $f_k$ sind messbar:
+	\begin{enumerate}
+		\item $\inf f_k$
+		\item $\sup f_k$
+		\item $\liminf f_k$
+		\item $\limsup f_k$
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	Sei $s \in \bR$. Dann gilt:
+	\begin{align*}
+		\{(\inf f_k) \geq s\} &= \bigcap_{k \in \bN} \{f_k \geq s\}\\
+		\{(\sup f_k) \leq s\} &= \bigcap_{k \in \bN} \{f_k \leq s\}\\
+	\end{align*}
+	Also sind $\inf f_k$ und $\sup f_k$ messbar.
+	\newpar
+	Es gilt außerdem:
+	\begin{align*}
+		\liminf f_k &= \sup_{k \in \bN}(\inf_{l \geq k} f_l)\\
+		\limsup f_k &= \inf_{k \in \bN}(\sup_{l \geq k} f_l)\\
+	\end{align*}
+	Also sind $\liminf f_k$ und $\limsup f_k$ ebenfalls messbar.
+\end{proof}
+\begin{definition}
+	Wir definieren die Positiv- und Negativanteile einer Funktion als:
+	\begin{align*}
+		f^+ := \max(f, 0) &\geq 0\\
+		f^- := \max(-f, 0) &\geq 0\\
+	\end{align*}
+	Es gilt also $f = f^+ - f^-$ und $\abs{f} = f^+ + f^-$
+\end{definition}
+\begin{theorem}
+	Sei $(X, \cA)$ ein messbarer Raum, $D \in \cA$, $f,g : D \to \ol{\bR}$ $\cA$-messbar, $\alpha \in \bR$. Dann sind auch folgende Funktionen auf ihren Definitionsbereichen messbar:
+	\begin{enumerate}
+		\item $f + g$
+		\item $\alpha f$
+		\item $f^+$
+		\item $f^-$
+		\item $\max(f,g)$
+		\item $\min(f,g)$
+		\item $\abs{f}$
+		\item $fg$
+		\item $\frac{f}{g}$
+	\end{enumerate}
+\end{theorem}
+\noindent Mit "auf ihren Definitionsbereichen messbar" werden Definitonslücken Ausgeschlossen, z.B. $(f + g)(x)$ mit $f(x) = \infty$ und $g(x) = -\infty$
+\begin{proof}
+	Seien $f,g : X \to \bR$. Dann gilt:
+	\begin{align*}
+		\{f + g < t\} = \bigcup_{r,s \in \bQ, r + s < t} \{f < r\} \cap \{g < s\}
+	\end{align*}
+	Also sind $f + g$ und $-f$ $\cA$-messbar. Es gilt außerdem:
+	\begin{align*}
+		\{ \alpha f > t\} = \{f > \frac{t}{\alpha}\}
+	\end{align*}
+	Also ist auch $\alpha f$ messbar.
+	\newpar
+	Sei nun $\varphi \in C^0(\bR)$. Dann ist $\varphi \circ f$ $\cA$-messbar:
+	\begin{align*}
+		(\varphi \circ f)^{-1}(U) = f^{1}(\phi^{-1}(U)) \in \cA
+	\end{align*}
+	Daraus folgt nun die Messbarkeit von $f^{\pm}$:
+	\begin{align*}
+		\varphi(s) = \max(\pm s, 0)
+	\end{align*}
+	Für $\abs{f}$ gilt:
+	\begin{align*}
+		\abs{f} = f^+ + f^-
+	\end{align*}
+	Für $\max$ und $\min$ gelten folgende Formeln:
+	\begin{align*}
+		\max(f,g) &= \frac{1}{2}(f + g + \abs{f - g})\\
+		\min(f,g) &= \frac{1}{2}(f + g - \abs{f - g})
+	\end{align*}
+	Es gilt $f^2 = \varphi \circ f$ mit $\phi(s) = s^2$, daraus folgt die Messbarkeit von $f^2$, also auch von:
+	\begin{align*}
+		fg = \frac{1}{4}((f + g)^2 - (f - g)^2)
+	\end{align*}
+	Schließlich ist auch $\frac{1}{g}$ messbar, da
+	\begin{align*}
+		\left\{\frac{1}{g} < s\right\} =
+		\begin{cases}
+			\frac{1}{s} < g < 0 & s < 0\\
+			\{g < 0\} & s = 0\\
+			\{g < 0\} \cup \{g > \frac{1}{s}\} & s > 0\\
+		\end{cases}
+	\end{align*}
+	Für $g : X \to \ol{\bR}$ definieren wir nun:
+	\begin{align*}
+		f_k(x) := 
+		\begin{cases}
+			k & f(x) \geq k\\
+			f(x) & -k < f(x) < k\\
+			-k & f(x) \leq -k\\
+		\end{cases}
+	\end{align*}
+	Diese $f_k$ sind messbar (?). Ersetzen wir nun die Funktionen $f$ und $g$ in den gewünschten Formeln durch $f_k$ und $g_k$, kovergieren die entstehenden Funktionenfolgen punktweise gegen die gewünschten Funktionen in den erweiterten reellen Zahlen. Also gilt der Satz nicht nur für $f,g : X \to \bR$, sondern auch für $f,g : X \to \ol{\bR}$.
+\end{proof}
+\begin{definition}
+	Eine Aussage $A[x]$ ist \tbf{wahr für $\mu$-fast alle $x$}, wenn
+	\begin{align*}
+		\{x \in M \mid A[x]  \text{ ist falsch}\} \subseteq N \in \cN(\mu)
+	\end{align*}
+\end{definition}
+\begin{definition}
+	Sei $(X, \cA, \mu)$ ein Maßraum. Eine auf $D \in \cA$ definierte numerische Funktion $f : D \to \ol{\bR}$ heißt $\mu$-messbar auf $X$, wenn $\mu(X \setminus D) = 0$ und $f$ $\cA|_D$-messbar ist.
+\end{definition}
+\begin{theorem}
+	Die Relation "$f = g$ $\mu$-fast überall" ist eine Äquivalenzrelation
+\end{theorem}
+\begin{theorem}
+	Sei $D \in \cA$ und $f : D \to \ol{\bR}$ $\mu$-messbar. Dann gibt es eine $\cA$-messbare Funktion $g : X \to \ol{\bR}$ mit $f = g$ auf $D$.
+\end{theorem}
+\begin{corollary}
+	Unsere Sätze über $\cA$-messbare Funktionen gelten auch für $\mu$-messbare Funktionen.
+\end{corollary}
+\begin{lemma}
+	Sei $(X, \cA, \mu)$ ein vollständiger Maßraum und sei $f$ $\mu$-messbar auf $X$. Dann ist jede Funktion $\tilde{f}$ mit $f = \tilde{f}$ $\mu$-fast überall auch $\mu$-messbar.
+\end{lemma}
+\begin{proof}
+	Wir haben $f : D \to \ol{\bR}$, $D \in \cA$, $\mu(X \setminus D) = 0$.
+	\newpar
+	$\tilde{F} : \tilde{D} \to \ol{\bR} \implies \exists N \in \cN(\mu) : X \setminus N \subseteq D \cap \tilde{D}$ und $\forall X \in X \setminus N : f(x) = \tilde{f}(x)$. Es folgt, dass $X - \tilde{D} \in N$. Da $\mu$ vollständig ist, folgt $\tilde{D} \in \cA$.
+	\newpar
+	Es gilt:
+	\begin{align*}
+		\{x \in \tilde{D} : \tilde{f}(x) < s\} &= \{x \in \tilde{D} \cap N \mid \tilde{f}(x) < s\} \cup \{x \in \tilde{D} \cap (X \setminus N) : \tilde{f}(x) < s\}\\
+		&= \{x \in \tilde{D} \cap N \mid \tilde{f}(x) < s\} \cup \{x \in X \setminus N : \tilde{f}(x) < s\}\\
+		&= \{x \in \tilde{D} \cap N \mid \tilde{f}(x) < s\}\\ &\cup (\{x \in D : \tilde{f}(x) < s\} \setminus \{x \in D \cap N : \tilde{f}(x) < s\})\\
+		&= \{x \in \tilde{D} \cap N \mid \tilde{f}(x) < s\}\\ &\cup (\{x \in D : \tilde{f}(x) < s\} \setminus (\{x \in D : \tilde{f}(x) < s\} \cap N))
+	\end{align*}
+	Also ist $\tilde{f}$ $\mu$-messbar.
+\end{proof}
+\begin{theorem}
+	Sei $(X, \cA, \mu)$ ein vollständiger Maßraum. Seien Funktionen $f_k, k \in \bN$ $\mu$-messbar. Falls $f_k$ punktweise $\mu$-fast-überall gegen $f$ konvergiert, so ist $f$ $\mu$-messbar.
+\end{theorem}
+\begin{theorem}
+	\theoremname{Satz von Severini-Egorov:} Sei $(X, \cA, \mu)$ ein Maßraum, $D \in \cA$ eine Menge mit $\mu(D) < \infty$, und seien $f_k, f$ messbare, $\mu$-fast-überall endliche Funktionen auf $D$, sodass die $f_k$ fast überall gegen $f$ konvegieren. Dann existiert für alle $\epsilon \in \bR^+$ eine Menge $B \in \cA$ mit $B \subseteq D$ und
+	\begin{enumerate}
+		\item $\mu(D \setminus B) <  \epsilon$
+		\item $f_k$ konvergiert auf $B$ gleichmäßig gegen $f$.
+	\end{enumerate}
+\end{theorem}
+\section{Äußere Maße}
+\begin{definition}
+	Sei $X$ eine Menge. Wir nennen eine Funktion $\mu : \cP(X) \to \ol{\bR}_{\geq 0}$ ein \tbf{äußeres Maß auf $X$}, falls
+	\begin{align*}
+		A \subseteq \bigcup_{i \in \bN} A_i \implies \mu(A) \leq \sum_{i \in \bN} \mu(A_i).
+	\end{align*}
+\end{definition}
+\noindent 
+Alle bisher eingeführten Begrifflichkeiten zu Maßen und ihren Eigenschaften sind analog für äußere Maße definiert. Insbesondere ist ein äußeres Maß immer monoton und $\sigma$-subadditiv.
+\begin{definition}
+	Sei $\mu$ ein äußeres Maß auf $X$. Die Menge $A \subseteq X$ heißt $\mu$-messbar, falls für alle $S \subseteq X$:
+	\begin{align*}
+		\mu(S) \geq \mu(S \cap A) + \mu(S \setminus A)
+	\end{align*}
+	Das System aller $\mu$-messbaren Mengen wird mit $\cM(\mu)$ bezeichnet.
+\end{definition}
+\begin{example}
+	Jedes Maß auf $\cP(X)$ ist ein äußeres Maß. Beispiele sind z.B. das Diracmaß oder das Zählmaß.
+\end{example}
+\begin{theorem}
+	Sei $Q$ ein System von Teilmengen einer Menge $X$, welches die leere Menge enthält. Sei $\lambda : Q \to [0, \infty]$ eine Mengenfunktion, sodass $\lambda(\emptyset) = 0$. Sei außerdem $\mu : \cP(X) \to [0,\infty]$ für beliebige $E \subseteq X$, sodass:
+	\begin{align*}
+		\mu(E) = \inf \left\{\sum_{i = 1}^\infty \mu(P_i) \mid P_i \in Q, E \subseteq \bigcup_{i \in \bN} P_i \right\}
+	\end{align*}
+	Dann ist $\mu$ ein äußeres Maß.
+\end{theorem}
+\begin{theorem}
+	Seien $X, Y$ Mengen und $f : X \to Y$. Für ein gegebenes äußeres Maß $\mu : \cP(X) \to [0,\infty]$ erhält man durch die Vorschrift
+	\begin{align*}
+		f(\mu) : \cP(Y) &\to [0,\infty]\\
+		B &\mapsto \mu(f^{-1}(B))
+	\end{align*}
+	ein äußeres Maß auf $Y$, genannt das \tbf{Bildmaß von $\mu$ unter $f$}.
+\end{theorem}
+\noindent Ist $f^{-1}(B)$ $\mu$-messbar, so ist $B$ $f(\mu)$-messbar.
+\begin{theorem}
+	Sei $\mu : \cP(X) \to [0, \infty]$ ein äußeres Maß auf $X$. Für $M \subseteq X$ erhält man durch
+	\begin{align*}
+		\mu_{LM} : \cP(X) &\to [0, \infty]\\
+				        A & \mapsto \mu(M \cap A)\\
+	\end{align*}
+	Ein äußeres Maß auf $X$, welches wir die Einschrnkung von $\mu$ auf $M$ nennen. Ist $A$ $\mu$-messbar, so ist $A$ auch $\mu_{LM}$-messbar.
+\end{theorem}
+\begin{theorem}
+	Sei $\mu$ ein äußeres Maß auf einer Menge $X$. Dann gilt:
+	\begin{enumerate}
+		\item Jede $\mu$-Nullmenge $N$ ist $\mu$-messbar
+		\item Für jede Familie $N_k$ von Nullmengen ist auch $N := \bigcup_{k \in \bN} N_k$ $\mu$-messbar.
+	\end{enumerate} 
+\end{theorem}
+\begin{example}
+	Wir können auf jeder Menge $X$ durch
+	\begin{align*}
+		\beta(A) = 
+		\begin{cases}
+			0 & A = \emptyset\\
+			1 & \text{sonst}
+		\end{cases}
+	\end{align*}
+	ein äußeres Maß definieren. Dann sind nur $\emptyset$ und $X$ $\beta$-messbar.
+\end{example}
+\begin{lemma}
+	Seien $A_i \in \cM(\mu)$, $i = 1, \hdots, k$ paarweise disjunkt. Dann gilt für alle $S \subseteq X$
+	\begin{align*}
+		\mu\left(S \cap \bigcup_{i = 1}^k A_i\right) = \sum_{i = 1}^k \mu (S \cap A_i)
+	\end{align*}
+\end{lemma}
+\begin{theorem}
+	Sei $\mu : \cP(X) \to \barR_{\geq 0}$ ein äußeres Maß. Dann ist das System $\cM(\mu)$ eine $\sigma$-Algebra und $\mu$ ist ein vollständiges Maß auf $\cM(\mu)$.
+\end{theorem}
+\begin{proof}
+	Zu zeigen ist:
+	\begin{description}
+		\item[1. \ul{Endliche Durchschnitte und Vereinigungen sind messbar:}]
+		Es gilt $X \in \cM$, denn für jede Menge $S \subseteq X$ ist
+		\begin{align*}
+			\mu(S \cap X) + \mu (S \setminus X) = \mu(S) + \mu(\emptyset) = \mu(S)
+		\end{align*}
+		Mit $A \in \cM$ folgt auch $X \setminus A \in \cM$, denn für $S \subseteq X$ gilt
+		\begin{align*}
+			\mu(S \cap (X \setminus A)) + \mu(S \setminus (X \setminus A)) = \mu(S \setminus A) + \mu (S \cap A) = \mu(S)
+		\end{align*}
+		Als nächstes zeigen wir, dass $A \cap B \in \cM$ für $A, B \in \cM$. Für alle $S \subseteq X$ gilt
+		\begin{align*}
+			\mu(S) &= \mu(S \cap A) + \mu(S \setminus A)\\
+			\mu(S \cap A) &= \mu(S \cap A \cap B) + \mu((S \cap A) \setminus B)
+		\end{align*}
+		Durch Wahl von $S \setminus A \cap B$ als Teilmenge und Messbarkeit von $A$ erhält man:
+		\begin{align*}
+			\mu(S \setminus (A \cap B)) &= \mu((S \setminus (A \cap B)) \cap A) + \mu((S \setminus (A \cap B)) \setminus A)\\
+			&= \mu((S \cap A) \setminus B) + \mu(S \setminus A)
+		\end{align*}
+		Aus diesen drei Identitäten folgt sofort:
+		\begin{align*}
+			\mu(S) = \mu(S \cap (A \cap B)) + \mu(S \setminus (A \cap B))
+		\end{align*}
+		Es gilt also:
+		\begin{align*}
+			A \cup B = X \setminus ((X \setminus A) \cap (X \setminus B)) \in \cM
+		\end{align*}
+		und
+		\begin{align*}
+			A \setminus B = A \cap (X \setminus B) \in \cM
+		\end{align*}
+		Also ist $\cM$ unter endlichen Vereinigungen und Durchscnitten abgeschlossen.
+		\item[2. $\mu$ ist $\sigma$-additiv auf $\cM$]
+		Left as an exercise :)
+		\item[3. $\cM$ ist abgeschlossen unter zählbaren Vereinigungen]
+		Left as an exercise :)
+	\end{description}
+\end{proof}
+\begin{corollary}
+	Sei $\mu$ ein äußeres Maß. Seien $A_i$ $\mu$-messbar. Dann gilt:
+	\begin{enumerate}
+		\item Ist $A_1 \subseteq A_2 \subseteq \hdots$, so gilt 
+		\begin{align*}
+			\displaystyle \mu\left(\bigcup_{i = 1}^\infty A_i\right) = \lim_{i \to \infty} \mu(A_i)
+		\end{align*}
+		\item Ist $A_1 \supseteq A_2 \supseteq \hdots$, so gilt
+		\begin{align*}
+			\displaystyle \mu\left(\bigcap_{i = 1}^\infty A_i\right) = \lim_{i \to \infty} \mu(A_i)
+		\end{align*}
+	\end{enumerate}
+\end{corollary}
+\section{Der Fortsetzungssatz von Carathéodory}
+\begin{definition}
+	Ein Mengensystem $A \subseteq \cP(X)$ heißt $\cup$-stabil, falls 
+	\begin{align*}
+		\forall A, B \in \cA : A \cup B \in \cA.
+	\end{align*}
+	analog heißt $\cA$ $\cap$-stabil, falls
+	\begin{align*}
+		\forall A, B \in \cA : A \cap B \in \cA.
+	\end{align*}
+	Per Induktion folgt direkt, dass auch Ergebnisse endlicher Wiederholungen der Operationen in $\cA$ enthalten sein müssen.
+\end{definition}
 %
+\begin{definition}
+	Sei $\cR \subseteq \cP(X)$ ein Mengenring. Eine Funktion $\lambda : \cR \to \barR_{\geq 0}$ heißt \tbf{Prämaß} auf $\cR$, wenn:
+	\begin{enumerate}
+		\item $\lambda(\emptyset) = 0$
+		\item Für paarweise disjunkte Mengen $A_i \in \cR$ mit $\displaystyle \bigcup_{i = 1}^\infty A_i \in \cR$ gilt $\sigma$-Additivität, also:
+		\begin{align*}
+			\lambda\left(\bigcup_{i = 1}^\infty A_i \right) = \sum_{i = 1}^\infty \lambda(A_i)
+		\end{align*}
+	\end{enumerate}
+\end{definition}
+\begin{definition}
+	Sei $\lambda$ ein Prämaß auf dem Ring $\cR \subseteq \cP(X)$. Ein äußeres Maß $\mu$ auf $\cP(X)$, bzw. ein Maß $\mu$ auf $\cA \subseteq \cP(X)$, heißt Fortsetzung von $\lambda$, falls
+	\begin{enumerate}
+		\item $\mu|_{\cR} = \lambda$
+		\item $\cR \subseteq \cM(\mu)$ (bzw. $\cR \subseteq \cA$)
+	\end{enumerate}
+\end{definition}
+\begin{theorem}
+	\theoremname{Carathéodory-Fortsetzung:} Sei $\lambda : \cR \to \barR_{\geq 0}$ ein Prämaß auf dem Ring $\cR$. Sei $\mu : \cP(X) \to \barR_{\geq 0}$ das äußere Maß
+	\begin{align*}
+		\mu(E) := \inf \left\{\sum_{i = 1}^\infty \mu(A_i) \mid A_i \in \cR, E \subseteq \bigcup_{i = 1}^\infty A_i\right\}
+	\end{align*}
+	Dann ist $\mu$ eine Fortsetzung von $\lambda$, welches wir als das \tbf{von $\lambda$ induzierte äußere Maß} oder als die \tbf{Carathéodory-Fortsetzung von $\lambda$} bezeichnen.
+	\begin{proof}
+		\phantom{}
+		\begin{description}
+			\item[\ul{1: $\forall A \in \cR : \mu(A) = \lambda(A)$.}]
+			Es gilt $\mu(A) \leq \lambda(A)$, da wir $A_1 = A$ und $A_i = \emptyset$ für $i \geq 2$ wählen können.
+			\newpar
+			Für $\lambda(A) \leq \mu(A)$ reicht zu zeigen, dass:
+			\begin{align*}
+				A \subseteq \bigcup_{i = 1}^\infty A_i \wedge A_i \in \cR \implies \lambda(A) \leq \sum_{i = 1}^\infty \lambda(A_i).
+			\end{align*}
+			Wir betrachten hierfür die disjunkten Mengen
+			\begin{align*}
+				B_i = \left(A_i \setminus \bigcup_{j = 1}^{i -1} A_j\right) \cap A \in \cR.
+			\end{align*}
+			Für diese gilt:
+			\begin{align*}
+				\lambda(A) = \lambda\left(\bigcup_{i = 1}^\infty B_i\right) = \sum_{i = 1}^\infty \lambda(B_i) \leq \sum_{i = 1}^\infty \lambda(A_i).
+			\end{align*}
+			\item[\ul{2: Jedes $A \in \cR$ ist $\mu$-messbar.}] Sei $A \in \cR$ und $S \subseteq X$ beliebig mit $\mu(S) < \infty$. Zu $\epsilon \in \bR^+$ wähle $A_i \in \cR$, sodass
+			\begin{align*}
+				S \subseteq \bigcup_{i = 1}^\infty A_i
+			\end{align*}
+			und
+			\begin{align*}
+				\sum_{i = 1}^\infty \lambda(A_i) \leq \mu(S) + \epsilon
+			\end{align*}
+			So gilt
+			\begin{align*}
+				S \cap A \subseteq \bigcup_{i = 1}^\infty (A_i \cap A)
+			\end{align*}
+			sowie 
+			\begin{align*}
+				S \setminus A \subseteq \bigcup_{i = 1}^\infty (A_i \setminus A).
+			\end{align*}
+			Aus der Definition von $\mu$ folgt
+			\begin{align*}
+				\mu(S \cap A) + \mu(S \setminus A) &\leq \sum_{i = 1}^\infty \lambda(A_i \cap A) + \sum_{i = 1}^\infty \lambda(A_i \setminus A)\\
+				&= \sum_{i = 1}^\infty \lambda(A_i)\\
+				&\leq \mu(S) + \epsilon
+			\end{align*}
+			Für $\epsilon \to 0$ folgt, dass $A$ $\mu$-messbar ist.
+		\end{description}
+	\end{proof}
+\end{theorem}
+Die Carathéodory-Fortsetzung $\mu$ ist ein vollständiges Maß auf der $\sigma$-Algebra der Messbaren Mengen $\cM(\mu)$, die die durch den Ring $\cR$ generierte $\sigma$-Algebra $\sigma(\cR)$ enthält.
+\newpar
+Wir wollen als nächstes Zeigen, dass die Carathéodory-Fortsetzung eindeutig ist.
+\begin{lemma}
+	\theoremname{Maximalitt der Carathéodory-Fortsetzung:} Sei $\mu$ die Carathéodory-Fortsetzung des Prämaßes $\lambda : \cR \to \barR_{\geq 0}$ auf dem Ring $\cR$ über $X$. Sei $\tilde\mu$ ein Maß auf $\sigma(\cR)$ mit $\tilde\mu = \lambda$ auf $\cR$. Dann gilt \begin{align*}
+		\forall E \in \sigma(\cR) : \tilde\mu(E) \leq \mu(E)
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Da Maße $\sigma$-subadditiv sind, gilt für alle $E \in \sigma(\cR)$ die Implikation
+	\begin{align*}
+		E \subseteq \bigcup_{i = 1}^\infty P_i \wedge P_i \in \cR \implies \tilde\mu(E) \leq \sum_{i = 1}^\infty \tilde\mu(P_i) = \sum_{i = 1}^\infty \lambda(P_i)
+	\end{align*}
+	Durch Bildung des Infimums über alle solchen Überdeckungen liefert die Carathéodory-Fortsetzung.
+\end{proof}
 
 
 

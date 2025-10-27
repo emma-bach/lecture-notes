@@ -15,6 +15,7 @@
 \usepackage{tikz-cd}
 \usepackage{physics}
 \usepackage{placeins}
+\usepackage[many]{tcolorbox}
 
 %\usepackage{setspace}
 
@@ -25,17 +26,22 @@
 
 \renewcommand\cftsecdotsep{\cftdot}
 \renewcommand\cftsubsecdotsep{\cftdot}
+
 \renewcommand\epsilon{\varepsilon}
+\renewcommand\phi{\varphi}
 
 % Starts a new paragraph without indentation
 % and with an empty line between paragraphs
 \newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
-\newcommand{\trans}{\twoheadrightarrow}
+
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\inj}{\hookrightarrow}
+
 \newcommand{\ttt}[1]{\texttt{#1}}
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\ul}[1]{\underline{#1}}
-
-\newcommand{\Hess}[1]{\text{Hess}(#1)}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\theoremname}[1]{\emph{\tbf{\ul{#1}}}}
 
 \newcommand{\bC}{\mathbb{C}}
 \newcommand{\bF}{\mathbb{F}}
@@ -75,12 +81,19 @@
 
 \newcommand{\ggT}{\text{ggT}}
 \newcommand{\kgV}{\text{kgV}}
+\newcommand{\id}{\text{id}}
+\newcommand{\im}{\text{im}}
+\newcommand{\ord}{\text{ord}}
 
 \renewcommand{\tr}{\text{tr}\ }
 \newcommand{\rang}{\text{rang}\ }
 
-\newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
 \newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\angles}[1]{\left\langle #1 \right\rangle}
+
+\newcommand{\Grp}{\text{Grp}}
+\newcommand{\Mag}{\text{Mag}}
+\newcommand{\Mon}{\text{Mon}}
 
 \renewcommand*\contentsname{Inhalt}
 \renewcommand*\proofname{Beweis}
@@ -102,12 +115,20 @@
 
 \theoremstyle{definition}
 \newtheorem{definition}[lemma]{Definition}
-\newtheorem{beispiel}[lemma]{Beispiel}
+\newtheorem{example}[lemma]{Beispiel}
 \newtheorem{beobachtung}[lemma]{Beobachtung}
 \newtheorem{anmerkung}[lemma]{Anmerkung}
 \newtheorem{question}[lemma]{Frage}
 \newtheorem{application}[lemma]{Anwendung}
 \newtheorem{konsequenz}[lemma]{Konsequenz}
+
+\tcolorboxenvironment{proof}{
+	colback=black!5!white,
+	boxrule=0pt,
+	sharp corners,
+	breakable,
+	enhanced,
+}
 
 \newenvironment{proofsketch}{\begin{proof}[Beweisskizze]\renewcommand*{\qedsymbol}{\("\square"\)}}{\end{proof}}
 
@@ -244,4 +265,373 @@
 	\end{align*}
 	Also existiert ein $q_i$ mit $p_1 = q_i$. Teilen wir nun beide Seiten durch $p_1$, folgt die Aussage durch die Induktionsannahme.
 \end{proof}
+\begin{definition}
+	Euklidischer Algorithmus
+\end{definition}
+\chapter{Gruppen}
+\begin{definition}
+	\phantom{}
+	\begin{enumerate}
+		\item Eine Menge $M$ mit Verknüpfung $\top : M \times M \to M$ heißt \tbf{Magma}.
+		\item Ein Magma mit neutralem Element heißt \tbf{unitäres Magma}.
+		\item Ein unitäres Magma mit assoziativer Verknüpfung heißt \tbf{Monoid}.
+		\item Ein Monoid mit inversen Elementen heißt \tbf{Gruppe}.
+		\item Eine Gruppe mit kommutativer Gruppe heißt \tbf{kommutative Gruppe} oder \tbf{abelsche Gruppe}.
+	\end{enumerate}
+\end{definition}
+\begin{example}
+	\phantom{}
+	\begin{enumerate}
+		\item $(\bZ, -)$ ist ein nichtunitäres Magma.
+		\item ?
+		\item $(\bN, +)$ und $(\bN, \cdot)$ sind Monoide.
+		\item $(\bZ, +)$ ist eine abelsche Gruppe.
+	\end{enumerate}
+\end{example}
+\begin{theorem}
+	Das neutrale Element einer Gruppe ist eindeutig.
+\end{theorem}
+\begin{itemize}
+	\item Es gibt keine Gruppe mit $0$ Elementen, da die Leere Menge kein neutrales Element hat.
+	\item Es gibt genau eine Gruppe mit einem Element, die Gruppe $\{e\}$.
+\end{itemize}
+\begin{theorem}
+	Es gibt genau eine Gruppe mit zwei Elementen, nämlich die Gruppe $\{e,a\}$, mit Verknüpfungstabelle:
+	\begin{align*}
+		\begin{array}{c|c|c}
+			&e&a\\\hline
+			e&e&a\\\hline
+			e&a&e\\
+		\end{array}
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Durch die Definition von $e$ sind drei Teile der Tabelle schon eindeutig festgelegt. $a \cdot a = e$, da sonst $a$ kein Inverses hätte.
+\end{proof}
+\begin{theorem}
+	Gilt für ein Gruppenelement $a \in G$ $a^2 = a$, so gilt $a = e$.
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+		a = ae = aaa^{-1} = aa^{-1} = e
+	\end{align*}
+\end{proof}
+\begin{theorem}
+	Aus $a \cdot x = a \cdot y$ folgt $x = y$.
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+		ax &= ay\\
+		a^{-1}ax &= a^{-1}ay\\
+		ex &= ey\\
+		x &= y
+	\end{align*}
+\end{proof}
+Es folgt, dass in einer Gruppentabelle in jeder Spalte und jeder Zeile kein Element doppelt vorkommen kann.
+\begin{corollary}
+	Es gibt nur eine Gruppe mit drei Elementen, nämlich:
+	\begin{align*}
+		\begin{array}{c|c|c|c}
+			&e&a&b\\\hline
+			e&e&a&b\\\hline
+			a&a&b&e\\\hline
+			b&b&e&a\\
+		\end{array}
+	\end{align*}
+\end{corollary}
+\begin{theorem}
+	Es gibt zwei Gruppen mit vier Elementen, nämlich:
+	\begin{align*}
+		\begin{array}{c|c|c|c|c}
+			 &e&a&b&c\\\hline
+			e&e&a&b&c\\\hline
+			a&a&e&c&b\\\hline
+			b&b&c&a&e\\\hline
+			c&c&b&e&a
+		\end{array} &\simeq (\bZ / 2\bZ) \times (\bZ / 2\bZ)\\
+		\begin{array}{c|c|c|c|c}
+			&e&a&b&c\\\hline
+			e&e&a&b&c\\\hline
+			a&a&b&c&e\\\hline
+			b&b&c&e&a\\\hline
+			c&c&e&a&b
+		\end{array} &\simeq \bZ / 4\bZ
+	\end{align*}
+\end{theorem}
+\begin{definition}
+	Ein Gruppenhomomorphismus ist eine Abbildung
+	\begin{align*}
+		\phi : (G, \top) \to (H, \bot)
+	\end{align*}
+	mit
+	\begin{align*}
+		\phi(a \top b) = \phi(a) \bot \phi(b)
+	\end{align*}
+	Wir schreiben die Menge der Gruppenhomomorphismen von $G$ nach $H$ als $\Grp(G,H)$.
+\end{definition}
+\begin{theorem}
+	$\Grp((\bZ, +), G) \simeq G$
+\end{theorem}
+\begin{proof}
+	Ordne jedem Gruppenelement $g$ die Abbildung $\phi(n) : g \to g^n$ zu.
+\end{proof}
+\begin{theorem}
+	Sind $G$ und $H$ Gruppen, so gilt $\Mag(G,H) = \Mon(G,H) = \Grp(G,H)$.
+\end{theorem}
+\begin{definition}
+	Eine Teilmenge $H \subseteq G$ einer Gruppe $G$ heißt \tbf{Untergruppe}, wenn sie so mit einer Gruppenstruktur versehen werden kann, dass die Einbettungsabbildung $i : H \to G$ ein Gruppenhomomorphismus ist.
+\end{definition}
+\noindent Dies ist eine sehr allgemeine Definition, die analog für Untervektorräume, Untermagmas etc. funktioniert. In der Praxis verwendet man meistens folgendes Kriterium:
+\begin{theorem}
+	$H$ ist genau dann eine Untergruppe, wenn $e \in H$ und wenn für jedes $a,b \in H$ auch $ab \in H$ und $a^{-1}, b^{-1} \in H$.
+\end{theorem}
+\begin{theorem}
+	\theoremname{Satz von Lagrange:} Sei $G$ eine endliche Gruppe und $H$ eine Untergruppe. So ist die Zahl der Elemente von $H$ ein Teiler der Zahl der Elemente von $G$.
+\end{theorem}
+\noindent Der Beweis folgt nach einigen weitern Definitionen und Sätzen.
+\begin{definition}
+	Sei $G$ eine Gruppe mit Untergruppe $H$. Wir definieren:
+	\begin{align*}
+		gH &= \{gh \mid h \in H\} \subseteq G\\
+		G / H &= \{gH \mid g \in G\} \subseteq \cP(G)
+	\end{align*}
+\end{definition}
+\begin{lemma}
+	Sei $h \in H$. Dann gilt $hH = H$.
+\end{lemma}
+\begin{lemma}
+	Je zwei Nebenklassen $gH$ und $g'H$ sind entweder gleich oder disjunkt.
+\end{lemma}
+\noindent Aus diesen beiden Lemmas folgt $\abs{G} = \abs{G / H} \cdot \abs{H}$, was den Satz von Lagrange impliziert.
+\begin{theorem}
+	Der Schnitt beliebig vieler Untergruppen bildet eine Untergruppe.
+\end{theorem}
+\begin{definition}
+	Sei $G$ eine Gruppe und $T \subseteq G$ eine Teilmenge. Die \tbf{durch $T$ erzeugte Untergruppe} $\angles{T}$ ist die kleinste Untergruppe, welche $T$ enthält.
+\end{definition}
+\noindent $\angles{T}$ besteht aus allen Elementen von $G$, welche durch beliebig häufige Anwendung von Inversionen und Gruppenoperationen entstehen kann, wobei wir die "leere Gruppenoperation" als $e$ definieren (für den Fall $\angles{\emptyset} = \{e\}$.)
+\begin{theorem}
+	Sei $\varphi : G \to H$ ein Gruppenhomomorphismus. Sei $A$ eine Untergruppe von $G$ und $B$ eine Untergruppe von $H$. So ist $\phi(A)$ eine Untergruppe von $H$ und $\phi^{-1}(B)$ eine Untergruppe von $G$.
+\end{theorem}
+\begin{theorem}
+	\theoremname{Universelle Eigenschaft surjektiver Gruppenhomomorphismen:} Sei $\phi : G \surj H$ ein surjektiver Gruppenhomomorphismus. Sei $\psi : G \to K$ ein Gruppenhomomorphismus, sodass $\ker \psi \supseteq \ker \phi$. So existiert genau ein Gruppenhomomorphismus $\ol{\psi}$, sodass:
+	\begin{align*}
+		\psi = \ol{\psi} \circ \phi
+	\end{align*}
+	Also sodass das folgende Diagramm kommutiert:
+	\[\begin{tikzcd}
+		G & H \\
+		&\\
+		{} & K
+		\arrow["\phi", two heads, from=1-1, to=1-2]
+		\arrow["\psi"', from=1-1, to=3-2]
+		\arrow["{\exists!\overline{\psi}}", dashed, from=1-2, to=3-2]
+	\end{tikzcd}\]
+\end{theorem}
+\begin{proof}
+	Sei $\phi(x) = \phi(y)$, also $\phi^{-1}(\phi(x)) = \phi^{-1}(\phi(y))$. Dann gilt 
+	\begin{align*}
+		\phi(xy^{-1}) = \phi(1) = 1,
+	\end{align*} 
+	also $xy^{-1} \in \ker \phi$, also $y \in x \cdot \ker \phi$. 
+	Somit gilt \begin{align*}
+		\phi^{-1}(\phi(g)) = g \cdot \ker \phi.
+	\end{align*} 
+	Es gilt außerdem
+	\begin{align*}
+		\psi(g \cdot \ker \phi) = \psi(g) \cdot \psi(\ker(\phi)) = \phi(g),
+	\end{align*}
+ 	also ist $\psi$ konstant auf den Fasern (also den Urbildern einzelner Elemente) von $\phi$. Somit existiert ein $\ol{\psi}$ Aufgrund der "universellen Eigenschaft surjektiver Funktionen", welche noch nicht eingeführt wurde :), folgt die Existenz eines $\ol{\psi}$ mit den gefragten Eigenschaften.
+ 	\newpar
+ 	Zu zeigen ist noch, dass $\ol{\psi}$ ein Gruppenhomomorphismus ist.\\
+ 	Wähle hierfür $g \in G, g' \in G$ und $\phi(g) = h$ und $\phi(g') = h'$. Dann gilt
+ 	\begin{align*}
+ 		\ol{\psi}(hh') = \ol{\psi}(\phi(gg')) = \psi(gg') = \psi(g) \cdot \psi(g') = \ol{\psi}(h) \cdot \ol{\psi}(h')
+ 	\end{align*}
+\end{proof}
+% https://q.uiver.app/#q=WzAsNCxbMSwwLCJHIl0sWzAsMiwiSCJdLFsxLDIsIksiXSxbMiwyLCJIIl0sWzAsMSwiXFxwaGkiXSxbMCwyLCJcXHBzaSIsMl0sWzAsMywiXFxwaGkiLDJdLFsxLDIsIlxcZXhpc3RzIVxcb3ZlcmxpbmV7XFxwc2l9Il0sWzIsMywiXFxleGlzdHMhXFxvdmVybGluZXtcXHBoaX0iXSxbMSwzLCJcXGlkX0giLDEseyJjdXJ2ZSI6Mn1dXQ==
+\[\begin{tikzcd}
+	& G \\
+	\\
+	H & K & H
+	\arrow["\phi", from=1-2, to=3-1]
+	\arrow["\psi"', from=1-2, to=3-2]
+	\arrow["\phi"', from=1-2, to=3-3]
+	\arrow["{\exists!\overline{\psi}}", dashed, from=3-1, to=3-2]
+	\arrow["{\exists!\overline{\phi}}", dashed, from=3-2, to=3-3]
+\end{tikzcd}\]
+Die "Moral" dieses Satzes: Ein surjektiver Gruppenhomomorphismus $\phi : G \surj H$ wird durch $(G, \ker \phi)$ "im wesentlichen eindeutig" festgelegt.
+\newpar
+Die Frage ist nun, ob jede Untergruppe einer Gruppe $G$ als Kern eines surjektiven Gruppenhomomorphismus festgelegt ist. Die Antwort auf diese Frage: Nein! Die einzigen Untergruppen, welche als solche Kerne auftreten, sind sogenannte \tbf{Normalteiler}.
+\begin{definition}
+	Sei $G$ eine Gruppe. Eine Untergruppe $N \subseteq G$ heißt \tbf{Normalteiler}, falls
+	\begin{align*}
+		\forall g \in G : gN = Ng
+	\end{align*}
+\end{definition}
+\begin{example}
+	Wir betrachten die Gruppe $Q \subset GL(2,\bR)$ aller linearen Abbildungen, welche ein Quadrat auf sich selbst abbilden. Diese Gruppe hat acht Elemente:
+	\begin{itemize}
+		\item Die Rotationen $d_0$, $d_1$, $d_2$ und $d_3$ um Vielfache von $90$°,
+		\item die Spiegelungen $s_{x}$ und $s_{y}$ an den Koordinatenachsen,
+		\item und die Spiegelungen $s_+$ und $s_-$ an den Diagonalachsen.
+	\end{itemize}
+	Diese Gruppe ist nicht kommutativ! Zum Beispiel ist $d_1s_+ = s_y$, aber $s_+ d_1 = s_x$ (Wir notieren die Elemente als Abbildungen, also wird links zuerst $s_+$ und dann $d_1$ angewandt.
+	\newpar
+	Wir betrachten nun die Untergruppe $H = \angles{s_+}$. So gilt $d_1H = \{s_y, d_1\}$, aber $Hd_1 = \{s_x, d_1\}$
+\end{example}
+\begin{theorem}
+	Der Kern eines Gruppenhomomorphismus ist immer ein Normalteiler.
+\end{theorem}
+\begin{proof}
+	Sei $\phi : G \to H$. So ist $(\ker \phi) x = \phi^{-1}(\phi(x)) = x (\ker \phi)$.
+\end{proof}
+\begin{theorem}
+	Für jeden Normalteiler $N \subseteq G$ gibt es einen surjektiven Gruppenhomomorphismus $\phi : G \to H$ mit $\ker \phi = N$.
+\end{theorem}
+\begin{proof}
+	Wir wählen $H := G / N = \{xN : x \in G\}$. Für je zwei Teilmengen $A, B \subseteq G$ definieren wir $AB = \{ab : a \in A, b \in B\}$ und erhalten eine assoziative Verknüpfung auf $\cP(G)$. Für einen Normalteiler $N \subseteq G$ ist $G / N$ unter dieser Verknüpfung stabil (geschlossen), denn durch Abuse of Notation folgt $xNyN = xyNN = xyN$. Unter dieser Verknüpfung wird $G/N$ eine Gruppe mit neutralem Element $1N = N$ und $x^{-1}N = (xN)^{-1}$.
+	\newpar
+	Dadurch wird dann $\phi : G \to G/N$, $x \to xN$ ein Gruppenhomomorphismus mit $\ker \phi = N$.
+\end{proof}
+\begin{example}
+	Die Menge $D \subsetneq Q$ der Drehungen eines Quadrats ist ein Normalteiler der vollen Symmetriegruppe $Q$.
+\end{example}
+\begin{proof}
+	Sei $s$ eine Beliebige Spiegelung. So gilt $Ds = \{s_+, s_-, s_x, s_y\} = sD$. Einzelne Spiegelungen kommutieren also nicht mit einzelnen Gruppenelementen, es ist jedoch trotzdem eine Art "Kommutativität mit der Gruppe als Ganzes" vorhanden.
+\end{proof}
+\noindent Die Menge der Drehungen ist desweiteren gegeben als der Kern der Determinante, welche ein Gruppenhomomorphismus in die Gruppe mit zwei Elementen ist (genauer in die Gruppe $\{\pm 1, \cdot\}$).
+\begin{theorem}
+	Sei $\phi : G \to H$ ein Gruppenhomomorphismus. So induziert $\phi$ einen Isomorphismus $G / \ker \phi \to \im \phi$.
+\end{theorem}
+\noindent Sei $G$ eine Gruppe mit $\abs{G} = 5$. Gemäß Lagrange hat $G$ nur die triviale Gruppe und sich selbst als Untergruppe. Sei $g \in G \setminus \{1\}$. So haben wir einen Gruppenhomomorphismus
+\begin{align*}
+	\phi : (\bZ, +) &\to G\\
+	         n &\mapsto g^n
+\end{align*}
+Wir wissen nun, das das Bild von $\phi$ eine Untergruppe von $G$ bildet. Da $g \neq 1$ handelt es sich nicht um die triviale Gruppe, also ist $G = \im \phi$.
+\newpar
+$\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in \bN$, sodass $\ker \phi = \bZ n$. Da $G$ $5$ Elemente hat, muss $n = 5$. Die einzige Gruppe mit $5$ Elementen ist also $\bZ / 5\bZ$.
+\begin{corollary}
+	Ist $p$ eine Primzahl, so ist jede Gruppe mit $p$ Elementen isomorph zu $\bZ/ p\bZ$.
+\end{corollary}
+\begin{lemma}
+	Sei $\pi : G \to H$ ein surjektiver Gruppenhomomorphismus und $N \subseteq G$ ein Normalteiler. So ist $\pi(N)$ ein Normalteiler von $H$.
+\end{lemma}
+\begin{theorem}
+	\theoremname{Noetherscher Isomorphiesatz:} Sei $G$ eine Gruppe und seien $H$ und $K$ Normalteiler. So ist $H / K$ ein Normalteiler von $G / K$ und die Komposition kanonischer Abbildungen $G \surj G / K \surj (G / K) / (H / K)$ induziert einen Isomorphismus $G / H \to (G / K) / (H / K)$
+\end{theorem}
+\begin{definition}
+	Sei $G$ eine Gruppe und $g \in G$. Wir definieren die Ordnung eines Elements als:
+	\begin{align*}
+		\ord(g) = \inf\{n \in \bN_{\geq 1} \mid g^n = e\}
+	\end{align*}
+	Erinnerung: Das Infimum der leeren Menge ist $\infty$, also gilt $\ord(g) = \infty$ falls kein solches $n$ existiert.
+\end{definition}
+\begin{proposition}
+	Sei $G$ eine Gruppe und $g \in G$.
+	\begin{enumerate}
+		\item $\ord(g) = \abs{\angles{g}}$
+		\item $\angles{g}$ ist isomorph zu $\bZ / (\ord(g))\bZ$, falls die Ordnung endlich ist, und zu $\bZ$, falls die Ordnung unendlich ist.
+		\item Falls $\ord(g) < \infty$, so gilt $g^n = e \Leftrightarrow \ord(g) \mid n$
+	\end{enumerate}
+\end{proposition}
+\begin{definition}
+	Sei $G$ eine Gruppe. So heißt $\abs{G}$ die \tbf{Ordnung} der Gruppe.
+\end{definition}
+\begin{theorem}
+	Sei $g \in G$ ein Element einer endlichen Gruppe. So ist $\ord(g)$ ein Teiler von $\abs{G}$.
+\end{theorem}
+\begin{proof}
+	$\ord(g) = \abs{\angles{g}}$. Nach Lagrange teilt die Größe der Untergruppe $\angles{g}$ die Größe der Gruppe $G$.
+\end{proof}
+\noindent Im Allgemeinen gibt es aber nicht für jeden Teiler ein Element mit der jeweiligen Ordnung. Zum Beispiel fehlt bei jeder nicht zyklischen Gruppe bereits die Ordnung selbst. Wohl aber gilt:
+\begin{theorem}
+	\theoremname{Cauchy:} Sei $p$ eine Primzahl mit $p \mid \abs{G}$. So gibt es ein $g \in G$ mit $\ord(g) = p$.
+\end{theorem}
+\noindent Ein Beweis folgt aber erst später.
+\begin{corollary}
+	Sei $g \in G$ ein Element einer endlichen Gruppe. So gilt 
+	\begin{align*}
+		g^\abs{G} = e.
+	\end{align*}
+\end{corollary}
+\begin{proof}
+	$g^\abs{G} = g^{r \cdot \abs{\ord(g)}} = e^r = e.$
+\end{proof}
+\begin{theorem}
+	\theoremname{Kleiner Satz von Fermat:} Sei $p$ eine Primzahl und $a \in \bZ$. So gilt
+	\begin{align*}
+		a^p \equiv a \mod p
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Wir betrachten $\bZ/p\bZ$. Falls $\alpha \equiv 0 \mod p$ ist die Aussage trivial. Außerdem hat die Multiplikative Gruppe die Ordnung $p-1$, also gilt für $\alpha \not\equiv 0$ $\alpha^{p-1} \equiv 1 \mod p$, also $\alpha^p \equiv \alpha \mod p$.
+\end{proof}
+\begin{proof}
+	(Ohne Gruppentheorie): Sei $a \in \{0, \hdots, p-1\}$. So sind die Zahlen $a, 2a, 3a, \hdots, (p-1)a$ paarweise verschieden, also ist nach Schubfachprinzip ein Element jeder Restklasse $\mod p$ enthalten. Also gilt:
+	\begin{align*}
+		\prod_{k = 1}^{p-1} ka &\equiv \prod_{k = 1}^{p-1} k \mod p\\
+		\implies (p-1)!a^{p-1} &\equiv (p-1)! \mod p.
+	\end{align*}
+	Allerdings ist $(p-1)!$ teilerfremd zu $p$, also können wir durch $(p-1)!$ teilen und erhalten $a^{p-1} \equiv 1 \mod p$.
+\end{proof}
+\begin{theorem}
+	\label{thrm:sunziprereq}
+	Seien $a,b \in \bN_{\geq 1}$ teilerfremd. So induziert
+	\begin{align*}
+		\phi : \bZ &\to \bZ / a\bZ \times \bZ / b\bZ\\
+		n &\mapsto (n + a\bZ, n + b\bZ)
+	\end{align*}
+	einen Isomorphismus:
+	\begin{align*}
+		\bZ / ab\bZ &\overset{\sim}{\rightarrow} \bZ / a\bZ \times \bZ / b\bZ\\
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Nach Bézout gibt es $x,y \in \bZ$ mit
+	\begin{align*}
+		xa + yb = 1.
+	\end{align*}
+	Nun gilt:
+	\begin{align*}
+		n &= xy = 1 - yb \overset{\phi}{\mapsto} (0,1)\\
+		m &= yb = 1 - xy \overset{\phi}{\mapsto} (1,0)
+	\end{align*}
+	Diese Tupel bilden eine Basis des Bildraums, also ist $\phi$ surjektiv:
+	\begin{align*}
+		\phi(\alpha n + \beta m) &= \phi(\alpha n) + \phi(\beta m)\\
+								 &= \alpha\phi(n) + \beta\phi(m)\\
+								 &= (\beta, \alpha)
+	\end{align*}
+	Da beide Seiten gleich viele Elemente haben handelt es sich sogar um einen Isomorphismus.
+\end{proof}
+\begin{example}
+	Das Kongruenzensystem
+	\begin{align*}
+		n \equiv 3 \mod 17\\
+		n \equiv 5 \mod 9\\
+		n \equiv 1 \mod 12
+	\end{align*}
+	hat keine Lösung, denn aus $n \equiv 5 \mod 9$ folgt $n \equiv 2 \mod 3$, also $n \not \equiv 1 \mod 12$. Ersetzen wir jedoch $12$ durch $13$, so sind die Teiler teilerfremd und der chinesische Restsatz garantiert eine Lösung.
+\end{example}
+\begin{theorem}
+	\theoremname{Chinesischer Restsatz / Satz von Sunzi / Satz von Aryabhata:} Satz \ref{thrm:sunziprereq} funktioniert auch für mehr als zwei Zahlen - sind $q_1, \hdots, q_r \in \bN_{\geq 1}$ teilerfremd, so ist
+	\begin{align*}
+		\bZ \to \bZ / q_1\bZ \times \hdots \times \bZ / q_r \bZ
+	\end{align*}
+	surjektiv und induziert eines Isomorphismus
+	\begin{align*}
+		\bZ / q_1 \hdots q_r \bZ \overset{\sim}{\rightarrow} \bZ / q_1\bZ \times \hdots \times \bZ / q_r\bZ
+	\end{align*}
+\end{theorem}
+\begin{lemma}
+	\theoremname{Zentrales Lemma der RSA-Verschlüsselung:} Seien $p$ und $q$ prim und $st \equiv 1 \mod (p-1)(q-1)$. So ist $(a^t)^s \equiv \mod a \mod pq$.
+\end{lemma}
+\begin{proof}
+	Wir wissen $a^x = a \mod p$ falls $x \equiv 1 \mod (p-1)$. 
+	\newpar
+	Also $a^x = a \mod pq$, wenn $x \equiv 1 \mod (p-1)$ und $x \equiv 1 \mod (q-1)$, also insbesondere $a^x = a \mod p$ wenn $x \equiv 1 \mod (p-1)(q-1)$.
+\end{proof}
+\noindent In der RSA-Verschlüsselung werden dann letztendlich $pq$ und $t$ veröffentlicht, $a^t$ als Nachricht zurückgeschickt, und dann durch Exponentiation mit $s$ die Nachricht entschlüsselt.
 \end{document}

@@ -1,0 +1,373 @@
+\documentclass{report}
+\usepackage[a4paper,margin=1.5in]{geometry}
+\usepackage{fancyhdr}
+\usepackage[titles]{tocloft}
+\usepackage[titletoc]{appendix}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{pdfpages}
+\usepackage{bm}
+\usepackage{tikz-cd}
+\usepackage{physics}
+\usepackage{placeins}
+\usepackage[many]{tcolorbox}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+%hyperref should be last apparently
+\usepackage{hyperref}
+
+\renewcommand\cftsecdotsep{\cftdot}
+\renewcommand\cftsubsecdotsep{\cftdot}
+\renewcommand\epsilon{\varepsilon}
+
+% Starts a new paragraph without indentation
+% and with an empty line between paragraphs
+\newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
+
+\newcommand{\theoremname}[1]{\emph{\tbf{\ul{#1}}}}
+
+\newcommand{\symdiff}{\vartriangle}
+\newcommand{\trans}{\twoheadrightarrow}
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+
+\newcommand{\Hess}[1]{\text{Hess}(#1)}
+\newcommand{\at}{\text{at}}
+
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bQ}{\mathbb{Q}}
+\newcommand{\bR}{\mathbb{R}}
+
+\newcommand{\bRnn}{\mathbb{R}^{n \times n}}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cX}{\mathcal{X}}
+
+\newcommand{\ve}{\vec{e}}
+\newcommand{\vh}{\vec{h}}
+\newcommand{\vv}{\vec{v}}
+\newcommand{\vw}{\vec{w}}
+\newcommand{\vx}{\vec{x}}
+\newcommand{\vy}{\vec{y}}
+\newcommand{\vz}{\vec{0}}
+\newcommand{\zz}{\vec{z}}
+
+\newcommand{\tbA}{\mathbf{A}}
+\newcommand{\tbB}{\mathbf{B}}
+\newcommand{\tbC}{\mathbf{C}}
+\newcommand{\tbD}{\mathbf{D}}
+\newcommand{\tbE}{\mathbf{E}}
+\newcommand{\tbY}{\mathbf{Y}}
+\newcommand{\tbZ}{\mathbf{Z}}
+
+\newcommand{\an}{(a_n)_{n \in \bN}}
+\newcommand{\bn}{(b_n)_{n \in \bN}}
+\newcommand{\sn}{(s_n)_{n \in \bN}}
+
+\renewcommand{\tr}{\text{tr}\ }
+\newcommand{\rang}{\text{rang}\ }
+\newcommand{\id}{\text{id}\ }
+
+\newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
+\newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
+
+\renewcommand*\contentsname{Inhalt}
+\renewcommand*\proofname{Beweis}
+
+\pagestyle{fancy} %allows headers
+
+\lhead{Emma Bach}
+\rhead{\today}
+
+\NewDocumentEnvironment{nalign}{}{\equation\aligned}{\endaligned\endequation}
+
+	% \newtheorem{codename}{printedname}[countedwith]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{theorem}[lemma]{Satz}
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{corollary}[lemma]{Korollar}
+
+\theoremstyle{definition}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{example}[lemma]{Beispiel}
+\newtheorem{beobachtung}[lemma]{Beobachtung}
+\newtheorem{anmerkung}[lemma]{Anmerkung}
+\newtheorem{question}[lemma]{Frage}
+\newtheorem{application}[lemma]{Anwendung}
+\newtheorem{konsequenz}[lemma]{Konsequenz}
+
+\tcolorboxenvironment{proof}{
+	colback=black!5!white,
+	boxrule=0pt,
+	sharp corners,
+	breakable,
+	enhanced,
+}
+
+\newenvironment{proofsketch}{\begin{proof}[Beweisskizze]\renewcommand*{\qedsymbol}{\("\square"\)}}{\end{proof}}
+
+\begin{document}
+	\include{title}
+	\tableofcontents
+	\thispagestyle{fancy}
+	\chapter{Aufgabenstellung}
+	In der Numerik beschäftigt man sich mit der praktischen Berechnung von Lösungen mathematischer Probleme.
+	\begin{example}
+		Berechne $\displaystyle \int_0^1 e^{-x^2} dx$!
+	\end{example}
+	\begin{example}
+		Berechne $\sin(20)$!
+	\end{example}
+	\begin{example}
+		Berechne $\sqrt{753}$!
+	\end{example}
+	\begin{example}
+		Berechne $\displaystyle \min_{x \in [0,1]} F(x)$, für eine geeignete Funktion $F$!
+	\end{example}
+	\begin{example}
+		Berechne $x$, sodass $f(x) = 0$!
+	\end{example}
+	\begin{example}
+		Berechne $x \in \bR^n$, sodass $Ax = b$!
+	\end{example}
+	\begin{definition}
+		Eine Mathematische Aufgabe in der Numerik besteht im Finden einer Lösung von
+		\begin{align*}
+			F(x,d) = 0
+		\end{align*}
+		für gegebenes Datum $d$ und gegebene Funktion $F$.
+	\end{definition}
+	\noindent
+	Typischerweise können in akzeptabler Zeit keine exakten Lösungen gefunden werden, sondern nur Approximationen. Insbesondere stehen statt den vollen Mengen $\bQ$, $\bR$, $\bC$ etc. auch nur endlich viele \tbf{Maschinenzahlen} zur Verfügung - arbiträre reelle Zahlen benötigen unendlich viel Speicher! Rechenoperationen sind dementsprechend Fehlerbehaftet, es gibt Rundungsfehler. Außerdem gibt es in reellen Anwendungen oft \tbf{Modellfehler} und \tbf{Datenfehler}.
+	\newpar
+	Eine Grundlegende Idee in der Numerik ist es deshalb, eine gute Balance zwischen Exaktheit und Aufwand der Berechnung zu finden.
+	\begin{example}
+		Die Berechnung der Determinante einer Matrix mittels Laplaceschem Entwicklungssatz benötigt $O(n!)$ Rechenoperationen. Die Determinante mit diesem Verfahren zu berechnen, dauert sehr viel länger, als das Universum alt ist.
+		\newpar
+		Besser: Matrix (approximativ) auf Dreiecksgestalt bringen und die Diagonalelemente multiplizieren.
+	\end{example}
+	\begin{definition}
+		Eine Mathematische Aufgabe heißt \tbf{wohlgestellt}, wenn zu geeigneten Daten $d$ eindeutige Lösungen $x$ existieren, und diese stetig von $d$ abhängt. Andernfalls ergibt die Suche nach einer numerischen Lösung wenig Sinn. Für wohlgestellte Probleme existiert eine Lösungsfunktion $\phi$, sodass $x = \phi(d)$ das Problem löst, d.h. $f(\phi(d),d) = 0$.
+	\end{definition}
+	\begin{definition}
+		Ein numerischer Algorithmus zur näherungsweisen Lösung einer wohlgestellten Aufgabe $\phi$ ist eine Abbildung $\tilde{\phi}$, die durch Hintereinanderausführung möglicherweise fehlerbehafteter elementarer Rechenoperationen definiert ist, also 
+		\begin{align*}
+			\tilde{\phi} = f_j \circ f_{j-1} \circ \hdots \circ f_1
+		\end{align*}
+	\end{definition}
+	\begin{definition}
+		Der \tbf{Aufwand} eines Verfahrens $\tilde \phi$ ist die Anzahl der benötigten elementaren Rechenschritte. Typischerweise interessiert uns nicht die exakte Anzahl an Schritten, sondern nur die Größenordnung.
+	\end{definition}
+	\begin{proposition}
+		Das Gaußverfahren hat Aufwand $\cO(n^3)$.
+	\end{proposition}
+\chapter{Numerische Lineare Algebra}
+\section{Matrixfaktorisierung}
+\subsection{Dreiecksmatrizen}
+\begin{definition}
+	Eine Matrix $L \in \bR^{n \times n}$ heißt \tbf{untere Dreiecksmatrix}, falls $\forall i < j : l_{ij} = 0$.
+\end{definition}
+\begin{definition}
+	Eine Matrix $U \in \bR^{n \times n}$ heißt \tbf{obere Dreiecksmatrix}, falls $U^\top$ eine untere Dreiecksmatrix ist.
+\end{definition}
+\begin{definition}
+	Eine Dreiecksmatrix heißt \tbf{normalisiert}, falls alle ihre Diagonaleinträge $1$ sind.
+\end{definition}
+\begin{definition}
+	Eine Matrix heißt \tbf{regulär}, wenn sie invertierbar ist.
+\end{definition}
+\begin{lemma}
+	Die quadratischen oberen (bzw. unteren) Dreiecksmatrizen bilden unter Matrixmultiplikation eine Gruppe.
+\end{lemma}
+\noindent
+Lineare Gleichungssysteme mit regulärer Dreiecksmatrix lassen sich leicht lösen. Sei $U \in \bR^{n \times n}$ eine reguläre obere Dreiecksmatrix und $b \in \bR^n$. Wir berechnen $x \in \bR^n$ folgendermaßen:
+\begin{enumerate}
+	\item for i = n : -1 : 1:
+	\begin{enumerate}
+		\item $\displaystyle x_i = \left(b_i - \sum_{j = i+1}^n u_{ij}x_j\right) \cdot \frac{1}{u_{ii}}$
+	\end{enumerate}
+	\item end.
+\end{enumerate}
+Der Aufwand dieses Verfahrens ist $\cO(n^2)$. Ein analoger Algorithmus existiert für untere Dreiecksmatrizen.
+\subsection{$LU$-Zerlegung}
+Falls für eine reguläre Matrix $A \in \bR^{n \times n}$ eine Zerlegung $A = LU$ in eine untere Dreiecksmatrix $U$ und eine obere Dreiecksmatrix $L$ gegeben ist, so lässt sich das lineare Gleichungssystem $Ax = b$ in zwei Schritten lösen:
+\begin{enumerate}
+	\item Löse $Ly = b$.
+	\item Löse $Ux = y$.
+\end{enumerate}
+\begin{definition}
+	Eine Faktorisierung $A = LU$ mit unterer Dreiecksmatrix $L \in \bR^{n \times n}$ und oberer Dreiecksmatrix $U \in \bR^{n \times n}$ heißt \tbf{$LU$-Zerlegung} von $A$. Die Zerlegung heißt \tbf{normalisiert}, falls $L$ normalisiert ist.
+\end{definition}
+\begin{theorem}
+	Für jede reguläre Matrix $A \in \bR^{n \times n}$ sind äquivalent:
+	\begin{enumerate}
+		\item Es existiert eine eindeutige normalisierte $LU$-Zerlegung.
+		\item Alle Untermatrizen $A_k = (a_{ij})_{(i,j) \in (1, \hdots, k)^2}$ sind regulär. 
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	\phantom{}
+	\begin{itemize}
+		\item[$\rightarrow$] Ist $A$ regulär, so sind auch $L$ und $U$ regulär. Damit sind von $L$ und $U$ alle Diagonaleinträge nicht null. Somit sind auch die Untermatrizen $L_k$ und $U_k$ regulär, somit auch die Untermatrizen $A_k = L_k U_k$.
+		\item[$\leftarrow$] Für $n = 1$ ist die Aussage klar. Sei nun angenommen, die Aussage gelte für Matrizen der Größe $(n - 1) \times (n - 1)$. Damit existieren Matrizen $L_{n-1}, U_{n-1}$, sodass $A_{n-1} = L_{n-1}U_{n-1}$ eine normalisierte $LU$-Zerlegung ist. Seien nun $\binom{b}{a_{nn}}$ die letzte Spalte und $(c^\top, a_{nn})$ die letzte Zeile von $A$. Die Aussage ist bewiesen, wenn geeignete $l,u \in \bR^{n-1}$ und $r \in \bR$ existieren, sodass
+		\begin{align*}
+			\begin{pmatrix}
+				A_{n-1} & b\\
+				c^\top & a_{nn}
+			\end{pmatrix}
+			&=
+			\begin{pmatrix}
+				L_{n-1} & 0\\
+				l^\top & 1
+			\end{pmatrix}
+			\begin{pmatrix}
+				U_{n-1} & u\\
+				0 & r
+			\end{pmatrix}\\
+			&=
+			\begin{pmatrix}
+				L_{n-1}U_{n-1} & L_{n-1}u\\
+				(U^\top_{n-1} l)^\top & l^\top u + r
+			\end{pmatrix}\\
+			&=
+			\begin{pmatrix}
+				A_{n-1} & L_{n-1}u\\
+				(U^\top_{n-1} l)^\top & l^\top u + r
+			\end{pmatrix}
+		\end{align*}
+		Wir brauchen also $L_{n-1}u = b$, $U_{n-1}^\top l = c$, und $a_{nn} = l^\top u + r$. Durch Regularität von $L_{n-1}$ und $U_{n-1}$ existieren eindeutige Lösungen $u, l$, der ersten beiden Gleichungen, somit ist auch $r$ festgelegt.
+	\end{itemize}
+\end{proof}
+\begin{corollary}
+	\phantom{}
+	\begin{itemize}
+		\item Jede positiv definite Matrix besitzt eine eindeutige $LU$-Zerlegung.
+		\item Jede strikt diagonaldominante Matrix, also jede Matrix $A$ mit $\sum_{j \in 1, \hdots, n, i \neq j} \abs{a_ij} < \abs{a_{ii}}$ besitzt eine eindeutige $LU$-Zerlegung.
+		\item Die Matrix $A = \begin{pmatrix}
+			0 & 1\\
+			1 & 0
+		\end{pmatrix}$
+		besitzt keine $LU$-Zerlegung.
+		\item Die Nullmatrix besitzt zwar $LU$-Zerlegungen, diese sind aber nicht eindeutig.
+	\end{itemize}
+\end{corollary}
+\begin{lemma}
+	Falls $A = LU$ eine normalisierte $LU$-Zerlegung von $A$ ist, so gilt
+	\begin{align*}
+		a_{ik} = u_{ik} + \sum_{j = 1}^{i-1} l_{ij} u_{jk}
+	\end{align*}
+	und
+	\begin{align*}
+		a_{ki} = l_{ki} u_{ii} + \sum_{j = 1}^{i-1} l_{kj} u_{ji}
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Es gilt $l_{ij} = 0$ für $j > i$ und $l_{ii} = 1$. Es gilt außerdem $u_{ij} = 0$ für $j < i$. Die Formeln folgen direkt aus der Definition des Matrixprodukts.
+\end{proof}
+Diese Formeln lassen sich für $i \leq k$ nach $u_{ik}$ auflössen und für $k > i$ nach $l_{ki}$ auflösen. Wir erhalten folgenden Algorithmus:
+\begin{algorithm}
+\begin{algorithmic}[1]
+	\For{$i = 1, i \leq n, i++$}
+		\For{$k = i, k \leq n, k++$}
+			\State $\displaystyle u_{ik} \gets a_{ik} - \sum_{j = 1}^{i-1}l_{ij}u_{jk}$
+		\EndFor
+		\For{$k = i+1, k \leq n, k++$}
+		\State $\displaystyle l_{ki} \gets \frac{1}{u_{ii}} \cdot \left(a_{ki} - \sum_{j = 1}^{i-1}l_{kj}u_{ji}\right)$
+		\EndFor
+	\EndFor
+\end{algorithmic}
+\end{algorithm}
+\begin{proposition}
+	Der Rechenauftrag dieses Algorithmus beträgt $O(n^3)$.
+\end{proposition}
+\begin{proposition}
+	Es ist nicht mehr Speicher nötig, als sowieso für $A$ benötigt wird. Die Einträge von $A$ können im Speicher einfach sukzessiv durch die jeweiligen Einträge von $L$ bzw. $U$ ersetzt werden.
+\end{proposition}
+\begin{definition}
+	Ein numerisches Problem $\phi$ heißt \tbf{schlecht Konditioniert}, wenn kleine Unterschiede in der Eingabe zu großen Unterschieden in der korrekten Lösung führen, also wenn
+	\begin{align*}
+		\frac{\abs{\phi(\tilde{x}) - \phi(x)}}{\abs{\phi(x)}} >> \frac{\abs{\tilde{x} - x}}{\abs{x}}
+	\end{align*}
+	Ansonsten heißt die Aufgabe \tbf{gut konditioniert}.
+\end{definition}
+\begin{definition}
+	Ein Verfahren $\tilde{\phi}$ heißt \tbf{numerisch instabil}, wenn eine Störung $\tilde{x}$ existiert, sodass der durch Rundungsfehler verursachte relative Fehler erheblich größer ist als der rein durch die Störung verursachte Fehler.
+\end{definition}
+\begin{example}
+	Sei 
+	\begin{align*}
+		A = \begin{pmatrix}
+			1 & 1\\ 
+			1 & 1 + \epsilon
+		\end{pmatrix}
+	\end{align*}
+	Für $\epsilon \in \bR^+$. Es gilt
+	\begin{align*}
+		A^{-1} = \begin{pmatrix}
+			1 + \frac{1}{\epsilon} & -\frac{1}{\epsilon}\\ 
+			- \frac{1}{\epsilon} & \frac{1}{\epsilon}
+		\end{pmatrix}
+	\end{align*}
+	\begin{align*}
+		A^{-1} \binom{1}{1} = \binom{1}{0}. \qquad \qquad A^{-1} \binom{1}{1 + \epsilon} = \binom{0}{1}.
+	\end{align*}
+\end{example}
+\noindent Eine kleine Störung in den Daten $b$ des linearen Gleichungssystems $Ax = b$ führt zu Problemen der Größenordnung $1$!!! So können wir keine Numerik machen!!! Dieses Problem ist \tbf{schlecht konditioniert}.
+\begin{example}
+	Sei 
+	\begin{align*}
+		A = \begin{pmatrix}
+			\epsilon & 1\\ 
+			1 & 0
+		\end{pmatrix},
+	\end{align*}
+	also
+	\begin{align*}
+		A^{-1} = \begin{pmatrix}
+			0 & 1\\ 
+			1 & -\epsilon
+		\end{pmatrix}.
+	\end{align*}
+	So haben wir kein Problem bei der Berechnung von $A^{-1}b$ - die Aufgabe ist gut konditioniert. Sagen wir nun, wir versuchen, das Gleichungssystem effizient durch $LU$-Zerlegung zu lösen. Die $LU$-Zerlegung von $A$ ist jedoch gegeben durch
+	\begin{align*}
+		A = 
+		\begin{pmatrix}
+			1 & 0\\ 
+			\frac{1}{\epsilon} & 1
+		\end{pmatrix}
+		\begin{pmatrix}
+			\epsilon & 1\\ 
+			0 & \frac{1}{\epsilon}
+		\end{pmatrix},
+	\end{align*}
+	die Berechnung von $L^{-1}b$ und  $U^{-1}b$ führt nun wieder zu großen Rundungsfehlern. Aus unserer Idee entsteht also ein \tbf{instabiler Algorithmus.}
+\end{example}
+\begin{theorem}
+	\theoremname{Cholesky-Zerlegung:} Sei $A \in \bR^{n \times n}$ symmetrisch und positiv definit. So existiert eine eindeutige untere Dreiecksmatrix $L$, sodass
+	\begin{align*}
+		A = LL^\top.
+	\end{align*} 
+	und $l_{ii} > 0$
+\end{theorem}
+\end{document}
