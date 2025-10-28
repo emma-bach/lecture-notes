@@ -1,99 +1,19 @@
 \documentclass{report}
+
+% custom margins
 \usepackage[a4paper,margin=1.5in]{geometry}
-\usepackage{fancyhdr}
-\usepackage[titles]{tocloft}
-\usepackage[titletoc]{appendix}
-\usepackage{tikz}
-\usepackage{xcolor}
 
-\usepackage{multicol}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{pdfpages}
-\usepackage{bm}
-\usepackage{tikz-cd}
-\usepackage{physics}
-\usepackage{placeins}
-\usepackage[many]{tcolorbox}
+% emma's long list of custom macros and universally used packages
+\include{../macros-and-packages.tex}
 
-%\usepackage{setspace}
-
-%\onehalfspacing
-
-%hyperref should be last apparently
-\usepackage{hyperref}
-
-\renewcommand\cftsecdotsep{\cftdot}
-\renewcommand\cftsubsecdotsep{\cftdot}
-
-\renewcommand\epsilon{\varepsilon}
-\renewcommand\phi{\varphi}
-
-% Starts a new paragraph without indentation
-% and with an empty line between paragraphs
-\newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
-
-\newcommand{\surj}{\twoheadrightarrow}
-\newcommand{\inj}{\hookrightarrow}
-
-\newcommand{\ttt}[1]{\texttt{#1}}
-\newcommand{\tbf}[1]{\textbf{#1}}
-\newcommand{\ul}[1]{\underline{#1}}
-\newcommand{\ol}[1]{\overline{#1}}
-\newcommand{\theoremname}[1]{\emph{\tbf{\ul{#1}}}}
-
-\newcommand{\bC}{\mathbb{C}}
-\newcommand{\bF}{\mathbb{F}}
-\newcommand{\bN}{\mathbb{N}}
-\newcommand{\bQ}{\mathbb{Q}}
-\newcommand{\bR}{\mathbb{R}}
-\newcommand{\bZ}{\mathbb{Z}}
-
-\newcommand{\cA}{\mathcal{A}}
-\newcommand{\cB}{\mathcal{B}}
-\newcommand{\cC}{\mathcal{C}}
-\newcommand{\cE}{\mathcal{E}}
-\newcommand{\cM}{\mathcal{M}}
-\newcommand{\cP}{\mathcal{P}}
-\newcommand{\cX}{\mathcal{X}}
-
-\newcommand{\ve}{\vec{e}}
-\newcommand{\vh}{\vec{h}}
-\newcommand{\vv}{\vec{v}}
-\newcommand{\vw}{\vec{w}}
-\newcommand{\vx}{\vec{x}}
-\newcommand{\vy}{\vec{y}}
-\newcommand{\vz}{\vec{0}}
-\newcommand{\zz}{\vec{z}}
-
-\newcommand{\tbA}{\mathbf{A}}
-\newcommand{\tbB}{\mathbf{B}}
-\newcommand{\tbC}{\mathbf{C}}
-\newcommand{\tbD}{\mathbf{D}}
-\newcommand{\tbE}{\mathbf{E}}
-\newcommand{\tbY}{\mathbf{Y}}
-\newcommand{\tbZ}{\mathbf{Z}}
-
-\newcommand{\an}{(a_n)_{n \in \bN}}
-\newcommand{\bn}{(b_n)_{n \in \bN}}
-\newcommand{\sn}{(s_n)_{n \in \bN}}
-
-\newcommand{\ggT}{\text{ggT}}
-\newcommand{\kgV}{\text{kgV}}
-\newcommand{\id}{\text{id}}
-\newcommand{\im}{\text{im}}
-\newcommand{\ord}{\text{ord}}
-
-\renewcommand{\tr}{\text{tr}\ }
-\newcommand{\rang}{\text{rang}\ }
-
-\newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
-\newcommand{\angles}[1]{\left\langle #1 \right\rangle}
-
-\newcommand{\Grp}{\text{Grp}}
-\newcommand{\Mag}{\text{Mag}}
-\newcommand{\Mon}{\text{Mon}}
+% colored box behind proofs
+\tcolorboxenvironment{proof}{
+	colback=black!5!white,
+	boxrule=0pt,
+	sharp corners,
+	breakable,
+	enhanced,
+}
 
 \renewcommand*\contentsname{Inhalt}
 \renewcommand*\proofname{Beweis}
@@ -103,38 +23,10 @@
 \lhead{Emma Bach}
 \rhead{\today}
 
-\NewDocumentEnvironment{nalign}{}{\equation\aligned}{\endaligned\endequation}
-
 \begin{document}
 
-% \newtheorem{codename}{printedname}[countedwith]
-\newtheorem{lemma}{Lemma}[chapter]
-\newtheorem{theorem}[lemma]{Satz}
-\newtheorem{proposition}[lemma]{Proposition}
-\newtheorem{corollary}[lemma]{Korollar}
 
-\theoremstyle{definition}
-\newtheorem{definition}[lemma]{Definition}
-\newtheorem{example}[lemma]{Beispiel}
-\newtheorem{beobachtung}[lemma]{Beobachtung}
-\newtheorem{anmerkung}[lemma]{Anmerkung}
-\newtheorem{question}[lemma]{Frage}
-\newtheorem{application}[lemma]{Anwendung}
-\newtheorem{konsequenz}[lemma]{Konsequenz}
 
-\tcolorboxenvironment{proof}{
-	colback=black!5!white,
-	boxrule=0pt,
-	sharp corners,
-	breakable,
-	enhanced,
-}
-
-\newenvironment{proofsketch}{\begin{proof}[Beweisskizze]\renewcommand*{\qedsymbol}{\("\square"\)}}{\end{proof}}
-
-%
-%
-%
 \include{title}
 \tableofcontents
 \thispagestyle{fancy}
@@ -156,7 +48,7 @@
 \begin{theorem}
 	Es gibt eine Bijektion 
 	\begin{align*}
-		\bN &\leftrightarrow \{\text{\emph{Untergruppen von ($\bZ, + $)}}\}\\
+		\bN &\leftrightarrow \{\textnormal{Untergruppen von ($\bZ, + $)}\}\\
 		n &\mapsto n\bZ
 	\end{align*}
 \end{theorem}
@@ -204,7 +96,7 @@
 	\end{align*}
 \end{definition}
 \begin{theorem}
-	\ul{\emph{Über den größten gemeinsamen Teiler}}: Seien $a,b \in \bZ$. So gibt es $r,s \in \bN$ mit 
+	\theoremname{Über den größten gemeinsamen Teiler}: Seien $a,b \in \bZ$. So gibt es $r,s \in \bN$ mit 
 	\begin{align*}
 		\ggT(a,b) = ra + sb
 	\end{align*}
@@ -224,7 +116,7 @@
 \end{proof}
 \noindent Die Existenz der Darstellung $\ggT(a,b) = ra + sb$ ist auch als das \tbf{Lemma von Bézout} oder die \tbf{Bézoutsche Identät} bekannt.
 \begin{lemma}
-	\ul{\emph{Lemma von Euklid:}} Sei $p$ eine Primzahl und $a,b \in \bZ$.
+	\theoremname{Lemma von Euklid:} Sei $p$ eine Primzahl und $a,b \in \bZ$.
 	Dann gilt:
 	\begin{align*}
 		p \mid ab \implies (p \mid a) \vee (p \mid b)
@@ -246,7 +138,7 @@
 	Es gilt trivial $p \mid prb$, außerdem gilt per Annahme $p \mid ab$. Es folgt $p \mid rpb + sab = b$.
 \end{proof}
 \begin{theorem}
-	\ul{\emph{Eindeutigkeit der Primfaktorzerlegung im Ring $\bZ$:}}
+	\theoremname{Eindeutigkeit der Primfaktorzerlegung im Ring $\bZ$:}
 	Sei $n \in \bN_{\geq 1}$ und
 	\begin{align*}
 		n = \prod_{i = 1}^r p_i = \prod_{i = 1}^s q_i
@@ -470,7 +362,7 @@ Die Frage ist nun, ob jede Untergruppe einer Gruppe $G$ als Kern eines surjektiv
 	\end{align*}
 \end{definition}
 \begin{example}
-	Wir betrachten die Gruppe $Q \subset GL(2,\bR)$ aller linearen Abbildungen, welche ein Quadrat auf sich selbst abbilden. Diese Gruppe hat acht Elemente:
+	Wir betrachten die Gruppe $Q \subset GL(2,\bR)$ aller linearen Abbildungen, welche ein Quadrat auf sich selbst abbilden. Prof. Soergel nennt diese Gruppe auch gerne die "Bierdeckelgruppe $B$". Die Gruppe hat acht Elemente:
 	\begin{itemize}
 		\item Die Rotationen $d_0$, $d_1$, $d_2$ und $d_3$ um Vielfache von $90$°,
 		\item die Spiegelungen $s_{x}$ und $s_{y}$ an den Koordinatenachsen,
@@ -609,9 +501,9 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 \begin{example}
 	Das Kongruenzensystem
 	\begin{align*}
-		n \equiv 3 \mod 17\\
-		n \equiv 5 \mod 9\\
-		n \equiv 1 \mod 12
+		n &\equiv 3 \mod 17\\
+		n &\equiv 5 \mod 9\\
+		n &\equiv 1 \mod 12
 	\end{align*}
 	hat keine Lösung, denn aus $n \equiv 5 \mod 9$ folgt $n \equiv 2 \mod 3$, also $n \not \equiv 1 \mod 12$. Ersetzen wir jedoch $12$ durch $13$, so sind die Teiler teilerfremd und der chinesische Restsatz garantiert eine Lösung.
 \end{example}
@@ -622,9 +514,13 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 	\end{align*}
 	surjektiv und induziert eines Isomorphismus
 	\begin{align*}
-		\bZ / q_1 \hdots q_r \bZ \overset{\sim}{\rightarrow} \bZ / q_1\bZ \times \hdots \times \bZ / q_r\bZ
+		\bZ / q_1 \hdots q_r \bZ \iso \bZ / q_1\bZ \times \hdots \times \bZ / q_r\bZ
 	\end{align*}
 \end{theorem}
+\noindent Genauer kann man isomorph jedem Element $n$ das Tupel $(n \mod q_1, \hdots, n \mod q_r)$ zuordnen - so kommt man zurück zur "klassischen" Formulierung des Chinesischen Restsatzes.
+\begin{corollary}
+	Die Gruppe $\bZ / q_1\bZ \times \hdots \times \bZ / q_r\bZ$ wird durch das Element $(1, \hdots, 1)$ erzeugt und ist somit zyklisch.
+\end{corollary}
 \begin{lemma}
 	\theoremname{Zentrales Lemma der RSA-Verschlüsselung:} Seien $p$ und $q$ prim und $st \equiv 1 \mod (p-1)(q-1)$. So ist $(a^t)^s \equiv \mod a \mod pq$.
 \end{lemma}
@@ -634,4 +530,145 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 	Also $a^x = a \mod pq$, wenn $x \equiv 1 \mod (p-1)$ und $x \equiv 1 \mod (q-1)$, also insbesondere $a^x = a \mod p$ wenn $x \equiv 1 \mod (p-1)(q-1)$.
 \end{proof}
 \noindent In der RSA-Verschlüsselung werden dann letztendlich $pq$ und $t$ veröffentlicht, $a^t$ als Nachricht zurückgeschickt, und dann durch Exponentiation mit $s$ die Nachricht entschlüsselt.
+\begin{definition}
+	Sei $A$ eine abelsche Gruppe und $p$ eine Primzahl. Wir definieren:
+	\begin{align*}
+		A(p) = \{a \in A \mid \exists n \in \bN : \ord(a) = p^n\}
+	\end{align*}
+\end{definition}
+\begin{theorem}
+	Sei $(A, +)$ eine abelsche Gruppe. Für jede Primzahl $p$ ist $A(p) \subseteq A$ eine Untergruppe.
+\end{theorem}
+\begin{proof}
+	Seien $x,y \in A(p)$. So existieren $r,s \in \bN_{\geq 0}$, sodass $p^rx = p^sy = 0$. Da $A$ abelsch ist folgt
+	\begin{align*}
+		p^{r+s}(x+y) = p^rx + p^sy = 0
+	\end{align*}
+	Also $x + y \in A(p)$.
+	\newpar
+	Es gilt außerdem $p0 = 0$, also $0 \in A(p)$, und $p^r(-x) = -(p^rx) = -0 = 0$, also $-x \in A(p)$.
+\end{proof}
+\begin{theorem}
+	Sei $(A, +)$ eine abelsche Gruppe und seien $p_1, \hdots, p_r$ paarweise verschiedene Primzahlen. So liefert die Gruppenverknüpfung eine Injektion
+	\begin{align*}
+		A(p_1) \times \hdots \times A(p_r) \inj A
+	\end{align*}
+	mit Bild alle Elemente endlicher Ordnung, in deren Ordnung nur die Primfaktoren $p_1, \hdots, p_r$ vorkommen.
+\end{theorem}
+\begin{proof}
+	Sei sonst $(a_1, \hdots, a_r) \neq (0, \hdots, 0)$ ein Tupel mit $a_i \in A(p_i)$ und 
+	\begin{align*}
+		a_1 + \hdots + a_r = 0.
+	\end{align*} Sei OBdA $a_1 \neq 0$. So gilt:
+	\begin{align*}
+		-a_1 = a_2 + \hdots + a_r
+	\end{align*}
+	Für hinreichend großes $n$ gilt nun
+	\begin{align*}
+		-(p_2\hdots p_r)^na_1 = (p_2\hdots p_r)^n(a_2 + \hdots + a_r) = 0
+	\end{align*}
+	Allerdings gilt
+	\begin{align*}
+		(p_2\hdots p_r)^na_1 \neq 0
+	\end{align*}
+	Da die Primzahlen $p_2, \hdots, p_r$ alle die Ordnung von $a_1$ nicht Teilen. Widerspruch!
+	\newpar
+	Sei nun $a \in A$, $\ord(a) = p_1^{\alpha_1}\hdots p_r^{\alpha_r}$. So gilt:
+	\begin{align*}
+		\angles{a} &\cong  \bZ / \ord(a)\bZ\\
+				   &= \bZ / p_1^{\alpha_1}\hdots p_r^{\alpha_r}\bZ\\
+				   &\cong \bZ / p_1^{\alpha_1}\bZ \times \hdots \times \bZ / p_r^{\alpha_r}\bZ
+	\end{align*}
+\end{proof}
+\noindent Dieser Satz ist analog zur Hauptraumzerlegung eines Vektorraums - wir zerlegen $A$ in eine direkte Summe aus Untergruppen. Es gibt in der kommutativen Algebra einen Satz über Module über Ringe, welcher sowohl diesen Satz als auch die Hauptraumzerlegung gemeinsam verallgemeinert.
+\begin{corollary}
+	Sei $E$ eine endliche abelsche Gruppe. Seien $p_1, \hdots, p_r$ die Primfaktoren der Kardinalität $\abs{E}$ von $E$. So gilt:
+	\begin{enumerate}
+		\item Die Verknüpfung liefert eine Bijektion
+		\begin{align*}
+			E(p_1) \times \hdots \times E(p_r) \iso E
+		\end{align*}
+		\item Für alle $i$ ist $\abs{E(p_i)}$ eine Potenz von $p_i$. 
+	\end{enumerate}
+\end{corollary}
+\begin{proof}
+	\phantom{}
+	\begin{enumerate}
+		\item Folgt direkt aus dem vorherigen Satz, da die Elemente endlicher Ordnung, in deren Ordnung nur die Primfaktoren $p_1, \hdots, p_r$ vorkommen, nun die ganze Gruppe ausmachen.
+		\item Folgt aus Induktion über $\abs{E_p}$. Der Fall $\abs{E_p} = 1$ ist klar:
+		\begin{align*}
+			\abs{E_p} = 1 = p^0
+		\end{align*}
+		Für $\abs{E_p} > 1$ existiert ein Element $x \neq 0$. Es gilt $\abs{\angles{x}} = p^r$ nach Annahme. Dann folgt
+		\begin{align*}
+			\abs{E(p) / \angles{x}} = p^s
+		\end{align*}
+		nach Induktionsannahme, da der Quotient kleiner ist. Somit folgt nach Lagrange
+		\begin{align*}
+			\abs{E_p} = \abs{E(p) / \angles{x}} \cdot \abs{\angles{x}} = p^s \cdot p^r
+		\end{align*}
+	\end{enumerate}
+\end{proof}
+\begin{proposition}
+	Sei $E$ eine endliche abelsche Gruppe, sodass die Ordnung jedes $x \in E$ eine Potenz von $p$ prim ist. So ist $\abs{E}$ ebenfalls eine $p$-Potenz.
+\end{proposition}
+\begin{proposition}
+	Es existiert eine Bijektion zwischen der Menge der endlichen abelschen Gruppen bis auf Isomorphismus und den endlichen Multimengen echter Primpotenzen. Genauer hat jede endliche abelsche Gruppe die Form
+	\begin{align*}
+		\bZ / p_1\bZ \times \hdots \times \bZ / p_r \bZ
+	\end{align*}
+	Für $p_1, \hdots, p_r$ prim.
+\end{proposition}
+\noindent Zum Beispiel ist jede abelsche Gruppe der Ordnung $8$ isomorph zu $\bZ / 8\bZ$, $\bZ / 4\bZ \times \bZ / 2\bZ$, oder $\bZ / 2\bZ \times \bZ / 2\bZ \times \bZ / 2\bZ$.
+\begin{theorem}
+	Sei $K$ ein Körper und $K^\times$ dessen multiplikative Gruppe. So ist jede endliche Untergruppe von $K^\times$ zyklisch.
+\end{theorem}
+\begin{definition}
+	Sei $G$ eine Gruppe und $X$ eine Menge. Eine Operation von $G$ auf $X$ ist eine Abbildung
+	\begin{align*}
+		G \times G &\to X\\
+		(g,x) &\mapsto gx
+	\end{align*}
+	Sodass: 
+	\begin{enumerate}
+		\item $\forall g,h \in G : (gh)x = g(hx)$
+		\item $1x = x$
+	\end{enumerate}
+\end{definition}
+\begin{example}
+	Sei $X$ eine Menge und
+	\begin{align*}
+		\Ens^\times(X) := \{f : X \to X \mid f \text{ bijektiv}\}
+	\end{align*}
+	So ist $\Ens^\times$ eine Gruppe, welche durch Anwendung der jeweiligen Funktion auf kanonische Weise auf $X$ operiert:
+	\begin{align*}
+		\Ens^\times(X) \times X &\to X\\
+		(f, x) &\mapsto f(x)
+	\end{align*}
+\end{example}
+\begin{example}
+	$\cS_n$ operiert durch Anwendung der jeweiligen Permutation auf $\{1, \hdots, n\}$.
+\end{example}
+\begin{example}
+	Analog operiert $\GL(n,\bR)$ auf $\bR^n$.
+\end{example}
+\begin{definition}
+	Sei $G$ eine Gruppe, welche auf eine Menge $X$ operiert. So nennen wir für $x \in X$ die Menge
+	\begin{align*}
+		Gx = \{gx \mid g \in G\}
+	\end{align*}
+	die \tbf{Bahn} von $x$.
+\end{definition}
+\begin{example}
+	Wir lassen die Gruppe $\SO(2)$ der zweidimensionalen Rotationsmatrizen auf $\bR^2$ operieren. So ist die Bahn eines Vektors $\vv$ der Kreis mit Radius $\norm{\vv}$.
+\end{example}
+\begin{example}
+	Sei $H$ eine Untergruppe einer Gruppe $G$. So operiert $H$ durch die Gruppenoperation auf $G$ und die Bahnen $Hg$ sind genau die Nebenklassen.
+\end{example}
+\begin{proposition}
+	Die Bahnen der Operation einer Gruppe auf einer Menge sind paarweise disjunkt.
+\end{proposition}
+\begin{proposition}
+	Die Bahnen der Operation eines Monoids auf einer Menge sind nicht umbedingt paarweise disjunkt.
+\end{proposition}
 \end{document}

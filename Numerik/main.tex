@@ -1,96 +1,22 @@
 \documentclass{report}
-\usepackage[a4paper,margin=1.5in]{geometry}
-\usepackage{fancyhdr}
-\usepackage[titles]{tocloft}
-\usepackage[titletoc]{appendix}
-\usepackage{tikz}
-\usepackage{xcolor}
 
-\usepackage{multicol}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{pdfpages}
-\usepackage{bm}
-\usepackage{tikz-cd}
-\usepackage{physics}
-\usepackage{placeins}
-\usepackage[many]{tcolorbox}
+% custom margins
+\usepackage[a4paper,margin=1.5in]{geometry}
+
+% emma's long list of custom macros and universally used packages
+\include{../macros-and-packages.tex}
+
+% fancy box behind proofs
+\tcolorboxenvironment{proof}{
+	colback=black!5!white,
+	boxrule=0pt,
+	sharp corners,
+	breakable,
+	enhanced,
+}
 
 \usepackage{algorithm}
 \usepackage{algpseudocode}
-
-%hyperref should be last apparently
-\usepackage{hyperref}
-
-\renewcommand\cftsecdotsep{\cftdot}
-\renewcommand\cftsubsecdotsep{\cftdot}
-\renewcommand\epsilon{\varepsilon}
-
-% Starts a new paragraph without indentation
-% and with an empty line between paragraphs
-\newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
-
-\newcommand{\theoremname}[1]{\emph{\tbf{\ul{#1}}}}
-
-\newcommand{\symdiff}{\vartriangle}
-\newcommand{\trans}{\twoheadrightarrow}
-\newcommand{\ttt}[1]{\texttt{#1}}
-\newcommand{\tbf}[1]{\textbf{#1}}
-\newcommand{\ul}[1]{\underline{#1}}
-\newcommand{\ol}[1]{\overline{#1}}
-
-\newcommand{\Hess}[1]{\text{Hess}(#1)}
-\newcommand{\at}{\text{at}}
-
-\newcommand{\bC}{\mathbb{C}}
-\newcommand{\bF}{\mathbb{F}}
-\newcommand{\bN}{\mathbb{N}}
-\newcommand{\bQ}{\mathbb{Q}}
-\newcommand{\bR}{\mathbb{R}}
-
-\newcommand{\bRnn}{\mathbb{R}^{n \times n}}
-
-\newcommand{\cA}{\mathcal{A}}
-\newcommand{\cB}{\mathcal{B}}
-\newcommand{\cC}{\mathcal{C}}
-\newcommand{\cE}{\mathcal{E}}
-\newcommand{\cH}{\mathcal{H}}
-\newcommand{\cM}{\mathcal{M}}
-\newcommand{\cN}{\mathcal{N}}
-\newcommand{\cO}{\mathcal{O}}
-\newcommand{\cP}{\mathcal{P}}
-\newcommand{\cR}{\mathcal{R}}
-\newcommand{\cT}{\mathcal{T}}
-\newcommand{\cX}{\mathcal{X}}
-
-\newcommand{\ve}{\vec{e}}
-\newcommand{\vh}{\vec{h}}
-\newcommand{\vv}{\vec{v}}
-\newcommand{\vw}{\vec{w}}
-\newcommand{\vx}{\vec{x}}
-\newcommand{\vy}{\vec{y}}
-\newcommand{\vz}{\vec{0}}
-\newcommand{\zz}{\vec{z}}
-
-\newcommand{\tbA}{\mathbf{A}}
-\newcommand{\tbB}{\mathbf{B}}
-\newcommand{\tbC}{\mathbf{C}}
-\newcommand{\tbD}{\mathbf{D}}
-\newcommand{\tbE}{\mathbf{E}}
-\newcommand{\tbY}{\mathbf{Y}}
-\newcommand{\tbZ}{\mathbf{Z}}
-
-\newcommand{\an}{(a_n)_{n \in \bN}}
-\newcommand{\bn}{(b_n)_{n \in \bN}}
-\newcommand{\sn}{(s_n)_{n \in \bN}}
-
-\renewcommand{\tr}{\text{tr}\ }
-\newcommand{\rang}{\text{rang}\ }
-\newcommand{\id}{\text{id}\ }
-
-\newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
-\newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
 
 \renewcommand*\contentsname{Inhalt}
 \renewcommand*\proofname{Beweis}
@@ -100,32 +26,6 @@
 \lhead{Emma Bach}
 \rhead{\today}
 
-\NewDocumentEnvironment{nalign}{}{\equation\aligned}{\endaligned\endequation}
-
-	% \newtheorem{codename}{printedname}[countedwith]
-\newtheorem{lemma}{Lemma}[chapter]
-\newtheorem{theorem}[lemma]{Satz}
-\newtheorem{proposition}[lemma]{Proposition}
-\newtheorem{corollary}[lemma]{Korollar}
-
-\theoremstyle{definition}
-\newtheorem{definition}[lemma]{Definition}
-\newtheorem{example}[lemma]{Beispiel}
-\newtheorem{beobachtung}[lemma]{Beobachtung}
-\newtheorem{anmerkung}[lemma]{Anmerkung}
-\newtheorem{question}[lemma]{Frage}
-\newtheorem{application}[lemma]{Anwendung}
-\newtheorem{konsequenz}[lemma]{Konsequenz}
-
-\tcolorboxenvironment{proof}{
-	colback=black!5!white,
-	boxrule=0pt,
-	sharp corners,
-	breakable,
-	enhanced,
-}
-
-\newenvironment{proofsketch}{\begin{proof}[Beweisskizze]\renewcommand*{\qedsymbol}{\("\square"\)}}{\end{proof}}
 
 \begin{document}
 	\include{title}

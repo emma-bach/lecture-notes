@@ -1,101 +1,20 @@
 \documentclass{report}
+
+% custom margins
 \usepackage[a4paper,margin=1.5in]{geometry}
-\usepackage{fancyhdr}
-\usepackage[titles]{tocloft}
-\usepackage[titletoc]{appendix}
-\usepackage{tikz}
-\usepackage{xcolor}
-\usepackage[many]{tcolorbox}
 
-\usepackage[ddmmyyyy]{datetime}
-
-\usepackage{multicol}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{pdfpages}
-\usepackage{bm}
-\usepackage{tikz-cd}
-\usepackage{physics}
-\usepackage{placeins}
-
-\usepackage{setspace}
-
-\renewcommand{\baselinestretch}{1.2} 
-
-%hyperref should be last apparently
-\usepackage{hyperref}
-
-\renewcommand\cftsecdotsep{\cftdot}
-\renewcommand\cftsubsecdotsep{\cftdot}
-\renewcommand\epsilon{\varepsilon}
-
-\newcommand{\theoremname}[1]{\emph{\tbf{\ul{#1}}}}
-
-% Starts a new paragraph without indentation
-% and with an empty line between paragraphs
-\newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
+% emma's long list of custom macros and universally used packages
+\include{../macros-and-packages.tex}
 
 
-
-\newcommand{\symdiff}{\vartriangle}
-\newcommand{\trans}{\twoheadrightarrow}
-\newcommand{\ttt}[1]{\texttt{#1}}
-\newcommand{\tbf}[1]{\textbf{#1}}
-\newcommand{\ul}[1]{\underline{#1}}
-\newcommand{\ol}[1]{\overline{#1}}
-
-\newcommand{\Hess}[1]{\text{Hess}(#1)}
-\newcommand{\at}{\text{at}}
-
-\newcommand{\bC}{\mathbb{C}}
-\newcommand{\bF}{\mathbb{F}}
-\newcommand{\bN}{\mathbb{N}}
-\newcommand{\bQ}{\mathbb{Q}}
-\newcommand{\bR}{\mathbb{R}}
-\newcommand{\barR}{\ol{\mathbb{R}}}
-
-\newcommand{\cA}{\mathcal{A}}
-\newcommand{\cB}{\mathcal{B}}
-\newcommand{\cC}{\mathcal{C}}
-\newcommand{\cE}{\mathcal{E}}
-\newcommand{\cF}{\mathcal{F}}
-\newcommand{\cH}{\mathcal{H}}
-\newcommand{\cM}{\mathcal{M}}
-\newcommand{\cN}{\mathcal{N}}
-\newcommand{\cO}{\mathcal{O}}
-\newcommand{\cP}{\mathcal{P}}
-\newcommand{\cR}{\mathcal{R}}
-\newcommand{\cT}{\mathcal{T}}
-\newcommand{\cX}{\mathcal{X}}
-
-\newcommand{\ve}{\vec{e}}
-\newcommand{\vh}{\vec{h}}
-\newcommand{\vv}{\vec{v}}
-\newcommand{\vw}{\vec{w}}
-\newcommand{\vx}{\vec{x}}
-\newcommand{\vy}{\vec{y}}
-\newcommand{\vz}{\vec{0}}
-\newcommand{\zz}{\vec{z}}
-
-\newcommand{\tbA}{\mathbf{A}}
-\newcommand{\tbB}{\mathbf{B}}
-\newcommand{\tbC}{\mathbf{C}}
-\newcommand{\tbD}{\mathbf{D}}
-\newcommand{\tbE}{\mathbf{E}}
-\newcommand{\tbY}{\mathbf{Y}}
-\newcommand{\tbZ}{\mathbf{Z}}
-
-\newcommand{\an}{(a_n)_{n \in \bN}}
-\newcommand{\bn}{(b_n)_{n \in \bN}}
-\newcommand{\sn}{(s_n)_{n \in \bN}}
-
-\renewcommand{\tr}{\text{tr}\ }
-\newcommand{\rang}{\text{rang}\ }
-\newcommand{\id}{\text{id}\ }
-
-\newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
-\newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
+% colored box behind proofs
+\tcolorboxenvironment{proof}{
+	colback=black!5!white,
+	boxrule=0pt,
+	sharp corners,
+	breakable,
+	enhanced,
+}
 
 \renewcommand*\contentsname{Inhalt}
 \renewcommand*\proofname{Beweis}
@@ -105,57 +24,12 @@
 \lhead{Emma Bach}
 \rhead{\today}
 
-\NewDocumentEnvironment{nalign}{}{\equation\aligned}{\endaligned\endequation}
-
-% \newtheorem{codename}{printedname}[countedwith]
-\newtheorem{lemma}{Lemma}[section]
-\newtheorem{theorem}[lemma]{Satz}
-\newtheorem{proposition}[lemma]{Proposition}
-\newtheorem{corollary}[lemma]{Korollar}
-
-\theoremstyle{definition}
-\newtheorem{definition}[lemma]{Definition}
-\newtheorem{beispiel}[lemma]{Beispiel}
-\newtheorem{example}[lemma]{Beispiel}
-\newtheorem{beobachtung}[lemma]{Beobachtung}
-\newtheorem{anmerkung}[lemma]{Anmerkung}
-\newtheorem{question}[lemma]{Frage}
-\newtheorem{application}[lemma]{Anwendung}
-\newtheorem{konsequenz}[lemma]{Konsequenz}
-
-\tcolorboxenvironment{proof}{
-	colback=black!5!white,
-	boxrule=0pt,
-	sharp corners,
-	breakable,
-	enhanced,
-}
-
 \begin{document}
-
-\newenvironment{proofsketch}{\begin{proof}[Beweisskizze]\renewcommand*{\qedsymbol}{\("\square"\)}}{\end{proof}}
-
-%
-%
-%
+	
 \include{title}
 \tableofcontents
 \thispagestyle{fancy}
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
+
 \chapter{Grundlagen der Mengenlehre}
 \section{Die de-Morganschen Regeln}
 \begin{theorem}
@@ -191,10 +65,11 @@
 \chapter{Zahlen}
 \section{Die natürlichen Zahlen}
 \section{Die rationalen Zahlen}
-\section{Die reellen Zahlen}
+\section{Reelle Zahlen axiomatisch}
 \section{Algebraische Grundbegriffe}
+
 \chapter{Topologie}
-In den meisten Anfängervorlesungen über Analysis ist der einzige relevante Topologische / Metrische Raum der Raum $(\bR, \abs{-})$ der Reellen Zahlen mit der Absolutbetragsmetrik $d(x,y) = \abs{x-y}$. Falls du nicht daran interessiert bist, tiefer in die Theorie einzutauchen und die betrachteten Konzepte in voller Allgemeinheit aufzunehmen, kannst du dieses Kapitel dementsprechend auch fürs Erste überspringen und in jedem Satz in den darauffolgenden Kapiteln die Wörter "Topologischer Raum" und "Metrischer Raum" durch "$\bR$" und die Funktion "$d(x,y)$" durch "$\abs{x - y}$" ersetzen.
+In den meisten Anfängervorlesungen über Analysis ist der einzige relevante Topologische / Metrische Raum der Raum $(\bR, \abs{-})$ der Reellen Zahlen mit der Absolutbetragsmetrik $d(x,y) = \abs{x-y}$. Falls kein zusätzliches Interesse besteht, tiefer in die Theorie einzutauchen und die betrachteten Konzepte in voller Allgemeinheit aufzunehmen, kannst dieses Kapitel dementsprechend auch fürs Erste übersprungen werden und in jedem Satz in den darauffolgenden Kapiteln die Wörter "Topologischer Raum" und "Metrischer Raum" durch "$\bR$" und die Funktion "$d(x,y)$" durch "$\abs{x - y}$" ersetzt werden.
 \newpar
 Spätestens ab dem Kapitel über den Euklidischen Raum $\bR^n$ entsprechen die Notizen eher einer Vorlesung "Analysis II" - ab diesem Punkt werden auch andere Metrische Räume als $\bR$ relevant, und es lohnt es sich, die Grundlagen nachzuholen.
 \section{Metrische und Topologische Räume}
@@ -673,6 +548,7 @@ Dieser Satz ist je nach verwendeter Konstruktion der reellen Zahlen entweder ein
 %
 %
 %
+\chapter{Formale Konstruktion der Reellen Zahlen}
 %
 %
 %
@@ -2280,14 +2156,14 @@ Es stellt sich zum Beispiel heraus, dass selbst bei simplen Anfangswertproblemen
 \end{lemma}
 \noindent 
 Das folgende Beispiel zeigt, dass wir im Allgemeinen nur eine zeitlich lokale Lösung erwarten können:
-\begin{beispiel}
+\begin{example}
 	Das Anfangswertproblem 
 	\begin{align*}
 		x(0) &= 1,\\
 		x' &= x^2 
 	\end{align*}
 	Hat auf $(-\infty, 1)$ die Lösung $x(t) = \frac{1}{1-t}$. Diese Lösung hat jedoch bei $t = 1$ eine Singularität und ist somit nicht fortsetzbar.
-\end{beispiel}
+\end{example}
 \begin{theorem}
 	\emph{\tbf{Kurzzeitexistenzsatz von Picard-Lindelöf:}} \\\noindent Sei $f \in \bC^0(G, \bR^n)$ mit $D_x f \in \bC^0(G, \bR^{n \times n})$. Sei $(t_0, x_0) \in G$.
 	\newpar
@@ -2393,7 +2269,7 @@ Wir erlauben hier jede Art von Intervall, egal ob offen, halboffen, oder geschlo
 	wobei \[G(y) = \int_{y_0}^y \frac{1}{g(x)} dx, y \in I,\] \[H(t) = \int_{t_0}^{t}h(s) ds, t \in J\] ist. 
 \end{theorem}
 \end{definition}
-\begin{beispiel}
+\begin{example}
 	Sei $y'(t) = 2t(1 + y^2)$ mit Anfangsbedingung $y(t_0) = y_0$, wobei $(t_0, y_0 \in \bR^2)$.
 	Dann gilt:
 	\[
@@ -2423,7 +2299,7 @@ Wir erlauben hier jede Art von Intervall, egal ob offen, halboffen, oder geschlo
 		OBdA $t_0 \in (\alpha, \beta)$, dann
 		\[y(t) = \tan(t^2 - t_0^2 - \arctan(y_0))\]
 	\end{enumerate}
-\end{beispiel}
+\end{example}
 \clearpage
 \section{Lineare Gleichungen}
 Angenommen, wir haben eine Funktion $f(t, y)$ der Form
@@ -2881,7 +2757,7 @@ Nun fürs Erste zurück zu $\sigma$-Algebren.
 	\end{align*}
 \end{definition}
 \begin{theorem}
-	\ul{\tbf{\emph{Stetigkeitseigenschaften:}}} Sei $(X, \cA, \mu)$ ein Maßraum. Dann gelten für $A_i \subseteq \cA, i \in \bN$ folgende Aussagen:
+	\theoremname{Stetigkeitseigenschaften:} Sei $(X, \cA, \mu)$ ein Maßraum. Dann gelten für $A_i \subseteq \cA, i \in \bN$ folgende Aussagen:
 	\begin{enumerate}
 		\item Ist $A_i$ monoton wachsend, also $A_1 \subseteq A_2 \subseteq \hdots$, so folgt
 		\begin{align*}
@@ -2948,7 +2824,7 @@ Nun fürs Erste zurück zu $\sigma$-Algebren.
 	\end{align*}
 \end{definition}
 \begin{theorem}
-	\ul{\emph{\tbf{Vervollständigung:}}} Sei $(X, \cA, \mu)$ ein Maßraum. Dann ist $\overline{\cA_\mu}$ eine $\sigma$-Algebra und $\overline{\mu}$ ein vollständiges Maß, welches auf $\cA$ mit $\mu$ übereinstimmt.
+	\theoremname{Vervollständigung:} Sei $(X, \cA, \mu)$ ein Maßraum. Dann ist $\overline{\cA_\mu}$ eine $\sigma$-Algebra und $\overline{\mu}$ ein vollständiges Maß, welches auf $\cA$ mit $\mu$ übereinstimmt.
 \end{theorem}
 \begin{proof}
 	\phantom{}

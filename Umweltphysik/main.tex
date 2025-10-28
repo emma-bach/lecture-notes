@@ -1,75 +1,19 @@
 \documentclass{report}
-\usepackage[a4paper,margin=1in]{geometry}
-\usepackage{fancyhdr}
-\usepackage[titles]{tocloft}
-\usepackage[titletoc]{appendix}
-\usepackage{tikz}
-\usepackage{xcolor}
 
-\usepackage{multicol}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{placeins}
-\usepackage{tikz-cd} % commutative diagrams
-\usepackage{physics} % \abs and \norm macros
+% custom margins
+\usepackage[a4paper,margin=1.5in]{geometry}
 
-%hyperref should be last apparently
-\usepackage{hyperref}
+% emma's long list of custom macros and universally used packages
+\include{../macros-and-packages.tex}
 
-\renewcommand\cftsecdotsep{\cftdot}
-\renewcommand\cftsubsecdotsep{\cftdot}
-\renewcommand\epsilon{\varepsilon}
-
-% Starts a new paragraph without indentation
-% and with an empty line between paragraphs
-\newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
-
-\newcommand{\trans}{\twoheadrightarrow}
-\renewcommand{\grad}{\vec{\nabla}}
-
-\newcommand{\ttt}[1]{\texttt{#1}}
-\newcommand{\tbf}[1]{\textbf{#1}}
-\newcommand{\ul}[1]{\underline{#1}}
-\newcommand{\mc}[1]{\mathcal{#1}}
-
-\newcommand{\bC}{\mathbb{C}}
-\newcommand{\bF}{\mathbb{F}}
-\newcommand{\bN}{\mathbb{N}}
-\newcommand{\bQ}{\mathbb{Q}}
-\newcommand{\bR}{\mathbb{R}}
-
-\newcommand{\cB}{\mathcal{B}}
-
-\renewcommand{\va}{\vec{a}}
-\renewcommand{\vb}{\vec{b}}
-\newcommand{\vc}{\vec{c}}
-\newcommand{\ve}{\vec{e}}
-\newcommand{\vF}{\vec{F}}
-\newcommand{\vp}{\vec{p}}
-\newcommand{\vr}{\vec{r}}
-\newcommand{\vs}{\vec{s}}
-\newcommand{\vT}{\vec{T}}
-\renewcommand{\vu}{\vec{u}}
-\newcommand{\vv}{\vec{v}}
-\newcommand{\vw}{\vec{w}}
-\newcommand{\vW}{\vec{W}}
-\newcommand{\vx}{\vec{x}}
-\newcommand{\vy}{\vec{y}}
-\newcommand{\vz}{\vec{0}}
-
-\newcommand{\veta}{\vec{\eta}}
-
-\newcommand{\Mat}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
-\newcommand{\Matnn}{\text{Mat}(n \times n)}
-\newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
-\newcommand{\Id}{\text{Id}}
-\newcommand{\SO}{\mathcal{SO}}
-
-\newcommand{\tensor}{\otimes}
-\newcommand{\Hom}{\text{Hom}}
-
-\newcommand{\inv}{\text{inv}}
+% fancy box behind proofs
+\tcolorboxenvironment{proof}{
+	colback=black!5!white,
+	boxrule=0pt,
+	sharp corners,
+	breakable,
+	enhanced,
+}
 
 \renewcommand*\contentsname{Inhalt}
 \renewcommand*\proofname{Beweis\newline}
@@ -79,27 +23,7 @@
 \lhead{Emma Bach}
 \rhead{\today}
 
-
 \begin{document}
-	% \newtheorem{codename}{printedname}[countedwith]
-	\newtheorem{lemma}{Lemma}[chapter]
-	\newtheorem{theorem}[lemma]{Satz}
-	\newtheorem{proposition}[lemma]{Proposition}
-	\newtheorem{corollary}[lemma]{Korollar}
-	
-	
-	
-	\theoremstyle{definition}
-	\newtheorem{definition}[lemma]{Definition}
-	\newtheorem{beispiel}[lemma]{Beispiel}
-	\newtheorem{beobachtung}[lemma]{Beobachtung}
-	\newtheorem{anmerkung}[lemma]{Anmerkung}
-	\newtheorem{question}[lemma]{Frage}
-	\newtheorem{application}[lemma]{Anwendung}
-	\newtheorem{konsequenz}[lemma]{Konsequenz}
-	%
-	%
-	%
 	\include{title}
 	\tableofcontents
 	\thispagestyle{fancy}
@@ -303,32 +227,39 @@
 		\implies T &= 2\pi \sqrt{\frac{r^3}{GM}}
 	\end{align*}
 	\subsection{Arbeit gegen die Schwerkraft}
-	Angenommen, wir heben einen Körper mit Masse $m$ vom Abstand $R_0$ zur Erde auf den Abstand $R_0 + h$ an. So gilt:
+	Angenommen, wir heben einen Körper mit Masse $m$ vom Abstand $R_0$ zur Erde auf den Abstand $R_1 = R_0 + h$ an. So gilt:
 	\begin{align*}
-		W &= \int_{R_0}^{R_0 + h} F \cdot ds\\
-		  &= \int_{R_0}^{R_0 + h} G \frac{mM}{r^2} \cdot dR\\
-		  &= GmM \left(\frac{1}{R_0} - \frac{1}{R_0 + h}\right)
+		W &= \int_{R_0}^{R_1} F \cdot ds\\
+		  &= \int_{R_0}^{R_1} G \frac{mM}{r^2} \cdot dR\\
+		  &= GmM \left(\frac{1}{R_0} - \frac{1}{R_0 + h}\right)\\
+		  &= GmM \left(\frac{1}{R_0} - \frac{1}{R_1}\right)
 	\end{align*}
 	\subsection{Barometrische Höhenformel}
+	Wir wissen, dass auf der Erde genug Gas vorhanden ist, und dass die Schwerkraft ausreichend ist, um eine Atmosphäre zu bilden. Die Kenngröße der Schwerkraft auf der Erde ist die Fallbeschleunigung $g$, die Kenngrößen der Luft sind die Dichte $\rho$, die Molare Masse $M$, und Temperatur $T$.
+	\newpar
 	Wie ändert sich der Atmosphärische Luftdruck mit steigender Höhe?
 	\newpar
 	Ist $m$ die Masse an Luft, $n$ die Anzahl der Luftmoleküle und $M$ die durchschnittliche molare Masse der Moleküle, so ist der Druck gegeben durch:
 	\begin{align*}
 		\rho = \frac{m}{V} = \frac{M \cdot n}{V}
-	\end{align*}
+	\end{align*}	
 	Für Luft gilt näherungsweise die Zustandsgleichung für ideale Gase $pV = nRT$, also:
 	\begin{align*}
 		\rho = \frac{1}{V} Mn = \frac{p}{nRT} Mn = \frac{M}{RT} p
 	\end{align*}
+	$R$ ist hier die sogenannte Gaskonstante $R \approx 8.314 \frac{\text{J}}{\text{K}\cdot \text{mol}}$.
+	\newpar
 	Für den Druckgradienten folgt:
 	\begin{align*}
 		dp &= - \frac{dF}{A} = -\frac{dm \cdot g}{A} = \frac{\rho \cdot g \cdot dV}{A} = -\rho \cdot g \cdot dh\\
 		\implies \frac{dp}{dh} &= -\rho \cdot g = -\frac{Mg}{RT} \cdot p
 	\end{align*}
-	Unter der Annahme, dass die Atmosphäre isotherm ist (in etwa konstante Temperatur hat), folgt
+	Unter der Annahme, dass die Atmosphäre isotherm ist, also in etwa konstante Temperatur hat, folgt
 	\begin{align*}
-		content...
+		\frac{dp}{dh} &= -cp\\
+		\implies p(h) &= p_0 \cdot e^{-ch} = p_0 \cdot e^{{\textstyle-\frac{Mg}{RT}}h}
 	\end{align*}
+	Der Druck nimmt also mit zunehmender Höhe exponentiell ab.
 	\chapter{Thermodynamik}
 	\chapter{Physik der Erde}
 \end{document}

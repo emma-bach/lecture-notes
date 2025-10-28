@@ -1,0 +1,197 @@
+%AMS packages - Symbols, "Theorem" and "Proof" Environments
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{physics}
+
+% Nicer Headers and Footers
+\usepackage{fancyhdr}
+\usepackage[yyyymmdd]{datetime}
+\renewcommand{\dateseparator}{-}
+
+% Table of Contents
+\usepackage[titles]{tocloft}
+\usepackage[titletoc]{appendix}
+
+% Tikz and Graphics
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{xcolor}
+\usepackage[many]{tcolorbox}
+
+% Nicer Underlining
+\usepackage{contour}
+\usepackage{ulem}
+
+% Multiple Text Columns
+\usepackage{multicol}
+
+% FloatBarrier
+\usepackage{placeins} 
+
+% hyperref should be last apparently
+\usepackage{hyperref}
+
+%--- RENEWED COMMANDS ---
+
+% Variant Greek Letters
+\renewcommand\epsilon{\varepsilon}
+\renewcommand\phi{\varphi}
+
+% Nicer Table of Contents
+\renewcommand\cftsecdotsep{\cftdot}
+\renewcommand\cftsubsecdotsep{\cftdot}
+
+%--- TEXT FORMATING ---
+
+% nice underlining
+\renewcommand{\ULdepth}{1.6pt}
+\contourlength{0.8pt}
+\newcommand{\ul}[1]{%
+	\uline{\phantom{#1}}%
+	\llap{\contour{white}{#1}}%
+}
+
+% shorthand
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\tem}[1]{\emph{#1}}
+\newcommand{\ttt}[1]{\texttt{#1}}
+
+\newcommand{\mc}[1]{\mathcal{#1}}
+
+\newcommand{\ol}[1]{\overline{#1}}
+
+% Underlined, bold, non-cursive Theorem Name
+\newcommand{\theoremname}[1]{\ul{\textnormal{\tbf{#1}}}}
+
+% Starts a new paragraph without indentation
+% and with an empty line between paragraphs
+\newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
+
+
+%--- RELATION SYMBOLS AND OPERATORS ---
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\iso}{\overset{\sim}{\rightarrow}}
+\newcommand{\symdiff}{\vartriangle}
+\newcommand{\trans}{\twoheadrightarrow}
+\newcommand{\tensor}{\otimes}
+
+%--- STUFF IN FANCY BRACKETS ---
+\newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\angles}[1]{\left\langle #1 \right\rangle}
+
+%--- LETTERS ---
+% mathbb
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bQ}{\mathbb{Q}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bZ}{\mathbb{Z}}
+
+% mathcal
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cX}{\mathcal{X}}
+
+% real numbers in fancy costumes
+\newcommand{\barR}{\ol{\mathbb{R}}}
+\newcommand{\bRnn}{\mathbb{R}^{n \times n}}
+
+% vectors
+\renewcommand{\va}{\vec{a}}
+\renewcommand{\vb}{\vec{b}}
+\newcommand{\vc}{\vec{c}}
+\newcommand{\ve}{\vec{e}}
+\newcommand{\vF}{\vec{F}}
+\newcommand{\vp}{\vec{p}}
+\newcommand{\vr}{\vec{r}}
+\newcommand{\vs}{\vec{s}}
+\newcommand{\vT}{\vec{T}}
+\renewcommand{\vu}{\vec{u}}
+\newcommand{\vv}{\vec{v}}
+\newcommand{\vw}{\vec{w}}
+\newcommand{\vW}{\vec{W}}
+\newcommand{\vx}{\vec{x}}
+\newcommand{\vy}{\vec{y}}
+\newcommand{\vz}{\vec{0}}
+
+\newcommand{\veta}{\vec{\eta}}
+
+\renewcommand{\grad}{\vec{\nabla}}
+
+% bold letters
+\newcommand{\tbA}{\mathbf{A}}
+\newcommand{\tbB}{\mathbf{B}}
+\newcommand{\tbC}{\mathbf{C}}
+\newcommand{\tbD}{\mathbf{D}}
+\newcommand{\tbE}{\mathbf{E}}
+\newcommand{\tbY}{\mathbf{Y}}
+\newcommand{\tbZ}{\mathbf{Z}}
+
+% sequences
+\newcommand{\an}{(a_n)_{n \in \bN}}
+\newcommand{\bn}{(b_n)_{n \in \bN}}
+\newcommand{\sn}{(s_n)_{n \in \bN}}
+
+% special functions
+\newcommand{\at}{\text{at}}
+\newcommand{\ggT}{\text{ggT}}
+\newcommand{\kgV}{\text{kgV}}
+\newcommand{\id}{\text{id}}
+\newcommand{\Id}{\text{Id}}
+\newcommand{\im}{\text{im}}
+\newcommand{\inv}{\text{inv}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\rang}{\text{rang}\ }
+\renewcommand{\tr}{\text{tr}\ }
+
+% groups and sets
+\newcommand{\GL}{\text{GL}}
+\newcommand{\SO}{\text{SO}}
+\newcommand{\Hess}[1]{\text{Hess}(#1)}
+
+\newcommand{\Grp}{\text{Grp}}
+\newcommand{\Mag}{\text{Mag}}
+\newcommand{\Mon}{\text{Mon}}
+\newcommand{\Ens}{\text{Ens}}
+\newcommand{\Hom}{\text{Hom}}
+
+\newcommand{\Matnn}{\text{Mat}(n \times n)}
+\newcommand{\MatBB}[3]{\text{Mat}^{#1}_{#2}\left(#3\right)}
+
+% --- THEOREM AND PROOF TYPES ---
+% \newtheorem{codename}{printedname}[countedwith]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{theorem}[lemma]{Satz}
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{corollary}[lemma]{Korollar}
+
+\theoremstyle{definition}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{example}[lemma]{Beispiel}
+\newtheorem{beobachtung}[lemma]{Beobachtung}
+\newtheorem{anmerkung}[lemma]{Anmerkung}
+\newtheorem{question}[lemma]{Frage}
+\newtheorem{application}[lemma]{Anwendung}
+\newtheorem{konsequenz}[lemma]{Konsequenz}
+
+% --- CUSTOM ENVIRONMENTS ---
+
+% sketchy proofs marked with untrustworthy QED symbol
+\newenvironment{proofsketch}{\begin{proof}[Beweisskizze]\renewcommand*{\qedsymbol}{\("\square"\)}}{\end{proof}}
+
+% align with exactly one number for labeling
+\NewDocumentEnvironment{nalign}{}{\equation\aligned}{\endaligned\endequation}
