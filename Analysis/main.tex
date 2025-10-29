@@ -2,15 +2,18 @@
 
 % custom margins
 \usepackage[a4paper,margin=1.5in]{geometry}
+\renewcommand{\baselinestretch}{1.2}
 
 % emma's long list of custom macros and universally used packages
 \include{../macros-and-packages.tex}
 
-
 % colored box behind proofs
 \tcolorboxenvironment{proof}{
-	colback=black!5!white,
+	colback=white,
 	boxrule=0pt,
+	leftrule=0.5mm,
+	before skip=0.75cm,
+	after skip=0.75cm,
 	sharp corners,
 	breakable,
 	enhanced,
@@ -1169,15 +1172,16 @@ Durch Lemma \ref{lemma:normequiv} folgt:
 \begin{proof}
  $X_k \to X$, $i \in \{1, \hdots, n\}$, $\epsilon \in \bR^+$. Dann gilt
  \begin{align*}
-  \exists k_o \in \bN : \forall k \geq k_0 : \norm{X_k - X} \leq \epsilon \implies \forall i : \abs{x_i^{(k)} - x_i} < \epsilon \implies \lim_{k \to \infty} x_i^{(k)} = x_i
+  \exists k_0 \in \bN : \forall k \geq k_0 : \norm{X_k - X} \leq \epsilon \implies \forall i : \abs{x_i^{(k)} - x_i} < \epsilon \implies \lim_{k \to \infty} x_i^{(k)} = x_i
  \end{align*}
  Und umgekehrt:
  \begin{align*}
   \forall i : x_i^{(k)} \to x_i, \epsilon \in \bR^+ \implies \exists k_0^i \in \bN : \forall k \geq k_0^i \abs{x_i^{(k)} - x_i} \leq \frac{\epsilon}{\sqrt{n}}
  \end{align*}
- \[
-  k_0 := \max\{k_0^n, \hdots, k_0^n\} \implies \forall k \geq k_0 : \abs{x_i^{(k)} - x_i} < \frac{\epsilon}{\sqrt{n}} \implies \norm{X_k - X} \leq \sqrt{n}\norm{X_k - X} < \epsilon
- \]
+ \begin{align*}
+  k_0 := \max\{k_0^n, \hdots, k_0^n\} &\implies \forall k \geq k_0 : \abs{x_i^{(k)} - x_i} < \frac{\epsilon}{\sqrt{n}}\\
+  &\implies \norm{X_k - X} \leq \sqrt{n}\norm{X_k - X} < \epsilon
+ \end{align*}
 \end{proof}
 \begin{theorem}
  Für konvergente Folgen $(X_k),(Y_k) \in \bR^n$, $(\lambda_k) \in \bR$ gilt:
@@ -1822,8 +1826,8 @@ Die Abbildung $F$ ist genau dann differenzierbar in $X_0$, wenn alle Koordinaten
   \end{align*}
   Sei $X,Z \in \overline{U_\alpha}$. Nun gilt:
   \begin{align*}
-   \norm{\phi(\vx) - \phi(\zz)} &= \norm{F(\vx) - \vx - (F(\zz) - \zz)}\\
-                                &\leq \epsilon \norm{\vx - \zz}
+   \norm{\phi(\vx) - \phi(\vz)} &= \norm{F(\vx) - \vx - (F(\vz) - \vz)}\\
+                                &\leq \epsilon \norm{\vx - \vz}
   \end{align*}
   Gemäß Banachschem Fixpunktsatz existert also genau ein $X \in \overline{U_\alpha}$, sodass $\phi(\vx) = \vx$, also $F(\vx) = \vy$. Da $\phi(\vx) < \alpha$ gilt auch $\vx \in U_\alpha$.
  \end{proof}
@@ -1865,7 +1869,7 @@ Die Abbildung $F$ ist genau dann differenzierbar in $X_0$, wenn alle Koordinaten
  \end{proof}
  Was ist nun, wenn die Vorraussetzungen $\vx = 0$, $F(0) = 0$, $DF_0 = I$ nicht gelten?
  \newpar
- Wir definieren lineare Translationsabbildungen $T_{\zz} : \bR^n \to \bR^n$ $\vx \to \vx + \zz$. Sei nun:
+ Wir definieren lineare Translationsabbildungen $T_{\vz} : \bR^n \to \bR^n$ $\vx \to \vx + \vz$. Sei nun:
  \begin{itemize}
   \item $L : DF_{\vx_0}$,
   \item $M' := (L \circ T_{-\vx_0})(M)$,
@@ -2333,7 +2337,7 @@ Also ist $L$ ein linearer Operator!
 	Sei $y_2$ eine Lösung der inhomogenen Gleichung und $y_0$ eine Lösung der homogenen Gleichung. So existiert eine Lösung $y_1$ der inhomogenen Gleichung, sodass
 	\[y_2 = y_0 + y_1\]
 \end{lemma}
-	\textbf{Variation der Konstanten:} 
+	\noindent\textbf{Variation der Konstanten:} 
 	\[y(t) = c(t) e^{H(t)}\]
 	\[y'(t) = c'(t) e^{H(t)} + c(t)e^{H(t)}h(t)\]
 	Damit $y$ eine Lösung von (3.1) ist muss gelten:
@@ -2505,7 +2509,9 @@ Falls $Y$ eine Lösung des Systems mit Konstante ist, gilt:
 	\[\tbY = \tbB \tbZ = (B_1 e^{\lambda_1 t}, \hdots, B_n e^{\lambda_n t})\]
 \end{theorem}
 \chapter{Maßtheorie}
-Maße formalisieren und generalisieren die intuitiven Begriffe von Längen, Volumen etc.
+Unser nächstes Großes Ziel ist eine Verallgemeinerung des Integrationsbegriffs. Wir arbeiten hin zum sogenannten \tbf{Lebesque-Integral}, welches uns Funktionen integrieren lässt, die bisher nicht integrierbar waren.
+\newpar
+Die erste Vorraussetzung ist ein allgemeiner Volumenbegriff. Dieser wird uns gegeben durch \tbf{Maße}, welche die intuitiven Begriffe von Längen, Volumen etc. formalisieren und generalisieren. 
 \begin{itemize}
 	\item Eindimensionales Maß: Länge eines Intervalls.
 	\item Zweidimensionales Maß: Flächeninhalt eines Rechtecks.
@@ -2536,13 +2542,10 @@ Erlauben wir jedoch auch unendliche Vereinigungen, erhalten wir das \tbf{Maßpro
 \newpar
 Es ist also leider nicht möglich, einen sinnvollen Maßbegriff in unserer idealisierten Form zu erhalten.
 \newpar
-Unser Ansatz ist nun, nur Mengen zu messen, welche im Grenzwert als zählbare Vereinigung von Rechtecken / Quadern / etc. (endliche Vereinigung von Intervallen) dargestellt werden kann.
+Unser Ansatz ist wird letztendlich sein, nur Mengen zu messen, welche im Grenzwert als zählbare Vereinigung von Rechtecken / Quadern / etc. (endliche Vereinigung von Intervallen) dargestellt werden können. Glücklicherweise sind die einzigen Gegenbeispiele jedoch pathologische Mengen, die uns sowieso nicht allzu sehr interessiert haben.
 \begin{theorem}
 	Jede offene Menge ist als zählbare Vereinigung geschlossenerer Quader darstellbar.
 \end{theorem}
-\begin{definition}
-	Wir bezeichnen die Menge $\cM \subsetneq \cP(\bR^n)$ als die Menge der \tbf{messbaren Funktionen}.
-\end{definition}
 \section{Mengensysteme}
 \subsection{Mengenringe und Mengenalgebren}
 \begin{definition}
@@ -3299,7 +3302,7 @@ Alle bisher eingeführten Begrifflichkeiten zu Maßen und ihren Eigenschaften si
 		\end{description}
 	\end{proof}
 \end{theorem}
-Die Carathéodory-Fortsetzung $\mu$ ist ein vollständiges Maß auf der $\sigma$-Algebra der Messbaren Mengen $\cM(\mu)$, die die durch den Ring $\cR$ generierte $\sigma$-Algebra $\sigma(\cR)$ enthält.
+\noindent Die Carathéodory-Fortsetzung $\mu$ ist ein vollständiges Maß auf der $\sigma$-Algebra der Messbaren Mengen $\cM(\mu)$, die die durch den Ring $\cR$ generierte $\sigma$-Algebra $\sigma(\cR)$ enthält.
 \newpar
 Wir wollen als nächstes Zeigen, dass die Carathéodory-Fortsetzung eindeutig ist.
 \begin{lemma}

@@ -2,14 +2,18 @@
 
 % custom margins
 \usepackage[a4paper,margin=1.5in]{geometry}
+\renewcommand{\baselinestretch}{1.2}
 
 % emma's long list of custom macros and universally used packages
 \include{../macros-and-packages.tex}
 
 % colored box behind proofs
 \tcolorboxenvironment{proof}{
-	colback=black!5!white,
+	colback=white,
 	boxrule=0pt,
+	leftrule=0.5mm,
+	before skip=0.75cm,
+	after skip=0.75cm,
 	sharp corners,
 	breakable,
 	enhanced,
@@ -25,16 +29,10 @@
 
 \begin{document}
 
-
-
 \include{title}
 \tableofcontents
 \thispagestyle{fancy}
-%
-%
-%
-%
-%
+
 \chapter{Primzahlen}
 \begin{definition}
 	$H \subseteq \bZ$ heißt Untergruppe von $\bZ$, wenn 
@@ -379,7 +377,7 @@ Die Frage ist nun, ob jede Untergruppe einer Gruppe $G$ als Kern eines surjektiv
 	Sei $\phi : G \to H$. So ist $(\ker \phi) x = \phi^{-1}(\phi(x)) = x (\ker \phi)$.
 \end{proof}
 \begin{theorem}
-	Für jeden Normalteiler $N \subseteq G$ gibt es einen surjektiven Gruppenhomomorphismus $\phi : G \to H$ mit $\ker \phi = N$.
+	Für jeden Normalteiler $N \subseteq G$ gibt es einen surjektiven Gruppenhomomorphismus $\phi : G \surj H$ mit $\ker \phi = N$.
 \end{theorem}
 \begin{proof}
 	Wir wählen $H := G / N = \{xN : x \in G\}$. Für je zwei Teilmengen $A, B \subseteq G$ definieren wir $AB = \{ab : a \in A, b \in B\}$ und erhalten eine assoziative Verknüpfung auf $\cP(G)$. Für einen Normalteiler $N \subseteq G$ ist $G / N$ unter dieser Verknüpfung stabil (geschlossen), denn durch Abuse of Notation folgt $xNyN = xyNN = xyN$. Unter dieser Verknüpfung wird $G/N$ eine Gruppe mit neutralem Element $1N = N$ und $x^{-1}N = (xN)^{-1}$.
@@ -458,8 +456,9 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 	\end{align*}
 \end{theorem}
 \begin{proof}
-	Wir betrachten $\bZ/p\bZ$. Falls $\alpha \equiv 0 \mod p$ ist die Aussage trivial. Außerdem hat die Multiplikative Gruppe die Ordnung $p-1$, also gilt für $\alpha \not\equiv 0$ $\alpha^{p-1} \equiv 1 \mod p$, also $\alpha^p \equiv \alpha \mod p$.
+	Wir betrachten $\bZ/p\bZ$. Falls $\alpha \equiv 0 \mod p$ ist die Aussage trivial. Da außerdem die Multiplikative Gruppe die Ordnung $p-1$ hat gilt im Fall $\alpha \not\equiv 0$ ebenfalls trivial $\alpha^{p-1} \equiv 1 \mod p$, also $\alpha^p \equiv \alpha \mod p$.
 \end{proof}
+\noindent Alternativ kann der Beweis auch auf "Allgemeinbildungsniveau" geführt werden:
 \begin{proof}
 	(Ohne Gruppentheorie): Sei $a \in \{0, \hdots, p-1\}$. So sind die Zahlen $a, 2a, 3a, \hdots, (p-1)a$ paarweise verschieden, also ist nach Schubfachprinzip ein Element jeder Restklasse $\mod p$ enthalten. Also gilt:
 	\begin{align*}
