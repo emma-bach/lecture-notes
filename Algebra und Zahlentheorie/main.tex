@@ -670,4 +670,116 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 \begin{proposition}
 	Die Bahnen der Operation eines Monoids auf einer Menge sind nicht umbedingt paarweise disjunkt.
 \end{proposition}
+\begin{definition}
+	Sei $G$ eine Gruppe, welche auf einer Menge $X$ operiert. Sei $x \in X$. Wir nennen die Menge
+	\begin{align*}
+		G_x := \{g \in G \mid gx = x\}
+	\end{align*}
+	die \tbf{Standgruppe} oder \tbf{Isotropiegruppe} von $x$.
+\end{definition}
+\begin{lemma}
+	Die Abbildung $G \to X : g \to gx$ induziert eine Bijektion
+	\begin{align*}
+		G / G_x \iso Gx
+	\end{align*} 
+\end{lemma}
+\begin{proofsketch}
+	Für jede $G_x$-Linksnebenklasse $L \subset G$ besteht die Menge $Lx$ nur aus einem Punkt. Falls $L = gG_x$ haben wir genauer $Lx = gG_xx = \{gx\}$. Wir können nun unsere Bijektion definieren, indem wir jeder Linksnebenklasse $L \in G/G_x$ das einzige Element von $Lx$ zuordnen. Sie ist trivial surjektiv, gleichzeitig ist sie injektiv, denn aus $gG_x x = hG_x x$ folgt $gx = hx$, also $h^{-1}g \in G_x$, also $gG_x = hG_x$.
+\end{proofsketch}
+\begin{corollary}
+	\theoremname{Bahnformel:}
+	\begin{align*}
+		\abs{G} = \abs{Gx} \cdot \abs{G_x} = \abs{G / G_x} \cdot \abs{G_x}
+	\end{align*}
+\end{corollary}
+	\noindent Frage: Was sind die endlichen Untergruppen der dreidimensionalen Drehgruppe $\SO_3$? 
+	\newpar
+	Vorüberlegung: Jede Gruppe $G$ mit $x \in G$ operiert auf sich selber durch $g.x = gxg^{-1}$, auch notiert als $(\textnormal{int} g)(x)$ für "interior", da dies einen sogenannten \tbf{inneren Automorphismus} bildet. Es gilt nämlich:
+	\begin{align*}
+		\textnormal{int} : G &\to \Aut(G)\\
+		g &\mapsto (x \mapsto gxg^{-1})
+	\end{align*}
+	
+	\noindent Wir nennen diese Operation die "\textbf{Operation durch Konjugation}".
+	\newpar
+	Dabei gilt:
+	\begin{align*}
+		(hg).x &= hgx(hg)^{-1}\\
+			   &= hgxg^{-1}h^{-1}\\
+			   &= h(gxg^{-1})h^{-1}\\ 
+			   &= h.(g.x)
+	\end{align*}
+	und außerdem:
+	\begin{align*}
+		g.(xy) = gxyg^{-1} = gxg^{-1}gyg^{-1} = (g.x)(g.y)
+	\end{align*}
+	Intuitiv sind Drehungen, welche zueinander konjugiert werden können, "quasi die gleichen" - die Symmetriegruppe, welche den Raum an einer Achse um $180$ Grad dreht, ist die gleiche, welche den Raum an einer anderen Achse um $180$ Grad dreht. Es ist also sinnvoll, die Frage einzuschränken auf "Was sind die endlichen Untergruppen von $\SO_3$ \tit{bis auf Konjugation}? Die Antwort ist nun:
+	\begin{theorem}
+		Die endlichen Untergruppen der Drehgruppe $\SO_3$ bis auf Konjugation sind genau:
+		\begin{enumerate}
+			\item Die zyklischen Gruppen $C_k$, für $k \geq 1$
+			\item Die \tbf{Diedergruppen} $D_k$, für $k \geq 2$ (die Verallgemeinerungen unserer Quadratgruppe)
+			\item Die Symmetriegruppen des Würfels (= die Symmetriegruppe des Oktaeders), des Tetraeders, und des Ikosaeders (= die Symmetriegruppe des Dodekaeders)
+		\end{enumerate}
+	\end{theorem}
+	\begin{proof}
+		\begin{proposition}
+			$g \in \SO_3 \setminus \id$ hält genau eine Gerade punktweise fest. Diese sticht an zwei Punkten durch die Einheitssphäre $S^2$.
+		\end{proposition}
+		\noindent Wir nennen diese Punkte die Pole $P \subset S^2$ von $g$. Sei also $G \subset \SO(3)$ eine endliche Untergruppe. Wir definieren
+		\begin{align*}
+			M \in \{(g,p) \mid g \in G \setminus \id, p \in P\}
+		\end{align*}
+		Als die Menge der Pole der Drehachsen der Gruppe. Es gilt
+		\begin{align*}
+			\abs{M} &= 2(\abs{G} - 1)\\
+			\abs{M} &= \sum_{p \in P} \left(\abs{G_p} - 1\right)\\
+		\end{align*}
+		Die Gruppe operiert außerdem auf der Menge der Pole ($G \searrow P$). Wir können die Menge der Pole somit Zerlegen in ihre $G$-Bahnen, also $P \to P_1 \sqcup \hdots \sqcup P_r$. Die Ordnung der Pole einer Bahn ist konstant, wir definieren also die \tbf{Polordnung} der Pole der $i$-ten Bahn als
+		\begin{align*}
+			\forall p \in P_i : n_i := \abs{G_p}
+		\end{align*}
+		Und erhalten
+		\begin{align*}
+			\sum_{p \in P} \left(\abs{G_p} - 1\right) &= \sum_{i = 1}^r \abs{P_i} \cdot (n_i - 1)\\
+		\end{align*}
+		Aus der Bahnformel erhalten wir
+		\begin{align*}
+			\abs{P_i} \cdot n_i = \abs{G}
+		\end{align*}
+		Also gilt:
+		\begin{align*}
+			2(\abs{G} - 1)  &=\sum_{i = 1}^r \abs{P_i} \cdot (n_i - 1)\\
+			\implies 2 - \frac{2}{\abs{G}} &=\sum_{i = 1}^r 1 - \frac{1}{n_i}\\ 
+		\end{align*}
+		\begin{description}
+			\item[Fall $r = 0$:] Es gibt keine Pole, also ist die Gruppe trivial. Die triviale Gruppe kann auch betrachtet werden als die zyklische Gruppe $C_1$ mit nur einem Element.
+			\item[Fall $r = 1$:] Dann gilt:
+			\begin{align*}
+				2 - \frac{2}{\abs{G}} &= 1 - \frac{1}{n_1}
+			\end{align*}
+			Die Gruppe muss mindestens $2$ Elemente haben, also ist der linke Term größer als $1$ und der rechte Term kleiner als $1$, was ein Widerspruch ist.
+			\item[Fall $r = 2$:] Dann gilt:
+			\begin{align*}
+				2 - \frac{2}{\abs{G}} &= 2 - \frac{1}{n_1} - \frac{1}{n_2}
+			\end{align*}
+			Es gilt $n_i \leq \abs{G}$, also ist die Gleichung genau dann erfüllt, wenn $n_1 = n_2 = \abs{G}$. Wir haben also eine Gruppe mit zwei Polen, deren Ordnung die Ordnung der gesamten Gruppe ist. Die ganze Gruppe hat also nur eine Symmetrieachse, die Gruppe muss dann eine zyklische Gruppe sein.
+			\item[Fall $r = 3$:] Dann gilt:
+			\begin{align*}
+				2 - \frac{2}{\abs{G}} &= 3 - \frac{1}{n_1} - \frac{1}{n_2} - \frac{1}{n_3}\\
+			\implies
+				 1 + \frac{2}{\abs{G}} &= \frac{1}{n_1} + \frac{1}{n_2} + \frac{1}{n_3}
+			\end{align*}
+			Sei OBdA $n_1 \leq n_2 \leq n_3$. Behauptung: Dann muss $n_1 = 2$ sein.
+			\begin{description}
+				\item[Fall $3a$: $n_2 = 2$:] Dann gilt $2n_3 = \abs{G}$. Nach Bahnformel folgt $\abs{P_3} = 2$. Bei einer Polbahn mit zwei Elementen müssen sich die Pole gegenüberliegen. Wir erhalten die Diedergruppe $D_{n_3}$ - $n_3$ entspricht der zentralen Drehsymmetrie und $n_1$ und $n_2$ entsprechen den seitlichen Symmetrieachsen durch die Ecken und Kanten.
+				\item[Fall $3a$: $n_2 > 2$:]
+				\begin{align*}
+					\frac{1}{2} + \frac{1}{n_2} + \frac{1}{n_3} > 1 + \frac{2}{\abs{G}}
+				\end{align*}
+				Also $n_2 = 3$ und $n_3 = 3$ oder $n_3 = 4$ oder $n_3 = 5$. Der erste Fall liefert den Tetraeder, der zweite Fall den Würfel und der dritte Fall den Ikosaeder.
+			\end{description}
+			\item[Fall $r \geq 4$:] Die Gleichungen sind nicht mehr lösbar.
+		\end{description}
+	\end{proof}
 \end{document}

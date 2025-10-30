@@ -368,14 +368,22 @@ Dieser Satz ist je nach verwendeter Konstruktion der reellen Zahlen entweder ein
 	Die Folge $\an$ konvergiert genau dann, wenn sie beschränkt ist mit $\limsup a_n = \liminf a_n$.
 \end{corollary}
 \begin{definition}
-	Sei $M \subset \bR$. Eine Zahl $a \in \bR \cup \{-\infty\}$ heißt \tbf{Infimum} der Menge $M$, wenn:
+	Sei $M \subset \bR$. Eine Zahl $a \in \bR \cup \{-\infty\}$ heißt \tbf{größte untere Schranke} oder \tbf{Infimum} der Menge $M$, wenn:
 	\begin{enumerate}
 		\item $\forall x \in M : a \leq x$
 		\item $\forall a < a' : \exists x \in M : x < a'$
 	\end{enumerate}
 \end{definition}
+\noindent Der folgende Trick wird später in der Integrations- und Maßtheorie oft nützlich:
+\begin{proposition}
+	Sei $M \subset \bR$. Sei $\inf M \neq -\infty$. Dann gilt:
+	\begin{align*}
+		\forall \epsilon \in \bR_{> 0} : \exists m \in M : m < \inf M + \epsilon
+	\end{align*}
+\end{proposition}
+
 \begin{definition}
-	Sei $M \subset \bR$. Eine Zahl $a \in \bR \cup \{\infty\}$ heißt \tbf{Supremum} der Menge $M$, wenn:
+	Sei $M \subset \bR$. Eine Zahl $a \in \bR \cup \{\infty\}$ heißt \tbf{kleinste obere Schranke} oder \tbf{Supremum} der Menge $M$, wenn:
 	\begin{enumerate}
 		\item $\forall x \in M : x \leq a$
 		\item $\forall a' < a : \exists x \in M : a' < x$
@@ -3306,7 +3314,7 @@ Alle bisher eingeführten Begrifflichkeiten zu Maßen und ihren Eigenschaften si
 \newpar
 Wir wollen als nächstes Zeigen, dass die Carathéodory-Fortsetzung eindeutig ist.
 \begin{lemma}
-	\theoremname{Maximalitt der Carathéodory-Fortsetzung:} Sei $\mu$ die Carathéodory-Fortsetzung des Prämaßes $\lambda : \cR \to \barR_{\geq 0}$ auf dem Ring $\cR$ über $X$. Sei $\tilde\mu$ ein Maß auf $\sigma(\cR)$ mit $\tilde\mu = \lambda$ auf $\cR$. Dann gilt \begin{align*}
+	\theoremname{Maximalität der Carathéodory-Fortsetzung:} Sei $\mu$ die Carathéodory-Fortsetzung des Prämaßes $\lambda : \cR \to \barR_{\geq 0}$ auf dem Ring $\cR$ über $X$. Sei $\tilde\mu$ ein Maß auf $\sigma(\cR)$ mit $\tilde\mu = \lambda$ auf $\cR$. Dann gilt \begin{align*}
 		\forall E \in \sigma(\cR) : \tilde\mu(E) \leq \mu(E)
 	\end{align*}
 \end{lemma}
@@ -3315,11 +3323,110 @@ Wir wollen als nächstes Zeigen, dass die Carathéodory-Fortsetzung eindeutig is
 	\begin{align*}
 		E \subseteq \bigcup_{i = 1}^\infty P_i \wedge P_i \in \cR \implies \tilde\mu(E) \leq \sum_{i = 1}^\infty \tilde\mu(P_i) = \sum_{i = 1}^\infty \lambda(P_i)
 	\end{align*}
-	Durch Bildung des Infimums über alle solchen Überdeckungen liefert die Carathéodory-Fortsetzung.
+	Die Bildung des Infimums über alle solchen Überdeckungen liefert die Carathéodory-Fortsetzung.
 \end{proof}
 
-
-
+\begin{theorem}
+	\theoremname{Hopf-Fortsetzung:} Sei $\lambda : \cR \to \barR_{\geq 0}$ ein Prämaß auf dem Mengenring $\cR \subseteq \cP(x)$. Dann gibt es ein Maß $\mu$ auf $\sigma(\cR)$ mt $\mu = \lambda$ auf $\cR$. Diese Fortsetzung ist eindeutig, falls $\lambda$ $\sigma$-endlich ist.
+\end{theorem}
+\begin{proof}
+	Die Existenz von $\mu$ folgt aus der Carathéodory-Fortsetzung und daraus, dass jedes äußere Maß ein Maß bildet.
+	\newpar
+	Sei $\tilde\mu$ ein Maß auf $\sigma(\cR)$, sodass $\tilde\mu = \lambda$ auf $\cR$. Sei $A_i \in \cR$ und $\bigcup A_i = A \in \sigma(\cR)$.
+	\newpar
+	Dann ist
+	\begin{align*}
+		\tilde\mu(A) = \lim_{n \to \infty} \tilde\mu(\bigcup A_i) = \lim_{n \to \infty} \mu(\bigcup A_i) = \mu(A)
+	\end{align*}
+	Sei $E \in \sigma(\cR)$ mit $\mu(E) < \infty$. Sei $\epsilon \in \bR_{> 0}$. Dann existiert eine Überdeckung $A = \bigcup A_i \supseteq E$, sodass $\mu(A) \leq \mu(E) + \epsilon$. Es folgt $\mu(A \setminus E) < \epsilon$, also
+	\begin{align*}
+		\mu(E) + \epsilon &\geq \mu(A) = \mu(A \cap E) + \mu(A \setminus E) =  \mu(E) + \mu(A \setminus E)\\
+		\implies \epsilon &\geq \mu(A \setminus E)\\
+		\mu(E) &\leq \mu(A) = \tilde\mu(A) = \tilde\mu(E) + \tilde\mu(A \setminus E)\\
+		&\leq \tilde\mu(E) + \mu(A \setminus E) \leq \tilde\mu(E) + \epsilon
+	\end{align*}
+	Für $\epsilon \to 0$ folgt $\tilde\mu(E) \leq \mu(E)$.
+	\newpar
+	Sei $\lambda$ $\sigma$-endlich. Dann existieren paarweise disjunkte $X_n \in \cR$, die endliches $\lambda$ haben, somit auch endliches $\mu$. Sei $X = \bigcup X_n$ und $E \in \cR$. Dann gilt:
+	\begin{align*}
+		\mu(E) = \sum \mu(E \cap X_n) = \sum \tilde\mu(E \cap X_n) = \tilde\mu(E).
+	\end{align*}
+\end{proof}
+\begin{definition}
+	Ein Maß $\mu$ heißt \tbf{regulär}, falls:
+	\begin{align*}
+		\forall M \subseteq X : \exists D \supseteq M, D \in \cM(\mu) : \mu(M) = \mu(D)
+	\end{align*}
+\end{definition}
+\begin{theorem}
+	Die Carathéodory-Fortsetzung ist regulär.
+\end{theorem}
+\begin{theorem}
+	Sei $\mu$ die Carathéodory-Fortsetzung des Prämaßes $\mu : \cR \to \barR_{\geq 0}$ auf dem Mengenring $\cR$ über $X$. Dann gibt es zu jeder Menge $D \subseteq X$ eine Menge $E \in \sigma(\cR)$ mit $E \supseteq D$ und $\mu(D) = \mu(E)$. Insbesondere ist $\mu$ ein äußeres Maß.
+\end{theorem}
+\begin{theorem}
+	\theoremname{Eindeutigkeit der Maßfortsetzung:} Sei $\lambda$ ein $\sigma$-endliches Prämaß auf einem Mengenring $\cR$ über $X$, und sei $\mu : \cP(X) \to \barR_{\geq 0}$ die Carathéodory-Fortsetzung von $\lambda$. Dann ist $\mu|_{\cM(\mu)}$ die Vervollständigung vom Maß $\mu|_{\sigma(\cR)}$ und $\cM(\mu)$ ist die vervollständigte $\sigma$-Algebra $\overline{\sigma(\cR)}_{\mu|_{\sigma(\cR)}}$ von $\sigma(\cR)$ gemäß $\mu|_{\sigma(\cR)}$. Insbesondere gibt es genau eine Fortsetzung von $\lambda : \cR \to \barR_{\geq 0}$ zu einem vollständigen Maß auf $\cM(\mu)$.
+\end{theorem}
+\begin{corollary}
+	\theoremname{Charakterisierung von $\cM(\mu)$:}
+	Sei $\lambda : \cR \to \barR_{\geq 0}$ ein $\sigma$-endliches Prämaß auf dem Mengenring $\cR \subseteq \cP(X)$ mit Charathéodory-Fortsetzung $\mu$. Eine Menge $D \subset X$ ist genau dann $\mu$-messbar, wenn eine der folgenden Bedingungen gilt:
+	\begin{enumerate}
+		\item Es gibt ein $E \in \sigma(\cR)$ mit $E \supset D$ und $\mu(E \setminus D) = 0$.
+		\item Es gibt ein $C \in \sigma(\cR)$ mit $C \subset D$ und $\mu(D \setminus C) = 0$ 
+	\end{enumerate}
+\end{corollary}
+\noindent Sei $\mu$ ein Äußeres Maß. Wir wissen, dass wir $\mu$ auf seine messbaren Mengen einschränken, um ein vollständiges Maß $\lambda$ zu erhalten. Umgekehrt können wir mit einem Maß $\lambda$ auf $\cA$ anfangen und durch Carathéodory eine Fortsetzung $\lambda^C$ erhalten, welche ein reguläres äußeres Maß ist.
+\begin{theorem}
+	Die durch Einschränkung bzw. Fortsetzung gegebenen Abbildungen zwischen den $\sigma$-endlichen, regulären Abbildungen zwischen den $\sigma$-endlichen regulären äußeren Maßen und den $\sigma$-endlichen vollständigen Maßen auf $X$ sind zueinander invers und somit insbesondere bijektiv.
+\end{theorem}
+\begin{proof}
+	\begin{enumerate}
+		\item Sei $\lambda$ ein $\sigma$-endliches vollständiges Maß auf $\cA$. Da $\cA = \sigma(\cA)$ folgt $\lambda = \lambda^C|_{\cA}$. Da $\lambda$ vollständig ist folgt $\cA \ol{\cA_{\lambda}} = \cM(\lambda^C)$.
+		\item Sei $\mu$ ein $\sigma$-endliches reuläres äußeres Maß. Wir zeigen $\mu = \lambda^C$ für $\lambda = \mu|_{\cM(\mu)}$. Es gilt $\cM(\mu) \subset \cM(\mu)$ nach vorherigen Sätzen. $\mu$ ist regulär nach Vorraussetzung und $\lambda^C$ ist regulär nach einem der vorherigen Sätze. Weiter stimmen beide äußere Maße auf $\cM(\mu) = \cM(\lambda^C)$ überein, sind also gleich.
+	\end{enumerate}
+\end{proof}
+\section{Mengensysteme und Mengenfunktionen}
+Wie konstruiert man aus einfachen Mengenfunktionen Prämaße?
+\begin{definition}
+	Ein Mengensystem $\cQ \subset \cP(X)$ heißt \tbf{Halbring} über $X$, falls:
+	\begin{enumerate}
+		\item $\emptyset \in \cQ$
+		\item $P, Q \in \cQ \implies P \cap Q \in \cQ$
+		\item $P, Q \in \cQ \implies P \setminus Q = \bigcup P_i$ mit endlich vielen paarweise disjunkten $P_i \in \cQ$.
+	\end{enumerate}
+\end{definition}
+\begin{example}
+	Sei $X$ eine beliebige Menge. Dann ist $\cQ := \{\emptyset\} \cup \{\{a\} \mid a \in X\}$ ein Halbring.
+\end{example}
+\begin{example}
+	Eine Menge $I \subset \cR$ heißt \tbf{Intervall}, wenn es $a,b \in \cR$ mit $a \leq b$ gibt, sodass:
+	\begin{align*}
+		(a,b) \subset I \subset [a,b]
+	\end{align*}
+	Wir bezeichnen das System aller Intervalle mit $\cI$.
+	Ein achsenparalleler \tbf{Quader} in $\bR^n$ ist ein kartesisches Produkt von Intervallen. Das System aller Quader in $\bR^n$ wird mit $\cQ^n$ bezeichnet.
+\end{example}
+\noindent Wir wollen im folgenden Zeigen, dass das System der Quader des $\bR^n$ einen Halbring bildet.
+\begin{theorem}
+	Das System $\cI$ der Intervalle in $\cR$ ist ein Halbring.
+\end{theorem}
+\begin{theorem}
+	Seien $\cQ_i$ Halbringe über $X_i$. Dann ist das System der Produktmengen
+	\begin{align*}
+		\cQ = \{P_1 \times \hdots \times P_n \mid P_i \in \cQ_i\}
+	\end{align*}
+	ein Halbring über $X_1 \times \hdots \times X_n$.
+\end{theorem}
+\begin{corollary}
+	Das System $\cQ^n$ der Quader in $\bR^n$ ist ein Halbring.
+\end{corollary}
+\begin{theorem}
+	Sei $\cQ$ ein Halbring und $F$ das System aller endlichen Vereinigungen
+	\begin{align*}
+		F = \bigcup_{i = 1}^k P_i
+	\end{align*}
+	von Mengen $P_i \in \cQ$. Dann ist $F$ der durch $\cQ$ generierte Mengenring.
+\end{theorem}
 
 
 

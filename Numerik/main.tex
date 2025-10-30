@@ -7,10 +7,13 @@
 % emma's long list of custom macros and universally used packages
 \include{../macros-and-packages.tex}
 
-% fancy box behind proofs
+% fancy bar next to proofs
 \tcolorboxenvironment{proof}{
-	colback=black!5!white,
+	colback=white,
 	boxrule=0pt,
+	leftrule=0.5mm,
+	before skip=0.75cm,
+	after skip=0.75cm,
 	sharp corners,
 	breakable,
 	enhanced,
@@ -250,7 +253,7 @@ Diese Formeln lassen sich für $i \leq k$ nach $u_{ik}$ auflössen und für $k >
 			1 & -\epsilon
 		\end{pmatrix}.
 	\end{align*}
-	So haben wir kein Problem bei der Berechnung von $A^{-1}b$ - die Aufgabe ist gut konditioniert. Sagen wir nun, wir versuchen, das Gleichungssystem effizient durch $LU$-Zerlegung zu lösen. Die $LU$-Zerlegung von $A$ ist jedoch gegeben durch
+	So haben wir kein Problem bei der Berechnung von $A^{-1}b$ - die Aufgabe ist gut konditioniert. Sagen wir nun, wir versuchen, das Gleichungssystem effizient durch $LU$-Zerlegung zu lösen. Wir sehen, $LU$-Zerlegung von $A$ ist jedoch gegeben durch
 	\begin{align*}
 		A = 
 		\begin{pmatrix}
@@ -262,7 +265,7 @@ Diese Formeln lassen sich für $i \leq k$ nach $u_{ik}$ auflössen und für $k >
 			0 & \frac{1}{\epsilon}
 		\end{pmatrix},
 	\end{align*}
-	die Berechnung von $L^{-1}b$ und  $U^{-1}b$ führt nun wieder zu großen Rundungsfehlern. Aus unserer Idee entsteht also ein \tbf{instabiler Algorithmus.}
+	und die Berechnung von $L^{-1}b$ und  $U^{-1}b$ führt nun wieder zu großen Rundungsfehlern. Aus unserer Idee entsteht also ein \tbf{instabiler Algorithmus.}
 \end{example}
 \begin{theorem}
 	\theoremname{Cholesky-Zerlegung:} Sei $A \in \bR^{n \times n}$ symmetrisch und positiv definit. So existiert eine eindeutige untere Dreiecksmatrix $L$, sodass
@@ -271,4 +274,243 @@ Diese Formeln lassen sich für $i \leq k$ nach $u_{ik}$ auflössen und für $k >
 	\end{align*} 
 	und $l_{ii} > 0$
 \end{theorem}
+\begin{proof}
+	Für $n = 1$ ist die Suche durch $l_{11} = \sqrt{a_{11}}$ erledigt.
+	\newpar
+	Die Untermatrix $A_{n-1}$ ist immer ebenfalls positiv definit und symmetrisch. Sei also $A_{n-1} = L_{n-1}L_{n-1}^\top$. Wir setzen $\binom{b}{a_{nn}}^\top$ als die letzte Zeile von $A$. Dann müssen wir zum Beweis des Satzes einen Vektor $c \in \bR^{n-1}$ und ein $\alpha \geq 0$ finden, sodass
+	\begin{align*}
+		\begin{pmatrix}
+			A_{n-1} & b\\
+			b^\top & a_{nn}
+		\end{pmatrix}
+		=
+		\begin{pmatrix}
+			L_{n-1} & 0\\
+			c^\top & \alpha
+		\end{pmatrix}
+		\begin{pmatrix}
+			L_{n-1}^\top & c\\
+			0 & \alpha
+		\end{pmatrix}
+		=
+		\begin{pmatrix}
+			A_{n-1} & L_{n-1}c\\
+			(L_{n-1} - c)^\top & \alpha^2 + c^\top c
+		\end{pmatrix}
+	\end{align*}
+	Dies ist nach Annahme äquivalent zu $L_{n-1}c = b$ und $c^\top c + \alpha^2 = a_{nn}$
+	\newpar
+	Da $L$ regulär ist existiert ein eindeutiges $c$, welches die erste Gleichung erfüllt.
+	Es gilt: 
+	\begin{align*}
+		\det A = \det \begin{pmatrix}
+			L_{n-1} & 0\\
+			c^\top & \alpha
+		\end{pmatrix}
+		\cdot
+		\det
+		\begin{pmatrix}
+			L_{n-1}^\top & c\\
+			0 & \alpha
+		\end{pmatrix}
+		=
+		\alpha^2(\det L_{n-1})^2
+	\end{align*}
+	Da $\det A > 0$ und $\det L_{n-1} \geq 0$ bekommen wir $\alpha > 0$, sodass $c^\top c + \alpha^2 = a_{nn}$ ebenfalls eine eindeutige positive Lösung hat.
+\end{proof}
+\begin{lemma}
+	Für $A = LL^\top$ gilt:
+	\begin{align*}
+		a_{ik} = 
+		\begin{cases}
+			l_{ik}l_{kk} + \sum_{j = i}^{k-1} l_{ij}l_{ki} & i > k\\
+			l_{kk}^2 + \sum_{j = 1}^{k-1} l_{kj}^2 & i = k
+		\end{cases} 
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Matrixmultiplikation ohne triviale Summanden.
+\end{proof}
+\begin{algorithm}
+	\tbf{Cholesky-Zerlegung:}
+	\begin{algorithmic}[1]
+		\For{$k = 1, i \leq n, i++$}
+			\State $l_{kk} = \sqrt{a_{kk} - \sum_{j = 1}^{k-1}l_{kj}^2}$
+			\For{$i = k+1, i \leq n, i++$}
+				\State $l_{ik} = (a_{kk} - \sum_{j = 1}^{k-1} l_{ij}l_{kj}) \frac{1}{l_{kk}}$
+			\EndFor
+		\EndFor
+	\end{algorithmic}
+\end{algorithm}
+\begin{proposition}
+	Der Aufwand ist wieder $\cO(n^3)$, allerdings mit kleineren Konstanten.
+\end{proposition}
+\begin{proposition}
+	Lösung von $Ax = b$ für $A = LL^\top$ wie gehabt durch $Ly = b$ und $L^\top x = y$.
+\end{proposition}
+\subsection{Matrixnormen}
+Bekannt sind die üblichen Vektornormen auf $\bR^n$, insbesondere 
+\begin{align*}
+	\norm{\vv}_p = \left(\sum_{j = 1}^n \abs{v_j}^p\right)^{\frac{1}{p}}
+\end{align*}
+und
+\begin{align*}
+	\norm{\vv}_\infty = \max v_j
+\end{align*} 
+Für $1 \leq p,q \leq \infty$ existiert eine Konstante $c_{pqn}$, sodass
+\begin{align*}
+	\forall \vv \in \bR^n : \frac{1}{c_{pqn}}\norm{\vv}_p \leq \norm{\vv}_q \leq c_{pqn}\norm{\vv}_p 
+\end{align*}
+\begin{definition}
+	Für Normen $\norm{-}_{\bR^n}$ und $\norm{-}_{\bR^m}$ auf $\bR^n$ und $\bR^m$ definieren wir die Operatornorm auf $\hom(\bR^n, \bR^m) = \bR^{m \times n}$ als
+	\begin{align*}
+		\norm{A}_{op} = \sup_{x \in \bR^n : \norm{x}_{\bR^n} = 1} \norm{Ax}_{\bR^m}
+	\end{align*}
+\end{definition}
+\begin{lemma}
+	Die Operatornorm ist eine Norm.
+\end{lemma}
+\begin{proof}
+	\begin{enumerate}
+		\item Skalare können aus der inneren Norm und dem Supremum wie nötig herausgezogen werden.
+		\item Das Supremum ist über einer Menge positiver Zahlen, falls $x \neq \vzero$ gibt es mindestens einen Vektor größer $0$.
+		\item Dreiecksungleichung folgt aus der Dreiecksungleichung für $\norm{-}_{\bR^m}$.
+	\end{enumerate}
+\end{proof}
+\begin{lemma}
+	\begin{align*}
+		\norm{A}_{op} = \inf \{c > 0 : \forall x \in \bR^n \norm{Ax} \leq c\norm{x}\}
+	\end{align*}
+\end{lemma}
+\begin{lemma}
+	Für $A \neq 0$ und $x \in \bR^n$ mit $\norm{x} \leq 1$ und $\norm{Ax} = \norm{A}_{op}$ folgt $\norm{x} = 1$
+\end{lemma}
+\begin{corollary}
+	Für alle $x \in \bR^n$ gilt $\norm{Ax} \leq \norm{A}_{op}\norm{x}$
+\end{corollary}
+\begin{lemma}
+	Es gibt Vektoren, sodass die Matrixnorm ihr $\inf$ und ihren $\sup$ annimmt.
+\end{lemma}
+\begin{proof}
+	Es handelt sich um eine stetige Funktion auf einem Kompaktum.
+\end{proof}
+\begin{example}
+\begin{enumerate}
+	\item Die \tbf{Spaltensummennorm} $\norm{-}_1$ ist eine Operatornorm:
+	\begin{align*}
+		\norm{A}_{1} = \max_{j = 1, \hdots, n} \sum_{i = 1}^m \abs{a_{ij}}
+	\end{align*}
+	\item Die \tbf{Zeilensummennorm} $\norm{-}_\infty$ ist eine Operatornorm:
+	\begin{align*}
+		\norm{A}_{\infty} = \max_{i = 1, \hdots, m} \sum_{j = 1}^n \abs{a_{ij}}
+	\end{align*}
+	\item Die \tbf{Spektralnorm} $\norm{-}_2$ ist eine Operatornorm:
+	\begin{align*}
+		\norm{A}_2 = \rho(A^\top A) = (\max \{\abs{\lambda} : \lambda \textnormal{ ist Eigenwert von $A^\top A$}\})^\frac{1}{2}
+	\end{align*}
+\end{enumerate}
+\end{example}
+\begin{lemma}
+	Für $A \in \bR^{l \times m}$, $B \in \bR^{m \times n}$ und eine beliebige Operatornorm $\norm{-}$ gilt $\norm{AB} \leq \norm{A}\norm{B}$
+\end{lemma}
+\begin{proof}
+	\begin{align*}
+		&\norm{ABx} \leq \norm{A}\norm{Bx} \leq \norm{A}\norm{B}\norm{x}\\
+		\implies &\norm{AB} \leq \norm{A}\norm{B}
+	\end{align*}
+\end{proof}
+\begin{lemma}
+	Falls die Normen in Bild und Urbild gleich sind, gilt
+	\begin{align*}
+		\norm{E_n} = 1
+	\end{align*}
+\end{lemma}
+\begin{lemma}
+	Falls die Normen in Bild und Urbild gleich sind, gilt für $A$ symmetrisch mit Eigenwert $\lambda$
+	\begin{align*}
+		\norm{A} \geq \abs{\lambda}
+	\end{align*}
+\end{lemma}
+\begin{example}
+	Die Frobeniusnorm $\norm{-}_\cF$ einer Matrix $A \in \bR^{m \times n}$ ist gegeben durch
+	\begin{align*}
+		\norm{A}_\cF = \left(\sum_{j = 1}^m \sum_{i = 1}^n a_{ij}^2\right)^\frac{1}{2}
+	\end{align*}
+\end{example}
+\begin{lemma}
+	Für $n > 1$ ist die Frobeniusnorm keine Operatornorm!
+\end{lemma}
+\begin{proof}
+	\begin{align*}
+			\norm{E_n} = \sqrt{n}
+	\end{align*}
+	Normieren wir die Norm, gilt
+	\begin{align*}
+		\frac{1}{\sqrt{2}}\norm{\begin{pmatrix}
+				1 & 0\\
+				0 & 0
+		\end{pmatrix}}_{\cF}
+		=
+		\frac{1}{\sqrt{2}}
+		< 
+		1
+	\end{align*}
+	Wobei $1$ ein Eigenwert ist, was unseren vorherigen Lemmata widerspricht.
+\end{proof}
+\subsection{Konditionszahl}
+\begin{theorem}
+	Sei $\norm{-}$ eine Operatornorm auf $\bRnn$. Sei $A \in \bRnn$ regulär und seien $x, x', b, b' \in \bR^n$, sodass $Ax = b$, $Ax' = b'$. Dann gilt:
+	\begin{align*}
+		\frac{\norm{x - x'}}{\norm{x}} \leq \norm{A}\norm{A^{-1}}\frac{\norm{b - b'}}{\norm{b}}
+	\end{align*}
+\end{theorem}
+\begin{theorem}
+	\begin{align*}
+		\norm{x - x'} = \norm{A^{-1}(b - b')} \leq \norm{A^{-1}}\norm{b - b'}
+	\end{align*}
+	und
+	\begin{align*}
+		\norm{b} = \norm{Ax} \leq \norm{A}\norm{x}
+	\end{align*}
+	Es folgt:
+	\begin{align*}
+		\frac{\norm{x - x'}}{\norm{x}} \leq \frac{\norm{A^{-1}}\norm{b - b'}}{\norm{x}} \leq \frac{\norm{A^{-1}}\norm{b - b'}}{\norm{A^{-1}}\norm{b}}
+	\end{align*}
+\end{theorem}
+\begin{definition}
+	Die \tbf{Konditionszahl} einer regulären Matrix $A \in \bRnn$ bezüglich der durch $\norm{-}$ auf $\bR^n$ induzierten Operatornorm ist gegeben durch:
+	\begin{align*}
+		\textnormal{cond}_{\norm{-}}(A) = \norm{A}\norm{A^{-1}}
+	\end{align*}
+\end{definition}
+Wir schreiben oft $\textnormal{cond}_p$ statt $\textnormal{cond}_{\norm{-}_p}$.
+\begin{lemma}
+	$\textnormal{cond}(A) \geq 1$
+\end{lemma}
+\begin{lemma}
+	Für $A$ symmetrisch mit Eigenwerten $\lambda_i$ gilt 
+	\begin{align*}
+		\cond_2(A) = \frac{\max \abs{\lambda_j}}{\min \abs{\lambda_j}}
+	\end{align*}
+\end{lemma}
+\begin{example}
+	\begin{align*}
+		A = \begin{pmatrix}
+			1 & 1\\
+			1 & 1 + \epsilon
+		\end{pmatrix}
+	\end{align*}
+	Besitzt die Eigenwerte
+	\begin{align*}
+		\lambda_{1,2} = 1 + \frac{\epsilon}{2} \pm \left(1 + \frac{\epsilon^2}{4}\right)^\frac{1}{2}
+	\end{align*}
+	Also $\lambda_1 \approx 2 + \frac{\epsilon}{2}$ und $\lambda_2 \approx \frac{\epsilon}{2}$. Für $\epsilon \to 0$ geht also die Konditionszahl gegen unendlich.
+\end{example}
+\begin{theorem}
+	Für $A$ symmetrisch und positiv definit mit Cholesky-Zerlegung $A = L L^\top$ gilt
+	\begin{align*}
+		\cond_2(L) = \cond_2(L^\top) = \sqrt{\cond(A)}
+	\end{align*}
+\end{theorem}
+ \noindent Also kann das Problem, welches bei der $LU$-Zerlegung auftrat, bei der Cholesky-Zerlegung nicht vorkommen.
 \end{document}
