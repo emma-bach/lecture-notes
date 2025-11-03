@@ -261,6 +261,41 @@
 		\implies p(h) &= p_0 \cdot e^{-ch} = p_0 \cdot e^{{\textstyle-\frac{Mg}{RT}}h}
 	\end{align*}
 	Der Druck nimmt also mit zunehmender Höhe exponentiell ab.
+	\section{Rotierende Systeme}
+	\subsection{Corioliskraft}
+	Jede Bewegung auf der Oberfläche einer rotierenden Kugeln kann in drei Komponenten zerlegt werden:
+	\begin{itemize}
+		\item Axialkomponente: Parallel zur Drehachse.
+		\item Tangentialkomponente: Bewegung um die Drehachse herum.
+		\item Radialkomponente: Bewegung von der Drehachse weg.
+	\end{itemize}
+	Bei einer Bewegung in Radial- oder Tangentialrichtung ändert sich der Umfang des Kreises, auf dem ein Körpers um die Drehachse rotiert. Somit entspricht die vorherige Geschwindigkeit des Körpers nicht mehr der Umfangsgeschwindigkeit seines Umfelds, und es entsteht eine Scheinkraft, die sogenannte \tbf{Corioliskraft}. Radialbewegungen werden entgegen der Rotationsrichtung abgelenkt, es gilt:
+	\begin{align*}
+		\frac{1}{2}a_{Cor} (\Delta t)^2 &= \Delta s = \Delta r \cdot \Delta \phi = v \Delta t \cdot \omega \Delta t = v \cdot \omega \cdot (\Delta t)^2\\
+		\implies a_{Cor} &= 2 \cdot \omega \cdot v\\
+		\implies F_{Cor} &= 2 \cdot m \cdot \omega \cdot v
+	\end{align*}
+	Für Tangentialbewegung lässt sich die Bewegung zerlegen in die Umlaufgeschwindigkeit und eine zusätzliche Geschwindigkeit $v'$. Für die gesamte Zentripeltalbeschleunigung gilt:
+	\begin{align*}
+		a &= \frac{v^2}{R}\\
+		  &= \frac{(v_{\omega} + v')^2}{R}\\
+		  &= \frac{v_{\omega}^2}{R} + \frac{v'^2}{R} + 2\frac{v_\omega v'}{R}\\
+		  &= \frac{v_{\omega}^2}{R} + \frac{v'^2}{R} + 2 \omega v'
+	\end{align*}
+	Der erste Term entspricht der Zentripetalbeschleunigung der rotierenden Kugel, der zweite entspricht der Zentripetalbeschleunigung der zusätzlichen Tangentialbewegung, und der dritte Term entspricht der Tangentialen Coriolisbeschleunigung. Ähnlich wie bei der Radialgeschwindigkeit gilt also:
+	\begin{align*}
+		a_{Cor} &= 2 \cdot \omega \cdot v'\\
+		F_{Cor} &= 2 \cdot m \cdot \omega \cdot v'
+	\end{align*}
+	Die Corioliskraft wirkt immer senkrecht zur Bewegungsrichtung, bei tangentialer Bewegung Richtung Erdachse und bei radialer Bewegung in Tangentialrichtung. 
+	Auf der Nordhalbkugel führt:
+	\begin{itemize}
+		\item Eine Bewegung nach Norden zu einer Beschleunigung nach Osten,
+		\item eine Bewegung nach Süden zu einer Beschleunigung nach Westen,
+		\item eine Bewegung nach Osten zu einer Beschleunigung nach Süden,
+		\item und eine Bewegung nach Westen zu einer Beschleunigung nach Norden.
+	\end{itemize}
+	Eine wichtige Folge ist, dass Richtung Äquator blasende Winde entgegen der Erdrotation in Richtung Westen abgelenkt werden. So entstehen zum Beispiel die Passatwinde.
 	\chapter{Thermodynamik}
 	\chapter{Physik der Erde}
 \end{document}

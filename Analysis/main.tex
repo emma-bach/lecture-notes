@@ -3427,11 +3427,51 @@ Wie konstruiert man aus einfachen Mengenfunktionen Prämaße?
 	\end{align*}
 	von Mengen $P_i \in \cQ$. Dann ist $F$ der durch $\cQ$ generierte Mengenring.
 \end{theorem}
-
-
-
-
-
+\begin{corollary}
+	Sei $\cQ$ ein Halbring über $X$ und $\cF$ der von $\cQ$ erzeugte Ring. Dann ist $\sigma(\cQ) = \sigma(\cF)$
+\end{corollary}
+\begin{theorem}
+	Sei $\cQ$ ein Halbring über $X$ und $\cF$ der von $\cQ$ erzeugte Ring. So  gibt es zu jedem $F \in \cF$ paarweise disjunkte Mengen $P_1, \hdots, P_k \in \cQ$, sodass
+	\begin{align*}
+		F = \bigcup_{i = 1}^k P_i.
+	\end{align*}
+\end{theorem}
+\begin{definition}
+	Sei $\cQ \in \cP(X)$ ein Halbring. Eine Funltion $\lambda : \cQ \to [0, \infty]$ heißt \tbf{Inhalt} auf $\cQ$, wenn:
+	\begin{enumerate}
+		\item $\lambda(\emptyset) = 0$
+		\item Für paarwise disjunkte $A_i \in \cQ$ mit $\bigcup A_i \in \cQ$ gilt
+		\begin{align*}
+			\lambda\qty(\bigcup A_i) = \sum^n \lambda(A_i) 
+		\end{align*}
+	\end{enumerate}
+	Ein Inhalt $\lambda$ definiert ein Prämaß auf $\cQ$, wenn $\lambda$ $\sigma$-additiv ist, also die Additivität auch für abzählbar unendliche Vereinigungen gilt.
+\end{definition}
+\begin{theorem}
+	\theoremname{Fortsetzung auf den erzeugten Ring:} Sei $\lambda$ ein Inhalt auf einem Halbring $\cQ$. Sei $\cF$ der von $\cQ$ erzeugte Ring. Dann gibt es genau einen Inhalt $\bar\lambda$ auf $\cQ$, sodass $\forall Q \in \cQ : \lambda(Q) = \bar\lambda(Q)$
+\end{theorem}
+\begin{corollary}
+	Ein Inhalt auf einem Halbring $\cQ$ über $X$ ist monoton und subadditiv.
+\end{corollary}
+\begin{example}
+	Sei $\cQ^n$ der Halbring der Quader im $\bR^n$. Sei $Q = I_1 \times \hdots \times I_n \in \cQ$, sodass jedes $I_j$ die Grenzen $a_j$ und $b_j$ hat. Wir definieren das \tbf{elementargeometrische Volumen} als
+	\begin{align*}
+		\vol^n(Q) := \prod_{j = 1}^n (b_j - a_j)
+	\end{align*}
+\end{example}
+\begin{theorem}
+	Das elementargeometrische Volumen induziert einen Inhalt auf dem Quaderhalbring $\cQ^n$.
+\end{theorem}
+\begin{theorem}
+	Sei $\lambda$ ein Prämaß auf dem Halbring $\cQ$ über $X$ und $\bar\lambda$ die eindeutige Erweiterung auf den von $\cQ$ erzeugten Ring $\cR$. So ist $\bar\lambda$ ein Prämaß auf $\cR$.
+\end{theorem}
+\begin{theorem}
+	\theoremname{Caratheodory-Fortsetzung auf Halbringen:} Sei $\lambda$ ein Prämaß auf dem Halbring $\cQ$ über $X$. Sei $\mu$ das äußere Maß
+	\begin{align*}
+		\mu(E) = \inf \qty{\sum_{i = 1}^\infty \lambda(A_i) \mid A_i \in \cQ, E \subseteq \bigcup_{i \in \bN} A_i}
+	\end{align*}
+	So ist $\mu$ ein äußeres Maß. Wie im Fall für Ringe bezeichnen wir $\mu$ als die Carathéodory-Fortsetzung von $\lambda$.
+\end{theorem}
 
 
 
@@ -3461,6 +3501,7 @@ Wie konstruiert man aus einfachen Mengenfunktionen Prämaße?
 %
 %
 \appendix
+\chapter{Wörterbuch Analysis III}
 \chapter{Sammlung von Reihen und ihren Grenzwerten}
 \section{Geometrische Summe}
 \begin{align*}
