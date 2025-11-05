@@ -782,4 +782,128 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 			\item[Fall $r \geq 4$:] Die Gleichungen sind nicht mehr lösbar.
 		\end{description}
 	\end{proof}
+	\begin{definition}
+		Eine Gruppe $G \neq 1$ heißt \tbf{einfach}, falls ihre einzigen Normalteiler die triviale Gruppe $1$ und die Gruppe $G$ selbst sind.
+	\end{definition}
+	\begin{proposition}
+		Jede Gruppe mit Primzahlordnung ist einfach (also $\bZ/ p\bZ$ für $p$ prim). Diese Gruppen sind die einzigen abelschen einfachen Gruppen.
+	\end{proposition}
+	\begin{proof}
+		Satz von Lagrange.
+	\end{proof}
+	\begin{proposition}
+		Für fast alle Körper $k$ ist $GL(n,k) / k^\times$ einfach.
+	\end{proposition}
+	\begin{theorem}
+		Die Ikosaedergruppe $I$ ist einfach.
+	\end{theorem}
+	\begin{proof}
+		Wir haben:
+		\begin{itemize}
+			\item Ein Element der Ordnung $1$ (die Identität)
+			\item $15$ Elemente der Ordnung $2$ (Drehungen um Kantenmitten, da wir $30$ Kanten haben und je zwei gegenüberliegende Kanten die selben Drehungen haben)
+			\item $20$ Elemente der Ordnung $3$ (Drehungen um Flächenmitten, da wir $20$ Flächen haben)
+			\item Keine Elemente der Ordnung $4$
+			\item $24$ Elemente der Ordnung $5$ (Drehungen an Ecken, da wir $12$ Ecken haben, an jeder Ecke vier Drehungen, aber je zwei gegenüberliegende Ecken die gleichen Drehungen haben)
+		\end{itemize}
+		Wir wollen die Elemente nun in Konjugationsklassen zerlegen. Die Elemente der Ordnung $2$ und der Ordnung $3$ bilden jeweils eine Konjugationsklasse. Die Drehungen um Ecken können jedoch nicht alle in der selben Konjugationsklasse liegen, da $24$ kein Teiler von $60$ ist. Die Drehungen um Ecken zerfallen also in zwei Konjugationsklassen - es handelt sich um die Drehungen um $2\pi/5$ ($72$°, "Eine Ecke weiter"), und die Drehungen um $4\pi/5$ ($144°$, "zwei Ecken weiter"). Größere Drehungen existieren nicht, da eine Drehung drei Ecken weiter einer Drehung um zwei Ecken in die andere Richtung entspricht und eine Drehung vier Ecken weiter einer Drehung um eine Ecke in die andere Richtung entspricht.
+		\newpar
+		Sei also nun $N$ ein Normalteiler von $I$. So muss $\abs{N}$ ein Teiler von $\abs{I}$ sein, also $1,2,3,4,5,6,10,12,15,20,30,60$.
+		\begin{proposition}
+			Sei $N$ ein Normalteiler einer Gruppe $G$. So ist $N$ eine Vereinigung von Konjugationsklassen von $G$.
+		\end{proposition}
+		Aus der Proposition folgt, dass $\abs{I}$ außerdem eine Summe von $1,20,15,12,12$ sein muss, wobei die $1$ in der Sumume enthalten sein muss (da $N$ sonst nicht das neutrale Element enthalten würde). Die einzigen Möglichkeiten sind also $\abs{N} = 1 = 1$ und $\abs{N} = 60 = 1 + 20 + 15 + 12 + 12$. Also sind die einzigen Normalteiler von $I$ die triviale Gruppe und $I$ selbst.
+	\end{proof}
+	\begin{proposition}
+		Die \tbf{alternierenden Gruppen}
+		\begin{align*}
+			A_r := \ker(\sgn : \cS_r \to \{\pm 1\})
+		\end{align*} sind für $r \geq 5$ einfach. (Wobei der Kern genau den Permutationen mit $\sgn(\sigma) = 1$ entspricht). Insbesondere ist $A_5$ isomorph zur Ikosaedergruppe, und diese ist die kleinste nichtabelsche einfache Gruppe.
+	\end{proposition}
+	\begin{proof}
+		Ein Ikosaeder hat die selbe Symmetriegruppe wie ein Dodekaeder, da die beiden Körper dual zueinander sind (also können die Ecken des einen den Flächenmitten des anderen zugeordnet werden und umgekehrt).
+		\begin{proposition}
+			Ein Dodekaeder enthält fünf eingeschriebene Würfel.
+		\end{proposition}
+		Wir erhalten einen Gruppenhomomorphismus $\phi : I \to \cS_5$, welcher beschreibt, wie eine Symmetrie des Ikosaeders/Dodekaeders die eingeschriebenen Würfel permutiert. So ist $\sgn \circ \phi$ ein Homomorphismus $I \to \{\pm 1\}$. Da $I$ einfach ist und $\abs{I} \geq 2$ ist $\ker(\sgn \circ \phi) = I$. 
+		\newpar
+		$\ker(\phi)$ ist ein von $I$ verschiedener Normalteiler, also ist $\ker(\phi) = 1$, also ist $\phi$ injektiv. Es gilt $\abs{I} = 60$ und $\abs{\cS_5} = 120 \implies \abs{A_5} = 60$, also ist $\phi$ auch surjektiv, also bijektiv, also ein Isomorphismus.
+	\end{proof}
+	\begin{definition}
+		Eine \tbf{Kompositionsreihe} einer Gruppe $G$ ist eine Folge von Untergruppen
+		\begin{align*}
+			1 = G_0 \subset G_1 \subset \hdots \subset G_{r-1} \subset G_r = G
+		\end{align*}
+		sodass jedes $G_i$ Normalteiler von $G_{i+1}$ ist und alle \tbf{Subquotienten} $G_i / G_{i-1}$ einfach sind.
+	\end{definition}
+	\begin{theorem}
+		\theoremname{Jordan-Hölder:} Je zwei Kompositionsreihen einer endlichen Gruppe $G$ haben die selbe Länge und bis auf Reihenfolge die selben Subquotienten.
+	\end{theorem}
+	\noindent Dieser Satz gibt uns eine "Primfaktorzerlegung" von Gruppen, in der die "Primfaktoren" die Subquotienten sind.
+	\begin{example}
+		Sei $G = \bZ / 20\bZ$. Eine mögliche Kompositionsreihe ist nun:
+		\begin{align*}
+			\bZ/20\bZ \supset 2\bZ / 20\bZ \supset 10\bZ / 20\bZ \supset 0
+		\end{align*}
+		Die Subquotienten hier sind dann $\bZ/2\bZ$, $\bZ/5\bZ$ und $\bZ/2\bZ$.
+	\end{example}
+	\begin{proposition}
+		Es existiert eine universelle Eigenschaft surjektiver linearer Abbildungen, welche exakt analog zur universellen Eigenschaft surjektiver Gruppenhomomorphismen funktioniert. 
+	\end{proposition}
+	\noindent Eine lineare Abbildung ist also im Wesentlichen eindeutig durch ihren Kern bestimmt - alle surjektiven linearen Abbildungen mit dem selben Kern können durch Verkettung mit einem eindeutigen Isomorphismus ineinander überführt werden.
+	\begin{proposition}
+		Für jeden Untervektorraum $U \subset V$ gibt es eine surjektive lineare Abbildung $s : V \surj W$ mit $\ker s = U$. Dies ist genau die Abbildung $V \surj V / U$.
+	\end{proposition}
+	\begin{proposition}
+		Für Vektorräume gilt $\dim V = \dim U + \dim V / U$. Diese Formel kann als Analogon zum Satz von Lagrange gesehen werden.
+	\end{proposition}
+	\begin{example}
+		Betrachte einen $3$-dimensionalen Vektorraum $V$ über $\bF_7$. Eine mögliche Kompositionsreihe ist
+		\begin{align*}
+			V \supset W \supset U \supset \{0\}
+		\end{align*}
+		mit $\dim W = 2$ und $\dim U = 1$. Die Subquotienten $V/W$, $W/U$ und $U/\{0\}$ sind jeweils eindimensionale Untervektorräume von $V$, also isomorph zur additiven Gruppe von $\bF_7$.
+	\end{example}
+	\begin{proof}[Beweis (Jordan-Hölder):]
+		Per Induktion über $\abs{G}$. Ist $\abs{G} = 1$, ist $G$ die triviale Gruppe und somit insbesondere bereits alleine die vollständige Kompositionsreihe und die Aussage gilt trivial.
+		\newpar
+		Seien nun $G \supset M \supset \hdots$ und $G \supset N \supset \hdots$ Kompositionsreihen. $M$ und $N$ müssen beide Ordnungen kleiner $G$ haben, falls also $M = N$ ist gilt die Aussage per Induktion. Ist $N \neq M$, existiert ein surjektiver Homomorphismus $N \surj G / M$ mit Kern $N \cap M$. Somit geht $N / N \cap M$ isomorph auf $G / M$. 
+		\newpar
+		Wir wissen also, dass der Subquotient $G / M$ isomorph zu $N / N \cap M$ ist. Analog ist der Subquotient $G / N$ isomorph zu $M / M \cap N$. Also sind
+		$G \supset M \supset M \cap N \supset \hdots$ und $G \supset N \supset M \cap N \supset \hdots$ valide Kompositionsreihen, welche per Induktion äquivalent zu den ursprünglichen Kompositionsreihen sind. Somit folgt auch die gesuchte Aussage per Induktion.
+	\end{proof}
+	\begin{definition}
+		Sei $p$ eine Primzahl. Eine endliche Gruppe $G$ heißt \tbf{$p$-Gruppe}, wenn
+		\begin{align*}
+			\abs{G} = p^n.
+		\end{align*}
+	\end{definition}
+	\begin{definition}
+		Sei $G$ eine Gruppe. Das \tbf{Zentrum} $Z$ einer Gruppe ist die Menge der Elemente, welche mit allen anderen Gruppenelementen kommutieren:
+		\begin{align*}
+			Z(G) = \{z \in G \mid \forall g \in G : zg = gz\}
+		\end{align*}
+	\end{definition}
+	\begin{theorem}
+		Sei $G$ eine nichttriviale $p$-Gruppe. So ist auch das Zentrum von $G$ nichttrivial.
+	\end{theorem}
+	\begin{proof}
+		Sei $\abs{G} = p^r$. Wir zerlegen $G$ in ihre Konjugationsklassen $C_1, \hdots, C_s$. $\abs{C_i}$ teilt $\abs{G} = p^r$, also haben insbesondere alle Konjugationsklassen eine $p$-Potenz als Ordnung.
+		\newpar
+		Ist $\abs{C_i} = 1$, gilt $C_i = \{z\}$ mit $z \in Z(G)$. Also:
+		\begin{align*}
+			\abs{G}  \equiv \abs{Z(G)} \mod p
+		\end{align*}
+		Ist $\abs{G} \neq 1$, folgt $\abs{Z(G)} \neq 1$.
+	\end{proof}
+	\begin{theorem}
+		Sei $p$ prim und $\abs{G} = p^2$. So ist $G$ abelsch und isomorph zu $\bZ / p^2\bZ$ oder $\bZ / p\bZ \times \bZ / p\bZ$.
+	\end{theorem}
+	\begin{proof}
+		Wir wissen $Z(G) \neq 1$. Wäre $Z(G) \neq G$, so wäre $\abs{Z(G)} = p$ und für $x \in G \setminus Z(G)$ wäre
+		\begin{align*}
+			\angles{Z(G), x} = G
+		\end{align*}
+		Aber diese erzeugte Gruppe ist abelsch! Widerspruch!!!!!!
+	\end{proof}
 \end{document}
