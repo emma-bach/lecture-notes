@@ -513,4 +513,105 @@ Wir schreiben oft $\textnormal{cond}_p$ statt $\textnormal{cond}_{\norm{-}_p}$.
 	\end{align*}
 \end{theorem}
  \noindent Also kann das Problem, welches bei der $LU$-Zerlegung auftrat, bei der Cholesky-Zerlegung nicht vorkommen.
+ \begin{proof}
+ 	Wir bemerken zunächst, dass $L^\top L$ und $LL^\top$ die selben Eigenwerte haben. Beide Matrizen sind symmetrisch und es gilt
+ 	\begin{align*}
+ 		\forall &x \in \bR^n, \lambda \in \bR : \\
+ 		&L^\top L x = \lambda x \Leftrightarrow  LL^\top Lx = \lambda(Lx) := \lambda y
+ 	\end{align*}
+ 	Somit folgt
+ 	\begin{align*}
+ 		\rho(LL^\top) = \rho(L^\top L)
+ 	\end{align*}
+ 	und somit auch
+ 	\begin{align*}
+ 		\norm{L}_2 = \norm{L^\top}_2
+ 	\end{align*}
+ 	analog gilt
+ 	\begin{align*}
+ 		\norm{L^{-1}}_2 = \norm{L^{-\top}}_2
+ 	\end{align*}
+ 	Also $\cond_2(L) = \cond_2(L^\top)$. Da $LL^\top = A$, und $A$ symmaterisch, folgt
+ 	\begin{align*}
+ 		\norm{L}_2^2 &= \norm{L^\top}_2^2\\
+ 					 &= \rho(LL^\top)\\
+ 					 &= \rho(A)\\ 
+ 					 &= \norm{A}_2
+ 	\end{align*}
+ 	und
+ 	\begin{align*}
+ 		\norm{L^{-1}}_2^2 &= \rho(L^{-\top}L^{-1})\\
+ 		 				  &= \rho(A^{-1})\\ 
+ 		 				  &= \norm{A^{-1}}_2,
+ 	\end{align*}
+ 	also insgesamt
+ 	\begin{align*}
+ 		\cond_2(L) &= \norm{L}_2\norm{L^{-1}}_2\\
+ 		           &= \norm{A}_2^{1/2} \norm{A^{-1}}_2^{1/2}\\ 
+ 		           &= \sqrt{\cond_2(A)}
+ 	\end{align*}
+ \end{proof}
+\chapter{Eliminationsverfahren}
+ \section{Gauss-Jordan-Elimination}
+ 	\begin{definition}\theoremname{Gauss-Jordan-Elimination}
+ 		Sei $A \in \bRnn$, $b \in \bR^n$.
+ 		\begin{enumerate}
+ 			\item Setze $A^{(1)} = A$, $b^{(1)} = b$, $k = 1$.
+ 			\item Für $A^{(k)}$ gelte für $1 \leq j \leq k -1$ und $i \geq j + 1$ $a_{ij}^k = 0$, d.h. $A^{(k)}$ habe die Form
+ 			\begin{align*}
+ 				\begin{pmatrix}
+ 					a_{11}&\hdots&&&\hdots&a_{1n}\\
+ 					&a_{22}&&&&\vdots\\
+ 					&&\ddots\\
+ 					&&&a_{kk} & \hdots & a_{kn}\\
+ 					&&&\vdots & &\vdots\\
+ 					&&&a_{nk} & \hdots & a_{nn}\\
+ 				\end{pmatrix}
+ 			\end{align*}
+ 			mit Nullen im unteren linken Teil.
+ 			\item Wir setzen $\displaystyle l_{ik} = \frac{a_{ik}}{a_{kk}^{(k)}}$ und definieren $L \in \bRnn$ als
+ 			\begin{align*}
+ 				L =
+ 				\begin{pmatrix}
+ 					1&\hdots&&&\hdots&0\\
+ 					&1&&&&\vdots\\
+ 					&&\ddots\\
+ 					&&&1 & \hdots & 0\\
+ 					&&&-l_{k+1, k} & \hdots & 0\\
+ 					\vdots&&&\vdots & &\vdots\\
+ 					0&\hdots&&-l_{n,k} & \hdots 0 \hdots& 1\\
+ 				\end{pmatrix}
+ 			\end{align*}
+ 			\item Setze $A^{(k+1)} = L^{(k)}A^{(k)}$, $b^{(k+1)} = L^{(k)}b^{(k)}$
+ 			\item Stoppe, falls $k + 1 = n$, sonst erhöhe $k$ und gehe zu Schritt 2.
+ 		\end{enumerate}
+ 	\end{definition}
+ 	\begin{theorem}
+ 		Ist $A \in \bRnn$ regulär, so ist Gauß-Jordan-Elimination genau dann durchführbar, wenn $A$ eine $LU$-Zerlegung hat. Das Verfahren liefert dann die normierte $LU$-Zerlegung $U = A^{(n)}$ und $L = (L^{(n-1)} \cdot \hdots \cdot L^{(1)})^{-1}$. Die rechte Seite $y = b^{(n)}$ löst dann $y = L^{-1}b$ und die Lösung des Linearen Gleichungssystems $Ax = b$ ist gegeben durch die Lösung von $Ux = y$.
+ 	\end{theorem}
+\section{Pivotsuche}
+	Das Gaußverfahren ist für 
+	\begin{align*}
+	 	A = \begin{pmatrix}
+	 		\epsilon & 1\\
+	 		1 & 1\\
+	 	\end{pmatrix}
+	\end{align*}
+	zwar durchführbar, aber instabil. Wir führen deswegen eine sogenannte Pivotsuche durch - im $k$-ten Schritt bestimmen wir $p \in \{k, \hdots, n\}$, sodass
+	\begin{align*}
+	 	\abs{a_{pk}^{(k)}} = \max a_{ik}^{(k)}
+	\end{align*}
+	und vertauschen dann die Zeilen $p$ und $k$ in $A^{(k)}$ und $b^{(k)}$. Wir müssen diese Vertauschung jedoch nicht im Speicher tatsächlich durchführen, es reicht, einen Permutationsvektor $\pi \in \bN^n$ vorzuschalten. Wir initialisieren $\pi$ als $(1,2,\hdots,n)^\top$, sollen daraufhin $k$ und $p$ vertauscht werden, vertauschen wir die jeweiligen Komponenten in $\pi$. Wollen wir daraufhin im Programm auf $a_{ij}$ Zugreifen, müssen wir stattdessen auf $a_{\pi(i) j}$ zugreifen.
+	\begin{theorem}
+		Ist $A \in \bRnn$ regulär, $b \in \bR^n$, so ist das Gaußverfahren mit Pivotsuche durchführbar und liefert die normalisierte $LU$-Zerlegung 
+		\begin{align*}
+			PA = LU
+		\end{align*}
+		mit
+		$\abs{l_{ij}} \leq 1$
+		für alle $i,j$, sowie die modifizierte rechte Seite $b^{(n)} = L^{-1}Pb$, wobei 
+		\begin{align*}
+			P = P^{(n-1)} P^{(n-2)} \hdots P^{(1)}
+		\end{align*}
+	\end{theorem}
 \end{document}

@@ -22,6 +22,9 @@
 \renewcommand*\contentsname{Inhalt}
 \renewcommand*\proofname{Beweis}
 
+% use roman numerals in enumerate
+\renewcommand{\labelenumi}{(\roman{enumi})}
+
 \pagestyle{fancy} %allows headers
 
 \lhead{Emma Bach}
@@ -3472,6 +3475,103 @@ Wie konstruiert man aus einfachen Mengenfunktionen Prämaße?
 	\end{align*}
 	So ist $\mu$ ein äußeres Maß. Wie im Fall für Ringe bezeichnen wir $\mu$ als die Carathéodory-Fortsetzung von $\lambda$.
 \end{theorem}
+\begin{theorem}
+	Für einen Inhalt $\lambda$ auf einem Ring $\cR$ und Mengen $A_i \in \cR$ betrachten wir folgende Aussagen:
+	\begin{enumerate}
+		\item $\lambda$ ist ein Prämaß auf $\cR$
+		\item Falls $A_i \subseteq A_{i+1}$ für alle $i$ und $\bigcup A_i \in \cR$ ist äquivalent:
+		\begin{align*}
+			\lambda\lr(\bigcup A_i) = \lim_{i \to \infty} \lambda(A_i)			
+		\end{align*}
+		\item Falls $A_i \supseteq A_{i+1}$ für alle $i$, mit $\lambda(A_1) < \infty$ und $\bigcap A_i \in \cR$ gilt
+		\begin{align*}
+			\lambda\lr(\bigcap A_i) = \lim_{i \to \infty} \lambda(A_i)
+		\end{align*}
+		\item Falls $A_i \supseteq A_{i+1}$ für alle $i$, mit $\lambda(A_1) < \infty$ und $\bigcap A_i = \emptyset$ gilt
+		\begin{align*}
+			\lim_{i \to \infty} \lambda(A_i) = 0
+		\end{align*}
+	\end{enumerate}
+	Es gilt:
+	\begin{itemize}
+		\item Aussagen (i) und (ii) sind äquivalent.
+		\item Aus Aussagen (i) und (ii) folgen Aussagen (iii) und (iv).
+		\item Ist $\lambda$ endlich, so sind alle Aussagen äquivalent.
+	\end{itemize}
+\end{theorem}
+\section{Dynkin-Systeme, monotone Klassen und Produkträume}
+\begin{definition}
+	Ein Mengensystem $\cD$ mit Grundmenge $X$ heißt \tbf{Dynkin-System}, falls:
+	\begin{enumerate}
+		\item $X \in \cD$
+		\item $\forall A, B \in \cD, A \subseteq B : B \setminus A \in \cD$
+		\item Sind $A_i \in \cD$ paarweise disjunkt, so ist $\bigcup_{i \in \bN} A_i \in \cD$.
+	\end{enumerate}
+\end{definition}
+\begin{example}
+	Jede $\sigma$-Algebra ist ein Dynkin-System.
+\end{example}
+\begin{example}
+	Sei $X$ eine Menge mit gerader Kardinalität. Dann ist die Menge mit Teilmengen mit gerader Kardinalität ein Dynkin-System.
+\end{example}
+\begin{theorem}
+	Ein Dynkin-System ist genau dann eine $\sigma$-Algebra, wenn es $\cap$-stabil ist.
+\end{theorem}
+\begin{proof}
+	Zu zeigen ist nur, dass jedes $\cap$-stabile Dynkin-System $\cD$ eine $\sigma$-Algebra ist.
+	\newpar
+	Sei also $A,B \in \cD$ und $\cD$ $\cap$-stabil. Dann gilt
+	\begin{align*}
+		A \cup  B = A \cup (B \setminus (A \cap B)) \in \cD
+	\end{align*}
+	Da letztere Vereinigung eine disjunkte Vereinigung von in $\cD$ enthaltenen Mengen ist.
+	\newpar
+	Seien $A_i \in \cD$, $\hat A_0 := \emptyset$, $\hat A_i := \bigcup_{j = 1}^i A_j$. So sind
+	$B_i := \hat A_i \setminus \hat A_{i + 1}$ paarweise disjunkt, also $\bigcup A_i \in \cD$.
+ \end{proof}
+\begin{theorem}
+	Für jedes $\cap$-stabile Mengensystem $\cE$ über einer Menge $X$ gilt:
+	\begin{align*}
+		\cD(\cE) = \sigma(\cE)
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Da $\sigma(\cE)$ ein Dynkin-System ist, gilt $\cD(\cE) \subseteq \sigma(\cE)$. Für $\sigma(\cE) \subseteq \cD(\cE)$ reicht es zu zeigen, dass $\cD(\cE)$ eine $\sigma$-Algebra ist.
+	\newpar
+	Sei $D \in \cD(\cE)$. Wir definieren:
+	\begin{align*}
+		\cD_D := \{Q \subseteq X \mid Q \cap D \in \cD(\cE)\}
+	\end{align*}
+	Wir wollen zeigen, dass $\cD_D$ ein Dynkin-System ist. Es gilt:
+	\begin{enumerate}
+		\item $X \in \cD_D$
+		\item Für $E,F \in \cD_D$, $E \subseteq F$ gilt: 
+		\begin{align*}
+			(F \setminus E) \cap D &= (F \cap D) \setminus (E \cap D) \in \cD(\cE)\\ 
+								   &\implies F \setminus E \in \cD_D
+		\end{align*}
+		\item Für paarweise disjunkte $D_i \in \cD_D$ gilt analog:
+		\begin{align*}
+			\lr(\bigcup D_i) \cap D &= \bigcup(D_i \cap D) \in \cD(\cE)\\
+			&\implies \bigcup D_i \in \cD_D	
+		\end{align*}
+	\end{enumerate}
+	Es bleibt zu zeigen, dass für jedes $E \in \cE$ $\cD(\cE) \subset \cD_E$, und zu folgern, dass für $\forall D \in \cD(\cE) : \cD(\cE)\subset \cD_D$. Dies ist den Lesenden überlassen :)
+\end{proof}
+\begin{definition}
+	Ein Mengensystem $\cM \subseteq \cP(X)$ heißt \tbf{monotone Klasse}, falls:
+	\begin{enumerate}
+		\item Aus $A_i \in \cM$ mit $A_i \subseteq A_{i + 1}$ folgt $\bigcup A_i \in \cM$
+		\item Aus $A_i \in \cM$ mit $A_i \supseteq A_{i + 1}$ folgt $\bigcap A_i \in \cM$
+	\end{enumerate}
+\end{definition}
+\begin{corollary}
+	Jede $\sigma$-Algebra ist eine monotone Klasse. 
+\end{corollary}
+\begin{theorem}
+	Jede monotone Klasse, die eine Mengenalgebra ist, ist eine $\sigma$-Algebra. Insbesondere ist für jede Mengenalgebra $\cR$ $\cM(\cR) = \sigma(\cR)$.
+\end{theorem}
+
 
 
 
