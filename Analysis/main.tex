@@ -3602,6 +3602,162 @@ Wie konstruiert man aus einfachen Mengenfunktionen Prämaße?
 %
 \appendix
 \chapter{Wörterbuch Analysis III}
+\section*{A}
+\begin{description}
+	\item[\tit{Algebra:}] Sei $X$ eine beliebige Menge. Eine Menge $\cA \subset \cP(X)$ heißt \tit{Mengenalgebra} oder einfach \tit{Algebra}, falls $\cA$ ein Mengenring ist und $X$ enthält. Somit ist $\cA$ eine Mengenalgebra, falls:
+	\begin{enumerate}
+		\item $\emptyset \in \cA$,
+		\item $A, B \in \cA \implies A \setminus B \in \cA$ ($\cA$ ist \tit{$\setminus$-stabil},
+		\item $A, B \in \cA \implies A \cap B \in \cA$ ($\cA$ ist \tit{$\cap$-stabil},
+		\item $X \in \cA$.
+	\end{enumerate}
+	\item[\tit{äußeres Maß:}] Sei $X$ eine beliebige Menge. Ein \tit{äußeres Maß} ist eine Funktion $\mu : \cP(X) \to \barR_{\geq 0}$ mit folgenden Eigenschaften:
+	\begin{enumerate}
+		\item $\mu(\emptyset) = 0$
+		\item $\displaystyle A \subset \bigcup_{i = 1}^\infty A_i \implies \mu(A) \leq \sum_{i = 1}^\infty \mu(A_i)$ ($\sigma$-subadditivität)
+	\end{enumerate} 
+	Jedes äußere Maß definiert ein vollständiges Maß auf der $\sigma$-Algebra seiner messbaren Mengen.
+\end{description}
+\section*{C}
+\begin{description}
+	\item[\tit{Carathéodory-Fortsetzung}] Sei $\lambda : \cR \to \barR_{\geq 0}$ ein Prämaß. So ist die Funktion $\mu : \cP(X) \to \barR_{\geq 0}$ mit
+	\begin{align*}
+		\mu(E) = \inf\lr{\sum_{i = 1}^\infty \lambda(A_i) \mid A_i \in \cR, E \subset \bigcup_{i = 1}^\infty A_i}
+	\end{align*}
+	ein äußeres Maß auf $X$, welches wir die \tit{Carathéodory-Fortsetzung von $\lambda$} nennen. Per Definition ordnet $\mu$ jeder Menge $E$ den Wert der gemäß $\lambda$ kleinstmöglichen Überdeckung mit Mengen aus $\cR$ zu (bzw. die größte untere Schranke, falls es kein Minimum gibt).
+\end{description}
+\section*{D}
+\begin{description}
+	\item[\tit{Dynkin-System}:]
+	Sei $X$ eine beliebige Menge. Eine Menge $\cA \subset \cP(X)$ heißt \tit{Dynkin-System}, falls:
+	\begin{enumerate}
+		\item $X \in \cD$,
+		\item $A, B \in \cD, A \subset B \implies B \setminus A \in \cD$,
+		\item $(A_i)_{i \in \bN} \subset \cA$ paarweise disjunkt $\implies \bigcup_{i = 1}^\infty A_i \in \cD$.
+	\end{enumerate}
+	Die Definition entspricht der Definition einer $\sigma$-Algebra, aber mit eingeschränkten Stabilitätseigenschaften. Ein Dynkin-System ist genau dann eine $\sigma$-Algebra, wenn es $\cap$-stabil ist.
+\end{description}
+\section*{E}
+\begin{description}
+	\item[\tit{endliche Additivität}:]  Sei $X$ eine beliebige Menge und $\cM \subset \cP(X)$ ein Mengensystem auf $X$. Eine Abbildung $f : M \to \barR_{\geq 0}$ heißt \tit{endlich additiv}, wenn für paarweise disjunkte Mengen $A_1, \hdots, A_n \in \cM$ mit $\bigcup_{i = 1}^n A_i \in \cM$ gilt, dass:
+	\begin{align*}
+		f\lr(\bigcup_{i = 1}^n A_i) = \sum_{i = 1}^n f(A_i).
+	\end{align*}
+	Inhalte sind per Definition endlich additiv. Maße und Prämaße sind per Definition $\sigma$-additiv, also insbesondere endlich additiv.
+	\item[\tit{endliches Maß}:] Ein Maß (bzw. Prämaß, äußeres Maß, Inhalt) $mu$ auf einem Mengensystem $\cM$ heißt \tbf{endlich}, falls $\forall M \in \cM : \mu(M) < \infty$.
+\end{description}
+\section*{H}
+\begin{description}
+	\item[\tit{Halbring:}] Sei $X$ eine beliebige Menge. Eine Menge $\cQ \subset \cP(X)$ heißt \tit{Halbring}, falls:
+	\begin{enumerate}
+		\item $\emptyset \in \cQ$
+		\item $\cQ$ ist \tit{$\cap$-stabil}, also $P,Q \in \cQ \implies P \cap Q \in \cQ$ 
+		\item Für $P, Q \in \cQ$ existieren endlich viele paarweise disjunkte Mengen $P_1, \hdots, P_k \in \cQ$, sodass
+		\begin{align*}
+			P \setminus Q = \bigcup_{i = 1}^k P_i
+		\end{align*}
+		$\cQ$ erfüllt also eine abgeschwächte Version von \tit{$\setminus$-Stabilität}.
+	\end{enumerate}
+	Halbringe sind die Mengensysteme, auf denen Inhalte definiert werden können.
+	\item[\tit{Hopf-Fortsetzung:}] Sei $\lambda : \cR \to \barR_{\geq 0}$ ein Prämaß auf einem Mengenring $\cR$. So existiert ein Maß $\mu$ auf $\sigma(\cR)$ mit $\mu = \lambda$ auf $\cR$. Falls $\lambda$ $\sigma$-endlich ist, ist diese Fortsetzung eindeutig.
+\end{description}
+\section*{I}
+\begin{description}
+	\item[\tit{Inhalt:}] Sei $\cQ$ ein Halbring über einer Menge $\cX$. Eine Funktion $\lambda : \cQ \to \barR_{\geq 0}$ heißt \tit{Inhalt} auf $\cQ$, falls
+	\begin{enumerate}
+		\item $\lambda(\emptyset) = 0$
+		\item $\lambda$ ist \tit{endlich additiv} - Für paarweise disjunkte Mengen $A_1, \hdots, A_n \in \cQ$ mit $\bigcup_{i = 1}^n A_i \in \cQ$ gilt also:
+		\begin{align*}
+			\lambda\lr(\bigcup_{i = 1}^n A_i) = \sum_{i = 1}^n \lambda(A_i).
+		\end{align*}
+	\end{enumerate} 
+\end{description}
+\section*{M}
+\begin{description}
+	\item[\tit{Maß:}] Sei $\cA$ ein $\sigma$-Algebra auf einer Menge $\cX$. Eine Funktion $\lambda : \cA \to \barR_{\geq 0}$ heißt \tit{Maß} auf $\cA$, falls
+	\begin{enumerate}
+		\item $\mu(\emptyset) = 0$
+		\item $\mu$ ist \tit{$\sigma$-additiv} - Für jede Folge paarweise disjunkten Mengen $(A_i)_{i \in \bN} \subset \cA$ mit $\bigcup_{i = 1}^n A_i \in \cA$ gilt also:
+		\begin{align*}
+			\mu\lr(\bigcup_{i = 1}^\infty A_i) = \sum_{i = 1}^\infty \mu(A_i).
+		\end{align*}
+	\end{enumerate} 
+	\item[\textit{messbare Funktion:}]
+	Wir unterscheiden zwischen \tit{$\cA$-$\cC$-messbaren Funktionen}, welche auf einer gesamten Menge $X$ definiert sein müssen, und \tit{$\mu$-messbaren Funktionen}, welche nur fast überall auf $X$ definiert sein müssen.
+	\begin{description}
+		\item[\tit{$\cA$-$\cC$-messbar:}] Seien $(X, \cA)$ und $(Y, \cC)$ messbare Räume. Eine Abbildung $f : X \to Y$ heißt \tit{$\cA$-$\cC$-messbar}, falls $f^{-1}(\cC) \subset \cA$, also falls
+		\begin{align*}
+			\forall C \in \cC : f^{-1}(C) \in \cA
+		\end{align*}
+		Ist $f : X \to X$ sprechen wir auch einfach von $\cA$-messbaren Funktionen.
+		\item[\tit{$\mu$-messbar:}] Sei $(X, \cA, \mu)$ ein Maßraum. Eine auf $D \in \cA$ definierte Funktion $f : D \to \barR$ heißt \tit{$\mu$-messbar} auf $X$, wenn $\mu(X \setminus D) = 0$ und wenn $f$ $\cA|_D$ messbar ist, also messbar auf der Einschränkung von $\cA$ von $X$ auf $D$.
+		\item[\textit{messbare Menge:}] Sei $\mu$ ein äußeres Maß auf einer Menge $X$. So heißt eine Menge $A \subset X$ \tit{messbar}, falls für alle $S \subset X$:
+	\begin{align*}
+		\mu(S) \geq \mu(S \cap A) + \mu(S \setminus A)
+	\end{align*}
+	Da per Definition äußerer Maße bereits $\mu(S) \leq \mu(S \cap A) + \mu(S \setminus A)$, ist dies äquivalent zu
+	\begin{align*}
+		\mu(S) = \mu(S \cap A) + \mu(S \setminus A).
+	\end{align*}
+	\end{description}
+\end{description}
+\section*{N}
+\begin{description}
+	\item[\tit{numerische Funktion:}] Sei $(X, \cA)$ ein messbarer Raum und $D \in \cA$. So bezeichnen wir Funktionen $f : D \to \barR$ als \tit{numerische Funktionen}.
+\end{description}
+\section*{P}
+\begin{description}
+	\item[\tit{Prämaß:}] Sei $\cR$ ein Mengenring über einer Menge $\cX$. Eine Funktion $\lambda : \cR \to \barR_{\geq 0}$ heißt \tit{Prämaß} auf $\cR$, falls
+	\begin{enumerate}
+		\item $\lambda(\emptyset) = 0$
+		\item $\mu$ ist \tit{$\sigma$-additiv} - Für jede Folge paarweise disjunkten Mengen $(A_i)_{i \in \bN} \subset \cA$ mit $\bigcup_{i = 1}^n A_i \in \cA$ gilt also:
+		\begin{align*}
+			\lambda\lr(\bigcup_{i = 1}^\infty A_i) = \sum_{i = 1}^\infty \lambda(A_i).
+		\end{align*}
+	\end{enumerate} 
+	Ein Prämaß auf einem Ring $\cR$ kann durch \tit{Carathéodory-Fortsetzung} zu einem äußeren Maß auf $\cP(X)$ fortgesetzt werden. Es kann außerdem durch \tit{Hopf-Fortsetzung} zu einem Maß auf $\sigma(\cR)$ fortgesetzt werden.
+\end{description}
+\section*{R}
+\begin{description}
+	\item[\tit{reguläres äußeres Maß:}] Ein äußeres Maß heißt \tit{regulär}, falls für jede Menge $M \in X$ eine messbare Obermenge $D \supset M$ mit $\mu(D) = \mu(M)$ existiert.
+	\item[\tit{Ring:}] Sei $X$ eine beliebige Menge. Eine Menge $\cA \subset \cP(X)$ heißt \tit{Mengenring} oder einfach \tit{Ring}, falls:
+	\begin{enumerate}
+		\item $\emptyset \in \cR$,
+		\item $A, B \in \cR \implies A \setminus B \in \cR$ ($\cR$ ist \tit{$\setminus$-stabil}),
+		\item $A, B \in \cR \implies A \cap B \in \cR$ ($\cR$ ist \tit{$\cap$-stabil}),
+	\end{enumerate}
+	Ringe sind die Mengensysteme, auf denen Prämaße definiert werden können.
+\end{description}
+\section*{S}
+\begin{description}
+	\item[\tit{$\sigma$-Algebra:}] Sei $X$ eine beliebige Menge. Eine Menge $\cA \subset \cP(X)$ heißt \tit{$\sigma$-Algebra}, falls:
+	\begin{enumerate}
+		\item $X \in \cA$,
+		\item $A \in \cA \implies X \setminus A \in \cA$,
+		\item $(A_i)_{i \in \bN} \subset \cA \implies \bigcup_{i = 1}^\infty A_i \in \cA$ ($\cA$ ist nicht nur \tit{$\cup$-stabil}, sondern auch abzählbar unendlich $\cup$-stabil),
+	\end{enumerate}
+	Aus der Definition folgt, dass $\cA$ auch $\setminus$-stabil und abzählbar unendlich $\cap$-stabil ist.
+	$\sigma$-Algebren sind die Mengensysteme, auf denen Maße definiert werden können.
+	\newpar
+	Ist $\cM \subset \cP(X)$ ein Mengensystem, so notieren wir die kleinste $\sigma$-Algebra, die $\cM$ enthält als $\sigma(\cM)$.
+	\item[\tit{$\sigma$-additivität:}]  Sei $X$ eine beliebige Menge und $\cM \subset \cP(X)$ ein Mengensystem auf $X$. Eine Abbildung $f : M \to \barR_{\geq 0}$ heißt \tit{$\sigma$-additiv}, wenn für jede Folge von paarweise disjunkten Teilmengen $A_i \in \cM$ mit $\bigcup_{i = 1}^\infty A_i \in \cM$ gilt, dass:
+	\begin{align*}
+		f\lr(\bigcup_{i = 1}^\infty A_i) = \sum_{i = 1}^\infty f(A_i).
+	\end{align*}
+	Maße und Prämaße sind per Definition $\sigma$-additiv.
+	\item[\tit{$\sigma$-subadditivität:}] Sei $X$ eine beliebige Menge und $\cM \subset \cP(X)$ ein Mengensystem auf $X$. Eine Abbildung $f : M \to \barR_{\geq 0}$ heißt \tit{$\sigma$-subadditiv}, falls für jede Teilmenge $A \in \cM$ und Folge von Teilmengen $A_i \in \cM$ gilt, dass:
+	\begin{align*}
+		A \subset \bigcup_{i = 1}^\infty A_i \implies f(A) \leq \sum_{i = 1}^\infty f(A_i).
+	\end{align*}
+	Äußere Maße sind per Definition $\sigma$-subadditiv. Da $\sigma$-subadditivität aus $\sigma$-additivität folgt sind Maße und Prämaße ebenfalls $\sigma$-additiv. 
+	\item[\tit{stabil}:] Ein Mengensystem $\cM$ heißt stabil, falls es unter einer bestimmten Mengenoperation abgeschlossen ist. Insbesondere sind für die Maßtheorie folgende Begriffe relevant:
+	\begin{description}
+		\item[\tit{$\cap$-stabil:}] $\cM$ heißt $\cap$-stabil, falls für alle $A,B \in \cM$ auch $A \cap B \in \cM$.
+		\item[\tit{$\cup$-stabil:}] $\cM$ heißt $\cap$-stabil, falls für alle $A,B \in \cM$ auch $A \cup B \in \cM$.
+		\item[\tit{$\setminus$-stabil:}] $\cM$ heißt $\cap$-stabil, falls für alle $A,B \in \cM$ auch $A \setminus B \in \cM$.
+	\end{description}
+	$\sigma$-Algebren sind $\cap$-stabil, $\cup$-stabil und $\setminus$-stabil. Mengenringe und Mengenalgebren sind $\cap$-stabil und $\setminus$-stabil. Halbringe sind $\cap$-stabil und erfüllen eine abgeschwächte Version von $\setminus$-Stabilität..
+\end{description}
 \chapter{Sammlung von Reihen und ihren Grenzwerten}
 \section{Geometrische Summe}
 \begin{align*}
