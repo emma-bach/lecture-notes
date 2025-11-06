@@ -1,5 +1,5 @@
 # lecture-notes
-Notes taken in LaTeX during various lectures, exams and seminars.
+Notes taken in LaTeX for various lectures, exams and seminars.
 
 ## Mathematics:
 ### In German:
