@@ -906,4 +906,80 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 		\end{align*}
 		Aber diese erzeugte Gruppe ist abelsch! Widerspruch!!!!!!
 	\end{proof}
+	\begin{definition}
+		Sei $G$ eine endliche Gruppe, $p$ eine Primzahl, und $p^r$ die größte $p$-Potenz, die $\abs{G}$ teilt. Eine Untergruppe $S \subset G$ mit $\abs{S} = p^r$ heißt \tbf{$p$-Sylow} von $G$
+	\end{definition}
+	\begin{theorem}
+		In jeder $p$-Gruppe $G \neq 1$ gibt es ein Element $g \in G$ der Ordnung $p$.
+	\end{theorem}
+	\begin{theorem}
+		Jede $p$-Gruppe ist nilpotent.
+	\end{theorem}
+	\begin{theorem}
+		\theoremname{Sylow-Sätze:}
+		Sei $G$ eine endliche Gruppe und $p$ prim, sodass $p^r$ $G$ maximal teilt.. So gilt:
+		\begin{enumerate}
+			\item Es gibt $p$-Sylows in $G$.
+			\item Je zwei $p$-Sylows in $G$ sind zueinander konjugiert.
+			\item Jede Untergruppe $H \subset G$, deren Ordnung eine $p$-Potenz ist, liegt in einer $p$-Sylow.
+			\item Die Zahl der $p$-Sylows von $G$ ist kongruent zu $1$ modulo $p$ und teilt $\abs{G}/p^r$
+		\end{enumerate}
+	\end{theorem}
+	\begin{example}
+		In der Würfelgruppe $W$ ist $\abs{W} = 24$. Ein $2$-Sylow ist also eine Untergruppe mit Ordnung $2^3 = 8$. Davon gibt es drei, und zwar die Untergruppen, die Isomorph zur Diedergruppe $D_4$ sind.
+	\end{example}
+	\begin{proof}
+		[Beweis (Erster Sylowsatz):]
+		Seien $C_1, \hdots, C_r$ die Konjugationsklassen von $G$. Wir können diese weiter Zerlegen in $C_1, \hdots, C_s$ mit $s < r$ und $Z(G)$. Wir wählen ein $g_i \in C_i$ und erhalten (warum?)
+		\begin{align*}
+			\abs{G} = \abs{G / Z_G(g_1)} + \hdots + \abs{G / Z_G(g_s)} + \abs{Z(G)}
+		\end{align*}
+		Wobei $Z_G(x) = \{g \in G : gxg^{-1} = x\}$.
+		\newpar
+		Wir führen nun einen Beweis durch Induktion durch. Gibt es ein $i$, sodass $p^r$ $\abs{Z_G(g_i)}$ teilt, dann folgt die Aussage direkt per Induktion.
+		\newpar
+		Andernfalls teilt $p$ $\abs{G / Z_G(g_i)}$ für alle $i$, also teilt $p$ auch $\abs{Z(G)}$, also existiert ein $z \in Z(G)$ mit $\ord(z) = p$. 
+		\newpar
+		Wir wissen $\abs{G} = k p^r$ mit $k < p$, also gilt $\abs{G / \angles{z}} = k p^{r-1}$. Insbesondere existiert eine Untergruppe $\bar S \subset G / \angles{z}$ mit $\abs{\bar S} = p^{r-1}$, falls $k = 1$ ist dies die Gruppe $G / \angles{z}$ selbst. Wir definieren nun $S := \pi^{-1}(\bar S) \subset G$ - also ist $S$ die Gruppe, die durch die Quotientenabbildung auf $\bar S$ abgebildet wird - und es folgt $\abs{S} = p^r$.
+	\end{proof}
+	\begin{lemma}
+		Sei $G$ eine Gruppe. Sei
+		\begin{align*}
+			\cS= \{Q \subset G : \abs{Q} = p^r\}
+		\end{align*}
+		die Menge der $p$-Sylows von $G$. Ist $Q \in \cS$ schreiben wir $g.Q = gQg^{-1}$ oder ist $x \in\cS$ schreiben wir einfach $gx = gxg^{-1}$.
+		\newpar
+		Ist $H \subset G$ eine $p$-Gruppe und $x = Q\in \cS$ ein Fixpunkt von $H$ in der Menge $\cS$ der $p$-Sylows, so gilt $H \subset Q$.
+	\end{lemma}
+	\begin{proof}
+		$\forall h \in H : hx = x$ bedeuted $\forall h \in H : hQ = Qh$. Daraus folgt, dass $HQ$ eine Untergruppe von $G$ ist.
+		\newpar
+		Also gilt gemäß Bahnformel $\abs{HQ} = \abs{QH / H} \cdot \abs{H}$. Wir wissen $\abs{H} = p^r$, da $QH/H$ eine $Q$-Bahn ist, gilt außerdem $\abs{QH/H} = p^s$. Also ist die Ordnung von $HQ$ ebenfalls eine $p$-Potenz. Da die $p$-Potenz, die die Ordnung von $Q$ teilt, bereits maximal ist, folgt $\abs{HQ} = \abs{Q}$, also $HQ = Q$.
+	\end{proof}
+	\begin{proof}[Beweis (Zweiter Sylowsatz, Dritter Sylowsatz):]
+		Sei $P = x \in \cS$ eine beliebige $p$-Sylow. Es gilt $P \subset G_P$, also gemäß Bahnformel $\abs{GP} = \abs{G} / \abs{G_P}$, also teilt $p$ nicht die Ordnung von $GP$. Ist jetzt also $H \subset G$ eine $p$-Gruppe, können wir $GP$ in $H$-Bahnen $B_1, \hdots, B_r$ zerlegen. Da $H$ eine $p$-Gruppe ist, ist für alle $i$ die Ordnung $\abs{B_i}$ eine $p$-Potenz. Da $p$ aber nicht $\abs{GP}$ teilt, muss es $B_i$ mit $\abs{B} = 1$ geben. Also existiert ein $y \in GP \subset \cS$, welche Fixpunkte von $H$ sind. Also existiert ein $Q$ der Gestalt $gPg^{-1}$, welches ein Fixpunkt von $H$ ist, sodass $H \subset Q$.
+	\end{proof}
+	\begin{proof}[Beweis (Vierter Sylowsatz):]
+		Ganz $\cS$ ist eine $G$-Bahn $GP$ mit $P \in \cS$ beliebig. Da es nur einen Fixpunkt gibt, und da alle Bahnen $p$-Potenzordnung haben, gilt $\abs{\cS} \equiv 1 \mod p$. Es gilt außerdem $\abs{GP} = \abs{G} / \abs{G_p} \mid \abs{G} / \abs{P} = \abs{G} / p^r$.
+	\end{proof}
+	\begin{corollary}
+		Sei $G$ eine endliche Gruppe und $p$ eine Primzahl, die die Gruppenordnung teilt. So gibt es ein Element von $G$ der Ordnung $p$.
+	\end{corollary}
+	\begin{proof}
+		Gemäß der Sylowsätze existiert ein $p$-Sylow und darin ein Element der Ordnung $p$.
+	\end{proof}
+	\begin{corollary}
+		Jede Gruppe mit $6$ Elementen ist isomorph zu $\cS_3$ oder $\bZ / 6 \bZ$.
+	\end{corollary}
+	\begin{proof}
+		Gemäß Sylowsätzen existiert ein $a \in G$ mit $\abs{\angles{a}} = 2$ und ein $b \in G$ mit $\abs{\angles{b}} = 3$. Also gilt
+		\begin{align*}
+			\angles{a} \times \angles{b} \inj G,
+		\end{align*}
+		also
+		\begin{align*}
+			G = \{1,b,b^2,a,ab,ab^2\}
+		\end{align*}
+		Es folgt, dass entweder $ba = ab$ oder $ba = ab^2$. Wählen wir eine dieser beiden Möglichkeiten ist bereits die gesamte Gruppe festgelegt. Der erste Fall ergibt $\bZ / 6\bZ$, der zweite Fall ergibt $\cS_3$.
+	\end{proof}
 \end{document}
