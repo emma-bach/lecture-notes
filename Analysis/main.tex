@@ -3571,24 +3571,109 @@ Wie konstruiert man aus einfachen Mengenfunktionen Prämaße?
 \begin{theorem}
 	Jede monotone Klasse, die eine Mengenalgebra ist, ist eine $\sigma$-Algebra. Insbesondere ist für jede Mengenalgebra $\cR$ $\cM(\cR) = \sigma(\cR)$.
 \end{theorem}
+\begin{definition}
+	Seien $(X_i, \cA_i)_{i \in I}$ messbare Räume. Die von den Projektionen $(\pi_i)_{i \in I}$ induzierte $\sigma$-Algebra $\cA$ heißt \tbf{Produkt-$\sigma$-Algebra} auf $\prod_{i \in \cI} X_i$.
+	\newpar
+	Wir schreiben $\cA := \bigotimes_{i \in I} \cA_i$. Der dazugehörige messbare Raum heißt das Produkt der messbaren Räume.
+\end{definition}
+\begin{lemma}
+	Seien $(X_i, \cA_i)$, $i \in I$, messbare Rume, und sei $J \subset I$ eine nichtleere Teilmenge von $I$. So ist die Projektion
+	\begin{align*}
+		\pi_J = \pi_J^I : \prod_{i \in I} X_i \to \prod_{j \in J} x_j 
+	\end{align*}
+	$\bigotimes_{i \in I} \cA_i$ - $\bigotimes_{j \in J} \cA_j$-messbar.
+\end{lemma}
+\begin{lemma}
+	Seien $(X_i, \cA_i)_{i \in I}$ und $(Y, \cC)$ messbare Räume, und sei $g : Y \to \prod_{i \in I} X_i$ eine Abbildung. Dann ist $g$ genau dann $\cC-\bigotimes_{i \in I} \cA_i$-messbar, wenn alle Projektionen $\pi_i \circ g$ $\cC-\cA_i$-messbar sind.
+\end{lemma}
 
+\begin{definition}
+	Sei $M \subset \displaystyle \prod_{i \in I} X_i$ und sei für ein beliebiges $j$ $a_j \in X_j$. Der \tbf{Schnitt von $M$ durch $a_j$} ist die Menge:
+	\begin{align*}
+		M^{a_j} := \lr{(x_i)_{i \in I \setminus \{j\}} \in \prod_{i \in I \setminus \{j\}} X_i : x_j := a_j \implies (x_i)_{i \in I} \in M}
+	\end{align*}
+\end{definition}
 
+\begin{corollary}
+	Seien $(X_i, \cA_i)_{i \in I}$ messbare Räume, sei $M \in \displaystyle \bigotimes_{i \in I} \cA_i$, und sei $a_j \in X_j$ für ein $j \in I$. Dann ist der Schnitt $M^{a_j}$ ein Element von $\displaystyle \bigotimes_{i \in I \setminus \{j\}} \cA_i$.
+\end{corollary}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%
+\begin{theorem}
+	Seien $(X_i, \cA_i)_{i \in I}$ messbare Räume, sodass jedes $\cA$ die erzeugte $\sigma$-Algebra eines Mengensystems $\cE_i$ ist. Dann gilt
+	\begin{align*}
+		\bigotimes_{i \in I} \cA_i = \sigma\lr(\bigcup_{i \in I} \pi_i^{-1}(\cE_i))
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Es gilt:
+	\begin{align*}
+		\bigotimes_{i \in I} \cA_i 
+		&= \sigma \lr(\bigcup_{i \in I} \pi_i^{-1}(\cA_i))\\
+		&= \sigma \lr(\bigcup_{i \in I} \pi_i^{-1}(\sigma(\cE_i)))\\
+		&= \sigma \lr(\bigcup_{i \in I} \sigma(\pi_i^{-1}(\cE_i)))\\
+		&= \sigma \lr(\bigcup_{i \in I} \pi_i^{-1}(\cE_i))
+	\end{align*}
+\end{proof}
+\begin{corollary}
+	Sei $(X_i, \cA_i)_{i = 1, \hdots, n}$ eine endliche Menge messbarer Räume, wobei $\cA_i$ durch $\cE_i$ generiert sind und sodass für alle $i = 1, \hdots, n$ eine Folge $(E_i^k)_{k \in \bN} \subseteq \cE_i$, sodass
+	\begin{align*}
+		\bigcup_{k \in \bN} E_i^k = X_i
+	\end{align*}
+	Dann erzeugt das System
+	\begin{align*}
+		Q_0 := \lr{\prod_{i = 1}^n A_i : A_i \in \cE_i}
+	\end{align*}
+	die Produkt-$\sigma$-Algebra $\displaystyle \bigotimes_{i = 1}^n \cA_i$.
+\end{corollary}
+\begin{example}
+	Die Borel-$\sigma$-Algebra $\cB^n$ ist das Produkt der Borel-Sigma-Algebra $\cB$ auf $\bR$. Wir wählen also als $\cE_i$ die Intervalle, also Mengen $M$ mit $(a,b) \subseteq M \subseteq [a,b]$. Dann ist $Q_0$ die Menge der Quader. Wir werden später Zeigen, dass $\cB^n = \sigma(Q^n)$ und $\cB = \sigma(I)$.
+	\newpar
+	Es gilt $\bR = \displaystyle \bigcup_{k = 1}^\infty (-k, k)$, also ist
+	\begin{align*}
+		\cB^n = \sigma(Q^n) = \bigotimes_{i = 1}^n \cB^1.
+	\end{align*}
+\end{example}
+\begin{definition}
+	Sei $I$ eine Indexmenge. So defieren wir
+	\begin{align*}
+		P_0(I) := \lr{J \subseteq I : (J \neq \emptyset) \wedge (\abs{J} < \infty)}
+	\end{align*}
+	Dann ist 
+	\begin{align*}
+		\cQ := \bigcup_{J \in P_0(I)}\lr{\prod_{j \in J} \cA_j \times \prod_{i \notin J} X_i : A_i \in \cA_i, j \in J}
+	\end{align*}
+	die Menge der \tbf{messbaren Quader} und
+	\begin{align*}
+		\cZ := \bigcup_{J \in P_0(I)}\lr{\cA_J \times \prod_{i \notin J} X_i : A_J \in \bigotimes_{j \in J} \cA_j} = \bigcup_{J \in P_0(I)} \pi_j^{-1}(A_j)
+	\end{align*}
+	die Menge der \tbf{messbaren Zylinder}.
+\end{definition}
+\begin{theorem}
+	Sei $(X_i, \cA_i)\iinI$ eine Familie messbarer Räume. Dann erzeugen $\cQ$ und $\cI$ die Produkt-Sigma-Algebra $\displaystyle \bigotimes\iinI \cA_i$, d.h.
+	\begin{align*}
+		\bigotimes_{i \in I} \cA_i := \sigma(\cQ) = \sigma(\cZ)
+	\end{align*}
+\end{theorem}
+\chapter{Das $n$-dimensionale Lebesquemaß $\lambda^n$}
+\begin{lemma}
+	Der elementargeometrische Inhalt $\vol^n : \cQ^n \to \barR_{\geq 0}$ ist ein Prämaß auf dem Halbring $\cQ^n \subset P(\bR^n)$.
+\end{lemma}
+\begin{definition}
+	Das $n$-dimensionale äußere Lebesquemaß ist die Carathéodory-Fortsetzung des elementargeometrischen Inhalts, also:
+	\begin{align*}
+		\lambda^n(E) := \inf\lr{\sum_{k = 1}^\infty \vol^n(Q_k) : Q_k \in \cQ^n, E \subset \bigcup_{i = 1}^\infty \cQ_k}
+	\end{align*}
+	Das $n$-dimensionale Lebesquemaß ist dann die Einschränkung von $\lambda^n$ auf die $\sigma$-Algebra $\cM(\lambda^n)$ der messbaren Mengen. Wir bezeichnen dieses Maß ebenfalls mit $\lambda^n$.
+\end{definition}
+\begin{corollary}
+\begin{enumerate}
+	\item Das äußere Maß $\lambda^n$ ist regulär.
+	\item Das Maß $\lambda^n$ ist vollständig.
+\end{enumerate}
+\end{corollary}
+\begin{proof}
+	Gemäß der Vorüberlegungen zur Carathéodory-Fortsetzung aus dem letzten Kapitel.
+\end{proof}
 \chapter{Integrationstheorie}
 %
 %
