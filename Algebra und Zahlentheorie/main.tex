@@ -983,4 +983,245 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 		\end{align*}
 		Es folgt, dass entweder $ba = ab$ oder $ba = ab^2$. Wählen wir eine dieser beiden Möglichkeiten ist bereits die gesamte Gruppe festgelegt. Der erste Fall ergibt $\bZ / 6\bZ$, der zweite Fall ergibt $\cS_3$.
 	\end{proof}
+	\chapter{Ringe}
+	\begin{example}
+		Die Abbildung $\bZ \to \bZ$, welche jedes Element auf $0$ abbildet, ist kein Ringhomomorphismus, da das Einselement auf das Nullelement abgebildet wird. Wohl aber ist für einen beliebigen Ring $R$ die Abbildung $R \to 0$ in den Nullring ein Ringhomomorphismus.
+	\end{example}
+	\begin{lemma}
+		Es gibt keinen Ringhomomorphismus $\phi : \bQ \to \bZ$.
+	\end{lemma}
+	\begin{proof}
+		Es müsste gelten $\phi(1) = 1$, also $\phi(2) = 2$, und $\phi(2) \cdot \phi(\frac{1}{2}) = 2 \cdot \phi(\frac{1}{2})= 1$. Allerdings gibt es kein solches Element in $\bZ$.
+	\end{proof}
+	\begin{theorem}
+		Für jeden Ring $R$ gibt es genau einen Ringhomomorphismus $\bZ \to R$.
+	\end{theorem}
+	\begin{proof}
+		Analog wie für einen Gruppenhomomorphismus aus einer zyklischen Gruppe:
+		\newpar
+		Es gibt genau einen Gruppenhomomorphismus $\phi :(\bZ,+) \to (R,+)$ mit $1_\bZ \to 1_R$. Dieser bildet auch einen Ringhomomorphismus, denn für natürliches $a,b$ gilt:
+		\begin{align*}
+			\phi(a \cdot b) 
+			&= \sum_{i = 1}^{ab} 1_R\\
+			&= \sum_{i = 1}^a 1_R \cdot \sum_{i = 1}^b 1_R &\textnormal{(Induktiv per Distributivgesetz)}\\
+			&= \phi\lr(\sum_{i = 1}^a 1) \cdot \phi\lr(\sum_{i = 1}^b 1)\\
+			&= \phi(a) \cdot \phi(b)
+		\end{align*}
+		Und für negative $a,b \in \bZ$ folgt das Selbe, wenn man eine Summe bis zu einer negativen Zahl als Summe der Inversen definiert.
+	\end{proof}
+	\begin{theorem}
+		Sei $R$ ein Ring. So ist $\ker(Z \to R) = n\bZ$ für ein $n \in \bN$.  Wir nennen dieses $n$ die \tbf{Charakteristik} von $R$.
+	\end{theorem}
+	\begin{proof}
+		Jeder Ringhomomorphismus bildet einen Gruppenhomomorphismus. Der Kern muss also eine Untergruppe von $\bZ$ sein, also die Form $n\bZ$ haben.
+	\end{proof}
+	\begin{theorem}
+		Die Charakteristik von $R$ ist das kleinste $m \geq 1$ mit $\displaystyle \sum_{i = 1}^m 1_R = 0_R$, falls es ein solches $m$ gibt, ansonsten $0$.
+	\end{theorem}
+	\begin{example}
+		\phantom{}
+		\begin{itemize}
+			\item Es gilt $\char(\bZ) = \char(bQ) = \char(\bR) = 0$.
+			\item Der einzige Ring mit Charakteristik $1$ ist der Nullring.
+			\item $\char (\bF_p) = p$. 
+		\end{itemize}
+	\end{example}
+	\begin{theorem}
+		Sei $R$ ein Kring (kommutativer Ring) der Charakteristik $p$, mit $p$ prim. So ist der \tbf{Frobeniushomomorphismus}
+		\begin{align*}
+			Fr : R &\to R\\
+				 a &\mapsto a^p := \prod_{i = 1}^p a
+		\end{align*}
+		ein Ringhomomorphismus.
+	\end{theorem}
+	\begin{proof}
+		Es gilt:
+		\begin{itemize}
+			\item $\phi(1) = 1)$
+			\item $\phi(ab) = \phi(a)\phi(b)$
+			\item 
+			$\displaystyle
+				\phi(a + b) 
+				= (a+b)^p
+				= \sum_{k = 0}^p \binom{p}{k}a^kb^{p-k}
+			$
+			\newpar
+			In der letzten Summe haben alle Terme außer dem ersten und dem letzten nun durch den Binomialkoeffizienten einen Faktor $p$ und sind im Ring somit $0$. Also
+			\begin{align*}
+				\sum_{k = 0}^p \binom{p}{k}a^kb^{p-k} 
+				&= a^p + b^p\\
+				&= \phi(a) + \phi(b)
+			\end{align*}
+		\end{itemize}
+	\end{proof}
+	\begin{theorem}
+		\theoremname{Universelle Eigenschaft surjektiver Ringhomomorphismen:} Sei $s : R \surj Q$ ein surjektiver Ringhomomorphismus und $\phi : R \to S$ ein beliebiger Ringhomomorphismus. So existiert genau dann ein Ringhomomorphismus $\bar\phi$ mit $\bar\phi \circ s = \phi$, wenn $\ker \phi \supseteq \ker s$. Falls $\bar\phi$ existiert, ist es eindeutig.
+	\end{theorem}
+	\begin{proof}
+		Es ist bereits bekannt, dass ein eindeutiger Gruppenhomomorphismus $\bar\phi$ zwischen den additiven Gruppen existiert. Zu zeigen ist, dass $\bar\phi$ ein Ringhomomorphismus ist. Dies ist jedoch simpel - es gilt:
+		\begin{itemize}
+			\item $\bar\phi(1_Q) = ( \bar\phi \circ s)(1_R) = \phi(1_Q) = 1_S$
+			\item Da $s$ surjektive ist, reicht für die Multiplikativität $\bar\phi(s(a) \cdot s(b)) = \bar\phi(s(a)) \cdot \bar\phi(s(b))$.
+			\begin{align*}
+				\bar\phi(s(a) \cdot s(b))
+				&= \bar\phi(s(ab)\\
+				&= \phi(ab)\\
+				&= \phi(a) \cdot \phi(b)\\
+				&= \bar\phi(s(a)) \cdot \bar\phi(s(b))
+			\end{align*}
+		\end{itemize}
+	\end{proof}
+	\noindent
+	Wie im Fall für Gruppen existiert also genau ein Ringisomorphismus zwischen den Bildern zweier Ringhomomorphismen mit gleichem Kern. Wir fragen uns nun: Gegeben einen Ring $R$ - welche Untergruppen von $(R,+)$ sind Kerne von Ringhomomorphismen? Die Antwort sind \tbf{Ideale}.
+	\begin{definition}
+		Eine Untergruppe $I$ der Additiven Gruppe $(R,+)$ eines Rings $R$ heißt \tbf{Ideal}, falls
+		$RI \subset I$ und $IR \subset I$ (also wenn das Produkt eines Ideals mit einem beliebigen Ringelement immer im Ideal liegt)
+	\end{definition}
+	\begin{lemma}
+		Sei $\phi : R \to S$ ein Ringhomomorphismus. So ist $\ker \phi \subset R$ ein Ideal.
+	\end{lemma}
+	\begin{proof}
+		$\phi(x) = 0 \implies \phi(ax) = \phi(xa) = 0$
+	\end{proof}
+	\begin{theorem}
+		Gegeben einen Ring $R$ mit Ideal $I$ gibt es einen surjektiven Ringhomomorphismus $s : R \surj Q$ mit Kern $I$.
+	\end{theorem}
+	\begin{proof}
+		Betrachte die Gruppe $(R / I, +)$. Wir behaupten, dass es darauf genau eine Multiplikation gibt, die verträglich ist mit $\phi : R \to R / I$. Zu zeigen ist nur, dass die Abbildung $s \circ \cdot_R$ konstant auf den Fasern von $s \times s : R \times R \to R/I \times R/I$ ist. Diese Fasern haben genau die Form $(a + I) \times (b + I)$. Es gilt:
+		\begin{align*}
+			(a+I) \circ (b+I) &= ab + aI + Ib + II\\
+			\implies s(ab + aI + Ib + II) &= ab + I
+		\end{align*}
+		(Da $aI + Ib + II \subset I$.)
+	\end{proof}
+	\begin{theorem}
+		$n \in \bN$ lässt beim Teilen durch $9$ den selben Rest wie seine Quersumme und beim Teilen durch $11$ den selben Rest wie seine alternierende Quersumme.
+	\end{theorem}
+	\begin{proof}
+		$10^n \equiv 1^n \mod 9$ und $10^n \equiv -1^n \mod 11$
+	\end{proof}
+	\begin{definition}
+		Sei $R$ ein Kring.
+		\begin{enumerate}
+			\item Seien $a,b \in R$. Wir sagen, $a$ \tbf{teilt} $b$, falls ein $c \in R$ existiert, sodass $ac = b$.
+			\item Ein Element $a \in R$ heißt \tbf{kürzbar}, wenn die Multiplikation $a \cdot : R \to R$ injektiv ist, also wenn $ax = ay \implies x = y$.
+			\item $R$ heißt \tbf{Integritätskring}, wenn genau ein nicht kürzbare Element in $R$ existiert (Dieses ist dann zwingend die $0_R$).
+		\end{enumerate}
+	\end{definition}
+	\begin{example}
+		\phantom{}
+		\begin{itemize}
+			\item Alle $a \in \bZ \setminus 0$ sind kürzbar.
+			\item $\bZ / 12\bZ$ ist kein Integritätsring, da $3 \cdot 4 = 3 \cdot 8 = 3 \cdot 0$. Im Allgemeinen ist $\bZ / m\bZ$ genau dann ein Integritätsring, wenn $m$ prim ist.
+			\item Jeder Körper ist ein Integritätsring.
+			\item Jeder Teilring eines Körpers ist ein Intergritätsring.
+		\end{itemize}
+	\end{example}
+	\begin{corollary}
+		Die Ringmultiplikation ist genau dann injektiv, wenn ihr Kern trivial ist, also wenn der Ring Nullteilerfrei ist.
+	\end{corollary}
+	\begin{lemma}
+		Jeder endliche kommutative Integritätsring $R$ ist ein Körper.
+	\end{lemma}
+	\begin{proof}
+		Sei $a \in R \setminus 0$ kürzbar. Dann ist die Multiplikation mit $a$ injektiv. Da $R$ endlich ist, ist die Multiplikation auch bijektiv, also existiert ein multiplikatives Inverses. Jeder kommutative Ring mit multiplikativen Inversen ist per Definition ein Körper.
+	\end{proof}
+	\begin{corollary}
+		Die Charakteristik eines Körpers ist $0$ oder eine Primzahl.
+	\end{corollary}
+	\begin{proof}
+		$\bZ / (\char K) \bZ \inj K$ ist injektiv. Dies ist nur möglich, wenn $(\char K)$ $0$ oder prim ist.
+	\end{proof}
+	\begin{definition}
+		Sei $R$ ein kommutativer Ring. $a \in R$ heißt \tbf{Einheit}, wenn es ein multiplikatives inverses gibt. Einheiten sind also quasi die "Einsteiler". Wir schreiben die Menge der Einheiten als $R^\times$ (da die Einheiten die größte multiplikativen Gruppe des Rings bilden).
+	\end{definition}
+	\begin{example}
+		\phantom{}
+		\begin{itemize}
+			\item $\bZ^\times = \{-1,1\}$
+			\item $\bQ^\times = \bQ \setminus 0$
+			\item $0^\times = 0$
+			\item $\bR[X]^\times = \bR^\times$
+		\end{itemize}
+	\end{example}
+	\noindent In der Physik hat man einen eindimensionalen $\bR$-Vektorraum $V$ der Länge, der Zeit, etc. Die Einheiten sind genau die Basen dieses Vektorraums, also bildet die Multiplikation eine Bijektion $\bR \iso V$. Analog ist die Multiplikation mit einer Einheit eine Bijektion $R \iso R$.
+	\begin{corollary}
+		In jedem endlichen kommutativen Ring sind die Einheiten genau die kürzbaren Elemente.
+	\end{corollary}
+	\begin{example}
+		\phantom{}
+		\begin{itemize}
+			\item $(\bZ / 12\bZ)^\times = \{1,5,7,11\}$
+			\item $(\bZ / m\bZ)^\times = \{a \mid \ggT(a,m) = 1\}$
+		\end{itemize}
+	\end{example}
+	\begin{definition}
+		\theoremname{Diffie-Hellman-Verschlüsselung:}
+		\begin{enumerate}
+			\item Alice wählt eine beliebige Gruppe $G$ und eine natürliche Zahl $a \in \bN$. Sie wählt ein Element $g \in G$ und veröffentlicht $G, g^a$ und $g$.
+			\item Daraufhin wählt Bob ein $b \in \bN$ und sendet $g^b$.
+			\item Alice rechnet nun $(g^b)^a$ und Bob rechnet $(g^a)^b$. Dies ist der gemeinsame geheime Schlüssel.
+		\end{enumerate}
+		Die Sicherheit des Algorithmus beruht darauf, dass der diskrete Logarithmus (also das berechnen von $a$ aus $g^a$) im Allgemeinen sehr ineffizient ist. Die häufigste Wahl ist $G = (\bZ / p \bZ)^\times$ für eine sehr große Primzahl $p$, in besonders sicherheitskritischen Fällen wird als Gruppe oft eine elliptische Kurve über einem endlichen Körper genommen.
+	\end{definition}
+	\begin{definition}
+		Sei $R$ ein Ring und $R[X]$ der Polynomring. Formell kann $R[X]$ auch definiert werden als die Menge aller Abbildungen $\bN \to R$, die höchstens an endlich vielen Stellen $\neq 0$ sind (diese Stellen entsprechen dann den Koeffizienten.) Wir unterscheiden zwischen \tit{Polynomen} und \tit{Polynomfunktionen} - Im Allgemeinen ist die kanonische Abbildung $\bF_p[X] \inj \Ens(\bF_p, \bF_p)$ nämlich nicht injektiv!
+	\end{definition}
+	\begin{lemma}
+		Im Fall eines endlichen Körpers $\bF_p$ ist die kanonische Abbildung $\bF_p[X] \surj \Ens(\bF_p, \bF_p)$ surjektiv. Der Kern dieser Abbildung ist das Ideal, welches von $(x^p - x)$ erzeugt wird.
+	\end{lemma}
+	\begin{proposition}
+		Sei $R$ ein kommutativer Ring und $c \in R$. So gibt es genau einen Ringhomomorphismus
+		\begin{align*}
+			E_c : R[X] \to R,
+		\end{align*}
+		sodass $E_c(X) = c$ und $E_c \circ \imath = \id$. (Wobei $\imath$ die kanonische Einbettung $R \to R[X]$ ist, welche ein Element als konstantes Polynom auffasst. Professor Soergel schreibt diese auch als $\textnormal{can}$.)
+		\newpar
+		Wir nennen $E_c$ den \tbf{Einsetzungshomomorphismus} und schreiben abkürzend 
+		\begin{align*}
+			P(c) := E_c(P)
+		\end{align*}
+	\end{proposition}
+	\begin{proposition}
+		Sei $\phi : R \to S$ ein Ringhomomorphismus und $c \in S$ (nicht $c \in R$!) ein Element, welches für alle $r \in R$ mit $\phi(r)$ bezüglich der Multiplikation kommutiert. So gibt es genau einen Ringhomomorphismus 
+		\begin{align*}
+			E_{c, \phi} : R[X] \to S
+		\end{align*} mit $E_{c, \phi}[X] = c$ und $E_{c, \phi} \circ \imath = \phi$.
+	\end{proposition}
+	\noindent Diese Proposition verallgemeinert die Vorherige, indem sie uns zum Beispiel erlaubt, Matrizen oder komplexe Zahlen in reelle Polynome einzusetzen.
+	\begin{proposition}
+		Jeder Ringhomomorphismus $\phi : R \to S$ liefert einen Ringhomomorphismus $\phi[X] : R[X] \to S[X]$.
+	\end{proposition}
+	\begin{definition}
+		Sei $R$ ein kommutativer Ring und $P \in R[X]$. Ein Element $\lambda \in R$ heißt \tbf{Nullstelle von $P$}, falls $P(\lambda) = 0$.
+	\end{definition}
+	\begin{definition}
+		Der \tbf{Grad} eines Polynoms ist definiert als:
+		\begin{align*}
+			\deg(P) = 
+			\begin{cases}
+				n & \textnormal{Falls $P = a_nx^n + \hdots + a_0x^0, a_n \neq 0$}\\
+				-\infty & \textnormal{Falls $P = 0$.}
+			\end{cases}
+		\end{align*}
+	\end{definition}
+	\begin{corollary}
+		Sei $R$ ein Integritätsring und $P, Q \in R[X]$. Dann gilt
+		\begin{align*}
+			\deg(PQ) = \deg(P) + \deg(Q)
+		\end{align*}
+	\end{corollary}
+	\noindent Unser Ziel ist es, folgenden Satz zu beweisen:
+	\begin{theorem}
+		Sei $R$ ein kommutativen Integritätsring und $P \in R[X] \setminus 0$. Dann hat $P$ höchstens $\deg(P)$ Nullstellen.
+	\end{theorem}
+	\begin{proofsketch}
+		Die kommutativen Integritätsringe sind genau die Ringe, über denen die gewohnte Zerlegung in Linearfaktoren funktioniert.
+	\end{proofsketch}
+	\begin{counterexample}
+		Sei $R = \Ens(M, \bR)$. Dann ist $R$ ein Ring, aber kein Integritätsring. So hat das Polynom $X^2 - X$ unendlich viele Nullstellen, nämlich alle Abbildungen $f : M \to \{0,1\}$.
+	\end{counterexample}
+	\begin{counterexample}
+		Ebenso gilt der Satz nicht für nichtkommutative Ringe. Es existieren zum Beispiel Zahlreiche Matrixringe, welche idempotente Matrizen enthalten, also Matrizen $M$ mit $M^n = I$. Somit sind alle skalaren Vielfachen dieser Matrizen Nullstellen von $X^n$.
+	\end{counterexample}
 \end{document}

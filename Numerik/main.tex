@@ -614,4 +614,173 @@ Wir schreiben oft $\textnormal{cond}_p$ statt $\textnormal{cond}_{\norm{-}_p}$.
 			P = P^{(n-1)} P^{(n-2)} \hdots P^{(1)}
 		\end{align*}
 	\end{theorem}
+
+
+
+
+\chapter{Ausgleichsprobleme}
+\begin{example}
+	Zu Messdaten $t_i, y_i, i = 1, \hdots, m$ wird die Ausgleichsgerade gesucht, also die Gerade definiert durch $c,b \in \bR$, sodass der Least-Squares Abstand
+	\begin{align*}
+		\sum_{i = 1}^n \lr((c \cdot t_i + b) - y_i)^2
+	\end{align*}
+	zu den Messdaten minimiert wird.
+\end{example}
+\noindent Im Allgemeinen haben solche Probleme die Form
+\begin{align*}
+	\min (x \mapsto \norm{Ax - b}_2^2).
+\end{align*}
+Ist $A$ eine reguläre $n \times n$-Matrix, so wird das Problem eindeutig durch $x = A^{-1}b$ gelöst. Typischerweise ist dies aber nicht der Fall - in der Praxis sind die meisten Gleichungssysteme überbestimmt.
+
+\section{Die Gaußsche Normalengleichung}
+\begin{definition}
+	Durch $A \in \bR^{m \times n}, b \in \bR^m$ wird das Ausgleichsproblem 
+	\begin{align*}
+		\min (x \mapsto \norm{Ax - b}_2^2).
+	\end{align*}
+	definiert. Für $x \in \bR^n$ heißt
+	\begin{align*}
+		r= b - Ax
+	\end{align*}
+	das \tbf{Residuum} von $x$.
+\end{definition}
+\begin{theorem}
+	Die Lösungen des Ausgleichsproblems sind genau die Lösung der \tbf{Gaußschen Normalengleichung}
+	\begin{align*}
+		A^\top Ax = A^\top b.
+	\end{align*}
+	Insbesondere existiert immer eine Lösung $x \in \bR^n$. Ist $z \in \bR^n$ eine weiter Lösung, so gilt $Ax = Az$ und die dazugehörigen Residuen stimmen überein.
+\end{theorem}
+\noindent Diese Normalengleichung erhält man durch Ableitung der Residuenfunktion $Ax-b$ nach $x$.
+\newpar
+\begin{proof}
+	Aus der linearen Algebra ist bekannt, dass
+	\begin{align*}
+		\bR^m = \im(A) + \ker(A^\top),
+	\end{align*}
+	wobei diese Zerlegung direkt und orthogonal ist. Damit existieren zu $b \in \bR^m$ eindeutig bestimmte Vektoren $y \in \im(A)$, $r \in \ker(A^\top)$, sodass $y \cdot r = 0$ und $b = r + y$. Weiter existiert $x \in \bR^n$ mit $y = Ax$.
+	\newpar
+	Es folgt
+	\begin{align*}
+		A^\top b = A^\top y + A^\top r = A^\top Ax + 0 = A^\top Ax.
+	\end{align*}
+	Somit löst $x$ die Gaußsche Normalengleichung. Es bleibt zu zeigen, dass $x$ auch das Ausgleichsproblem löst. Sei $z \in \bR^n$. So rechnen wir
+	\begin{align*}
+		\norm{b-Az}_2^2 &= \norm{(b - Ax) + A(x-z)}_2^2\\
+						&= \norm{b - Ax}_2^2 + \norm{A(x-z)}_2^2 + 2r \cdot (Ax - z)\\
+						&= \norm{b - Ax}_2^2 + \norm{A(x-z)}_2^2 + \underbrace{2A^\top r}_{= 0} \cdot (x - z)\\
+						&= \norm{b - Ax}_2^2 + \norm{A(x-z)}_2^2\\
+						&\geq \norm{b - Ax}_2^2
+	\end{align*}
+	somit gilt insbesondere Gleichheit genau dann, wenn $Ax = Az$.
+\end{proof}
+\begin{lemma}
+	Die Matrix $A^\top A$ ist symmetrisch und positiv semidefinit. Weiter ist $A$ genau dann positiv definit, wenn $\ker A = \{0\}$. In diesem Fall sind die Lösungen der Gaußschen Normalengleichung eindeutig.
+\end{lemma}
+\begin{proof}
+	Symmetrie ist offensichtlich. Positive Semidefinitheit gilt, da
+	\begin{align*}
+		x(A^\top A) x = (Ax) \cdot (Ax) = \norm{Ax}_2^2 \geq 0.
+	\end{align*}
+	Insbesondere gilt also Gleichheit genau dann, wenn $Ax = 0$, also wenn $x \in \ker A$.
+	\newpar
+	Die Eindeutigkeit der Lösung der Gaußschen Normalengleichung folgt aus der Regularität positiv definiter Matrizen. 
+\end{proof}
+\noindent Für $m = n$, $A \in \bRnn$ gilt
+\begin{align*}
+	\cond_2 (A^\top A) = \frac{\lambda_{\max}(A^\top A)}{\lambda_{\min}(A^\top A)} = (\cond_2(A))^2
+\end{align*}
+da $\cond_2 (A) \geq 1$ ist somit $A^\top A$ immer schlechter konditioniert als $A$. Die Lösung eines Ausgleichsproblems durch die Gaußsche Normalengleichung ist somit instabil.
+
+\section{Householder-Matrizen}
+Sei $Q \in O(n)$ (also eine $n \times n$-Orthogonalmatrix). So gilt $\norm{Q(Ax - b)}_2^2 = \norm{Ax-b}$. Wir versuchen, eine orthogonale Matrix $Q$ so zu konstruieren, dass $QA$ Dreiecksgestalt hat.
+\newpar
+\begin{lemma}
+	Für alle Orthogonalen Matrizen $Q$ gilt $\cond_2(Q) = 1$
+\end{lemma}
+\begin{proof}
+	\begin{align*}
+		\norm{Q}_2 \norm{Q^\top}_2 = \norm{Q}_2 \norm{Q^{-1}}_2 = 1
+	\end{align*}
+\end{proof}
+\begin{definition}
+	Für $v \in \bR^l$ mit $\norm{v}_2 = 1$ heißt die Matrix
+	\begin{align*}
+		P_v = E_l - 2vv^\top
+	\end{align*}
+	Die Householder-Transformation zu $v$.
+\end{definition}
+\noindent $(vv^\top)x$ entspricht der Projektion von $x$ auf den von $v$ aufgespannten Vektorraum. Insgesamt spiegelt die Householder-Transformation also $x$ an der Ursprungsebene orthogonal zu $v$.
+\begin{lemma}
+	$P_v$ ist symmetrisch und orthogonal. Außerdem gilt $P_vv = -v$ und
+	\begin{align*}
+		\forall w \in \bR^l : wv = 0 \implies P_v w = w
+	\end{align*}
+\end{lemma}
+\begin{lemma}
+	Sei $x \in \bR^l \neq 0, x \neq \lambda e_1$ und sei
+	\begin{align*}
+		\sigma = \begin{cases}
+			\sgn(x_1) & x_1 \neq 0\\
+			1 & \textnormal{sonst}
+		\end{cases}
+	\end{align*}  
+	Setzen wir nun
+	\begin{align*}
+		v = \frac{x + \sigma \norm{x}_2 e_1}{\norm{x + \sigma \norm{x}_2 e_1}_2},
+	\end{align*}
+	so gilt
+	\begin{align*}
+		P_v x = (E_l x - 2vv^\top)x = -\sigma\norm{x}_2 e_1
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Da $x \neq \lambda e_1$ ist $v$ wohldefiniert mit $\norm{v}_2 = 1$. Weiter folgt
+	\begin{align*}
+		\norm{x + \sigma \norm{x}_2 e_1}_2^2 &= \norm{x}^2 + 2 \sigma\norm{x}_2 x \cdot e_1 + \sigma^2 \norm{x}_2^2 \norm{e_1}_2^2\\
+		&= 2(x + \sigma \norm{x}_2 e_1)^\top x
+	\end{align*}
+	Mit $\tilde v = x + \sigma \norm{x}_2 e_1$ gilt
+	\begin{align*}
+		2\tilde v ^\top x &= 2(x + \sigma \norm{x}_2 e_1)^\top x\\
+		&= \norm{x + \sigma \norm{x}_2 e_1}_2^2\\
+		&= \norm{\tilde v}^2_2
+	\end{align*}
+	Es gilt $v = \frac{\tilde v}{\norm{v}_2}$, also
+	\begin{align*}
+		P_vx &= (E_l - 2vv^\top)x\\
+		     &= x - 2v\frac{\tilde v^\top x}{\norm{\tilde v}_2}\\
+		     &= x - v\frac{\norm{\tilde v}_2^2}{\norm{\tilde v}_2}\\
+		     &= x - v\norm{\tilde v}_2\\
+		     &= - \sigma\norm{x}_2 e_1
+	\end{align*}
+\end{proof}
+\noindent $\sigma$ verhindert hier sogenannte Auslöschungseffekte, also schlechte Konditionierung der Subtraktion zweier fast identischer Zahlen.
+\section{$QR$-Zerlegung}
+\begin{theorem}
+	Sei $A \in \bR^{m \times n}$, $m \geq n$, $\rang A = n$. So existiert $Q \in O(m)$ und eine verallgemeinerte obere Dreiecksmatrix $R \in \bR^{m \times n}$, sodass
+	\begin{align*}
+		A = QR
+	\end{align*}
+	Außerdem gilt $\forall i : \abs{r}_{ii} \geq 0$
+\end{theorem}
+\begin{proof}
+	Wir setzen $A_1 = A$, und es sei $x = a_1 \in \bR^m$ die erste Spalte von $A_1$. Falls $x \in \bR{e_1}$, setzen wir $Q_1 = E_m$. Ansonsten sei
+	\begin{align*}
+		Q_1 = P_v
+	\end{align*}
+	mit $v$ wie im Lemma. Es folgt
+	\begin{align*}
+		Q_1 a_1 = r_{11}e_1
+	\end{align*}
+	mit $\abs{r_{11}} = \norm{a_1}_2 \geq 0$. Somit folgt
+	\begin{align*}
+		Q_1 A_1 = 
+		\begin{pmatrix}
+			r_{11} & r_1^\top\\
+			\vzero & A_2
+		\end{pmatrix}
+	\end{align*}
+	mit $A_2 \in \bR^{(m-1) \times (n-1)}$.
+\end{proof}
 \end{document}

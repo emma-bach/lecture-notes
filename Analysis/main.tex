@@ -71,9 +71,63 @@
 \chapter{Zahlen}
 \section{Die natürlichen Zahlen}
 \section{Die rationalen Zahlen}
-\section{Reelle Zahlen axiomatisch}
 \section{Algebraische Grundbegriffe}
-
+\section{Reelle Zahlen axiomatisch}
+Die Konstruktion der reellen Zahlen ist deutlich komplizierter als die Konstruktion der natürlichen Zahlen und der rationalen Zahlen. Insbesondere ist für die meiner Meinung nach anschaulichste Konstruktion der Begriff einer Cauchyfolge nötig, für welchen wiederum topologische Grundbegriffe gebraucht werden.
+\newpar
+Die reellen Zahlen können aber auch ohne eine explizite Konstruktion bereits axiomatisch definiert werden: Wir sagen "Falls die reellen Zahlen existieren, sollen sie diese Gesetze erfüllen".
+\begin{definition}
+	Die reellen Zahlen sind der angeordnete Körper $\bR$, in dem für jede beschränkte Menge $M$ auch eine kleinste obere Schranke in $\bR$ existiert. Man sagt dann, der Körper ist \tit{Dedekind-vollständig}.
+\end{definition}
+\noindent Diese Definition erlaubt es uns a priori noch nicht von "den" reellen Zahlen zu sprechen - es könnte schließlich viele Dedekind-vollständige Körper geben, die eventuell nichts mit den reellen Zahlen zu tun haben. Es stellt sich jedoch heraus, dass dies nicht der Fall ist.
+\begin{theorem}
+	Alle angeordneten Körper mit dieser Eigenschaft sind isomorph.
+\end{theorem}
+\noindent Wir können also getrost von "den reellen Zahlen" reden. Der Beweis dieses Satzes wird allerdings einiges an Vorarbeit benötigen.
+\subsection{$\bR$ enthält $\bN$, $\bZ$ und $\bQ$}
+Im folgenden Abschnitt definieren wir $\bR$ als beliebiges Modell der reellen Zahlen, ohne von Eindeutigkeit auszugehen.
+\begin{definition}
+	Sei $K$ ein Körper und $S \subset K$ eine Teilmenge dieses Körpers. Wir nennen $S$ eine \tbf{induktive Teilmenge} von $K$, falls:
+	\begin{enumerate}
+		\item $0 \in S$
+		\item $\forall a \in S : a + 1 \in S$
+	\end{enumerate}
+\end{definition}
+\begin{lemma}
+	Es sei die Menge $N$ der Schnitt aller induktiver Teilmengen von $\bR$. Dann gilt:
+	\begin{enumerate}
+		\item Die Menge $N$ ist induktiv.
+		\item Ist $A \subseteq \bR$ induktiv, so ist $N \subseteq A$.
+		\item Ist $n \in N$, so ist $n \geq 0$. 
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	\begin{enumerate}
+		\item Sei $\cI$ die Menge aller induktiven Teilmengen von $\bR$. Wir wissen $1 \in I$ für alle $I \in \cI$, also auch $\displaystyle 1 \in \bigcap_{I \in \cI} I = N$.
+		Analog gilt für $\displaystyle a \in N = \bigcap_{I \in \cI} I$ auch $a \in I$ für alle $I$, also $a+1 \in I$ für alle $I$, also $\displaystyle a + 1 \in \bigcap_{I \in \cI} I = N$.
+		\item $N$ ist per Definition der Schnitt aller induktiver Teilmengen von $\bR$. Ein Schnitt von Mengen ist immer Teilmenge aller ursprünglichen Mengen.
+		\item Die Menge $\{x \in \bR : x \geq 0\}$ ist induktiv. Somit muss $N$ eine Teilmenge dieser Menge sein, also kann $N$ keine Elemente $n < 0$ enthalten.
+	\end{enumerate}
+\end{proof}
+\begin{theorem}
+	Die Menge $N$ mit Nachfolgerfunktion $s : n \to n + 1$ ist ein Modell der natürlichen Zahlen.
+\end{theorem}
+\begin{proof}
+	Zu zeigen ist, dass $N$ die Peanoaxiome erfüllt.
+	\begin{enumerate}
+		\item \ul{$\neg(\exists n \in N : s(n) = 0)$:}\\
+		Angenommen, $n + 1 = 0$. Dann muss $n$ das additive Inverse von $1$ sein, also $n = -1$. Dann ist aber $n < 0$, also wissen wir aus dem vorherigen Lemma, dass $n \notin N$.
+		\item \ul{$s$ ist injektiv:} Angenommen, $s(n) = s(m)$. Dann gilt $m + 1 = n + 1$, also $m = n$. Somit ist $s$ injektiv.
+		\item \ul{Induktionsaxiom:} Das Induktionsaxiom sagt uns, dass jede induktive Menge $G$, welche $0$ enthält und unter der Nachfolgerfunktion abgeschlossen ist, eine Obermenge der Natürlichen Zahlen ist. Dies folgt aus Bedingung (ii) aus unserem Lemma.
+	\end{enumerate}
+\end{proof}
+Wir schreiben dementsprechend von nun an $\bN \subseteq \bR$ statt $N \subseteq \bR$.
+\begin{theorem}
+	Die natürlichen Zahlen sind unter Addition und Multiplikation abgeschlossen.
+\end{theorem}
+\begin{theorem}
+	\theoremname{Wohlordnungsprinzip:} Jede nichtleere Teilmenge $G \subseteq \bN$ enthält ein minimales Element $m \in G$, also ein Element $m$, welches $\forall g \in G : m \leq g$ erfüllt.
+\end{theorem}
 \chapter{Topologie}
 In den meisten Anfängervorlesungen über Analysis ist der einzige relevante Topologische / Metrische Raum der Raum $(\bR, \abs{-})$ der Reellen Zahlen mit der Absolutbetragsmetrik $d(x,y) = \abs{x-y}$. Falls kein zusätzliches Interesse besteht, tiefer in die Theorie einzutauchen und die betrachteten Konzepte in voller Allgemeinheit aufzunehmen, kannst dieses Kapitel dementsprechend auch fürs Erste übersprungen werden und in jedem Satz in den darauffolgenden Kapiteln die Wörter "Topologischer Raum" und "Metrischer Raum" durch "$\bR$" und die Funktion "$d(x,y)$" durch "$\abs{x - y}$" ersetzt werden.
 \newpar
@@ -3674,6 +3728,69 @@ Wie konstruiert man aus einfachen Mengenfunktionen Prämaße?
 \begin{proof}
 	Gemäß der Vorüberlegungen zur Carathéodory-Fortsetzung aus dem letzten Kapitel.
 \end{proof}
+\begin{lemma}
+	\theoremname{Approximation durch Gitterfiguren:}
+	Betrachte für $k \in \bN_0$ die Würfelfamilie
+	\begin{align*}
+		\cW_k := \{Q_{k,m} := 2^{-k}(m + [0,1]^n) \mid m \in \bZ^n\}
+	\end{align*}
+	und definiere für $E \subseteq \bR^n$ die Approximationen von unten und oben:
+	\begin{align*}
+		\cF_k(E) := &\bigcup \lr{Q \in \cW_k \mid Q \subseteq E}\\
+		\cF^k(E) := &\bigcup \lr{Q \in \cW_k \mid Q \cap E \neq \emptyset}
+	\end{align*}
+	So gilt:
+	\begin{enumerate}
+		\item $F_k(E)$ und $F^k(E)$ sind abzählbare Vereinigungen abzählbar vieler kompakter Quader mit paarweise disjunktem Inneren
+		\item \begin{align*}
+			F_1(E) &\subseteq F_2(E) \subseteq \hdots \subseteq E\\
+			F^1(E) &\supseteq F^2(E) \supseteq \hdots \supseteq E
+		\end{align*}
+		\item \begin{align*}
+			F_k(E) &\supseteq \{x \in \bR^n \mid d(x, \bR^n \setminus E) > 2^{-k}\sqrt{n}\}\\
+			F^k(E) &\subseteq \{x \in \bR^n \mid d(x, E) \leq 2^{-k}\sqrt{n}\}
+		\end{align*}
+		\item \begin{align*}
+			\textnormal{int}(E) &\subseteq \bigcup_{k = 1}^\infty F_k(E) \subseteq E\\
+			\bar E &\supseteq \bigcap_{k = 1}^\infty F^k(E) \supseteq E
+		\end{align*}
+	\end{enumerate}
+\end{lemma}
+\begin{lemma}
+	Die Borelmengen $\cB^n$ sind die vom Halbring der Quader $\cQ^n$, dem Ring $\cF^n$ der Figuren, und dem vom System $\cC^n$ der abgeschlossenen Mengen erzeugte $\sigma$-Algebra, also:
+	\begin{align*}
+		\cB^n = \sigma(\cQ^n) = \sigma(\cF^n) = \sigma(\cC^n)
+	\end{align*}
+\end{lemma}
+\begin{corollary}
+	Für das äußere Lebesquemaß $\lambda^n$ gilt folgendes:
+	\begin{enumerate}
+		\item Alle Borelmengen sind $\lambda^n$-messbar.
+		\item Zu jeder Teilmenge $E \subseteq \bR^n$ existiert eine Obermenge $B \subseteq E$ mit $\lambda^n(E) = \lambda^n(B)$ 
+		\item $\lambda^n(K) < \infty$ für alle beschränkten Mengen $K \subseteq \bR^n$ (also insbesondere für kompakte Mengen).
+	\end{enumerate}
+\end{corollary}
+\begin{lemma}
+	Für ein beliebiges $E \subseteq \bR^n$ gilt
+	\begin{align*}
+		\lambda^n(E) = \inf\lr{\lambda^n(U) \mid U \textnormal{ offen}, U \supseteq E}.
+	\end{align*}
+	Ist $E$ zusätzlich $\lambda^n$-messbar, gilt außerdem
+	\begin{align*}
+		\lambda^n(E) = \sup\lr{\lambda^n(K) \mid K \textnormal{ kompakt}, K \subseteq E}.
+	\end{align*}	
+\end{lemma}
+\begin{theorem}
+	Eine Menge $D \subseteq \bR^n$ ist genau dann $\lambda^n$-messbar, wenn eine der folgenden Bedingungen gilt:
+	\begin{enumerate}
+		\item Es existiert eine Borelmenge $E \in \cB^n$ mit $E \supseteq D$ und $\lambda^n(E \setminus D) = 0$.
+		\item Es existiert eine Borelmenge $C \in \cB^n$ mit $C \subseteq D$ und $\lambda^n(D \setminus C) = 0$.
+	\end{enumerate}
+	Wir können hier insbesondere $E = \bigcap_{i \in \bN} U_i$ mit $U_i$ offen oder $C = \bigcup_{i \in \bN} A_i$ mit $A_i$ abgeschlossen wählen.
+\end{theorem}
+\begin{theorem}
+	\theoremname{Lusin}: Sei $A \subseteq \bR^n$ eine offene Menge mit $\lambda^n(A) < \infty$. Sei $f : A \to \bR$ auf $A$ $\lambda^n$-messbar. Dann existiert für alle $\epsilon \in \bR_{\geq 0}$ eine kompakte Teilmenge $K$, sodass $\lambda^n(A \setminus K) < \epsilon$ und sodass $f$ auf $K$ stetig ist.
+\end{theorem}
 \chapter{Integrationstheorie}
 %
 %
