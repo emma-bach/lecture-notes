@@ -121,13 +121,16 @@ Im folgenden Abschnitt definieren wir $\bR$ als beliebiges Modell der reellen Za
 		\item \ul{Induktionsaxiom:} Das Induktionsaxiom sagt uns, dass jede induktive Menge $G$, welche $0$ enthält und unter der Nachfolgerfunktion abgeschlossen ist, eine Obermenge der Natürlichen Zahlen ist. Dies folgt aus Bedingung (ii) aus unserem Lemma.
 	\end{enumerate}
 \end{proof}
-Wir schreiben dementsprechend von nun an $\bN \subseteq \bR$ statt $N \subseteq \bR$.
-\begin{theorem}
-	Die natürlichen Zahlen sind unter Addition und Multiplikation abgeschlossen.
-\end{theorem}
+\noindent Wir schreiben dementsprechend von nun an $\bN \subseteq \bR$ statt $N \subseteq \bR$.
 \begin{theorem}
 	\theoremname{Wohlordnungsprinzip:} Jede nichtleere Teilmenge $G \subseteq \bN$ enthält ein minimales Element $m \in G$, also ein Element $m$, welches $\forall g \in G : m \leq g$ erfüllt.
 \end{theorem}
+\begin{corollary}
+	Die Reellen Zahlen enthalten ein Modell der ganzen Zahlen $\bZ$ und der rationalen Zahlen $\bQ$ als Teilmengen.
+\end{corollary}
+\begin{proof}
+	Die Ganzen Zahlen sind per Definition gegeben durch $\bN \cup \{n' \in \bR : \exists n \in \bN : n' + n = 0\}$, also als die Menge der natürlichen Zahlen vereinigt mit der Mengen ihrer additiven Inversen. Analog sind die rationalen Zahlen der Abschluss der natürlichen Zahlen und ihrer multiplikativen Inversen.
+\end{proof}
 \chapter{Topologie}
 In den meisten Anfängervorlesungen über Analysis ist der einzige relevante Topologische / Metrische Raum der Raum $(\bR, \abs{-})$ der Reellen Zahlen mit der Absolutbetragsmetrik $d(x,y) = \abs{x-y}$. Falls kein zusätzliches Interesse besteht, tiefer in die Theorie einzutauchen und die betrachteten Konzepte in voller Allgemeinheit aufzunehmen, kannst dieses Kapitel dementsprechend auch fürs Erste übersprungen werden und in jedem Satz in den darauffolgenden Kapiteln die Wörter "Topologischer Raum" und "Metrischer Raum" durch "$\bR$" und die Funktion "$d(x,y)$" durch "$\abs{x - y}$" ersetzt werden.
 \newpar
@@ -3791,6 +3794,80 @@ Wie konstruiert man aus einfachen Mengenfunktionen Prämaße?
 \begin{theorem}
 	\theoremname{Lusin}: Sei $A \subseteq \bR^n$ eine offene Menge mit $\lambda^n(A) < \infty$. Sei $f : A \to \bR$ auf $A$ $\lambda^n$-messbar. Dann existiert für alle $\epsilon \in \bR_{\geq 0}$ eine kompakte Teilmenge $K$, sodass $\lambda^n(A \setminus K) < \epsilon$ und sodass $f$ auf $K$ stetig ist.
 \end{theorem}
+\begin{theorem}
+	Ein äußeres Maß $\mu$ auf $\bR^n$ heißt \tbf{Borelmaß}, falls folgendes gilt:
+	\begin{enumerate}
+		\item Alle Borelmengen sind $\mu$-messbar
+		\item Für jede kompakte Menge $K$ gilt $\mu(K) < \infty$
+	\end{enumerate}
+\end{theorem}
+\begin{example}\phantom{}
+	\begin{enumerate}
+		\item $\lambda^n$ ist ein Borelmaß.
+		\item Für beliebiges $E \subseteq \bR^n$ ist $\lambda^n |_E$ ein Borelmaß.
+	\end{enumerate}
+\end{example}
+\begin{definition}
+	Ein äußeres Maß $\mu$ auf $\bR^n$ heißt \tbf{translationsinvariant}, falls
+	\begin{align*}
+		\forall \vv \in \bR^n, E \subseteq \bR^n :\\ \mu(E + \vv) = \mu(E)
+	\end{align*}
+\end{definition}
+\begin{example}
+	Da der Elementarinhalt $\vol^n$ translationsinvariant ist folgt auch direkt die Translationsinvarianz von $\lambda^n$.
+\end{example}
+\begin{lemma}
+	Ist $\mu$ ein translationsinvariantes äußeres Maß, so ist jede Hyperebene 
+	\begin{align*}
+		H := \lr{x \in \bR^n \mid \exists i \in 1, \hdots, n : x_i = c \in \bR}
+	\end{align*}
+	eine $\mu$-Nullmenge.
+\end{lemma}
+\begin{theorem}
+	Sei $\mu$ ein translationsinvariantes Borelmaß auf $\bR^n$. Sei $E$ $\lambda^n$-messbar. Dann gilt
+	\begin{align*}
+		\mu(E) = \mu([0,1]^n) \cdot \lambda^n(E) := \theta \cdot \lambda^n(E)
+	\end{align*}
+\end{theorem}
+\begin{lemma}
+	Sei $U \subseteq \bR^n$ offen. Sei $f : U \to \bR^n$ lipschitzstetig mit Lipschitzkonstante $\Lambda$ bezüglich $\norm{\cdot}_\infty$. Dann gilt für alle $E \subseteq U$: 
+	\begin{align*}
+		\lambda^n(f(E)) \leq \Lambda^n \lambda^n(E) 
+	\end{align*}
+\end{lemma}
+\begin{theorem}
+	Sei $U \subseteq \bR^n$ offen und $f \in C^1(U, \bR^n)$. Dann gilt:
+	\begin{enumerate}
+		\item Ist $N \subseteq U$ eine $\lambda^n$-Nullmenge, so ist $f(N)$ ebenfalls eine $\lambda^n$-Nullmenge.
+		\item Ist $E \subseteq U$ $\lambda^n$-messbar, so ist auch $f(E)$ $\lambda^n$-messbar.
+	\end{enumerate}
+\end{theorem}
+\begin{theorem}
+	\theoremname{Invarianz von $\lambda^n$ unter orthogonalen Transformationen:}
+	Sei $S \in O(n)$. Dann gilt für alle $E \subset \bR^n$:
+	\begin{align*}
+		\lambda^n(S(E)) = \lambda^n(E)
+	\end{align*}
+\end{theorem}
+\begin{corollary}
+	\theoremname{Bewegungsinvarianz von $\lambda^n$:}
+	Sei $S \in O(n)$ und $a \in \bR^n$. Dann gilt für alle $E \subset \bR^n$:
+	\begin{align*}
+		\lambda^n(S(E) + a) = \lambda^n(E)
+	\end{align*}
+\end{corollary}
+\begin{lemma}
+	\theoremname{Polarzerlegung:} Zu jedem $S \in \GL_n(\bR)$ gibt es eine Diagonalmatrix $\Lambda$ mit positiven Einträgen $\lambda_i$ und Orthogonale Matrizen $T_1, T_2 \in O(n)$, sodass
+	\begin{align*}
+		S = T_1 \Lambda T_2
+	\end{align*}
+\end{lemma}
+\begin{theorem}
+	Für eine beliebige Lineare Abbildung $S \in \bRnn$ gilt
+	\begin{align*}
+		\lambda^n(S(E)) = \abs{\det S} \lambda^n(E)
+	\end{align*}
+\end{theorem}
 \chapter{Integrationstheorie}
 %
 %
@@ -3809,8 +3886,8 @@ Wie konstruiert man aus einfachen Mengenfunktionen Prämaße?
 	\item[\tit{Algebra:}] Sei $X$ eine beliebige Menge. Eine Menge $\cA \subset \cP(X)$ heißt \tit{Mengenalgebra} oder einfach \tit{Algebra}, falls $\cA$ ein Mengenring ist und $X$ enthält. Somit ist $\cA$ eine Mengenalgebra, falls:
 	\begin{enumerate}
 		\item $\emptyset \in \cA$,
-		\item $A, B \in \cA \implies A \setminus B \in \cA$ ($\cA$ ist \tit{$\setminus$-stabil},
-		\item $A, B \in \cA \implies A \cap B \in \cA$ ($\cA$ ist \tit{$\cap$-stabil},
+		\item $A, B \in \cA \implies A \setminus B \in \cA$ ($\cA$ ist \tit{$\setminus$-stabil}),
+		\item $A, B \in \cA \implies A \cap B \in \cA$ ($\cA$ ist \tit{$\cap$-stabil}),
 		\item $X \in \cA$.
 	\end{enumerate}
 	\item[\tit{äußeres Maß:}] Sei $X$ eine beliebige Menge. Ein \tit{äußeres Maß} ist eine Funktion $\mu : \cP(X) \to \barR_{\geq 0}$ mit folgenden Eigenschaften:
@@ -3893,7 +3970,8 @@ Wie konstruiert man aus einfachen Mengenfunktionen Prämaße?
 		\end{align*}
 		Ist $f : X \to X$ sprechen wir auch einfach von $\cA$-messbaren Funktionen.
 		\item[\tit{$\mu$-messbar:}] Sei $(X, \cA, \mu)$ ein Maßraum. Eine auf $D \in \cA$ definierte Funktion $f : D \to \barR$ heißt \tit{$\mu$-messbar} auf $X$, wenn $\mu(X \setminus D) = 0$ und wenn $f$ $\cA|_D$ messbar ist, also messbar auf der Einschränkung von $\cA$ von $X$ auf $D$.
-		\item[\textit{messbare Menge:}] Sei $\mu$ ein äußeres Maß auf einer Menge $X$. So heißt eine Menge $A \subset X$ \tit{messbar}, falls für alle $S \subset X$:
+	\end{description}
+	\item[\textit{messbare Menge:}] Sei $\mu$ ein äußeres Maß auf einer Menge $X$. So heißt eine Menge $A \subset X$ \tit{messbar}, falls für alle $S \subset X$:
 	\begin{align*}
 		\mu(S) \geq \mu(S \cap A) + \mu(S \setminus A)
 	\end{align*}
@@ -3901,7 +3979,6 @@ Wie konstruiert man aus einfachen Mengenfunktionen Prämaße?
 	\begin{align*}
 		\mu(S) = \mu(S \cap A) + \mu(S \setminus A).
 	\end{align*}
-	\end{description}
 \end{description}
 \section*{N}
 \begin{description}

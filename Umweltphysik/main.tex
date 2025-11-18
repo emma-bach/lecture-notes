@@ -296,6 +296,47 @@
 		\item und eine Bewegung nach Westen zu einer Beschleunigung nach Norden.
 	\end{itemize}
 	Eine wichtige Folge ist, dass Richtung Äquator blasende Winde entgegen der Erdrotation in Richtung Westen abgelenkt werden. So entstehen zum Beispiel die Passatwinde.
+	\section{Statistische Physik}
+	\subsection{Druck aus Molekülbewegung}
+	\subsection{Freiheitsgrade}
+	Ein Körper mit Volumen nicht null hat im Allgemeinen sechs Freiheitsgerade - drei in der Bewegung, und drei in der Rotation. Bei einzelnen Atomen gehen wir von einer Ausdehnung von $0$ aus, also von nur drei Freiheitsgraden. Ein Molekül mit $n$ Molekülen hat bei sehr hohen Temperaturen bis zu $3n$ Freiheitsgrade. Diese bestehen für lineare Moleküle aus $3$ Translationsfreiheitsgraden, $2$ Rotationsfreiheitsgraden, und $3n-5$ Vibrationsfreiheitsgraden. Bei nichtlinearen Molekülen ist ein zusätzlicher Rotationsfreiheitsgrade vorhanden, also ein Vibrationsfreiheitsgrad weniger.
+	\begin{description}
+		\item[Wichtige lineare Moleküle:] $O_2$, $N_2$, $CO_2$
+		\item[Wichtige nichtlineare Moleküle:] $H_2O$, $CH_4$, etc.
+	\end{description}
+	Die Anzahl der aktiven Freiheitsgrade $f_U$ bestimmt die Gesamtenergie der Teilchen und damit des gesamten Systems. Sie ist somit auch für die Wärmekapazität relevant.
+	\newpar
+	Bei der Ermittlung der Gesamtenergie zählen wir Vibrationsfreiheitsgrade doppelt, da sie sowohl kinetische als auch potentielle Energie besitzen:
+	\begin{align*}
+		f_U = f_{trans} + f_{rot} + 2 f_{vib}
+	\end{align*}
+	\subsection{Thermodynamische Temperatur}
+	\subsection{Zustandsgleichung des Atomgases}
+	\begin{align*}
+		p = \frac{1}{3} \cdot \frac{N}{V} \cdot m \cdot v^2
+	\end{align*}
+	\begin{align*}
+		E_{kin} = f \cdot \lr(\frac{1}{2} \cdot k \cdot t) = \frac{3}{2} \cdot k \cdot t
+	\end{align*}
+	\begin{align*}
+		\implies p &= \frac{N}{V} \cdot k \cdot T\\
+		\implies p \cdot V &= N \cdot k \cdot T\\
+						   &= \frac{N}{N_A} \cdot N_A \cdot k \cdot t\\ 
+						   &= n \cdot R \cdot T
+	\end{align*}
+	Es folgt außerdem, dass die Gesamtenergie $U$ eines Atomgases mit $f$ effektiven Freiheitsgraden und $N$ Teilchen gegeben ist durch:
+	\begin{align*}
+		U = \frac{f}{2}NkT = \frac{f}{2} nRT
+	\end{align*}
+	Wir fassen einige Terme zu zwei neuen Größen zusammen - der \tbf{molaren Wärmekapazität}
+	\begin{align*}
+		c_V = \frac{f}{2}R,
+	\end{align*}
+	und der \tbf{spezifischen Wärmekapazität}
+	\begin{align*}
+		C_v = \frac{c_w}{M} = \frac{f}{2}\frac{R}{M}
+	\end{align*}
+	wobei $M$ die gesamte Masse des untersuchten Stoffes ist.
 	\chapter{Thermodynamik}
 	\chapter{Physik der Erde}
 \end{document}

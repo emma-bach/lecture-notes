@@ -1077,6 +1077,9 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 		Eine Untergruppe $I$ der Additiven Gruppe $(R,+)$ eines Rings $R$ heißt \tbf{Ideal}, falls
 		$RI \subset I$ und $IR \subset I$ (also wenn das Produkt eines Ideals mit einem beliebigen Ringelement immer im Ideal liegt)
 	\end{definition}
+	\begin{definition}
+		Ein zyklisches Ideal heißt \tbf{Hauptideal}.
+	\end{definition}
 	\begin{lemma}
 		Sei $\phi : R \to S$ ein Ringhomomorphismus. So ist $\ker \phi \subset R$ ein Ideal.
 	\end{lemma}
@@ -1224,4 +1227,66 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 	\begin{counterexample}
 		Ebenso gilt der Satz nicht für nichtkommutative Ringe. Es existieren zum Beispiel Zahlreiche Matrixringe, welche idempotente Matrizen enthalten, also Matrizen $M$ mit $M^n = I$. Somit sind alle skalaren Vielfachen dieser Matrizen Nullstellen von $X^n$.
 	\end{counterexample}
+	\begin{theorem}
+		Sei $k$ ein kommutativer Ring und $P,Q \in k[X]$, wobei $Q$ normiert ist (also Leitkoeffizient $1$ hat.) Dann existieren eindeutige $A,B \in k[X]$, sodass
+		\begin{align*}
+			P = A \cdot Q + B
+		\end{align*}
+		Wobei $\deg B \leq (\deg Q) - 1$
+	\end{theorem}
+	\begin{example}
+		Der Quotientenring $\bR[X] / \angles{X^2 + 1}$ ist isomorph zu den Komplexen Zahlen (Da $X^2 + 1 = 0 \implies X^2 = -1 \implies i := X$
+	\end{example}
+	\begin{theorem}
+		Sei $P \in \bR[X]$ ein Polynom vom Grad $2$ ohne reelle Nullstellen, und sei $\alpha \in \bC$ mit $P(\alpha) = 0$. Dann gilt $\bR[X]/\angles{P} \iso \bC$.
+	\end{theorem}
+	\begin{theorem}
+		Sei $R$ ein Ring, $\fa_1, \hdots, \fa_r \subset R$ Ideale mit $i \neq j \implies \fa_i + \fa_j = R$. So ist die durch Restklassen gegebene Abbildung $\phi$ eine Surjektion $R \surj R/\fa_1 \times \hdots \times R/\fa_j$.
+	\end{theorem}
+	\begin{proof}
+		Die Abbildung ist klar ein Ringhomomorphismus. Es reicht also zu zeigen, dass alle "Einheitsvektoren" $(0, \hdots, 0, 1, 0, \hdots, 0)$ im Bild liegen, da dann der Rest durch Linearkombination folgt.
+		\newpar
+		OBdA reicht $(1, 0, \hdots, 0) \in \im(\phi)$. Es gilt:
+		\begin{align*}
+			&\fa_1 + \fa_i = R\\ \implies &\exists a_i \in \fa_1, b_i \in \fa_i : a_i + b_i = 1\\
+			\implies &1 - a_i = b_i\\
+			\implies &\phi_1(1 - a_i) = [1 - a_i]_{\fa_1} = 1,\\ &\phi_i(1 - a_i) = [b_i]_{\fa_i} = 0\\
+			\implies &\phi\lr(\prod_{i \geq 2}(1 - a_i)) = (1, \hdots, 0)
+		\end{align*}
+	\end{proof}
+	\begin{corollary}
+		\theoremname{Polynominterpolation:}
+		Gegeben $x_1, \hdots, x_r \in \bR$ paarweise verschieden und $y_1, \hdots, y_r \in \bR$ beliebig gibt es ein Polynom $P \in \bR[T]$, sodass $\forall i : P(x_i) = y_i$.
+	\end{corollary}
+	\begin{proof}
+		% https://q.uiver.app/#q=WzAsMyxbMCwwLCJcXGJSW1RdIl0sWzIsMCwiXFxiUiJdLFsxLDIsIlxcYlJbVF0gLyBcXGFuZ2xlc3tUIC0geH0iXSxbMCwxLCJFX3giXSxbMCwyLCIiLDIseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJlcGkifX19XSxbMiwxLCJcXHNpbSIsMix7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dXQ==
+		\[\begin{tikzcd}
+			{\bR[T]} && \bR \\
+			\\
+			& {\bR[T] / \angles{T - x}}
+			\arrow["{E_x}", from=1-1, to=1-3]
+			\arrow[two heads, from=1-1, to=3-2]
+			\arrow["\sim"', dashed, from=3-2, to=1-3]
+		\end{tikzcd}\]
+		The rest should be entirely obvious and is left as an exercise to the reader. (Maybe coming later :)
+	\end{proof}
+	Führt man eine Polynominterpolation durch, findet man die "Basisvektoren", indem man pro $x_i$ für alle $x_j$ die Geraden durch $(x_i, y_0)$ und $(x_j, 0)$ miteinander multipliziert. Diese werden dann aufsummiert. Letztendlich führt man also die selbe Rechnung durch wie in unserem abstrakteren Beweis über Ideale.
+	\begin{theorem}
+		Es gilt zusätzlich $\ker \phi = \bigcap_{i = 1}^r \fa_i$. Ist $R$ kommutativ, ist dies außerdem äquivalent zu $\angles{\fa_1 \fa_2 \hdots \fa_r}$.
+	\end{theorem}
+	\begin{proof}
+		Seien $\fa_1, \fa_2 \subset R$ und $R$ kommutativ mit $\fa_1 + \fa_2 = R$. Wir zeigen $\fa_1 \cap \fa_2 = \angles{\fa_1 \fa_2}$. Die Richtung $\fa_1 \cap \fa_2 \supseteq \angles{\fa_1 \fa_2}$ ist klar.
+		\newpar
+		Es existieren $a_1 \in \fa_1$, $a_2 \in \fa_2$, sodass $a_1 + a_2 = 1$. Dann gilt insbesondere 
+		\begin{align*}
+			\forall x \in \fa_1 \cap \fa_2 :\\
+			 a_1 x + a_2 x = x
+		\end{align*}
+		Also $\fa_1 \cap \fa_2 \subseteq \angles{\fa_1 \fa_2}$, also auch $\fa_1 \cap \fa_2 = \angles{\fa_1 \fa_2}$. Der Rest folgt durch Induktion.
+	\end{proof}
+	\begin{corollary}
+		\begin{align*}
+			\bR[T] / \angles{X^2 - 1} \cong \bR[T] / \angles{X + 1} \times \bR[T] / \angles{X - 1} \cong \bR \times \bR
+		\end{align*}
+	\end{corollary}
 \end{document}
