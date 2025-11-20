@@ -6,7 +6,7 @@ Notes taken in LaTeX for various lectures, exams and seminars.
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Algebra%20und%20Zahlentheorie/main.pdf">Algebra und Zahlentheorie, WS25/56</a>
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Analysis/main.pdf">Analysis I-III, SS25 + WS25/56</a>
 - <a href="https://github.com/emma-bach/lecture-notes/blob/main/Lineare%20Algebra/main.pdf">Lineare Algebra I + II, SS25</a>
-- <a href="https://github.com/emma-bach/lecture-notes/blob/main/Proseminar%20Elementare%Zahlentheorie/main.pdf">Proseminar Elementare Zahlentheorie, WS25/26</a>
+- <a href="https://github.com/emma-bach/lecture-notes/blob/main/Proseminar%20Elementare%20Zahlentheorie/main.pdf">Proseminar Elementare Zahlentheorie, WS25/26</a>
 
 ## Computer Science:
 ### In English:
