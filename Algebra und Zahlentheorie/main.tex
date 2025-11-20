@@ -984,6 +984,7 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 		Es folgt, dass entweder $ba = ab$ oder $ba = ab^2$. Wählen wir eine dieser beiden Möglichkeiten ist bereits die gesamte Gruppe festgelegt. Der erste Fall ergibt $\bZ / 6\bZ$, der zweite Fall ergibt $\cS_3$.
 	\end{proof}
 	\chapter{Ringe}
+	\section{Grundbegriffe}
 	\begin{example}
 		Die Abbildung $\bZ \to \bZ$, welche jedes Element auf $0$ abbildet, ist kein Ringhomomorphismus, da das Einselement auf das Nullelement abgebildet wird. Wohl aber ist für einen beliebigen Ring $R$ die Abbildung $R \to 0$ in den Nullring ein Ringhomomorphismus.
 	\end{example}
@@ -1136,7 +1137,7 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 		$\bZ / (\char K) \bZ \inj K$ ist injektiv. Dies ist nur möglich, wenn $(\char K)$ $0$ oder prim ist.
 	\end{proof}
 	\begin{definition}
-		Sei $R$ ein kommutativer Ring. $a \in R$ heißt \tbf{Einheit}, wenn es ein multiplikatives inverses gibt. Einheiten sind also quasi die "Einsteiler". Wir schreiben die Menge der Einheiten als $R^\times$ (da die Einheiten die größte multiplikativen Gruppe des Rings bilden).
+		Sei $R$ ein kommutativer Ring. $a \in R$ heißt \tbf{Einheit}, wenn es ein multiplikatives Inverses gibt. Einheiten sind also quasi die "Einsteiler". Wir schreiben die Menge der Einheiten als $R^\times$ (da die Einheiten die größte multiplikativen Gruppe des Rings bilden).
 	\end{definition}
 	\begin{example}
 		\phantom{}
@@ -1167,6 +1168,7 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 		\end{enumerate}
 		Die Sicherheit des Algorithmus beruht darauf, dass der diskrete Logarithmus (also das berechnen von $a$ aus $g^a$) im Allgemeinen sehr ineffizient ist. Die häufigste Wahl ist $G = (\bZ / p \bZ)^\times$ für eine sehr große Primzahl $p$, in besonders sicherheitskritischen Fällen wird als Gruppe oft eine elliptische Kurve über einem endlichen Körper genommen.
 	\end{definition}
+	\section{Polynomringe}
 	\begin{definition}
 		Sei $R$ ein Ring und $R[X]$ der Polynomring. Formell kann $R[X]$ auch definiert werden als die Menge aller Abbildungen $\bN \to R$, die höchstens an endlich vielen Stellen $\neq 0$ sind (diese Stellen entsprechen dann den Koeffizienten.) Wir unterscheiden zwischen \tit{Polynomen} und \tit{Polynomfunktionen} - Im Allgemeinen ist die kanonische Abbildung $\bF_p[X] \inj \Ens(\bF_p, \bF_p)$ nämlich nicht injektiv!
 	\end{definition}
@@ -1289,4 +1291,116 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 			\bR[T] / \angles{X^2 - 1} \cong \bR[T] / \angles{X + 1} \times \bR[T] / \angles{X - 1} \cong \bR \times \bR
 		\end{align*}
 	\end{corollary}
+	\section{Irreduzible Elemente und Faktorielle Ringe}
+	Wir wollen nun eine "Primfaktorzerlegung" für beliebige Ringe definieren:
+	\begin{definition}
+		Sei $R$ ein kommutativer Ring. Ein Element $a \in R$ heißt \tbf{irreduzibel in $R$}, falls es weder eine Einheit ist noch sich als Produkt von zwei Nichteinheiten darstellen lässt, also:
+		\begin{align*}
+			a = bc \implies b \in R^\times \vee c \in R^\times
+		\end{align*}
+	\end{definition}
+	\begin{definition}
+		Ein kommutativer Ring $R$ heißt \tbf{faktoriell}, wenn
+		\begin{enumerate}
+			\item $R$ ein Integritätsring ist,
+			\item Jedes $a \in R \setminus (R^\times \cup \{0\})$ ist Produkt von irreduziblen Elementen $a = p_1 p_2 \hdots p_r$
+			\item Ist $p_1p_2 \hdots p_r = q_1 q_2 \hdots q_s$, so ist $s = r$ und es gibt eine Permutation $\sigma \in \cS_r$ und ein $u_i \in R^\times$, sodass für alle $i$
+			\begin{align*}
+				p_i = u_i q_{\sigma(i)}
+			\end{align*}
+		\end{enumerate}
+	\end{definition}
+	\begin{proposition}
+		Der Ring $C(\bR, \bR)$ der stetigen Funktionen $\bR \to \bR$ ist nicht faktoriell, zum Beispiel ist die Funktion $\abs{x}$ kein Produkt von irreduziblen Funktionen, da wir die Funktion als ein beliebig langes Produkt von Wurzeln von sich selbst schreiben können.
+	\end{proposition}
+	\begin{proposition}
+		$R = \bZ[\sqrt{-5}] = \{a + b\sqrt{5} \mid a,b \in \bZ\}$ ist nicht faktoriell.
+	\end{proposition}
+	\begin{proof}
+		Es gilt $6 = 2 \cdot 3 = (1 + \sqrt{-5})(1 - \sqrt{-5})$. Alle dieser Faktoren sind irreduzibel.
+	\end{proof}
+	\begin{definition}
+		Ein kommutativer Integritätsring $R$ heißt \tbf{euklidisch}, falls man "mit Rest teilen kann", also "der Euklidische Algorithmus funktioniert". Formell bedeutet das, dass es eine Abbildung 
+		\begin{align*}
+			\sigma : R \setminus \{0\} \to \bN
+		\end{align*} gibt, sodass für alle $a,b \in R$ mit $b \neq 0$ $q,r \in R$ existieren, sodass
+		\begin{align*}
+			a = b \cdot q + r
+		\end{align*}
+		und $r = 0$ oder $\sigma(b) > \sigma(r)$.
+	\end{definition}
+	\begin{anmerkung}
+		Die Abbildung $\sigma$ kann durch eine Abbildung in eine beliebige wohlgeordnete Menge ersetzt werden.
+	\end{anmerkung}
+	\begin{example}\phantom{}
+		\begin{enumerate}
+			\item $R = \bZ$, $\sigma(n) = \abs{n}$.
+			\item $R = K[X]$ (für einen beliebigen Körper $K$), $\sigma(P) = \deg(P)$.
+			\item $R = \bZ[i]$, $\sigma(a + bi) = a^2 + b^2$. (Ausführlicher später).
+		\end{enumerate}
+	\end{example}
+	\begin{theorem}
+		In einem euklidischen Ring $R$ ist jedes Ideal $I$ ein Hauptideal.
+	\end{theorem}
+	\begin{proof}
+		Falls $I = \angles{0}$, so sind wir fertig. Falls $I \neq \angles{0}$ gibt es ein $b \in I \setminus 0$ mit kleinstmöglichem $\sigma(b)$. So gilt $I = \angles{b}$, denn falls $a \in I \setminus Rb$, so wäre $a = b \cdot q + r$, mit $r \neq 0$, $\sigma(r) < \sigma(b)$ und $r = a - bq \in I$. Widerspruch!!!!!!
+	\end{proof}
+	\begin{example}
+		Sei $K$ ein Körper und $A \in \Mat(n \times n, K)$. So ist
+		\begin{align*}
+			I = \{P \in K[X] \mid P(A) = 0\}
+		\end{align*}
+		ein Ideal, welches vom Minimalpolynom von $A$ erzeugt wird.
+	\end{example}
+	\begin{definition}
+		Ein Integritätsring $R$, welcher kein Körper ist und in dem jedes Ideal ein Hauptideal ist, heißt \tbf{Hauptidealring}.
+	\end{definition}
+	\begin{anmerkung}
+		Körper werden aus den Hauptidealringen ausgeschlossen, da man später in der kommutativen Algebra gerne hätte, dass die faktoriellen Ringe der \tit{Krull-Dimension $1$} die Hauptidealringe sind und die der Dimension $0$ die Körper.
+	\end{anmerkung}
+	\begin{theorem}
+		Jeder Hauptidealring ist faktoriell.
+	\end{theorem}
+	\begin{proof}\phantom{}
+		\begin{enumerate}
+			\item Zeige: Jedes $r \in R \setminus (R^\times \cap \{0\})$ ist ein Produkt $r = p_1 \hdots p_r$, $r \geq 1$, mit $p_i$ irreduzibel.
+			\newpar
+			Sei $r \in R$ ein Gegenbeispiel. Dann gilt:
+			\begin{itemize}
+				\item $r \notin R^\times$.
+				\item $r \neq 0$.
+				\item $r$ ist nicht irreduzibel.
+			\end{itemize}
+			Also $r = r_1 \cdot r'$, mit $r_1, r' \notin R^\times$. Also ist entweder $r_1$ oder $r_2$ auch ein Gegenbeispiel. Ohne Beschränkung der Allgemeinheit sei dies $r_1$. Wir wissen nun, dass $\angles{r_1} \supsetneq \angles{r}$ sein muss, da $r'$ keine Einheit ist und somit $r_1$ kein Vielfaches von $r$ sein kann. Wir faktorisieren weiter und finden eine Kette
+			\begin{align*}
+				\angles{r} \subsetneq \angles{r_1} \subsetneq \hdots
+			\end{align*}
+			Da diese Ideale jeweils ineinander liegen ist diese Vereinigung ein Ideal, also insbesondere ein Hauptideal. Somit existiert ein Element $k \in R$, welches dieses Ideal erzeugt. Insbesondere existiert ein $i$, sodass $k \in \angles{r_i}$. Dann muss aber
+			\begin{align*}
+				\angles{r_i} = \angles{r_{i +1}} = \hdots
+			\end{align*}
+			gelten.
+			Widerspruch!
+			\item Zeige: Die Faktorisierung ist eindeutig. Wir zeigen allgemeiner: Ist $p$ irreduzibel mit $p \mid ab$, so folgt $p \mid a$ oder $p \mid b$.
+			Äquivalent dazu ist: $p \mid ab \wedge \neg(p \mid a) \implies p \mid b$.
+			\newpar
+			Wir betrachten nun das Ideal $\angles{p,a}$. Dieses muss ein Hauptideal $\angles{c}$ sein. Dann gilt $c \mid p$ und $c \mid a$. Da $p$ irreduzibel ist gilt $c \in R^\times$ oder $c \in R^\times p$. Da $p$ $a$ nicht teilt, kann $c$ kein Vielfaches von $p$ sein. Also ist $c$ eine Einheit. Das von $p$ und $a$ erzeugte Ideal ist also $R$. Es folgt
+			\begin{align*}
+				xp + ya = 1,
+			\end{align*}
+			also
+			\begin{align*}
+				xpb + yab = b.
+			\end{align*}
+			Nun gilt trivial $p \mid xpb$. Wir wissen außerdem $p \mid ab$, also $p \mid yab$. Es folgt $p \mid b$.
+			\newpar
+			Die Eindeutigkeit der Faktorisierung folgt nun genau wie im Fall der ganzen Zahlen.
+		\end{enumerate}
+	\end{proof}
+	\begin{corollary}
+		Für jeden Körper $K$ existiert eine Bijektion, gegeben durch die Multiplikation, zwischen Multimengen von irreduziblen $K[X]$-Polynomen und normierten $K[X]$-Polynomen.
+	\end{corollary}
+	\begin{proposition}
+		Über algebraisch abgeschlossenen Körpern haben alle irreduziblen Polynome den Grad $1$.
+	\end{proposition}
 \end{document}

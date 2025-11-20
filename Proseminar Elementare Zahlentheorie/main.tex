@@ -1,0 +1,197 @@
+\documentclass{report}
+
+% custom margins
+\usepackage[a4paper,margin=1.5in]{geometry}
+\renewcommand{\baselinestretch}{1.2}
+
+% emma's long list of custom macros and universally used packages
+\include{../macros-and-packages.tex}
+
+% fancy bar next to proofs
+\tcolorboxenvironment{proof}{
+	colback=white,
+	boxrule=0pt,
+	leftrule=0.5mm,
+	before skip=0.75cm,
+	after skip=0.75cm,
+	sharp corners,
+	breakable,
+	enhanced,
+}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\renewcommand*\contentsname{Inhalt}
+\renewcommand*\proofname{Beweis}
+
+\pagestyle{fancy} %allows headers
+
+\lhead{Emma Bach}
+\rhead{\today}
+
+
+\begin{document}
+	\include{title}
+	\tableofcontents
+	\thispagestyle{fancy}
+	\chapter{Kettenbrüche II}
+	\section{Wiederholung}
+	\begin{definition}
+		Ein regulärer Kettenbruch ist ein Bruch der Form
+		\begin{align*}
+			a_0 + \frac{1}{a_1 + \frac{1}{a_2 + \hdots}}
+		\end{align*}
+	\end{definition}
+	\begin{proposition}
+		Es gilt folgende Rekursionsformel:
+		\begin{align*}
+			p_{-2} := 0, p_{-1} := 1, p_i = ap_{i-1} + p_{i - 2}\\
+			q_{-2} := 1, p_{-1} := 0, q_i = aq_{i-1} + q_{i - 2}
+		\end{align*}
+	\end{proposition}
+	\begin{proposition}
+		Es gilt:
+		\begin{enumerate}
+			\item Für $i \geq -1$ gilt $p_{i-1}q_i - p_iq_{i-1} = (-1)^i$
+			\item Für $i \geq 0$ gilt 
+			\begin{align*}
+				\alpha - \frac{p_i}{q_i} = \frac{(-1)^i}{q_i(q_i\alpha_{i+1} + q_{i - 1})}
+			\end{align*}
+		\end{enumerate}
+	\end{proposition}
+	\section{Neues}
+	\begin{definition}
+		Eine rationale Zahl $\frac{a}{b}$ mit $a \in \bZ$, $b \in \bN$ heißt \tbf{beste Näherung} einer reellen Zahl $\alpha \in \bR$, falls für alle $c \in \bZ$ und $d \in \bN_1$ mit $\frac{a}{b} \neq \frac{c}{d}$ und $d  \leq b$
+		\begin{align*}
+			\abs{d\alpha - c} > \abs{b\alpha - a}
+		\end{align*}
+		gilt.
+	\end{definition}
+	
+	Das Ziel des Vortrags ist, zu zeigen, dass jede beste Näherung von $\alpha \in \bR$ auch ein Näherungsbruch von $\alpha$ ist.
+	
+	\begin{lemma}\phantom{}
+		\begin{enumerate}
+			\item Sei $\alpha = \frac{p_k}{q_k} \in \bQ$. Dann hat man für alle $c \in \bZ$, $a \in \bN_1$ die Ungleichung
+			\begin{align*}
+				\abs{q_k \alpha - p_k} \leq \abs{d\alpha - c}
+			\end{align*}
+			mit Gleichheit für $\frac{c}{d} = \frac{p_k}{q_k}$.
+			\item Gilt $q_k > 1$ für $\alpha \in \bQ$, so hat man für alle $c \in \bZ, d \in \bN$ mit $d < q_k$ die Ungleichung $\abs{q_{k-1}\alpha - p_{k-1}} \leq \abs{d \alpha c}$, mit Gleichheit genau dann, wenn $(c,d) = (p_{k-1},q_{k-1})$ oder $(c,d) = (p_k - p_{k-1}, q_k - q_{k-1})$ ist.
+			\item Ist $\alpha \in \bQ, 0 \leq i \leq k-2$ oder $\alpha \in \bR \setminus \bQ$ und nicht gleichzeitig $i = 0$ und $a_1 = 1$, dann gilt für alle $c \in \bZ, d \in \bN_1$ mit $d < q_{i+1}$ die Ungleichung
+			\begin{align*}
+				\abs{q_i \alpha - p_i} \leq \abs{d \alpha - c}
+			\end{align*}
+			mit Gleichheit genau für $c = p_i, d = q_i$.
+		\end{enumerate}
+	\end{lemma}
+	\begin{proof}
+		\begin{enumerate}
+			\item Da $\alpha \in \bQ$ gilt auch $\alpha = \frac{p_k}{q_k}$, also folgt $0 = \abs{q_k \alpha - p_j} \leq \abs{d\alpha - c}$.
+			\item Betrachte das lineare Gleichungssystem
+			\begin{align*}
+				p_i x + p_{i+1} y &= c,\\
+				q_i x + q_{i+1} y &= d
+			\end{align*}
+			In Matrixschreibweise:
+			\begin{align*}
+				\begin{pmatrix}
+					p_i & p_{i+1}\\
+					q_i & q_{i+1}
+				\end{pmatrix}
+				\binom{x}{y}
+				=
+				\binom{c}{d}
+			\end{align*}
+			Dieses Gleichungssystem ist Lösbar, wenn die Determinante nicht Null ist, also $p_{i}q_{i+1} - q_ip_{i+1} \neq 0$. Dass dies gilt, wurde bereits letzte Woche gezeigt. Insbesondere existieren die Lösungen gemäß der Kramerschen Regel sogar in $\bZ$. Es gilt außerdem $x \neq 0$, da sonst $q_{i+1} \mid d$ folgen würde, was unserer Annahme $d \leq q_{i + 1}$ widerspricht.
+			\newpar
+			Durch Umstellen des Gleichungssystems folgt 
+			\begin{align*}
+				x(q_{k-1} \alpha - p_{k-1}) = d\alpha - c.
+			\end{align*}
+			Da $x \in \bZ \setminus \{0\}$ folgt $\abs{q_{k-1} \alpha - p_{k-1}} \leq {d\alpha - c}$.
+			\item In diesem Fall ist $c = \lambda p_i$ und $d = \lambda q_i$ $\lambda \in \bN_{\geq 2}$, da $q_i \alpha - p_i \neq 0$ und $\abs{q_i \alpha - p_i} < \lambda\abs{q_i\alpha - p_i} = \abs{d \alpha - c}$.
+			\newpar
+			Sei nun also $(c,d)$ von allen $(\lambda p_i, \lambda q_i)$ verschieden. Dann gilt für die Lösung des LGS $xy < 0$, denn $y = 0$ führt zu $\frac{p_i}{q_i} = \frac{c}{d}$ und $xy > 0$ ist im Widerspruch zu $0 < d < q_{i+1}$ und der Gleichheit in 1).
+			\newpar
+			Nach Wiederholung haben $q_i\alpha - p_i$ und $q_{i+1}\alpha - p_{i+1}$ unterschiedliche Vorzeichen. Da $0 \leq i \leq k-2$ sind auch beide Ungleich $0$.
+			\newpar
+			Insgesamt folgt, dass $x(q_i \alpha - p_{i})$ und $y(q_{i + 1}\alpha - p_{i+1})$ gleiches Vorzeichen haben. Dementsprechend gilt Gleichheit in der folgenden Dreiecksungleichung:
+			\begin{align*}
+				\abs{d \alpha - c}  &= \abs{x(q_i \alpha - p_i) + y(q_{i+1}\alpha - p_{i+1})}\\
+								    &= \abs{x}\abs{x(q_i \alpha - p_i)} + \abs{y}\abs{(q_{i+1}\alpha - p_{i+1})}\\
+								    &> \abs{q_i \alpha - p_i}
+			\end{align*}
+			
+		\end{enumerate}
+	\end{proof}
+	\begin{theorem}
+		Jede beste Näherung wird als Näherungsbruch angenommen.
+	\end{theorem}
+	\begin{proof}
+		Sei $\frac{a}{b}$ eine beste Näherung, aber $\frac{a}{b} \neq \frac{q_i}{p_i}$ für alle $i$.
+		\begin{description}
+			\item[Fall 1:] Sei $\alpha \in \bQ$ und $q_k \leq b$. Wähle $c = p_n, d = q_n$. Dann gilt $\frac{c}{d} \neq \frac{a}{b}$, $d \leq b$ und nach Lemma 1 folgt
+			\begin{align*}
+				0 = \abs{q_k \alpha - p_k} = \abs{d\alpha - c} < \abs{b \alpha - c},
+			\end{align*} 
+		 	also war $\frac{a}{b}$ keine beste Näherung.
+			\item[Fall 2:] Sei $\alpha \in \bQ$ mit $q_k > b$ oder $\alpha \in \bR \setminus \bQ$. Fixiere $i$, sodass $q_i \leq b \leq q_{i+1}$. Man erhält $i < k$ und 
+			\begin{align*}
+				1 < q_{i+1} = a_i q_i + q_{i-1},
+			\end{align*}
+			also $i \geq 1$ oder $a_i > 1$. Nach Lemma 2 und Lemma 3 und $b < q_{i+1}$ gilt
+			\begin{align*}
+				\abs{q_i \alpha - p_i} \leq \abs{b \alpha - a}
+			\end{align*}
+			Die Wahl von $c = p_i$ und $d = q_i$ liefert dann wieder $\frac{c}{d} \neq \frac{a}{b}$, $d \leq b$, und
+			\begin{align*}
+				 \abs{d \alpha - c} < \abs{b\alpha - c},
+			\end{align*}
+			also war $\frac{a}{b}$ wieder keine beste Näherung.
+		\end{description}
+	\end{proof}
+	\begin{theorem}
+		Sei $\alpha \in \bR$, $p \in \bZ$, $q \in \bN$ und
+		\begin{align*}
+			\abs{\alpha - \frac{p}{q}} < \frac{1}{2q^2}
+		\end{align*}
+		dann ist $\frac{p}{q}$ eine beste Näherung von $\alpha$, und somit insbesondere ein Näherungsbruch.
+	\end{theorem}
+	\begin{proof}
+		Angenommen, $\frac{p}{q}$ wäre keine beste Näherung. Dann gibt es $c \in \bZ$, $d \in \bN$ mit $d \leq q$ und $\frac{p}{q} \neq \frac{c}{d}$, sodass
+		\begin{align*}
+			\abs{d\alpha - c} \leq \abs{q\alpha - c}
+		\end{align*}
+		Nach Vorraussetzung gilt
+		\begin{align*}
+			\abs{q\alpha - p} < \frac{1}{2q},
+		\end{align*}
+		also auch
+		\begin{align*}
+			\abs{d\alpha - c} < \frac{1}{2q}.
+		\end{align*}
+		Nun gilt
+		\begin{align*}
+			\frac{1}{qb} &\leq \frac{p}{q} - \frac{c}{d}\\
+						 &\leq \abs{\alpha - \frac{p}{q}} +
+						 	   \abs{\alpha - \frac{c}{d}}\\
+						 &\leq \frac{1}{2q^2} + \frac{1}{2qd}
+		\end{align*}
+		Es folgt $\displaystyle \frac{1}{qd} < \frac{q + d}{2q^2d}$, also $2q < d + q$, also $q < d$, was ein Widerspruch zur Annahme ist.
+	\end{proof}
+	\begin{theorem}
+		Sei $\alpha \in \bR$. Angenommen, der $0$-te Näherungsbrüchen von $\alpha$ hat nicht die Form $[0,2]$, $[a_0,1,a_2,\hdots,a_k]$, oder $[a_0,1,a_2, \hdots]$. Dann ist jeder Näherungsbruch von $\alpha$ eine beste Näherung.
+	\end{theorem}
+	\begin{proof}
+		Wir müssen zeigen, dass für $\frac{p_i}{q_i}$ ($i \geq 1$ in den Ausnahmefällen) für alle $c \in \bZ$, $d \in \bN$ mit $\frac{c}{d} \neq \frac{p}{q}$ der Satz gilt.
+		\begin{description}
+			\item[Fall 1:] Sei $\alpha \in \bQ, i = k$. Dann gilt der Satz nach Lemma 1.
+			\item[Fall 2:] Sei $\alpha \in \bQ, i = k-1$. Dann gilt nach Vorraussetzung $d \leq q_i = q_{k-1}$, also gilt nach Lemma 2 $\abs{q_{k-1}\alpha . p_{k-1}} \leq \abs{d \alpha - c}$.
+			\newpar
+			Da nicht $k = 1$, $\alpha_k = 2$ gilt, folgt $q_k > 2q_{k-1}$. Es kann also keine Gleichheit eintreten, da $(c,d) \neq (p_{k-1}, q_{k-1})$ und $(c,d) \neq (p_k - p_{k-1}, q_k - q_{k-1})$, da $d \leq q_{k-1} < q_k - q_{k-1}$. 
+			\item[Fall 3:] Sei $\alpha \in \bQ$, $0 \leq i \leq k - 2$ oder $\alpha \in \bR \setminus Q$ nach Vorraussetzung ist $d \leq q_i \leq q_{i+1}$ und nach Ausnahmen ist nicht gleichzeitig $i = 0$ und $a_1 = 1$. Also folgt $\abs{q_i \alpha - p_i} < \abs{d\alpha - c}$, da $c \neq p_i$, $\alpha \neq q_i$.
+		\end{description}
+	\end{proof}
+\end{document}

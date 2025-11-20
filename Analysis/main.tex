@@ -2728,7 +2728,7 @@ Somit sind Existenzbeweise von Mengen, welche nicht Borel sind, in der Regel nic
 \begin{proposition}
 	Vitalimengen sind nicht Borel.
 \end{proposition}
-\noindent Ein Beweis folgt (hoffentlich -w-) später.
+\noindent Ein Beweis folgt deutlich später in \ref{theorem:vitalinonmeasurable}.
 \newpar\newpar
 Nun fürs Erste zurück zu $\sigma$-Algebren.
 \begin{theorem}
@@ -3711,7 +3711,7 @@ Wie konstruiert man aus einfachen Mengenfunktionen Prämaße?
 		\bigotimes_{i \in I} \cA_i := \sigma(\cQ) = \sigma(\cZ)
 	\end{align*}
 \end{theorem}
-\chapter{Das $n$-dimensionale Lebesquemaß $\lambda^n$}
+\section{Das $n$-dimensionale Lebesquemaß $\lambda^n$}
 \begin{lemma}
 	Der elementargeometrische Inhalt $\vol^n : \cQ^n \to \barR_{\geq 0}$ ist ein Prämaß auf dem Halbring $\cQ^n \subset P(\bR^n)$.
 \end{lemma}
@@ -3868,7 +3868,208 @@ Wie konstruiert man aus einfachen Mengenfunktionen Prämaße?
 		\lambda^n(S(E)) = \abs{\det S} \lambda^n(E)
 	\end{align*}
 \end{theorem}
+\begin{example}
+	Seien $\lambda_1, \hdots, \lambda_n > 0$. So definiert die Menge
+	\begin{align*}
+		E := \{x \in \bR^n \mid \sum_{i = 1}^n (\frac{x_i}{\lambda_i})^2 < 1\}
+	\end{align*}
+	einen Ellipsoid mit Halbachsen $\lambda_i$. Dieser ist das Bild eines offenen Balls unter einer Diagonalmatrix $\Lambda$. Also gilt
+	\begin{align*}
+		\lambda^n(E) = \lambda^n(\Lambda(B_1(0))) ) \prod_{i = 1}^n \lambda_i \cdot \lambda^n (B_1(0))
+	\end{align*}
+\end{example}
+\begin{theorem}
+	\label{theorem:vitalinonmeasurable}
+	Jede Vitalimenge $V$ ist nicht $\lambda^1$-messbar, und somit insbesondere nicht Borel.
+\end{theorem}
+\begin{proof}
+	Sei $q_k$ eine Abzählung von $[0,1] \cap \bQ$. Wir wissen $\forall q \in \bQ : \lambda^1(V) = \lambda^1(V + q)$. Wir wissen außerdem
+	\begin{align*}
+		[0,1] \subseteq \bigcup_{k \in \bN} q_k + V \subseteq [-1,2],
+	\end{align*}
+	also gilt insbesondere
+	\begin{align*}
+		1 \leq \lambda^1(\bigcup_{k \in \bN} q_k + V) \leq 3.
+	\end{align*}
+	Nun gilt:
+	\begin{align*}
+		\sum_{k = 1}^\infty \lambda^1(V) &= \sum_{k = 1}^\infty \lambda^1(V + q_k)\\
+			 							 &= \lambda^1 (\bigcup_{k = 1}^\infty(S + q_k))\\
+			 							 &\in [1,3]
+	\end{align*}
+	Was ein Widerspruch sowohl zu $\lambda^1(V) = 0$ also auch zu $\lambda^1(V) = \epsilon > 0$ ist.
+\end{proof}
 \chapter{Integrationstheorie}
+\section{Das Lebesqueintegral}
+Im gesamten folgende Kapitel nehmen wir $(X, \cA, \mu)$ als beliebigen Maßraum. Ist $\mu$ ein äußeres Maß, ersetzen wir $\cA$ durch $\cM(\mu)$.
+\newpar
+Wir nehmen außerdem $f : D \to \barR$ mit $D \subset X$ entwededer als $\cA$-messbare Funktion an, also
+\begin{align*}
+	D \in \cA, \forall s \in \bR : \{f > s\} \in \cA,
+\end{align*}
+oder als $\mu$-messbare Funktion, also
+\begin{align*}
+	f : \tilde D \to \barR, \tilde D \in \cA, \mu(D \setminus \tilde D) = 0,
+\end{align*}
+und $f|_{\tilde D}$ ist $\cA|_{\tilde D}$ messbar.
+\newpar
+Wir erinnern uns, dass die einfachsten messbaren Funktionen die Indikatorfunktionen $\chi_E$ von Mengen $E \in \cA$ sind.
+\begin{definition}
+	Sei $(Y, \cC)$ ein messbarer Raum. So nennen wir eine Funktion $f : Y \to \bR$ eine \tbf{Treppenfunktion}, wenn sie als endliche Linearkombination von Indikatorfunktionen von Mengen $A_i \in \cA$ darstellbar ist, also:
+	\begin{align*}
+		f(x) = \sum_{i = 1}^n \alpha_i \cdot (\chi_{A_i}(x))
+	\end{align*}
+	Insbesondere hat eine Treppenfunktion nur endlich viele mögliche Werte.
+\end{definition}
+\begin{proposition}
+	Die Treppenfunktionen bilden einen $\bR$-Vektorraum.
+\end{proposition}
+\begin{theorem}
+	Sei $(Y, \cC)$ ein messbarer Raum. Für jede nichtnegative $\cC$-messbare Funktion $f : Y \to [0, \infty]$ existiert eine monoton wachsende Folge $f_n$ nichtnegativer Treppenfunktionen, welche punktweise gegen $f$ konvergiert.
+\end{theorem}
+\begin{proof}
+	Sei $m \in \bN$, $k = 1, \hdots, m2^m$. Wir definieren
+	\begin{align*}
+		F_{m,k} := \{x \in Y \mid \frac{k-1}{2^m} \leq f(x) < \frac{k}{2^m}\}
+	\end{align*}
+	Da $f$ messbar ist, sind auch diese Mengen $F_{m,k}$ messbar. Wir definieren nun
+	\begin{align*}
+		f_m(x) =
+		\begin{cases}
+			\frac{k-1}{2^m} & x \in F_{m,k}\\
+			m & x \in Y \setminus \bigcup_{k} F_{m,k}
+		\end{cases}
+	\end{align*}
+	Offensichtlich ist die Folge $f_m$ monoton wachsend. Da die Differenz zum Funktionswert immer kleiner wird, konvergiert die Folge außerdem gegen $f$.
+\end{proof}
+\begin{definition}
+	\theoremname{Lebesqueintegral von Charakteristischen Funktionen:}
+	Das Lebesqueintegral einer Charakeristischen Funktion einer Menge $E \in \cA$ kann nun sehr intuitiv definiert werden durch:
+	\begin{align*}
+		\int_X \chi_A d\mu = \mu(A)
+	\end{align*}
+\end{definition}
+\begin{lemma}
+	Seien $A_1, \hdots, A_m, B_1, \hdots, B_m \in \cA$ paarweise disjunkt und seien $\alpha_i$, $\beta_j$ nichtnegative Zahlen. Dann gilt:
+	\begin{align*}
+		\sum_{i = 1}^n \alpha_i \chi_{A_i} &\leq \sum_{j = 1}^n \beta_j \chi_{B_j}\\
+		\implies \sum_{i = 1}^n \alpha_i \mu(A_i) &\leq \sum_{j = 1}^n \beta_j \mu(B_j)
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Sei $\alpha_0 = \beta_0 = 0$, $A_0 = X \setminus \bigcup_{i = 1}^m A_i$, $B_0 = X \setminus \bigcup_{j = 1}^n B_j$ mit $A_i \cap B_j = \emptyset$ oder $\alpha_i \leq \beta_j$. Dann gilt:
+	\begin{align*}
+		\sum_{i = 0}^m \alpha_i \mu(A_i) 
+		&= \sum_{i = 0}^m \sum_{j = 0}^n \alpha_i \mu(A_j \cap B_j)\\ 
+		&\leq \sum_{i = 0}^m \sum_{j = 0}^n \beta_j \mu(A_j \cap B_j)\\
+		&= \sum_{j = 0}^n \beta_j \mu(\cap B_j) 
+	\end{align*}
+\end{proof}
+\begin{anmerkung}
+	Wir können jede Treppenfunktion
+	\begin{align*}
+		f = \sum_{j = 1}^m \beta_j \chi_{B_j}
+	\end{align*}
+	in eine Darstellung mit paarweise disjunkten $B_j$ bringen, indem wir den Funktionswert auf einem Schnitt $B_i \cap B_j$ als $\beta_i + \beta_j$ definieren. 
+\end{anmerkung}
+\begin{definition}
+	\theoremname{Lebesqueintegral von Treppenfunktionen:}
+	Sei $D \in \cA$ und $s$ eine nichtnegative Treppenfunktion mit einer Darstellung
+	\begin{align*}
+		s = \sum_{j = 1}^n \beta_j \chi_{B_j}
+	\end{align*}
+	mit paarweise disjunkten $B_j \in \cA$ und $\beta_j \in \bR_{\geq 0}$.
+	\newpar
+	So definieren wir das Lebesqueintegral von $s$ als:
+	\begin{align*}
+		\int_D s\ d\mu = \sum_{j = 1}^n \beta_j \mu(B_j)
+	\end{align*}
+\end{definition}
+\begin{definition}
+	\theoremname{Lebesqueintegral messbarer Funktionen:}
+	Für nichtnegative $\cA$-messbare numerischer Funktionen auf $D \in \cA$ setzen wir:
+	\begin{align*}
+		\int_D f\ d\mu &:= \sup \lr{\int_D s\ d\mu}
+	\end{align*}
+	Wobei jedes $s$ eine Treppenfunktion ist, sodass $\forall x \in D : 0 \leq s(x) \leq f(x)$.
+	Für beliebige $\cA$-messbare Funktionen $f$ auf $D \in \cA$ definieren wir das Lebesqueintegral durch
+	\begin{align*}
+		\int_D f\ d_\mu := \int_D f^+\ d\mu - \int_D f^{-}\ d\mu,
+	\end{align*}
+	solange wenigstens eines der Intergral auf der rechten Seite endlich ist.
+\end{definition}
+\begin{anmerkung}
+	Für Treppenfunktion stimmen die Integraldefinitionen gemäß unseres Lemmas überein.
+\end{anmerkung}
+\begin{proposition}
+	Sei $f$ $\cA$-messbar auf einer Nullmenge $N \in \cA$. Dann ist
+	\begin{align*}
+		\int_N f\ d\mu = 0
+	\end{align*}
+\end{proposition}
+\begin{proposition}
+	Sei $f : X \to \barR$ und $M \in \cA$. Dann gilt
+	\begin{align*}
+		\int_M f\ d\mu = \int_X f \chi_M\ d\mu
+	\end{align*}
+	und
+	\begin{align*}
+		\int_M f\ d\mu = \int_M f\ d\mu|_M
+	\end{align*}
+\end{proposition}
+\begin{proof}
+	\begin{enumerate}
+	\item
+	Sei $f \geq 0$ und $0 \leq s \leq f$ auf $M$. Dann folgt $0 \leq s\chi_M \leq f\chi_M$. Sei nun
+	\begin{align*}
+		s = \sum \alpha_i \chi_{A_i}.
+	\end{align*}
+	Dann ist
+	\begin{align*}
+		s\chi_M = \sum \alpha_i \chi_{A_i \cap M}.
+	\end{align*}
+	Also gilt
+	\begin{align*}
+		\sup_{0 \leq s \leq f} \leq \sup_{0 \leq s \leq f_{\chi_M}},
+	\end{align*}
+	also
+	\begin{align*}
+		\int_M f\ d\mu \leq \int_X f\chi_M\ d\mu.
+	\end{align*}
+	Wir wissen außerdem $x \in X \setminus M \implies \forall i : x \notin A_i$, also
+	\begin{align*}
+		s = \sum \alpha_i \chi_{A_i \cap M},
+	\end{align*}
+	also
+	\begin{align*}
+		\int_X s\ d\mu = \int_M s\ d\mu \implies \int_X f(X_M)\ d\mu \leq \int_M f\ d\mu.
+	\end{align*}
+	\item
+	\begin{align*}
+		\int_M s\ d\mu &= \sum \alpha_i \mu(A_i)\\
+		&= \sum \alpha_i \mu(A_i \cap M)\\
+		&= \sum \alpha_i \mu|_M(A_i)\\
+		&= \int_M s\ d\mu|_M
+	\end{align*}
+\end{enumerate}
+\end{proof}
+Es reicht also, uns auf Integrale über ganz $X$ zu beschränken.
+\begin{lemma}\theoremname{Monotonie des Lebesqueintegrals:}
+	Für nichtnegative $\cA$-messbare Funktionen $f,g$ folgt aus $0 \leq f \leq g$
+	\begin{align*}
+		0 \leq \int_X f\ d\mu \leq \int_X g\ d\mu
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Die Menge der Treppenfunktionen unter $f$ ist eine Teilmenge der Treppenfunktionen unter $g$.
+\end{proof}
+\begin{theorem}
+	\theoremname{Über monotone Konvergenz:}
+	Seien $f_n$ nichtnegative $\cA$-messbare Funktionen auf $X$, sodass $f_n \uparrow f$, dann gilt
+	\begin{align*}
+		\lim_{n \to \infty} \int_x f_n\ d\mu = \int_X f\ d\mu
+	\end{align*}
+\end{theorem}
 %
 %
 %

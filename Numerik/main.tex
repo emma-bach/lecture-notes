@@ -762,7 +762,7 @@ Sei $Q \in O(n)$ (also eine $n \times n$-Orthogonalmatrix). So gilt $\norm{Q(Ax 
 	\begin{align*}
 		A = QR
 	\end{align*}
-	Außerdem gilt $\forall i : \abs{r}_{ii} \geq 0$
+	Außerdem gilt $\forall i : \abs{r}_{ii} > 0$
 \end{theorem}
 \begin{proof}
 	Wir setzen $A_1 = A$, und es sei $x = a_1 \in \bR^m$ die erste Spalte von $A_1$. Falls $x \in \bR{e_1}$, setzen wir $Q_1 = E_m$. Ansonsten sei
@@ -782,5 +782,153 @@ Sei $Q \in O(n)$ (also eine $n \times n$-Orthogonalmatrix). So gilt $\norm{Q(Ax 
 		\end{pmatrix}
 	\end{align*}
 	mit $A_2 \in \bR^{(m-1) \times (n-1)}$.
+	Wir setzen nun
+	\begin{align*}
+		\tilde Q_2 A_2 = 
+		\begin{pmatrix}
+			r_{12} & r_2^\top\\
+			\vzero & A_3
+		\end{pmatrix}
+	\end{align*}
+	und
+	\begin{align*}
+		Q_2 = \begin{pmatrix}
+			1 & \vzero^\top\\
+			\vzero & \tilde Q_2
+		\end{pmatrix}
+	\end{align*}
+	Die Matrix $Q_2$ ist orthogonal, insbesondere ist sie die Householder-Matrix zu $v = \binom{0}{\tilde v}$ mit $\tilde v$, wobei $\tilde v$ der Vektor ist, der $\tilde Q_2$ als Householder-Matrix gibt.
+	\newpar
+	Nach $n$ solchen Schritten erhalten wir $QA := (Q_nQ_{n-1} \hdots Q_1) A = R$. Da $Q$ ein Produkt orthogonaler Matrizen ist gilt insbesonderee $Q \in O(m)$. Die Einträge erfüllen $r_{ii} = \norm{a_i}_2 > 0$, da die Matrix $A$ vollen Rang hat.
 \end{proof}
+\begin{anmerkung}
+	Im Fall $m = n$ ist die Faktorisierung abgesehen von Vorzeichen der Diagonaleinträge von $R$ eindeutig, denn falls $A = QR = Q'R'$, so folgt mit
+	\begin{align*}
+		E := (Q')^{-1}Q = R'R^{-1}
+	\end{align*}
+	Dass $E$ eine orthogonale obere Dreiecksmatrix ist. Die orthogonalen Dreiecksmatrizen sind genau die Diagonalmatrizen mit Einträgen $\pm 1$. Damit folgt aber $Q = Q'E$ und $R = ER'$.
+\end{anmerkung}
+\begin{anmerkung}
+	Für die Anwendung einer Householder-Transformation kann jede Matrixmultiplikation als Householder-Transformation dargestellt werden, was wesentlich schneller als allgemeine Matrixmultiplikation ist:
+	\begin{align*}
+		P_vA &= (E_m - 2vv^\top)A\\ 
+			   &= A - 2v(v^\top A)\\
+	\end{align*}
+\end{anmerkung}
+\begin{anmerkung}
+	Die Vektoren $v$ zu den Householder-Transformationen lassen sich in den frei werdenden Einträgen von $A$ speichern. Weiter gilt
+	\begin{align*}
+		Q = \prod_{i = 1}^n (E_m - 2v_i v_i^\top)
+	\end{align*}
+\end{anmerkung}
+\begin{anmerkung}
+	Der Aufwand ist $\cO(n^3)$.
+\end{anmerkung}
+\section{Lösung des Ausgleichsproblems}
+Mithilfe der $QR$-Zerlegung bekommen wir ein stabiles Verfahren zur Lösung von Ausgleichsproblemen.
+\begin{theorem}
+	Sei $A \in \bR^{m \times n}$, $m \geq n$, $\rang A = n$. Sei $A = QR$ und $Q^\top b = \binom{c}{d}$, $Q^\top A = R = \binom{\hat R}{0}$ mit $c \in \bR^n$, $d \in \bR^{m-n}$, $\hat R = \bR^{n \times n}$ obere Dreiecksmatrix. So ist die Lösung des Anfangswertproblems gegeben durch
+	\begin{align*}
+		\hat R x = c
+	\end{align*}
+\end{theorem}
+\begin{anmerkung}
+	Da $\cond_2(Q) = 1$ folgt für reguläre $A \in \bR^{n \times n}$ direkt 
+	\begin{align*}
+		\cond_2(R) = \cond_2(A).
+	\end{align*}
+	Somit ist insbesondere unser Algorithmus stabil.
+\end{anmerkung}
+\section{Singulärwertzerlegung}
+	Wir betrachten $A^\top A \in \bRnn$, $A \in \bR^{m \times n}$.
+	\newpar
+	Dank Symmetrie ist $A^\top A$ diagonalisierbar, und es existiert eine Orthonormalbasis aus Eigenvektoren $v_1, \hdots, v_n$ mit Eigenwerten $\lambda_1 \geq \hdots \geq \lambda_p > \lambda_{p + 1} = \hdots = \lambda_{n} = 0$. Für $i \in 1, \hdots p$ setzten wir
+	\begin{align*}
+		u_i = \frac{1}{\sqrt{\lambda_i}} A v_i
+	\end{align*} 
+	Dann gilt für $i,j \in 1, \hdots, p$, dass
+	\begin{align*}
+		u_i^\top u_j &= \frac{1}{\sqrt{\lambda_i \lambda_j}}(Av_i)^\top Av_j\\
+					 &= \frac{1}{\sqrt{\lambda_i \lambda_j}} v_i^\top (A^\top A)v_j\\
+					 &= \frac{\lambda_j}{\sqrt{\lambda_i \lambda_j}} v_i^\top v_j\\
+					 &= \delta_{ij}
+	\end{align*}
+	Der letzte Schritt folgt, da für $i \neq j$ alles sowieso $0$ ist und für $i = j$ auch $\lambda_i = \lambda_j$ gilt und sich dann die Lambdas kürzen.
+	\newpar
+	Die Vektoren $u_1, \hdots, u_p$ bilden also eine Orthonormalbasis von $\Im A$.
+	Wir ergänzen zu einer Orthonormalbasis $u_1, \hdots, u_m$ des $\bR^m$. Dann gilt
+	\begin{align*}
+		A^\top u_i = \frac{1}{\sqrt{\lambda_i}} A^\top A v_i = \sqrt{\lambda_i} v_i
+	\end{align*}
+	Für $1 \leq i \leq p$. Für $i \geq p+1$ müssen die $u_i$ im Kern von $A$ liegen, also gilt die Gleichheit ebenfalls. Wir setzten $\sigma_i = \sqrt{\lambda_i}$ für $i = 1, \hdots, p$ und bekommen:
+	\begin{theorem}
+		\theoremname{Singulärwertzerlegung:} Sei $A \in \bR^{m \times n}$. Dann existieren Zahlen $\sigma_1 \geq \hdots \geq \sigma_p$ und Orthonormalbasen $(u_i)_{i = 1}^m$ des $\bR^m$ und $(v_i)_{i = 1}^n$ des $\bR^n$, sodass für alle $1 \leq i \leq p$:
+		\begin{align*}
+			Av_i = \sigma_i u_i\\ A^\top u_i = \sigma_i v_i
+		\end{align*}
+		und für alle $p+1 \leq j \leq n$ und $p+1 \leq k \leq m$
+		\begin{align*}
+			Av_j = 0\\ A^\top u_k = 0.
+		\end{align*}
+		Die Zahlen $\sigma_i^2$ sind genau die von Null verschiedenen Eigenwerte von $A^\top A$. Für
+		\begin{align*}
+			U = (u_1, \hdots, u_m) \in \bR^{m \times m},\\
+			V = (u_1, \hdots, u_n) \in \bR^{n \times n}
+		\end{align*}
+		gilt $U \in O(m)$, $V \in O(n)$. Ist $\Sigma$ die Diagonalmatrix, die die $\sigma$ in absteigender Reihenfolge enthält, gilt
+		\begin{align*}
+			A = U \Sigma V^\top
+		\end{align*}
+	\end{theorem} 
+	\begin{proofsketch}
+		Folgt direkt aus der Konstruktion :)
+	\end{proofsketch}
+	\section{Pseudoinverse}
+	\begin{definition}
+		Ist $A = U \Sigma V^\top$ die Singulärwertzerlegung von $A$ und $\Sigma^+ \in \bR^{n \times m}$ gegeben durch Inversion der Einträge ungleich Null, dann heißt
+		\begin{align*}
+			A^+ = V \Sigma^+ U^\top = \sum_{i = 1}^p \sigma^{-1}_i v_i u_i^\top
+		\end{align*}
+		die \tbf{Pseudoinverse} oder \tbf{Moore-Penrose-Inverse} von $A$.
+	\end{definition}
+	\begin{anmerkung}
+		Es gilt $\ker A^+ = \ker A^\top$ und $\Im A^+ = \Im A^\top$.
+	\end{anmerkung}
+	\begin{anmerkung}
+		Die Pseudoinverse ist die eindeutige Lösung des Gleichungssystems
+		\begin{align*}
+			AXA &= A,\\
+			XAX &= X,\\
+			(AX)^\top &= AX\\
+			(XY)^\top &= XA
+		\end{align*}
+	\end{anmerkung}
+	\begin{theorem}
+		Der Vektor $A^+ b$ löst das Ausgleichsproblem $\min \norm{Ax - b}_2^2$ und ist von allen Lösungen diejenige mit minimaler euklidischer Norm.
+	\end{theorem}
+	\begin{proof}
+		Mit $A^+A A^+ = A^+$ und $\ker A^+ = (\Im A)^\bot$ folgt 
+		\begin{align*}
+			A A^+ b - d \in \ker A^+ = (\Im A)^\bot = \ker A^\top,
+		\end{align*}
+		also
+		\begin{align*}
+			A^\top A(A^+ b) = A^\top b,
+		\end{align*}
+		damit ist aber $A^+b$ eine Lösung der Gaußschen Normalengleichung.
+		\newpar
+		Falls $z \in \bR^n$ eine weitere Lösung ist, so gilt $\ker A^\top A = \ker A$, also
+		\begin{align*}
+			A^\top A(A^+ b) - z = 0 \Leftrightarrow A(A^+b - z) = 0
+		\end{align*}
+		Wir setzen nun $w = A^+ b - z \in \ker A$. Es gilt $A^+ b \in \Im A^+ = (\ker A)^\bot$, also folgt
+		\begin{align*}
+			(A^+ b)w = 0
+		\end{align*}
+		Für $z = A^+ b - w$ gilt nun
+		\begin{align*}
+			\norm{z}_2^2 = \norm{A^+ b}_2^2 + \norm{w}_2^2,
+		\end{align*}
+		da der gemischte Term $\norm{(A^+b)w}_2^2$ wegfällt. Somit ist $A^+b$ die Lösung mit minimaler Norm.
+	\end{proof}
 \end{document}
