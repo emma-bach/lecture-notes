@@ -296,7 +296,7 @@
 		\item und eine Bewegung nach Westen zu einer Beschleunigung nach Norden.
 	\end{itemize}
 	Eine wichtige Folge ist, dass Richtung Äquator blasende Winde entgegen der Erdrotation in Richtung Westen abgelenkt werden. So entstehen zum Beispiel die Passatwinde.
-	\section{Statistische Physik}
+	\section{Statistische Physik und Reaktionskinetik}
 	\subsection{Druck aus Molekülbewegung}
 	\subsection{Freiheitsgrade}
 	Ein Körper mit Volumen nicht null hat im Allgemeinen sechs Freiheitsgerade - drei in der Bewegung, und drei in der Rotation. Bei einzelnen Atomen gehen wir von einer Ausdehnung von $0$ aus, also von nur drei Freiheitsgraden. Ein Molekül mit $n$ Molekülen hat bei sehr hohen Temperaturen bis zu $3n$ Freiheitsgrade. Diese bestehen für lineare Moleküle aus $3$ Translationsfreiheitsgraden, $2$ Rotationsfreiheitsgraden, und $3n-5$ Vibrationsfreiheitsgraden. Bei nichtlinearen Molekülen ist ein zusätzlicher Rotationsfreiheitsgrade vorhanden, also ein Vibrationsfreiheitsgrad weniger.
@@ -337,6 +337,66 @@
 		C_v = \frac{c_w}{M} = \frac{f}{2}\frac{R}{M}
 	\end{align*}
 	wobei $M$ die gesamte Masse des untersuchten Stoffes ist.
+	\section{Gasgemische}
+	Der Druck in einem Gasgemisch entspricht Näherungsweise der Summe der Drucke der einzelnen Gase:
+	\begin{align*}
+		p \approx \sum_{i \in I} p_i
+	\end{align*}
+	\subsection{Sättigungsdruck}
+	Für jede Temperatur, gibt es einen maximalen \tit{Dampfdruck} $f$, den sogenannten \tit{Sättigungsdruck}, bevor ein Dampf Kondensiert. Dieser steigt nichtlinear mit der Temperatur stark an. Es gilt:
+	\begin{align*}
+		f &= \frac{m_{H_2 O, max}}{V}\\
+		p_{H_2 O} &= \frac{n_{H_2 O} RT}{V} = \frac{m_{H_2 O}RT}{M_{H_2 O}V} = f\frac{R}{M_{H_2 O}}T
+	\end{align*}
+	Die Bestimmung der Konstante $m_{H_2 O}$-max ist nicht Teil des Vorlesungsstoffes.
+	\subsection{Mittlere freie Weglänge}
+	Die \tit{mittlere freie Weglänge $\lambda$} eines Gasgesmischs ist die mittlere Distanz, die sich ein Teilchen bewegen kann, bevor es mit einem andere Teilchen zusammenstößt. Dies lsst sich geometrisch herleiten als:
+	\begin{align*}
+		\lambda = \frac{1}{\displaystyle \sqrt{2}\pi \frac{N}{V}d^2}
+	\end{align*}
+	\subsection{Boltzmann-Verteilung}
+	Die Wahrscheinlichkeit, ein Teilchen mit Energie $E$ anzutreffen, ist proportional zu:
+	\begin{align*}
+		p(E) \sim e^{-\frac{E}{kt}}
+	\end{align*}
+	\subsection{Maxwell-Verteilung}
+	Die Wahrscheinlichkeitsverteilung der Geschwindigkeit $v$ ist:
+	\begin{align*}
+		p(v) = \lr(\frac{m}{2kt})^\frac{3}{2} \cdot 4\pi v^2 \cdot e^{\displaystyle -\frac{mv^2}{2kT}}
+	\end{align*}
+	Die wahrscheinlichste Geschwindigkeit ist dann:
+	\begin{align*}
+		v_p = \sqrt{\frac{2kT}{m}} = \sqrt{\frac{2RT}{M}},
+	\end{align*}
+	und daraus folgt für die wahrscheinlichste kinetische Energie:
+	\begin{align*}
+		E_{kin_p} = \frac{m}{2}v_p^2 = kT
+	\end{align*}
+	Die Maxwellverteilung ist asymmetrisch, also ist die mittlere Geschwindigkeit größer als die wahrscheinlichste Geschwindigkeit! Für Berechnung muss man die mittlere Geschwindigkeit
+	\begin{align*}
+		\bar E = \frac{3}{2} kT
+	\end{align*}
+	benutzen.
+	\newpar
+	Die Wahrscheinlichkeit, dass Teilchen mit mit einer Geschwindkeit $v \geq v_0$ unterwegs sind, ist identisch zu:
+	\begin{align*}
+		p(v \geq v_0) = p\lr(E \geq \frac{1}{2}mv_0) = \frac{2}{\sqrt{\pi}} \cdot \sqrt{\frac{E_0}{kT}} \cdot e^{\displaystyle -\frac{E_0}{kT}}
+	\end{align*}
+	\section{Arrhenius-Gleichung, Reaktionsgeschwindigkeit und RGT-Regel}
+	Jede Chemische Reaktion hat eine Aktivierungsenergie $E_A$, die ein Teilchen haben muss, um zu reagieren. Die Reaktion läuft also schneller ab, je mehr Teilchen diese Aktivierungsenergie haben. Die Reaktionsgeschwindigkeit $c$ wird in $\frac{\textnormal{mol}}{\textnormal{s}}$ gemessen. Im einfachsten Fall gilt die \tit{Arrhenius-Gleichung}:
+	\begin{align*}
+		c = A \cdot e^{\displaystyle -\frac{E_A}{RT}},
+	\end{align*}
+	wobei $A$ eine "Materialkonstante" der Reaktion ist. In der Praxis ist $A$ jedoch leicht Temperaturabhängig und somit nur näherungsweise konstant.
+	\newpar
+	In der Praxis ist $E_A >> RT$. Die wichtigste Konsequenz ist, dass in solchen Fällen $c$ Näherungsweise exponentiell mit $T$ wächst - bei einer Temperaturerhöhung von $10$° ist die Reaktionsgeschwindigkeit etwas mehr als doppelt so hoch. Dies ist die sogenannte \tit{RGT-Regel}, welche zum Beispiel ein wichtiger Faktor dafür ist, dass Essen bei höheren Temperaturen schneller schlecht wird.
+	
 	\chapter{Thermodynamik}
+	In der Physik unterscheiden wir zwischen \tit{Wärme} $Q$ (der "thermischen Energie" die während einem "Thermodynamischen Prozess" übertragen wird, gemessen in Joule) und \tit{Temperatur} $T$ (der gewohnten Temperatur, gemessen in Grad Kelvin). Wärme steigt mit Stoffmenge, Temperatur nicht.
+	\newpar
+	Die Temperaturänderung ist in der Regel proportional zur übertragenen Wärme:
+	\begin{align*}
+		F \cdot \Delta s = W = Q \sim m \cdot \Delta T
+	\end{align*}
 	\chapter{Physik der Erde}
 \end{document}

@@ -4070,6 +4070,95 @@ Es reicht also, uns auf Integrale über ganz $X$ zu beschränken.
 		\lim_{n \to \infty} \int_x f_n\ d\mu = \int_X f\ d\mu
 	\end{align*}
 \end{theorem}
+\begin{lemma}
+	Seien $f_1, f_2$ nichtnegative $\cA$-messbare Funktionen auf $X$. Dann gilt
+	\begin{align*}
+		\int_X (f_1 + f_2) \dmu = \int_X f_1 \dmu + \int_X f_2 \dmu
+	\end{align*}
+\end{lemma}
+\begin{anmerkung}
+	Sei $f$ nur $\mu$-messbar, also auf einer Menge $D$ definiert, sodass $\mu(X \setminus D) = 0$. So setzten wir
+	\begin{align*}
+		\int_X f \dmu = \int_D f \dmu
+	\end{align*}
+	(solange das Integral auf der rechten Seite tatsächlich definiert ist).
+\end{anmerkung}
+\begin{lemma}
+	Seien $f_1, f_2$ nichtnegative $\mu$-messbare Funktionen auf $X$. Dann gilt ebenfalls
+	\begin{align*}
+		\int_X (f_1 + f_2) \dmu = \int_X f_1 \dmu + \int_X f_2 \dmu
+	\end{align*}
+\end{lemma}
+\begin{lemma}
+	Für nichtnegative $\mu$-messbare Funktionen $f,g$ folgt aus $0 \leq f \leq g$ $\mu$-fast-überall, dass
+	\begin{align*}
+		0 \leq \int_X f \dmu \leq \int_X g \dmu
+	\end{align*}
+\end{lemma}
+\begin{definition}
+	Die Menge aller $\mu$-messbaren Funktionen auf $X$, deren Lebesque-Integral definiert ist, wird mit
+	\begin{align*}
+		\cL^*(\mu) = \cL^*
+	\end{align*}
+	bezeichnet. Weiter definieren wir
+	\begin{align*}
+		\cL^1 := \lr{f \in \cL*(\mu) \mid \int_X f \dmu \in \bR}
+	\end{align*}
+	und nennen eine Funktion $f$ \tbf{integrierbar}, falls $f \in \cL^1$.
+\end{definition}
+\begin{lemma}
+	Sei $g \in \cL^*(\mu)$ und $f$ eine $\mu$-messbare Funktion mit $f = g$ $\mu$-fast überall. Dann gilt $f \in \cL^*(\mu)$ und
+	\begin{align*}
+		\int_X f \dmu = \int_X g \dmu
+	\end{align*}
+	Ist $\mu$ vollständig, so gilt die Behauptung auch für $f$ nicht $\mu$-messbar.
+\end{lemma}
+\begin{lemma}
+	\theoremname{(Chebyshevsche Ungleichung:)} Sei $f \geq 0$ $\mu$-messbar auf $X$ und $\int_X f \dmu < \infty$. Dann gilt:
+	\begin{align*}
+		\mu(\{f \geq s\}) = 
+		\begin{cases}
+			\displaystyle \frac{1}{s} \int_X f \dmu & s \in (0, \infty)\\
+			0 & s = \infty
+		\end{cases}
+	\end{align*}
+\end{lemma}
+\begin{corollary}
+	\phantom{}
+	\begin{enumerate}
+		\item Ist $\int_X f \dmu < \infty$, so folgt $f(X) < \infty$ für $\mu$-fast alle $x \in X$.
+		\item Ist $f \geq 0$ und $\int_X f \dmu = 0$, so gilt $f(x) = 0$ $\mu$-fast überall.
+	\end{enumerate}
+\end{corollary}
+\begin{corollary}
+	Seien $f, g \in \cL^1$.
+	\begin{enumerate}
+		\item Falls $\forall A \in \cA : \int_A f \dmu = 0$ ist, dann gilt $f = 0$ $\mu$-fast überall.
+		\item Gilt für alle $A \in \cA$ die Ungleichung $\int_X f \dmu \leq \int_A g \dmu$, so ist $f \leq g$ $\mu$-fast überall.
+	\end{enumerate}
+\end{corollary}
+\begin{theorem}
+	Seien $f, g \in \cL^1(\mu)$. Dann gilt:
+	\begin{enumerate}
+		\item Für alle $\alpha, \beta \in \bR$ ist auch $\alpha f + \beta g \in \cL^1(\mu)$ und es gilt:
+		\begin{align*}
+			\int_X (\alpha f + \beta g) \dmu = \alpha \int_Xf \dmu + \beta \int_X g \dmu
+		\end{align*}
+		\item $\abs{f} \in \cL^1(\mu)$ und
+		\begin{align*}
+			\abs{\int_x f \dmu} \leq \int_X \abs{f} \dmu
+		\end{align*}
+		\item $\max(f,g) \in \cL^1(\mu)$, $\min(f,g) \in \cL^1(\mu)$.
+	\end{enumerate}
+	Ist $f$ nur $\mu$-messbar, aber $g \in \cL^1(\mu)$ mit $\abs{f} \leq g$ $\mu$-fast überall, so gilt
+	\begin{enumerate}
+		\item[(iv)] $f \in \cL^1(\mu)$ und
+		\begin{align*}
+			\int_X f \dmu \leq \int_X \abs{f} \dmu \leq \int_X g \dmu
+		\end{align*}
+	\end{enumerate}
+\end{theorem}
+
 %
 %
 %

@@ -1403,4 +1403,106 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 	\begin{proposition}
 		Über algebraisch abgeschlossenen Körpern haben alle irreduziblen Polynome den Grad $1$.
 	\end{proposition}
+	\begin{definition}
+		Ein Ideal eines Rings heißt \tbf{echtes Ideal}, wenn es nicht der ganze Ring ist. Es heißt außerdem \tbf{maximales Ideal}, falls es keine echte Teilmenge eines echten Ideals ist.
+	\end{definition}
+	\begin{proposition}
+		Ein Ideal ist genau dann maximal, wenn es ein von einem irreduziblen Element erzeugtes Hauptideal ist.
+	\end{proposition}
+	\begin{proposition}
+		Ein Ring ist genau dann ein Körper, wenn das einzige maximale Ideal das Nullideal ist.
+	\end{proposition}
+	\begin{theorem}
+		Sei $R$ ein Hauptidealring und $a \in R \setminus \{0\}$. So ist $R / \angles{a}$ genau dann ein Körper, wenn $\angles{a}$ maximal ist.
+	\end{theorem}
+	\section{Gaußprimzahlen und Summen zweier Quadrate}
+	\begin{lemma}
+		Der Ring $\bZ[i]$ der Gauß'schen Zahlen ist euklidisch und faktoriell.
+	\end{lemma}
+	\begin{definition}
+		Wir nennen die irreduziblen Elemente von $\bZ[i]$ \tbf{Gaußprimzahlen}. Außerdem nennen wir die Einheiten von $\bZ[i]$ \tbf{Gaußeinheiten}.
+	\end{definition}
+	\begin{proposition}
+		Es gibt genau vier Gaußeinheiten, nämlich
+		\begin{align*}
+			\bZ[i]^\times = \lr{1,-1,i,-i}
+		\end{align*}
+	\end{proposition}
+	\begin{lemma}\phantom{}
+		\begin{enumerate}
+			\item Jede Gaußprimzahl $\pi \in \bZ[i]$ teilt genau eine Primzahl $p \in \bN$.
+			\item Jede Primzahl $p \in \bN$ ist entweder Gaußprim oder zerfällt in das Produkt einer Gaußprimzahl mit ihrer Konjugierten.
+		\end{enumerate}
+	\end{lemma}
+	\begin{proof}\phantom{}
+		\begin{enumerate}
+			\item Sei $\pi \in \bZ[i]$ gaußprim. So ist $\pi$ nicht Null und keine Gaußeinheit. Somit gilt $\pi \bar\pi > 1$. Aus $\pi \mid \pi \bar\pi$ folgt $\pi \mid p$ für mindestens einen Primteiler $p$ von $\pi \bar \pi$, also teilt $\pi$ mindestens eine Primzahl.
+			Angenommen, es gilt $\pi \mid p$ und $\pi \mid q$ für Primzahlen $p$ und $q$. Dann folgt sofort $\pi \bar\pi \mid p^2$ und $\pi \bar \pi \mid q^2$, also $p = q$, da $\pi \bar \pi$ keine Einheit ist.
+			\item Gegeben eine Primzahl $p$ würde jede Zerlegung $p = \alpha \beta \gamma$ in Nichtgaußeinheiten in $\bZ[i]$ eine Zerlegung in Nichteinheiten $p^2 = (\alpha\bar\alpha)(\beta\bar\beta)(\gamma\bar\gamma)$, woraus folgen würde, dass $p$ nicht Prim ist. Folglich ist jede Primzahl das Produkt von höchstens zwei Gaußprimzahlen $\alpha$ und $\beta$. Dann folgt sofort $p^2 = (\alpha \bar \alpha)(\beta \bar \beta)$, also $p = \alpha \bar \alpha = \beta \bar \beta$, also $\beta = \bar\alpha$.
+		\end{enumerate}
+		
+	\end{proof}
+	\begin{proposition}
+		\label{prop:Gaußprim}
+		Es gilt:
+		\begin{itemize}
+			\item $2 = (1 + i)(1 - i)$.
+			\item $3$ ist Gaußprim.
+			\item $5 = (1 + 2i)(1 - 2i)$.
+			\item $7$ ist Gaußprim.
+			\item $11$ ist Gaußprim.
+			\item $13 = (2 + 3i)(2 - 3i)$
+		\end{itemize}
+	\end{proposition}
+	\begin{anmerkung}
+		Die $2$ spielt hier eine seltsame Sonderrolle, da $(1 + i) = i(1 - i)$, also $2 = i(1 - i)^2$. Die $2$ hat also bis auf Einheiten nur einen Gaußprimfaktor - alle anderen Primzahlen haben selbst bis auf Einheiten zwei Gaußprimfaktoren.
+	\end{anmerkung}
+	\begin{theorem}
+		Für eine Primzahl $p \in \bN$ ist gleichbedeutend:
+		\begin{enumerate}
+			\item $p$ ist nicht gaußprim;
+			\item $p$ ist eine Summe von zwei Quadraten;
+			\item $p \equiv 1 \mod 4$ oder $p \equiv 2 \mod 4$;
+			\item Das Polynom $X^2 + 1$ ist nicht irreduzibel in $\bF_p[X]$;
+			\item $(-1)$ ist ein Quadrat in $\bF_p$.
+		\end{enumerate}
+	\end{theorem}
+	\begin{proof}\phantom{}
+		\begin{description}
+			\item[$1 \Longleftrightarrow 2$:] Sei $p$ nicht gaußprim. So gilt $p = \pi \bar \pi$. Für $\pi = x + iy$ folgt dann $p = x^2 + y^2$. Umgekehrt folgt auch aus $p = x^2 + y^2$ direkt $p = (x + iy)(x - iy)$, also ist $p$ nicht Gaußprim.
+			\item[$2 \implies 3$:] Die Quadrate in $\bZ / 4 \bZ$ sind $0$ und $1$. Somit muss eine Summe von zwei Quadraten modulo $4$ kongruent zu $0,1$ oder $2$ sein. Ist die Summe $0$, so ist $p$ ein Vielfaches von $4$, also nicht prim.
+			\item[$1 \Longleftrightarrow 4$:] Wir betrachten folgendes Diagramm:
+			% https://q.uiver.app/#q=WzAsNCxbMiwwLCJcXGJaW1hdIl0sWzAsMiwiXFxiRl9wW1hdIl0sWzQsMiwiXFxiWltpXSJdLFsyLDQsIiBcXGJGX3BbWF0gLyBcXGFuZ2xlc3tYXjIgKyAxfSA9IFxcYlpbaV0gLyBcXGFuZ2xlc3twfSJdLFswLDEsIi8gXFxhbmdsZXN7cH0iXSxbMSwzLCJcXGFuZ2xlc3tYXjIgKzF9Il0sWzAsMiwiXFxhbmdsZXN7WF4yICsgMX0iLDJdLFsyLDMsIlxcYW5nbGVze3B9IiwyXV0=
+			\[\begin{tikzcd}[column sep = small]
+				&& {\bZ[X]} \\
+				\\
+				{\bF_p[X]} &&&& {\bZ[i]} \\
+				\\
+				&& { \bF_p[X]\ / \angles{X^2 + 1} = \bZ[i]\ / \angles{p}}
+				\arrow["{\mod \angles{p}}", two heads, from=1-3, to=3-1]
+				\arrow["{\mod \angles{X^2 + 1}}"', two heads, from=1-3, to=3-5]
+				\arrow["{\mod \angles{X^2 +1}}", two heads, from=3-1, to=5-3]
+				\arrow["{\mod \angles{p}}"', two heads, from=3-5, to=5-3]
+			\end{tikzcd}\]
+			dieses kommutiert gemäß universeller Eigenschaft der Quotientenabbildung.
+			\newpar
+			Somit ist $\angles{X^2 + 1}$ genau dann nicht irreduzibel, wenn $\bZ[i] / \angles{p}$ kein Körper ist, also wenn $p$ nicht irreduzibel ist.
+			\item[$3 \implies 5$:] Sei $p \equiv 1 \mod 4$. So gilt $p - 1 = 4m$, also
+			\begin{align*}
+				\abs{\bF_p^\times} = p - 1 = 4m,
+			\end{align*}
+			also:
+			\begin{align*}
+				\abs{\bF_p^\times} \cong (\bZ / 4m, +)
+			\end{align*}
+			somit existiert ein Element $x \in \bF_p^\times$ der Ordnung $4$. Somit hat $x^2$ die Ordnung $2$. Da in $(\bZ / 4m, +)$ nur ein solches Element existieren kann, kann auch in $\bF_p^\times$ nur ein solches Element der Ordnung $2$ existieren. Wir wissen bereits, dass $-1$ in $\bF_p^\times$ die Ordnung $2$ hat, also folgt $x^2 = -1$.
+			\item[$5 \implies 4$:] trivial.
+		\end{description}
+	\end{proof}
+	\begin{corollary}
+		Wir erhalten direkt einen formellen Beweis von Proposition \ref{prop:Gaußprim}.
+	\end{corollary}
+	\begin{corollary}
+		Eine positive natürliche Zahl $n \in \bN_1$ lässt sich genau dann als Summe $n = x^2 + y^2$ zweier Quadratzahlen schreiben, wenn in der Primfaktorzerlegung $n = p_1^{r_1}p_2^{r_2}\hdots p_t^{r_t}$ die Primfaktoren, welche Kongruent zu $3$ modulo $4$ sind, alle in geraden Potenzen auftreten.
+	\end{corollary}
 \end{document}
