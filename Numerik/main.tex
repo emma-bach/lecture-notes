@@ -931,4 +931,126 @@ Mithilfe der $QR$-Zerlegung bekommen wir ein stabiles Verfahren zur Lösung von 
 		\end{align*}
 		da der gemischte Term $\norm{(A^+b)w}_2^2$ wegfällt. Somit ist $A^+b$ die Lösung mit minimaler Norm.
 	\end{proof}
+	\chapter{Eigenwertaufgaben}
+	Im Prinzip gibt es die Möglichkeit, Nullstellen des charakteristischen Polynoms zu suchen, zum Beispiel durch das sog. \tit{Newton-Raphson-Verfahren}. Das ist aber typischerweise nicht praktikabel.
+	\section{Abschätzungen}
+	\begin{theorem}
+		Sei $A \in \bR^{n \times n}$ und $\lambda \in \bC$ ein Eigenwert von $A$. Dann gilt
+		\begin{align*}
+			\lambda \in \bigcup_{i = 1}^n K_i,
+		\end{align*}
+		wobei
+		\begin{align*}
+			K_i = \lr{z \in \bC : \abs{z - a_{ii}} \leq \sum_{j = i, i \neq j}^n \abs{a_{ij}}}.
+		\end{align*}
+		Die Mengen $K_i$ heißen \tbf{Gerschgorin-Kreise}.
+	\end{theorem}
+	\begin{proof}
+		Es sei $Ax = \lambda x$ für ein $x \in \bC^n \setminus \lr{0}$. Dann existiert ein maximaler Eintrag $i \in 1, \hdots, n$, also $\abs{x_j} \leq \abs{x_i}$ für alle $j \in 1, \hdots,n$ und $x_i \neq 0$. Dann gilt
+		\begin{align*}
+			\lambda x_i = (Ax)_i = \sum_{j = 1}^n a_{ij}x_j.
+		\end{align*}
+		Wir teilen durch $x_i \neq 0$ und erhalten
+		\begin{align*}
+			\lambda - a_{ii} = \sum_{j = 1, i \neq j}^n a_{ij} \frac{x_j}{x_i}.
+		\end{align*}
+		Durch Dreiecksungleichung und $\frac{\abs{x_j}}{x_i} \leq 1$ folgt $\lambda \in K_i$ und damit die Behauptung.
+	\end{proof}
+	\begin{theorem}
+		Sei $a \in \bRnn$ symmetrisch, also alle Eigenwerte reell. Für den maximalen und den minimalen Eigenwert von $A$ gilt dann:
+		\begin{align*}
+			\lambda_{max} = \max_{x \in \bR^n \setminus \lr{0}} \frac{x^\top A x}{\norm{x}^2_2}
+		\end{align*}
+		\begin{align*}
+			\lambda_{min} = \min_{x \in \bR^n \setminus \lr{0}} \frac{x^\top A x}{\norm{x}^2_2}
+		\end{align*}
+		Diese Brüche sind auch als die \tbf{Rayleigh-Quotienten} bekannt.
+	\end{theorem}
+	\begin{proof}
+		Sei $(v_i) \subset \bR^n$ eine Orthonormalbasis des $\bR^n$ aus Eigenvektoren zu den Eigenwerten $\lambda_1 \geq \lambda_2 \geq \hdots \geq \lambda_n \in \bR$ der Matrix $A$. Wir schreiben $x \in \bR^n$ als
+		\begin{align*}
+			x = \sum_{i = 1}^n \alpha_i v_i
+		\end{align*}
+		mit $\alpha_i \in \bR$. So gilt
+		\begin{align*}
+			Ax = \sum_{i = 1}^n \alpha_i \lambda_i v_i
+		\end{align*}
+		Dank Orthonormalität der $v_i$ folgt
+		\begin{align*}
+			x^\top x = \sum_{i,j = 1}^n \alpha_i \alpha_j \scalar{v_i}{v_j} = \sum_{i = 1}^n \alpha_i^2
+		\end{align*}
+		und insbesondere
+		\begin{align*}
+			x^\top Ax  = \sum_{i = 1}^n \lambda_i \alpha_i^2 
+		\end{align*}
+		daraus folgt
+		\begin{align*}
+			x^\top Ax &\geq \lambda_n \sum_{i = 1}^n \alpha_i^2\\
+			 		  &= \lambda_n \norm{x}_2^2\\
+			\implies \frac{x^\top A x}{\norm{x}_2^2} &\geq \lambda_n
+		\end{align*}
+		und
+		\begin{align*}
+			x^\top Ax &\leq \lambda_1 \sum_{i = 1}^n \alpha_i^2\\
+			 		  &= \lambda_1 \norm{x}_2^2\\
+			\implies \frac{x^\top A x}{\norm{x}_2^2} &\leq \lambda_1
+		\end{align*}
+	\end{proof}
+	\section{Konditionierung des Eigenwertproblems}
+	\begin{theorem}
+		Sei $A \in \bRnn$ komplex diagonalisierbar mit $A = VDV^{-1}$. Sei $E \in \bRnn$ eine beliebige "Störungsmatrix" und sei $\bar \lambda \in \bC$ ein Eigenwert von $A + E$. Dann existiert ein komplexer Eigenwert $\lambda$ von $A$, sodass
+		\begin{align*}
+			\abs{\bar \lambda - \lambda} \leq \cond_2(V)\norm{E}_2
+		\end{align*}
+	\end{theorem}
+	\begin{definition}
+		Die Abschätzung lässt sich auch durch den sog. \emph{Hausdorff-Abstand}
+		schreiben. Für einen metrischen Raum $M$ mit Metrik $d$ und Teilmengen $A,B$ ist dieser definiert als
+		\begin{align*}
+			d_H(A,B) := \max \lr{\sup_{x \in A} \inf_{y \in B} d(x,y), \sup_{y \in A} \inf_{x \in B} d(x,y)}
+		\end{align*}
+		Damit ist
+		\begin{align*}
+			d_H(\Sigma, \bar \Sigma) \leq \cond_2(V) \norm{E}_2
+		\end{align*}
+		wobei $\Sigma$ die Menge der Eigenwerte (das \tit{Spektrum}) von $A$ ist und $\bar \Sigma$ das Spektrum von $A - E$.
+	\end{definition}
+	\begin{anmerkung}
+		Nicht jede Matrix ist komplex diagonalisierbar.
+	\end{anmerkung}
+	\begin{corollary}
+		Jede Matrix $A$, sodass $A^\top A = A A^\top$ (also jede sog. \emph{Normale Matrix}) ist komplex diagonalisierbar. In diesem Fall ist $V$ unitär, also insbesondere $\cond(V)_2 = 1$. Somit gilt sogar
+		\begin{align*}
+			\abs{\lambda - \bar\lambda} \leq \norm{E}_2
+		\end{align*}
+	\end{corollary}
+	\begin{proposition}
+		Sei $p(t) = t^n + \sum_{i = 0}^{n-1} a_i t^i$ ein normalisiertes Polynom. So gilt
+		\begin{align*}
+			p(t) = (-1)^n \det(A - tE_n)
+		\end{align*}
+		mit der sogenannten \tbf{Frobenius-Begleitmatrix} $A$, deren Einträge überall $0$ sind, außer auf der Subdiagonalen, wo sie $1$ sind, und in der letzten Spalte, in der der $i$-te Eintrag (wobei wir bei $1$ mit dem Zählen anfangen) genau $-a_{i-1}$ ist. Die komplexen Eigenwerte von $A$ sind genau die komplexen Nullstellen von $p$.
+	\end{proposition}
+	\begin{corollary}
+		Da das Finden von Nullstellen eines Polynoms im Allgemeinen schlecht konditioniert ist, ist auch das Finden von Eigenwerten von Matrizen schlecht konditioniert.
+	\end{corollary}
+	\begin{example}
+		Das Polynom $p_{\epsilon}(t) = (t-a)^n - \epsilon$ besitzt die Nullstellen 
+		\begin{align*}
+			\chi_k = a - \epsilon ^ \frac{1}{n} e^{i2\pi \frac{k}{n}}
+		\end{align*}
+		Die Polynome $p_0$, $p_\epsilon$ Unterscheiden sich nur im konstanten Koeffizienten, und für die dazugehörigen Begleitmatrizen $A_0$ und $A_\epsilon$ gilt
+		\begin{align*}
+			\norm{A_0 - A_\epsilon} = \epsilon
+		\end{align*}
+		die Nullstellen unterscheiden sich jedoch durch
+		\begin{align*}
+			\abs{\lambda - \bar \lambda} = \epsilon ^{\frac{1}{n}},
+		\end{align*}
+		der relative Fehler ist letzendlich
+		\begin{align*}
+			\frac{\abs{\lambda - \lambda_k}}{\abs{\lambda}} \sim \frac{\epsilon^{\frac{1}{n}}}{\epsilon}
+		\end{align*}
+		und dieser Faktor wächst für $n > 1$ und $\epsilon \to 0$ unbeschränkt.
+	\end{example}
 \end{document}

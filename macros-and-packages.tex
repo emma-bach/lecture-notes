@@ -68,6 +68,8 @@
 % and with an empty line between paragraphs
 \newcommand*{\newpar}{\par\vspace{\baselineskip}\noindent}
 
+% Make inf height match sup height
+\renewcommand{\inf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
 
 %--- RELATION SYMBOLS AND OPERATORS ---
 \newcommand{\surj}{\twoheadrightarrow}
@@ -180,6 +182,7 @@
 \newcommand{\cond}{\textnormal{cond}}
 \newcommand{\sgn}{\textnormal{sgn}}
 \renewcommand{\char}{\textnormal{char}}
+\newcommand{\Frac}{\textnormal{Frac}}
 
 % groups and sets
 \newcommand{\GL}{\text{GL}}

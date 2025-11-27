@@ -186,6 +186,7 @@
 	\item Es gibt keine Gruppe mit $0$ Elementen, da die Leere Menge kein neutrales Element hat.
 	\item Es gibt genau eine Gruppe mit einem Element, die Gruppe $\{e\}$.
 \end{itemize}
+\section{Erste Versuche der Klassifikation}
 \begin{theorem}
 	Es gibt genau eine Gruppe mit zwei Elementen, nämlich die Gruppe $\{e,a\}$, mit Verknüpfungstabelle:
 	\begin{align*}
@@ -623,6 +624,7 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 \begin{theorem}
 	Sei $K$ ein Körper und $K^\times$ dessen multiplikative Gruppe. So ist jede endliche Untergruppe von $K^\times$ zyklisch.
 \end{theorem}
+\section{Gruppenoperationen und Kongruenzklassen}
 \begin{definition}
 	Sei $G$ eine Gruppe und $X$ eine Menge. Eine Operation von $G$ auf $X$ ist eine Abbildung
 	\begin{align*}
@@ -830,6 +832,7 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 		\newpar
 		$\ker(\phi)$ ist ein von $I$ verschiedener Normalteiler, also ist $\ker(\phi) = 1$, also ist $\phi$ injektiv. Es gilt $\abs{I} = 60$ und $\abs{\cS_5} = 120 \implies \abs{A_5} = 60$, also ist $\phi$ auch surjektiv, also bijektiv, also ein Isomorphismus.
 	\end{proof}
+	\section{Kompositionsreihen}
 	\begin{definition}
 		Eine \tbf{Kompositionsreihe} einer Gruppe $G$ ist eine Folge von Untergruppen
 		\begin{align*}
@@ -873,6 +876,7 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 		Wir wissen also, dass der Subquotient $G / M$ isomorph zu $N / N \cap M$ ist. Analog ist der Subquotient $G / N$ isomorph zu $M / M \cap N$. Also sind
 		$G \supset M \supset M \cap N \supset \hdots$ und $G \supset N \supset M \cap N \supset \hdots$ valide Kompositionsreihen, welche per Induktion äquivalent zu den ursprünglichen Kompositionsreihen sind. Somit folgt auch die gesuchte Aussage per Induktion.
 	\end{proof}
+	\section{$p$-Gruppen und Sylowsätze}
 	\begin{definition}
 		Sei $p$ eine Primzahl. Eine endliche Gruppe $G$ heißt \tbf{$p$-Gruppe}, wenn
 		\begin{align*}
@@ -1505,4 +1509,88 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 	\begin{corollary}
 		Eine positive natürliche Zahl $n \in \bN_1$ lässt sich genau dann als Summe $n = x^2 + y^2$ zweier Quadratzahlen schreiben, wenn in der Primfaktorzerlegung $n = p_1^{r_1}p_2^{r_2}\hdots p_t^{r_t}$ die Primfaktoren, welche Kongruent zu $3$ modulo $4$ sind, alle in geraden Potenzen auftreten.
 	\end{corollary}
+	\section{Bruchkörper und Bewertungen}
+	\begin{definition}
+		Sei $R$ ein Integritätsbereich. So definieren wir eine Äquivalenzrelation $\sim$ auf $R \times R^\times$ durch $(n,d) \sim (m,b)$, falls $nb = md$. So definieren wir den \tbf{Bruchkörper} $\Frac(R)$ als die Menge der Äquivalenzklassen von $\sim$, wobei wir die Äquivalenzklasse von $(n,d)$ als $\frac{n}{d}$ schreiben.
+	\end{definition}
+	\begin{proposition}
+		Der Bruchkörper $\Frac(R)$ bildet einen Körper, wenn wir:
+		\begin{enumerate}
+			\item Summen definieren durch
+			\begin{align*}
+				\frac{n}{d} + \frac{m}{b} = \frac{nb + md}{db}
+			\end{align*}
+			\item Produkte definieren durch
+			\begin{align*}
+				\frac{n}{d} \cdot \frac{m}{b} = \frac{nm}{db}
+			\end{align*}
+		\end{enumerate}
+	\end{proposition}
+	\begin{anmerkung}
+		Der Bruchkörper $\Frac(R)$ kann auch durch eine universelle Eigenschaft definiert werden - Sei $h : R \to F$ ein injektiver Ringhomomorphismus aus $R$ in einen Körper $F$. Dann gibt es genau einen Ringhomomorphismus $g : \Frac(R) \to F$, sodass
+		\begin{align*}
+			g|_R = h.
+		\end{align*}
+	\end{anmerkung}
+	\begin{definition}
+		Sei $R$ ein faktorieller Ring und $p \in R$ irreduzibel. Die \tbf{$p$-adische Bewertung} (oder einfach \tbf{$p$-Bewertung}) ist die Abbildung
+		\begin{align*}
+			v_p : \Frac(R) &\to \bZ \cup \{\infty\}
+		\end{align*}
+		mit
+		\begin{align*}
+			p^n \frac{a}{b} &\mapsto n
+		\end{align*}
+		falls $a,b \in R \setminus 0$ und teilerfremd zu $p$ (und $v_p(0) = \infty$).
+	\end{definition}
+	\begin{proposition}
+		$v_p (xy) = v_p(x) + v_p(y)$
+	\end{proposition}
+	\begin{anmerkung}
+		Die Abbildung $d_p(x,y) = v_p(x - y)$ ist eine Metrik. Vervollständigen wir $\bQ$ gemäß dieser Metrik erhalten wir die sogenannten \tbf{$p$-adischen Zahlen}, welche große Relevanz insbesondere in der algebraischen Zahlentheorie haben.
+	\end{anmerkung}
+	\begin{example}
+		Sei $R = k[X]$ über einem Körper $k$. Dann ist $v_{(x - \lambda)}(P)$ genau die Vielfachheit der Nullstelle $\lambda$ in $P$.
+	\end{example}
+	\begin{proposition}
+		Sei $a \in \Frac(R)$. Dann ist $a \in R$ genau dann, wenn für alle irreduziblen Elemente $p \in R$ $v_p(a) \geq 0$ gilt.
+	\end{proposition}
+	\begin{proposition}
+		Sei $a \in \Frac(R)$ und $v_p(a) = 0$ für alle $p$. Dann ist $a \in R^\times$.
+	\end{proposition}
+	\begin{definition}
+		Sei $R$ ein faktorieller Ring und $p \in R$ irreduzibel. Wir definieren die \tbf{Minimalbewertung von $P$ bei $p$} als die Abbildung:
+		\begin{align*}
+			w_p : (\Frac(R))[X] &\to \bZ \sqcup \lr{\infty}\\
+		\sum_{i = 0}^n a_i X^i &\mapsto \min\lr{v_p(a_i) \mid 1 \leq i \leq n}
+		\end{align*}
+	\end{definition}
+	\begin{lemma}
+		\theoremname{Lemma von Gauss:} Sei $R$ ein faktorieller Ring, $p \in R$ irreduzibel, und $A,B \in (\Frac R)[X]$. So gilt
+		\begin{align*}
+			w_p(AB) = w_p(A) + w_p(B)
+		\end{align*}
+	\end{lemma}
+	\begin{proof}
+		Sei fürs erste $w_p(A) = w_p(B) = 0$ und $A,B \in R[X]$. Betrachten wir die Äquivalenzklassen in $(R\ / \angles{p})[X]$, so gilt $[A] \neq [0]$ und $[B] \neq [0]$ (da mindestens ein Koeffizient existiert, der kein Vielfaches einer $p$-Potenz ist, sonst wäre ja $w_p$ nicht $0$.) Es folgt $[A][B] = [AB] \neq 0$. Also existiert in $[AB]$ ebenfalls ein Term, der kein Vielfaches einer $p$-Potenz ist, also gilt $w_p(AB) = 0$.
+		\newpar
+		Der Allgemeine Fall folgt nun durch vorheriges Multiplizieren der Polynome mit $p$-Potenzen, um sie in die gefragte Form zu bringen.
+	\end{proof}
+	\begin{definition}
+		Sei $P \in (\Frac(P))[X]$. Wir nennen $P$ \tbf{primitiv}, oder genauer \tbf{$R$-primitiv}, wenn für alle irreduziblen Elemente $p$ gilt $w_p(P) = 0$, also wenn es kein $p$ gibt, welches alle Koeffizienten teilt.
+	\end{definition}
+	\begin{theorem}
+		Ist $R$ faktoriell, so auch $R[X]$, und die irreduziblen Elemente sind genau:
+		\begin{enumerate}
+			\item Die irreduziblen Elemente von $R$,
+			\item Die irreduziblen Polynome aus $(\Frac(R))[X]$, die primitiv sind.
+		\end{enumerate}
+	\end{theorem}
+	\begin{application}
+		Die Primfaktorzerlegung von $X^n - 1$ in $\bQ[X]$, bzw. über $\bZ[X]$. Über den komplexen Zahlen sind die Nullstellen genau die $n$-ten Einheitswurzeln $\zeta$. Die sogenannten Kreisteilungspolynome sind dann definiert als:
+		\begin{align*}
+			\Phi_d(x) = \prod_{\ord \zeta = d}(X - \zeta)
+		\end{align*}
+		Man kann nun induktiv zeigen, dass diese sogar in $\bZ[X]$ liegen, und aus unserm Satz (und viel Extraarbeit) folgt, dass sie sogar irreduzibel sind.
+	\end{application}
 \end{document}

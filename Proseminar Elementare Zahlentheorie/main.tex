@@ -194,4 +194,47 @@
 			\item[Fall 3:] Sei $\alpha \in \bQ$, $0 \leq i \leq k - 2$ oder $\alpha \in \bR \setminus Q$ nach Vorraussetzung ist $d \leq q_i \leq q_{i+1}$ und nach Ausnahmen ist nicht gleichzeitig $i = 0$ und $a_1 = 1$. Also folgt $\abs{q_i \alpha - p_i} < \abs{d\alpha - c}$, da $c \neq p_i$, $\alpha \neq q_i$.
 		\end{description}
 	\end{proof}
+\chapter{Das Louville-Kriterium für Transzendente Zahlen}
+\begin{definition}
+	Eine komplexe Zahl $\alpha \in \bC$ heißt \tbf{algebraisch}, wenn ein $f \in \bZ[X]$ mit $f \neq 0$ existiert, sodass $f(\alpha) = 0$.
+\end{definition}
+\begin{definition}
+	Eine komplexe Zahl $\alpha \in \bC$ heißt \tbf{transzendent}, wenn sie nicht algebraisch ist.
+\end{definition}
+\begin{definition}
+	Eine algebraische Zahl $\alpha$ hat \tbf{Grad $n$}, wenn kein Polynom vom Grad $< n$ existiert, welches $\alpha$ als Nullstelle hat.
+\end{definition}
+\begin{theorem}
+	Transzendente Zahlen existieren.
+\end{theorem}
+\begin{proof}
+	Die Menge der komplexen Zahlen ist überabzählbar. Die Menge $\bZ[]X $ist in Bijektion mit der Menge der Tupel beliebig vieler ganzer Zahlen, also abzählbar. Jedes Polynom hat nur endlich viele Nullstellen. Somit muss es komplexe Zahlen geben, die keine Nullstellen eines Polynoms aus $\bZ[X]$ sind.
+\end{proof}
+\begin{definition}
+	Sei $\alpha$ eine reelle Zahl. Wir sagen, $\alpha$ ist \tbf{approximierbar zur Ordnung $m$}, wenn eine Konstante $K$ existiert, sodass unendlich viele $\frac{p}{q} \in \bQ$ existieren, sodass:
+	\begin{align*}
+		\abs{\alpha - \frac{p}{q}} < \frac{K}{q^m}
+	\end{align*} 
+\end{definition}
+\begin{theorem}
+	\theoremname{Satz von Louville:}
+	Ist $\alpha$ eine algebraische Zahl vom Grad $n > 1$, so existiert eine Konstante $c > 0$, sodass für alle $\frac{p}{q} \in \bQ$:
+	\begin{align*}
+		\abs{\alpha - \frac{p}{q}} > \frac{c}{q^n}
+	\end{align*}
+	also ist $\alpha$ zu keiner höheren Ordnung als $n$ approximierbar.
+\end{theorem}
+\begin{proof}
+	Sei $\alpha \in \bC$ algebraisch. So existiert ein Polynom $f \in \bZ[x] \setminus \{0\}$, welches $\alpha$ als Nullstelle hat. Sei
+	\begin{align*}
+		f = a_0x^n + a_1x^{n-1} + \hdots a_n
+	\end{align*}
+	Wir betrachten $f$ nun auf dem Intervall $(\alpha - 1, \alpha + 1)$.
+\end{proof}
+\begin{corollary}
+	Ist $\alpha$ zu beliebig hoher Ordnung $m$ approximierbar, so ist $\alpha$ nicht algebraisch, also transzendent.
+\end{corollary}
+\begin{anmerkung}
+	Die Umkehrung gilt nicht - viele transzendente Zahlen sind nicht beliebig hoch approximierbar. Insbesondere sind $e$ und $\pi$ nicht zu beliebig hoher Ordnung approximierbar.
+\end{anmerkung}
 \end{document}

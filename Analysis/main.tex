@@ -4158,7 +4158,126 @@ Es reicht also, uns auf Integrale über ganz $X$ zu beschränken.
 		\end{align*}
 	\end{enumerate}
 \end{theorem}
-
+\begin{corollary}
+	Seien $f,g$ $\mu$-messbar und $\int_X f \dmu > -\infty$. Sei $f \leq g$ $\mu$-fast überall. Dann gilt
+	\begin{align*}
+		\int_X f \dmu \leq \int_X g \dmu
+	\end{align*}
+	Insbesondere ist $\int_X g \dmu$ definiert. Die entsprechende Aussage gilt mit $\geq$, falls $\int_X f \dmu < \infty$.
+\end{corollary}
+\begin{proposition}
+	Sei $\alpha \in \bR$. Wir betrachten
+	\begin{align*}
+		f : \bR^n &\to \bR^n\\
+		x &\mapsto \abs{x}^{-\alpha}
+	\end{align*}
+	So gilt
+	\begin{align*}
+		\int_{\bR^n \setminus B_1(0)} f\ d\lambda^n < \infty \Leftrightarrow \alpha > n
+	\end{align*}
+	und
+	\begin{align*}
+		\int_{B_1(0)} f\ d\lambda^n < \infty \Leftrightarrow \alpha < n
+	\end{align*}
+\end{proposition}
+\section{Konvergenzsätze}
+Das Lebesqueintegral wurde insbesondere definiert, weil man die Bedingungen abschwächen wollte, bei denen man Grenzwerte und Integrale vertauschen kann, also:
+\begin{align*}
+	\lim_{n \to \infty} \int_X f_n \dmu = \int_X \lim_{n \to \infty} f_n \dmu
+\end{align*}
+Auch beim Lebesqueintegral geht dies nicht immer.
+\begin{example}
+	Sei 
+	\begin{align*}
+		f_\epsilon = \frac{1}{2\epsilon} \chi_{[-\epsilon, \epsilon]}
+	\end{align*}
+	So konvergiert $f_\epsilon$ fast überall gegen
+	\begin{align*}
+		f_0 = \begin{cases}
+			\infty & x = 0\\
+			0 & x \neq 0\\
+		\end{cases}
+	\end{align*}
+	Also:
+	\begin{align*}
+		\lim_{\epsilon \to 0} \int_X f_\epsilon \dmu = 1 > 0 = \int_X \lim_{\epsilon \to 0} f_\epsilon \dmu
+	\end{align*}
+\end{example}
+\begin{theorem}
+	\theoremname{Satz von Levi / Monotoner Konvergenzsatz:} Seien $f_n, f$ $\mu$-messbare Funktionen auf $X$ mit $f_n \uparrow f$ $\mu$-fast überall und sei $\int_X f_1 \dmu > -\infty$. Dann gilt
+	\begin{align*}
+		\lim_{n \to \infty} \int_x f_n \dmu = \int_x f \dmu
+	\end{align*}
+\end{theorem}
+\begin{anmerkung}
+	Ist $\mu$ vollständig, so folgt die $\mu$-Messbarkeit von $f$ bereits aus der $\mu$-Messbarkeit der $f_n$.
+\end{anmerkung}
+\begin{corollary}
+	Für nichtnegative $\mu$-messbare Funktionen $f_n$ gilt:
+	\begin{align*}
+		\int_X \sum_{n = 0}^\infty f_n \dmu = \sum_{n = 0}^\infty \int_X f_n \dmu
+	\end{align*}
+\end{corollary}
+\begin{lemma}
+	\theoremname{Lemma von Fatou:} Sei $(f_k)$ eine Folge $\mu$-messbarer Funktionen auf $X$ und sei $g$ integrierbar. Falls für alle $k \in \bN$ $f_k \geq g$ $\mu$-fast überall, dann gilt
+	\begin{align*}
+		\int_x \liminf f_k \dmu \leq \liminf \int_X f_k \dmu
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	$f_k$ sei auf $D_k \in \cA$ definiert und $\mu(X \setminus D_k) = 0$. Sei $D := \bigcap D_k$ und
+	\begin{align*}
+		f : D &\to \barR\\ 
+			x &\mapsto \liminf f_k(x)
+	\end{align*} 
+	Sei nun $g_k := \inf_{j \geq k} f_j$. Diese Folge ist monoton wachsend und definiert auf $\bigcup_{j \geq k} D_j$. Nun gilt
+	\begin{align*}
+		\lim_{k \to \infty} g_k = f
+	\end{align*}
+	Es existiert $g_k \geq g \in \cL^1$, also gilt
+	\begin{align*}
+		\int_X \liminf_{k \to \infty} f_k \dmu &= \int_X f \dmu\\
+		&= \liminf_{k \to \infty} g_k \dmu\\ 
+		&\leq \liminf_{k \to \infty} \int_X f_k \dmu
+	\end{align*}
+\end{proof}
+\begin{theorem}
+	\theoremname{Satz von Lebesque / Satz über dominierte Konvergenz:} Seien $f_k$ und $f$ $\mu$-messbare Funktionen auf $X$ mit $f_k \to f$ $\mu$-fast überall. Sei $g$ eine nichtnegative integrierbare Funktion, sodass
+	\begin{align*}
+		\sup_{k \in \bN} \abs{f_k} \leq g
+	\end{align*}
+	$\mu$-fast überall. Dann ist $f$ integrierbar und
+	\begin{align*}
+		\int_x f \dmu = \lim_{k \to \infty} \int_x f_k \dmu.
+	\end{align*}
+	Es gilt sogar
+	\begin{align*}
+		\norm{f - f_k}_{L^1(\mu)} := \int_X \abs{f - f_k} \dmu \to 0
+	\end{align*}
+\end{theorem}
+\begin{corollary}
+	Sei $h_n$ eine Folge $\mu$-messbarer Funktionen und $g \in \cL^1$. Falls die die Reihe
+	\begin{align*}
+		\sum_{j = 0}^\infty h_j
+	\end{align*}
+	$\mu$-fast überall konvergiert und
+	\begin{align*}
+		\sup_{n \in \bN}\abs{\sum_{j = 0}^n} \leq g
+	\end{align*}
+	Dann gilt
+	\begin{align*}
+		\int_X \sum_{j \in \bN} h_j \dmu = \sum_{j \in \bN} \int_X h_j \dmu
+	\end{align*}
+\end{corollary}
+\begin{corollary}
+	Jede Regelfunktion $f : (I = [a,b]) \to \bR$ ist integrierbar, und der Regelintegral stimmt mit dem Lebesqueintegral überein, also:
+	\begin{align*}
+		\int_a^b f \ dx = \int_I f \ d \lambda^1
+	\end{align*}
+\end{corollary}
+\begin{anmerkung}
+	Dies gilt nicht für uneigentliche Integrale! Es gibt Funktionen, die ein uneigentliches Regelintegral haben, aber kein Lebesqueintegral!
+\end{anmerkung}
 %
 %
 %
