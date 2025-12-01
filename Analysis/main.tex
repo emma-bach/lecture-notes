@@ -131,6 +131,7 @@ Im folgenden Abschnitt definieren wir $\bR$ als beliebiges Modell der reellen Za
 \begin{proof}
 	Die Ganzen Zahlen sind per Definition gegeben durch $\bN \cup \{n' \in \bR : \exists n \in \bN : n' + n = 0\}$, also als die Menge der natürlichen Zahlen vereinigt mit der Mengen ihrer additiven Inversen. Analog sind die rationalen Zahlen der Abschluss der natürlichen Zahlen und ihrer multiplikativen Inversen.
 \end{proof}
+\section{Konstruktion der reellen Zahlen durch Dedekindschnitte}
 \chapter{Topologie}
 In den meisten Anfängervorlesungen über Analysis ist der einzige relevante Topologische / Metrische Raum der Raum $(\bR, \abs{-})$ der Reellen Zahlen mit der Absolutbetragsmetrik $d(x,y) = \abs{x-y}$. Falls kein zusätzliches Interesse besteht, tiefer in die Theorie einzutauchen und die betrachteten Konzepte in voller Allgemeinheit aufzunehmen, kannst dieses Kapitel dementsprechend auch fürs Erste übersprungen werden und in jedem Satz in den darauffolgenden Kapiteln die Wörter "Topologischer Raum" und "Metrischer Raum" durch "$\bR$" und die Funktion "$d(x,y)$" durch "$\abs{x - y}$" ersetzt werden.
 \newpar
@@ -199,7 +200,8 @@ Allerdings gibt es auch Topologische Räume, auf denen keine Metriken existieren
 %
 %
 %
-\section{Normierte Vektorräume}
+
+\section{Normen auf Vektorräumen}
 Viele wichtige Metrische Räume sind Vektorräume, auf denen eine Norm definiert ist, also eine Funktion, welche den Vektoren Längen zuordnet. Ich werde hier in aller Kürze die Definitionen und einige relevante Eigenschaften wiederholen. Die allgemeine Theorie der Vektorräume ist enorm wichtig und wird in der Linearen Algebra genauer behandelt.
 \newpar
 Intuitiv ist ein Vektorraum ein Raum, dessen Elemente sich unter Addition und Skalierung wie Vektoren im $\bR^n$ verhalten. Diese Intuition wird durch folgende Definition formalisiert:
@@ -224,6 +226,7 @@ Intuitiv ist ein Vektorraum ein Raum, dessen Elemente sich unter Addition und Sk
 \begin{theorem}
 	Gegeben eine Norm $\norm{-} : V \to \bR$ bildet $d(\vv,\vw) = \norm{\vv - \vw}$ eine Metrik auf $V$.
 \end{theorem}
+
 %
 %
 %
@@ -495,6 +498,7 @@ Dieser Satz ist je nach verwendeter Konstruktion der reellen Zahlen entweder ein
 %
 %
 %
+\section{Intervallschachtelung}
 \section{Stetigkeit}
 \begin{definition}
 	\ul{\textbf{Stetigkeit in Topologischen Räumen:}} Seien $X, Y$ Topologische Räume. Eine Funktion $f : X \to Y$ heißt \textbf{stetig}, wenn das Urbild jeder offener Menge offen ist.
@@ -609,6 +613,7 @@ Dieser Satz ist je nach verwendeter Konstruktion der reellen Zahlen entweder ein
 	\newpar
 	Wir wissen, dass $f(x_{k_j})$ gegen $f(x_0)$ konvergiert (dies ist genau die Folgenstetigkeit von $f$). Aus der Eindeutigkeit des Grenzwerts folgt nun $f(x_0) = \alpha$.
 \end{proof}
+\section{Konstruktion der reellen Zahlen durch Cauchyfolgen}
 %
 %
 %
@@ -619,7 +624,6 @@ Dieser Satz ist je nach verwendeter Konstruktion der reellen Zahlen entweder ein
 %
 %
 %
-\chapter{Formale Konstruktion der Reellen Zahlen}
 %
 %
 %
@@ -4278,6 +4282,125 @@ Auch beim Lebesqueintegral geht dies nicht immer.
 \begin{anmerkung}
 	Dies gilt nicht für uneigentliche Integrale! Es gibt Funktionen, die ein uneigentliches Regelintegral haben, aber kein Lebesqueintegral!
 \end{anmerkung}
+\begin{lemma}
+	\theoremname{(Stetigkeit von Parameterintegralen)}
+	Sei $(X, \cA, \mu)$ ein Maßraum, $U \subset \bR^n$ eine offene Menge und erfülle $f : U \times X \to \bR$ die folgenden Bedingungen:
+	\begin{enumerate}
+		\item Es existiert eine Nullmenge $N \subseteq X$, sodass für alle Punkte $x \in X \setminus N$ die Funktion $f(\cdot, x)$ stetig in $U$ ist;
+		\item Für alle $y \in U$ ist die Funktion $f(y, \cdot)$ $\mu$-messbar;
+		\item Es existiert eine Funktion $g \in \cL^1(\mu)$, sodass für alle $y \in U$ und für $\mu$-fast alle $x \in X$ gilt
+		\begin{align*}
+			\abs{f(y,x)} \leq g(x)
+		\end{align*}
+		Dann ist die Funktion
+		\begin{align*}
+			\phi : U &\to \bR\\
+			y &\mapsto \int_X f(y,x) d\mu(x)
+		\end{align*}
+		stetig auf $U$.
+	\end{enumerate}
+\end{lemma}
+\begin{theorem}
+	\theoremname{(Differentiation unter dem Integralzeichen)} Sei $(X, \cA, \mu)$ ein Maßraum, $U \subset \bR^n$ eine offene Menge und erfülle $f : U \times X \to \bR$ die folgenden Bedingungen:
+	\begin{enumerate}
+		\item Es existiert eine Nullmenge $N \subseteq X$, sodass für alle Punkte $x \in X \setminus N$ die Funktion $f(\cdot, x)$ stetig differenzierbar in $U$ ist;
+		\item Für alle $y \in U$ ist die Funktion $f(y, \cdot)$ $\mu$-messbar;
+		\item Es existiert eine Funktion $g \in \cL^1(\mu)$, sodass für alle $y \in U$ und für $\mu$-fast alle $x \in X$ und $1 = 1, \hdots, n$ gilt
+		\begin{align*}
+			\abs{\partial_i f(y,x)} \leq g(x)
+		\end{align*}
+		Dann ist die Funktion
+		\begin{align*}
+			\phi : U &\to \bR\\
+			y &\mapsto \int_X f(y,x) d\mu(x)
+		\end{align*}
+		auf $U$ stetig differenzierbar und es gilt für alle $y \in U$ und $i = 1, \hdots, n$
+		\begin{align*}
+			\partial_i \phi(y) = \int_X \partial_i f(y,x) d\mu(x)
+		\end{align*}
+	\end{enumerate}
+\end{theorem}
+\begin{theorem}
+	\theoremname{(Absolutstetigkeit des Integrals)} Sei $f \in \cL^1(\mu)$. Dann gibt es zu jedem $\epsilon > 0$ ein $\delta > 0$, sodass für alle $A \in \cA$ gilt:
+	\begin{align*}
+		\mu(A) < \delta \implies \int_A \abs{f} d\mu < \epsilon
+	\end{align*}
+\end{theorem}
+\section{$L^p$-Räume}
+Die wohl wichtigste Konsequenz der Konvergenzsätze ist, dass die sogenannten $L^p$-Räume ein und zeigen, dass sie Banachräume (Vollständig normierte Vektorräume) sind.
+\begin{definition}
+	Sei $1 \leq p < \infty$. Wir bezeichnen mit $\cL^p = \cL^p(X, \cA, \mu)$ die Menge aller $\mu$-messbaren Funktionen $f$ mit
+	\begin{align*}
+		\int_X \abs{f}^p \dmu < \infty
+	\end{align*}
+\end{definition}
+\begin{definition}
+	Sei $f \in \cL^p$. Die $L^p$-Norm der Funktion $f$ ist die Abbildung
+	\begin{align*}
+		\norm{f}_p = \lr(\int_X \abs{f}^p \dmu)^\frac{1}{p}
+	\end{align*}
+\end{definition}
+\begin{definition}
+	Mit $\cL^\infty$ bezeichnen wir die Menge aller $\mu$-messbaren Funktionen $f$, fürdie eine Konstante $K \in \bR$ existiert, sodass
+	\begin{align*}
+		\abs{f} \leq K \quad\textnormal{$\mu$-fast überall}
+	\end{align*}
+	Die Größe
+	\begin{align*}
+		\norm{f}_\infty &:= \underset{x \in X}{\textnormal{ess sup}} \abs{f(x)}\\ &:= \inf\lr{s > 0 \mid \mu(\abs{f} > s) = 0}
+	\end{align*}
+	heißt $L^\infty$-Norm von $f$.
+\end{definition}
+\begin{anmerkung}
+	"ess sup" steht für "essentielles Supremum".
+\end{anmerkung}
+\noindent Wir müssen nun zeigen, dass die $L^p$-Normen tatschlich Normen sind.
+\begin{lemma}
+	\theoremname{Young-Ungleichung} Sei $p,q \in (1, \infty)$ mit $\frac{1}{p} + \frac{1}{q} = 1$. Für nichtnegative Zahlen $a,b \geq 0$ gilt:
+	\begin{align*}
+		ab \leq \frac{a^p}{p} + \frac{b^q}{q}
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Aus der Konkavität der Logarithmusfunktion folgt für $a,b > 0$:
+	\begin{align*}
+		\ln(\frac{a^p}{p} + \frac{b^q}{q})
+		&\geq \frac{1}{p} \ln a^p + \frac{1}{q} \ln b^q\\
+		&= \ln(a) + \ln(b)\\
+		&= \ln(ab)
+	\end{align*}
+	Die Logarithmusfunktion ist streng monoton wachsend, also gilt auch die Behauptung.
+\end{proof}
+\begin{lemma}
+	\theoremname{(Hölder-Ungleichung)} Sei $f \in \cL^p$ und $g \in \cL^p$ mit $p,q \in (1, \infty)
+	$ und $\frac{1}{p} + \frac{1}{q} = 1$. Dann ist $fg \in \cL^1$ und es gilt:
+	\begin{align*}
+		\abs{\int_x fg \dmu} \leq \int_X \abs{fg} \dmu \leq \norm{f}_p \norm{g}_q
+	\end{align*}
+\end{lemma}
+\begin{theorem}
+	Sei $1 \leq p \leq \infty$. Dann gilt:
+	\begin{enumerate}
+		\item $\norm{f}_p = 0 \implies f = 0$ $\mu$-fast überall
+		\item Sei $f \in \cL^p$ und $\lambda \in \bR$. Dann gilt:
+		\begin{align*}
+			\norm{\lambda f}_p = \abs{\lambda}\norm{f}_p
+		\end{align*}
+		\item \theoremname{Minkowski-Ungleichung:} Sei $f,g \in \cL^p$. Dann gilt $f + g \in \cL^p$	und
+		\begin{align*}
+			\norm{f + g}_p \leq \norm{f}_p + \norm{g}_p
+		\end{align*}
+\end{enumerate}
+\end{theorem}
+$\norm{\cdot}_p$ ist also schon fast eine Norm - das Problem ist momentan noch, dass es Funktionen gibt, welche nicht die Nullfunktion sind, aber trotzdem Norm $0$ haben. Wir lösen dies durch eine Äquivalenzklassenkonstruktion.
+\begin{definition}
+	Wir definieren die Äquivalenzrelation $f \sim g \Leftrightarrow f = g$ $\mu$-fast überall. Unsere $L^p$-Räume sind nun die Mengen der Äquivalenzklassen
+	\begin{align*}
+		L^p = \lr{[f] \mid f \in \cL^p}
+	\end{align*}
+	mit den offensichtlichen Definitionen für Addition, Skalarmultiplikation und Norm.
+\end{definition}
+In der Praxis wird leider oft nicht zwischen $L^p$ und $\cL^p$ unterschieden :(
 %
 %
 %

@@ -1032,6 +1032,15 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 		\end{itemize}
 	\end{example}
 	\begin{theorem}
+		Die Charakteristik eines Körpers ist prim.
+	\end{theorem}
+	\begin{proof}
+		Hätten wir einen Körper $K$ der Charakteristik $m = ab$, so wäre 
+		\begin{align*}
+			a \cdot 1_K + b \cdot 1_K = m \cdot 1_K = 0,
+		\end{align*} (wobei $a \cdot 1_K = \sum_{i = 1}^a 1_k$), also wäre der Körper nicht nullteilerfrei. 
+	\end{proof}
+	\begin{theorem}
 		Sei $R$ ein Kring (kommutativer Ring) der Charakteristik $p$, mit $p$ prim. So ist der \tbf{Frobeniushomomorphismus}
 		\begin{align*}
 			Fr : R &\to R\\
@@ -1574,7 +1583,7 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 	\begin{proof}
 		Sei fürs erste $w_p(A) = w_p(B) = 0$ und $A,B \in R[X]$. Betrachten wir die Äquivalenzklassen in $(R\ / \angles{p})[X]$, so gilt $[A] \neq [0]$ und $[B] \neq [0]$ (da mindestens ein Koeffizient existiert, der kein Vielfaches einer $p$-Potenz ist, sonst wäre ja $w_p$ nicht $0$.) Es folgt $[A][B] = [AB] \neq 0$. Also existiert in $[AB]$ ebenfalls ein Term, der kein Vielfaches einer $p$-Potenz ist, also gilt $w_p(AB) = 0$.
 		\newpar
-		Der Allgemeine Fall folgt nun durch vorheriges Multiplizieren der Polynome mit $p$-Potenzen, um sie in die gefragte Form zu bringen.
+		Der allgemeine Fall folgt nun durch vorheriges Multiplizieren der Polynome mit $p$-Potenzen, um sie in die gefragte Form zu bringen.
 	\end{proof}
 	\begin{definition}
 		Sei $P \in (\Frac(P))[X]$. Wir nennen $P$ \tbf{primitiv}, oder genauer \tbf{$R$-primitiv}, wenn für alle irreduziblen Elemente $p$ gilt $w_p(P) = 0$, also wenn es kein $p$ gibt, welches alle Koeffizienten teilt.
@@ -1591,6 +1600,6 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 		\begin{align*}
 			\Phi_d(x) = \prod_{\ord \zeta = d}(X - \zeta)
 		\end{align*}
-		Man kann nun induktiv zeigen, dass diese sogar in $\bZ[X]$ liegen, und aus unserm Satz (und viel Extraarbeit) folgt, dass sie sogar irreduzibel sind.
+		Man kann nun induktiv zeigen, dass diese sogar in $\bZ[X]$ liegen, und aus unserem Satz (und viel Extraarbeit) folgt, dass sie sogar irreduzibel sind.
 	\end{application}
 \end{document}
