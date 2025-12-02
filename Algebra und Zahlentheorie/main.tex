@@ -3,6 +3,7 @@
 % custom margins
 \usepackage[a4paper,margin=1.5in]{geometry}
 \renewcommand{\baselinestretch}{1.2}
+%\AddToHook{cmd/section/before}{\clearpage}
 
 % emma's long list of custom macros and universally used packages
 \include{../macros-and-packages.tex}
@@ -11,7 +12,8 @@
 \tcolorboxenvironment{proof}{
 	colback=white,
 	boxrule=0pt,
-	leftrule=0.5mm,
+	frame hidden,
+	borderline west={1pt}{0pt}{black},
 	before skip=0.75cm,
 	after skip=0.75cm,
 	sharp corners,
@@ -1323,6 +1325,9 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 			\end{align*}
 		\end{enumerate}
 	\end{definition}
+	\begin{anmerkung}
+		Körper besitzen zwar keine irreduziblen Elemente, sind aber trotzdem faktoriell, da jedes Element kürzbar ist und außerdem jedes Element eine Einheit ist, also $R \setminus (R^\times \cup \{0\}) = \emptyset$.
+	\end{anmerkung}
 	\begin{proposition}
 		Der Ring $C(\bR, \bR)$ der stetigen Funktionen $\bR \to \bR$ ist nicht faktoriell, zum Beispiel ist die Funktion $\abs{x}$ kein Produkt von irreduziblen Funktionen, da wir die Funktion als ein beliebig langes Produkt von Wurzeln von sich selbst schreiben können.
 	\end{proposition}
@@ -1518,10 +1523,16 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 	\begin{corollary}
 		Eine positive natürliche Zahl $n \in \bN_1$ lässt sich genau dann als Summe $n = x^2 + y^2$ zweier Quadratzahlen schreiben, wenn in der Primfaktorzerlegung $n = p_1^{r_1}p_2^{r_2}\hdots p_t^{r_t}$ die Primfaktoren, welche Kongruent zu $3$ modulo $4$ sind, alle in geraden Potenzen auftreten.
 	\end{corollary}
-	\section{Bruchkörper und Bewertungen}
+	\section{Bruchkörper, Bewertungen und Primfaktorzerlegung in Polynomringen}
 	\begin{definition}
 		Sei $R$ ein Integritätsbereich. So definieren wir eine Äquivalenzrelation $\sim$ auf $R \times R^\times$ durch $(n,d) \sim (m,b)$, falls $nb = md$. So definieren wir den \tbf{Bruchkörper} $\Frac(R)$ als die Menge der Äquivalenzklassen von $\sim$, wobei wir die Äquivalenzklasse von $(n,d)$ als $\frac{n}{d}$ schreiben.
 	\end{definition}
+	\begin{anmerkung}
+		Wir schreiben für den Bruchkörper eines Polynomrings $k[X]$ über einem Körper $k$ auch
+		\begin{align*}
+			\Frac\ k[X] := k(X)
+		\end{align*}
+	\end{anmerkung}
 	\begin{proposition}
 		Der Bruchkörper $\Frac(R)$ bildet einen Körper, wenn wir:
 		\begin{enumerate}
@@ -1596,10 +1607,116 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 		\end{enumerate}
 	\end{theorem}
 	\begin{application}
+		\label{app:kreisteilungspolynome}
 		Die Primfaktorzerlegung von $X^n - 1$ in $\bQ[X]$, bzw. über $\bZ[X]$. Über den komplexen Zahlen sind die Nullstellen genau die $n$-ten Einheitswurzeln $\zeta$. Die sogenannten Kreisteilungspolynome sind dann definiert als:
 		\begin{align*}
 			\Phi_d(x) = \prod_{\ord \zeta = d}(X - \zeta)
 		\end{align*}
 		Man kann nun induktiv zeigen, dass diese sogar in $\bZ[X]$ liegen, und aus unserem Satz (und viel Extraarbeit) folgt, dass sie sogar irreduzibel sind.
 	\end{application}
+	\begin{theorem}
+		Sei $R$ faktoriell. So ist $R[X]$ ebenfalls faktoriell, und die irreduziblen Elemente sind genau:
+		\begin{enumerate}
+			\item Die Irreduziblen von $R$,
+			\item und die primitiven Polynome von $R[X]$, die irreduzibel in $(\Frac R)[X]$ sind.
+		\end{enumerate}
+	\end{theorem}
+	\begin{corollary}
+		Sei $R$ faktoriell und $P \in R[X] \setminus R$ (also $P$ nicht konstant), sodass $P$ in $(\Frac R)[X]$ nicht irreduzibel. Dann gibt es auch $A, B \in R[X]$ von positivem Grad mit
+		\begin{align*}
+			P = A \cdot B
+		\end{align*}
+	\end{corollary}
+	\begin{proofsketch}
+		"Durch Widerspruch" :)
+	\end{proofsketch}
+	\begin{corollary}
+		Sei $R$ faktoriell, so ist auch $R[X_1, \hdots, X_n]$ faktoriell.
+	\end{corollary}
+	\begin{proofsketch}
+		Per Induktion.
+	\end{proofsketch}
+	\begin{theorem}
+		Sei $k$ ein Körper, $f,g \in k[X,Y] \setminus \lr{0}$ teilerfremd. So ist
+		\begin{align*}
+			\abs{\lr{(x,y) \in k^2 \mid f(x,y) = g(x,y) = 0}} < \infty
+		\end{align*}
+	\end{theorem}
+	\begin{proof}
+		Da $f$ und $g$ teilerfremd sind gibt es in $(\Frac\ k[X])[Y]$ eine Darstellung 
+		\begin{align*}
+			1 = pf + qg.
+		\end{align*}
+		mit $p,q \in (\Frac\ k[X])[Y]$. Dann können wir an die Gleichung das Produkt $h \in k[X] \setminus 0$ der Nenner von $p$ und $q$ multiplizeren und erhalten eine Darstellung
+		\begin{align*}
+			h = \tilde p \cdot f + \tilde q \cdot g
+		\end{align*}
+		mit $\tilde p, \tilde q \in k[X,Y]$. Somit muss jede gemeinsame Nullstelle von $f$ und $g$ eine Nullstelle von $h$ sein. Da $h \in k[X] \setminus 0$ ist, gibt es davon nur endlich viele.
+	\end{proof}
+	\section{Kreisteilungspolynome}
+	Wir wollen darauf hinarbeiten, das Polynom $X^n - 1$ in den Rationalen Zahlen zu faktorisieren. Dafür betrachten wir zuerst Faktorisierungen in den komplexen Polynomen - In Anmerkung \ref{app:kreisteilungspolynome} haben wir das sogenannte \tbf{$d$-te Kreisteilungspolynom} oder \tbf{$d$-te zyklotomische Polynom} definiert als:
+	\begin{align*}
+		\Phi_d(x) = \prod_{\ord \zeta_i = d}(X - \zeta_i)
+	\end{align*}
+	Wobei $\zeta_i$ die $n$-ten Einheitswurzeln, also die komplexen Zahlen mit $\zeta_i^n = 1$, sind, und $\ord{\zeta_i}$ im gruppentheoretischen Sinne gemeint ist, also ist $m = \ord{\zeta_i}$ die kleinste Zahl, sodass $\zeta_i^m = 1$.
+	\begin{proposition}
+		\label{thm:cyclotomicprod}
+		Es gilt
+		\begin{align*}
+			X^n - 1 = \prod_{d \mid n} \Phi_d(X)
+		\end{align*}
+	\end{proposition}
+	\begin{proposition}
+		Es gilt:
+		\begin{enumerate}
+			\item $\Phi_1(X) = X - 1$
+			\item $\Phi_2(X) = X + 1$
+			\item $\Phi_3(X) \cdot \Phi_1(X) = X^3 - 1$, also $\Phi_3(X) = X^2 + X + 1$.
+			\item $\Phi_4(X) = (X + i)(X - i) = X^2 + 1$.
+		\end{enumerate}
+	\end{proposition}
+	\begin{theorem}
+		Die Kreisteilungspolynome sind in $\bZ[X]$ enthalten und normiert.
+	\end{theorem}
+	\begin{proof}
+		Per Induktion über Proposition \ref{thm:cyclotomicprod}.
+	\end{proof}
+	Wir wollen letzendlich zeigen, dass alle Kreisteilungspolynome irreduzibel in $\bQ[X]$ und $\bZ[X]$ sind. Dafür brauchen wir aber noch einige Hilfssätze.
+	\begin{theorem}
+		\theoremname{(Eisenstein-Kriterium)} Sei 
+		\begin{align*}
+			P = \sum_{i = 1}^n a_i X^i \in \bZ[X].
+		\end{align*} Sei $p$ eine Primzahl, sodass
+		\begin{enumerate}
+			\item $p \nmid a_n$,
+			\item $p \mid a_i$ für alle $i < n$,
+			\item und $p^2 \nmid a_0$.
+		\end{enumerate}    
+		Dann ist $P$ irreduzibel in $\bQ[X]$.
+	\end{theorem}
+	\begin{proof}
+		Sei $P$ nicht irreduzibel in $\bQ[X]$. So gibt es nicht konstante $A,B \in \bZ[X]$ mit $\deg{A} = r$, $\deg{B} = s$, $n = r+s$, sodass
+		\begin{align*}
+			P = A \cdot B
+		\end{align*}
+		Es folgt
+		\begin{align*}
+			\ol P = \ol A \cdot \ol B
+		\end{align*}
+		im Quotientenring $(\bZ / p\bZ)[X]$.  Nach Annahme ist
+		\begin{align*}
+			\ol P = \ol a_n X^n
+		\end{align*}
+		Also folgt $\ol A = n X^r$ und $\ol B = m X^s$, mit $n,m \neq 0$ (und alle anderen Koeffizienten verschwinden). Es folgt (?) $p^2 \mid a_0$, was ein Widerspruch ist.
+	\end{proof}
+	Wenden wir nun das Eisensteinkriterium auf $\Phi_p (Y + 1)$ an, erhalten wir modulo $p$:
+	\begin{align*}
+		\ol \Phi_p (Y + 1) &= \frac{\ol{(Y + 1)^p} - 1}{Y + 1 - 1}\\
+						   &= \frac{\ol{Y^p + 1^p - 1}}{Y}\\
+						   &= \frac{Y^p}{Y}\\
+						   &= Y^{p-1} \in \bZ / p\bZ
+	\end{align*}
+	\begin{theorem}
+		Sei $p$ eine Primzahl. Dann ist $\Phi_p(X)$ irreduzibel in $\bZ[X]$.
+	\end{theorem}
 \end{document}

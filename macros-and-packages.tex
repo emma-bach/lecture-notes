@@ -59,7 +59,7 @@
 
 \newcommand{\mc}[1]{\mathcal{#1}}
 
-\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ol}[1]{\overline{{#1}}}
 
 % Underlined, bold, non-cursive Theorem Name
 \newcommand{\theoremname}[1]{\ul{\textnormal{\tbf{#1}}}}
@@ -70,6 +70,9 @@
 
 % Make inf height match sup height
 \renewcommand{\inf}{\mathop{\mathrm{inf}\vphantom{\mathrm{sup}}}}
+
+% Make tildes more readable
+\renewcommand{\tilde}{\widetilde}
 
 %--- RELATION SYMBOLS AND OPERATORS ---
 \newcommand{\surj}{\twoheadrightarrow}
@@ -175,7 +178,7 @@
 \newcommand{\Id}{\textnormal{Id}}
 \newcommand{\im}{\textnormal{im}}
 \newcommand{\inv}{\textnormal{inv}}
-\newcommand{\ord}{\textnormal{ord}}
+\newcommand{\ord}{\textnormal{ord}\ }
 \newcommand{\rang}{\textnormal{rang}\ }
 \renewcommand{\tr}{\textnormal{tr}\ }
 \newcommand{\vol}{\textnormal{vol}}
