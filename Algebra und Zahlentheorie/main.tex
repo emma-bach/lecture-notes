@@ -1719,4 +1719,81 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 	\begin{theorem}
 		Sei $p$ eine Primzahl. Dann ist $\Phi_p(X)$ irreduzibel in $\bZ[X]$.
 	\end{theorem}
+\section{Symmetrische Polynome}
+	\begin{definition}
+		Sei $k$ ein Ring. Ein Polynom $P \in k[X_1, \hdots, X_n]$ heißt symmetrisch, wenn es gleich jeder Permutation seiner Variablen ist, also $\sigma(P) = P$ für jedes $\sigma : X_i \to X_{\sigma(i)}$
+	\end{definition}
+	\begin{anmerkung}
+		Abstrakter: Die symmetrischen Polynome sind die Polynome, die unter der Wirkung der symmetrischen Gruppe auf dem Ring $k[X_1, \hdots, X_n]$ Invariant sind.
+	\end{anmerkung}
+	\begin{proposition}
+		Die Invarianten der Wirkung einer Gruppe $G$ auf einen Ring $R$ bilden immer ebenfalls einen Teilring von $R$, den sogenannten \tbf{Invariantenring} $R^G$.
+	\end{proposition}
+	\begin{definition}
+		In $\bZ[X_1, \hdots, X_n]$ sind die \tbf{elementarsymmetrischen Polynome} die Polynome
+		\begin{align*}
+			s_i = \sum_{\abs{I} = i} \lr(\prod_{j \in I} X_j)
+		\end{align*}
+		Allgemeiner sind in einem kommutativen Ring $k[T]$ die koeffizienten des Polynoms $\pi_{i = 1}^n (T - \zeta_i)$ genau die elementarsymmetrischen Polynome in den $-\zeta_i$.
+	\end{definition}
+	\begin{theorem}
+		Sei $k$ ein kommutativer Ring. Dann lässt sich jedes symmetrisch Polynom eindeutig als Polynom in den elementarsymmetrischen Polynomen darstellen.
+	\end{theorem}
+	\begin{proof}
+		Wir notieren für $\alpha \in \bN^n$
+		\begin{align*}
+			X^\alpha = X_1^{\alpha_1} \hdots X_n^{\alpha_n}
+		\end{align*}
+		Wir betrachten die lexikographische Ordnung (quasi die "Wörterbuchordnung") $\prec$ auf $\bN^n$. Diese ist auf $\bN^n$ (mit $n \in \bN$, also endlich) eine Wohlordnung - jede nichtleere Teilmenge hat ein kleinstes Element. Gegeben
+		\begin{align*}
+			f = \sum_{\alpha \in \bN^n} c_\alpha X^\alpha \in k[X_1, \hdots, X_n] \setminus \lr{0}
+		\end{align*}
+		heiße das größte $\alpha$ mit $c_\alpha \neq 0$ sein \tbf{Leitindex}. Ist $f$ symmetrisch, So gilt für den Leitindex $\alpha_1 \geq \alpha_2 \geq \hdots \geq \alpha_n$. (Da jede Permutation des Leitkoeffizients als Koeffizient vorkommen muss, und diese Permutation die Lexikographisch größte ist).
+		\newpar
+		Angenommen, $k[s_1, \hdots, s_n] \neq k[X_1, \hdots, X_n]^{\cS_n}$. Sei dafür $f$ symmetrisch, aber kein Polynom symmetrischer Polynom, sodass $f$ den kleinstmöglichen Leitindex hat, also:
+		\begin{align*}
+			f = c_\alpha X^\alpha + \sum_{\beta \prec \alpha} c_\beta X^\beta
+		\end{align*}
+		Da $f$ symmetrisch ist, gilt $\alpha_1 \geq \alpha_2 \hdots \alpha_n$. Behauptung: Das Polynom
+		\begin{align*}
+			g := s_n^{\alpha_n} \cdot \prod_{i = 1}^{n-1} s_{i}^{\alpha_i - \alpha_{i + 1}}
+		\end{align*}
+		hat den selben Leitindex. (Später als Lemma refaktorisieren?). Somit hat das Polynom $h := f - c_\alpha g$ einen kleineren Leitindex. Außerdem ist $h$ kein Polynom in den elementarsymmetrischen Polynom, sonst wäre $f = h + c_\alpha$ ebenfalls ein solches. Dies widerspricht der Annahme, dass $f$ einen kleinstmöglichen Leitindex hat.
+	\end{proof}
+	\begin{definition}
+		(Einfügen: Algebraische Unabhängigkeit)
+	\end{definition}
+	\begin{theorem}
+		Die elementarsymmetrischen Polynome sind algebraisch unabhängig.
+	\end{theorem}
+	\begin{proposition}
+		Das Polynom 
+		\begin{align*}
+			T^3 + pT + q \in k[T]
+		\end{align*}
+		in einem algebraisch abgeschlossenen Körper $k$ hat genau dann mehrfache Nullstellen, wenn 
+		\begin{align*}
+			4p^3+ 27q^2 = 0.
+		\end{align*}
+	\end{proposition}
+	\begin{lemma}
+		\begin{align*}
+			(X-Y)^2(Y-Z)^2(Z-X)^2 &= s_1^2s_2^2 - 4s_1^3s_3 + 18s_1s_2s_3 - 4s_2^3 - 27s_3^2
+		\end{align*}
+	\end{lemma}
+	\begin{lemma}
+		Durch Betrachtung der Grade haben wir
+		\begin{align*}
+			&(X-Y)^2(Y-Z)^2(Z-X)^2\\ = &As_1^6 + Bs_1^4s_2 + Cs_1^3s_3 + Ds_1^2s_2^2 + Es_1s_2s_3 + Fs_2^3 + Gs_3^2
+		\end{align*}
+	\end{lemma}
+	\begin{corollary}
+		\begin{align*}
+			T^3 + aT^2 + bT + c \in k[T]
+		\end{align*} 
+		in einem algebraisch abgeschlossenen Körper $k$ hat genau dann mehrfache Nullstellen, wenn
+		\begin{align*}
+			a^2b^2 - 4a^3c + 18abc - 4b^3 - 27c^3 = 0
+		\end{align*}
+	\end{corollary}
 \end{document}

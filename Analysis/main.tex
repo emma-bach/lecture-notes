@@ -4402,6 +4402,111 @@ $\norm{\cdot}_p$ ist also schon fast eine Norm - das Problem ist momentan noch, 
 	mit den offensichtlichen Definitionen für Addition, Skalarmultiplikation und Norm.
 \end{definition}
 In der Praxis wird leider oft nicht zwischen $L^p$ und $\cL^p$ unterschieden :(
+\begin{theorem}
+	Für beliebige $E \in \cA$ und $f : E \to \barR$ sei $f_0 : X \to \barR$ die Fortsetzung von $f$ mit $\forall x \in X \setminus E : f_0(x) = 0$. Wir setzen dann
+	\begin{align*}
+		\cL^p(E) = \cL^p(E, \mu) := \lr{f : E \to \barR \mid f_0 \in \cL(X)}
+	\end{align*}
+	und dementsprechend
+	\begin{align*}
+		L^p(E) := \lr{[f] \mid f \in \cL^p(E)}
+	\end{align*}
+	Durch
+	\begin{align*}
+		\norm{[f]}_{p, L(E)} = \norm{[f_0]}_{p, L(X)}
+	\end{align*}
+	Wird eine Norm auf $L^p(E)$ definiert.
+\end{theorem}
+\begin{lemma}
+	Sei $1 \leq p < \infty$ und 
+	\begin{align*}
+		f_k(x) = \sum_{j = 1}^k u_j(x)
+	\end{align*}
+	mit $u_j \in L^p$. Falls 
+	\begin{align*}
+		\sum_{j = 1}^\infty \norm{u_j(x)} < \infty,
+	\end{align*}so gilt:
+	\begin{enumerate}
+		\item $f(x) = \lim_{k \to \infty} f_k(x)$ existiert für fast alle $x \in X$
+		\item $f \in L^p$
+		\item $\lim_{k \to \infty }\norm{f - f_k}_p = 0$
+	\end{enumerate}
+\end{lemma}
+\begin{theorem}
+	\theoremname{(Satz von Riesz-Fischer)} Für $1 \leq p \leq \infty$ ist $(L^p, \norm{\cdot}_p)$ ein Banachraum, also vollständig.
+\end{theorem}
+\begin{proof}
+	Sei $(f_k)$ eine Cauchyfolge in $L^p$. Da die Folge Cauchy ist, reicht es zu zeigen, dass eine konvergente Teilfolge existiert:
+	\begin{align*}
+		\norm{f - f_n} \leq \norm{f - f_{n_k}} - \norm{f_{n_k} - f_n}
+	\end{align*}
+	Der Rest folgt, sobald ich wieder Zugang zum Skript habe :)
+\end{proof}
+\begin{corollary}
+	Gilt $f_k \to f$ in $L^p$ $1 \leq p \leq \infty$, so existeirt eine Teilfolge $f_{k_j}$, die punktweise $\mu$-fast-überall gegen $f$ konvergiert. Im Fall $p = \infty$ ist diese Teilfolge die ganze Folge, im endlichen Fall ist im Allgemeinen eine echte Teilfolge nötig.
+\end{corollary}
+\begin{example}
+	Seien $n,j,k \in \bN$, sodass $n = 2^k + j$ und $j \leq 2^k$. Wir betrachten eine Folge
+	\begin{align*}
+		f_n(x) = 
+		\begin{cases}
+			1 & j \cdot 2^{-k} \leq x \leq (j+1) \cdot 2^{-k}\\
+			0 & \textnormal{sonst}
+		\end{cases}
+	\end{align*}
+	Es gilt
+	\begin{align*}
+		\int_{\bR} f_n d\lambda^1 = 2^{-k} \leq \frac{2}{n} \to 0
+	\end{align*}
+	aber die Folge konvergiert nicht punktweise. Wohl aber konvergiert die Teilfolge
+	\begin{align*}
+		f_{n_k} := f_{2^k + \lfloor{x2^k}\rfloor}
+	\end{align*}
+	Denn für alle $k$ gilt $f_{n_k} = 1$.
+\end{example}
+\begin{theorem}
+	\theoremname{(Konvergenzsatz von Vitali)} Sei $1 \leq p < \infty$, also $p$ endlich. Die Folge $f_n \in L^p$ konvergiere punktweise $\mu$-fast überall gegen eine $\mu$-messbare Funktion $f$. Dann sind die folgenden Aussagen äquivalent:
+	\begin{enumerate}
+		\item $f \in L^p$ und $\lim_{k \to \infty} \norm{f - f_k}_p = 0$
+		\item Die Folge ist \tbf{gleichgradig integrierbar}: Mit $A \in \cA$ und
+		\begin{align*}
+			\lambda(A) = \limsup_{k \to \infty} \int_A \abs{f_k} \dmu
+		\end{align*}
+		gilt:
+		\begin{enumerate}
+			\item Für jedes $\epsilon \in \bR_{> 0}$ existiert ein $\delta \in \bR_{> 0}$, sodass für alle $A \in \cA$ mit $\mu(A) < \delta$ $\lambda(A) \leq \epsilon$ gilt.
+			\item Für jedes $\epsilon \in \bR_{> 0}$ existiert ein $E \in \cA$, sodass $\mu(E) < \infty$ und $\lambda(X \setminus E) < \epsilon$
+		\end{enumerate}
+	\end{enumerate}
+\end{theorem}
+\begin{anmerkung}
+	Bedingung (a) verhindert Situationen, in der eine Funktion auf sehr kleinen Intervallen sehr großes Maß hat, und (b) verhindert Situationen, in denen die Masse der Funktion "ins unendliche wandert".
+\end{anmerkung}
+\begin{definition}
+	Sei $\Omega \subset \bR^n$ eine offene Menge. Der \tbf{Träger} einer Funktion $f : \Omega \to \bR$ ist die Menge
+	\begin{align*}
+		\spt(f) := \overline{x \in \Omega \mid f(x) \neq 0}
+	\end{align*}
+\end{definition}
+\begin{definition}
+	Der Raum der stetigen Funktionen mit kompaktem Träger in $\Omega$ wird mit
+	\begin{align*}
+		C_0^0(\Omega)
+	\end{align*}
+	bezeichnet.
+\end{definition}
+\begin{definition}
+	Für $K \subset \bR^n$ kompakt, $x \in \bR^n$, $X \subset \bR^n$ definieren wir
+	\begin{align*}
+		\dist(x,K) := \inf_{y \in K} d(x,y)
+	\end{align*}
+	\begin{align*}
+		\dist(X,K) = \inf_{x \in X} \dist(x,K)
+	\end{align*}
+\end{definition}
+\begin{proposition}
+	$\dist$ ist lipschitzstetig mit Lipschitzkonstante $1$.
+\end{proposition}
 %
 %
 %

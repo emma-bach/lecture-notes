@@ -1054,4 +1054,81 @@ Mithilfe der $QR$-Zerlegung bekommen wir ein stabiles Verfahren zur Lösung von 
 		\end{align*}
 		und dieser Faktor wächst für $n > 1$ und $\epsilon \to 0$ unbeschränkt.
 	\end{example}
+	\section{Potenzmethode}
+	\begin{proposition}
+		Sei $A \in \bRnn$ reell diagonal mit Eigenwerten $\lambda_1, \hdots, \lambda_n \in \bR$ und linear unabhngigen Eigenvektoren $v_1, v_2, \hdots, v_n \in \bR^n$ mit $\norm{v_j}_2 = 1$. Sei
+		\begin{align*}
+			x = \sum_{j = 1}^n \alpha_j v_j.
+		\end{align*}
+		ein beliebiger Vektor.
+		Dann gilt
+		\begin{align*}
+			A^k = A^{k-1}(\sum_{j = 1}^n \lambda_j \alpha_j v_j) = \hdots = \sum_{j = 1}^n \lambda_j^k \alpha_j v_j
+		\end{align*}
+		Ist $\lambda_1$ der betragsmäßig größte Eigenwert, so folgt für $k$ hinreichend groß
+		\begin{align*}
+			A^k x \approx \alpha_1 \lambda^k v_1
+		\end{align*}
+		Da $\norm{v_1}_2 = 1$ folgt
+		\begin{align*}
+			\frac{\norm{A^{k+1}x}_2}{\norm{A^kx}_2} \approx \abs{\lambda_1}
+		\end{align*}
+	\end{proposition}
+	\begin{proposition}
+		\theoremname{(von Mises-Potenzmethode)}
+		Sei $A \in \bRnn$, $x \in \bR^n \setminus \lr{0}$, $\epsilon \in \bR_{>0}$. Wir setzen $x_0 = \frac{x}{\norm{x}_2}$, $\mu_0 = 0$, $k = 0$.
+		\begin{enumerate}
+			\item Berechne $x_{k+1} = Ax_k$, $\mu_{k+1} = \norm{x_{k+1}}_2$, $x_{k+1} = \frac{x_{k+1}}{\mu_{k+1}}$.
+			\item Falls $\abs{\mu_{k+1} - \mu_k} < \epsilon$ wird abgebrochen. Ansonsten setzte $k \gets k + 1$ und gehe zu Schritt 1.
+		\end{enumerate} 
+	\end{proposition}
+	\begin{theorem}
+		Sei $\abs{\lambda_1} \geq \hdots \geq \abs{\lambda_n} \geq 0$ und $x = \sum_{i = 1}^n \alpha_i v_i$ mit normierten Eigenvektoren $v_i$ von $A$.
+		\newpar
+		Falls $\alpha_1 \neq 0$, so folgt  mit $q = \abs{\frac{\lambda_2}{\lambda_1}} < 1$ und einem hinreichend großem $k$
+		\begin{align*}
+			\abs{\norm{Ax_k}_2 - \abs{\lambda_1}} \leq 4\norm{A}_2 \cdot c \cdot q^k
+		\end{align*}
+	mit $c$ unabhängig von $k$.
+	\end{theorem}
+	\begin{anmerkung}
+		In jedem Schritt verringert sich der Fehler um einen Faktor $q < 1$. Das Verfahren konvergiert somit \tit{in Ordnung $1$} (Siehe später in Numerik 2) - das ist vergleichsweise sehr langsam.
+	\end{anmerkung}
+	\begin{anmerkung}
+		Wir sehen, dass $\lambda_1 < 0$ genau dann, wenn für hinreichend großes $k$ $x_k \approx -x_{k+1}$ gilt, und dass die Folge $x_k$ abgesehen vom Vorzeichen gegen den Eigenvektor $v_1$ konvergiert.
+	\end{anmerkung}
+	\begin{theorem}
+		Für $A \in \bRnn$ symmetrisch gilt unter den gleichen Vorraussetzungen sogar
+		\begin{align*}
+			\abs{\lambda_1 - x_k^\top Ax_k} \leq 2 \norm{A}_2 c^2 q^{2k}
+		\end{align*}
+	\end{theorem}
+	\begin{anmerkung}
+		Falls $0 < \abs{\lambda_n} < \hdots \leq \abs{\lambda_1}$, so liefert die Potenzmethode mit $A^{-1}$ statt $A$ eine Approximation von $\frac{1}{\abs{\lambda_n}}$
+	\end{anmerkung}
+	\begin{anmerkung}
+		Wendet man die Methode auf $A - \mu E_n)^{-1}$ an, so kovergiert die Methode unter geeigneten Vorraussetzungen gegen den Eigenwert, der am nächsten an $\mu$ liegt.
+	\end{anmerkung}
+	\begin{anmerkung}
+		Die Methode funktioniert auch bei wiederholtem größten Eigenwert $\lambda_1 = \lambda_2$.
+	\end{anmerkung}
+	\section{Das $QR$-Verfahren}
+	\begin{proposition}
+		\theoremname{($QR$-Verfahren)}
+		Sei $A \in \bRnn$, $A_0 = A$, $k = 0$, $\epsilon \in \bR_{>0}$.
+		\begin{enumerate}
+			\item Bestimmt die $QR$-Zerlegung $A_k = Q_k R_k$
+			\item Setze $A_{k+1} = R_k Q_k$
+			\item Stoppe, falls $\norm{A_{k+1} - A_k} \leq \epsilon$. Ansonsten setze $k \gets k+1$ und gehe zu Schritt $1$.
+		\end{enumerate}
+	\end{proposition}
+	\begin{lemma}
+		Es gilt 
+		\begin{align*}
+			A_{k+1} = Q_k^\top A_k Q_k = (Q_0 \cdot \hdots \cdot Q_k)^\top A_k (Q_0 \cdot \hdots \cdot Q_k)
+		\end{align*}
+		\begin{align*}
+			A^{k+1} = (Q_0 \cdot \hdots \cdot Q_k)(R_k \cdot \hdots \cdot R_0)
+		\end{align*}
+	\end{lemma}
 \end{document}
