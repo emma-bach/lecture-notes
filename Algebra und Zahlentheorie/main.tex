@@ -1796,4 +1796,116 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 			a^2b^2 - 4a^3c + 18abc - 4b^3 - 27c^3 = 0
 		\end{align*}
 	\end{corollary}
+\chapter{Körper}
+\section{Körpererweiterungen}
+\begin{definition}
+	Sei $K$ ein Körper. Wir nennen den von der leeren Menge erzeugten Teilkörper $T = (\emptyset)_K$ den \tbf{Primkörper von $K$}. Dieser ist automatisch der kleinste Unterkörper von $K$.
+\end{definition}
+\begin{definition}
+	Eine \tbf{Körpererweiterung} ist ein paar $L \supset K$ bestehend aus einem Körper $L$ und einem Unterkörper $K$. Man schreibt dann statt $L \supset K$ meist $L / K$ und nennt $K$ den \tbf{Grundkörper} und $L$ den \tbf{Erweiterungskörper} oder \tbf{Oberkörper} der Körpererweiterung.
+\end{definition}
+\begin{definition}
+	Sei $L / K$ eine Körpererweiterung und $\alpha \in L$. Wir nennen $\alpha$ \tbf{algebraisch über $K$}, wenn es ein vom Nullpolynom verschiedenes Polynom $0 \neq Q \in K[X]$ mit $Q(\alpha) = 0$ gibt. Ist $\alpha$ nicht algebraisch, heißt es \tbf{transzendent}.
+\end{definition}
+\begin{theorem}
+	Sei $L / K$ eine Körpererweiterung, $\alpha \in L$.
+	\begin{enumerate}
+		\item Ist $\alpha$ transzendent, so ist der Einsetzungshomomorphismus $\phi_\alpha : K[X] \to L$ injektiv. Desweiteren induziert $\phi_\alpha$ einen Körperhomomorphismus $\tilde \phi_\alpha : \Frac(K[X]) \to L$ mit Bild $K(\alpha)$, also dem kleinsten von $K$ und $\alpha$ erzeugten Unterkörper von $L$
+		\item Ist $\alpha$ algebraisch über $K$, so ist $\ker(\phi_\alpha) \neq \lr{0}$. So gibt es in $K[X] \setminus \lr{0}$ unter allen $P$ mit $P(\alpha) = 0$ genau ein normiertes Polynom von kleinstem Grad. Wir nennen dieses das \tbf{Minimalpolynom} $\Irr(\alpha,K)$.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	\begin{enumerate}
+		\item (...)
+		\item $K[X]$ ist ein Hauptidealring. Somit existiert mindestens ein $Q \in K[X] \setminus \lr{0}$ mit $\ker(\phi_\alpha) = \angles{Q}$. Wir wählen ein $Q$ mit kleinstmöglichem Grad und normieren es und erhalten das Minimalpolynom.
+	\end{enumerate}
+\end{proof}
+\begin{lemma}
+	Jedes Polynom $P \in K[X]$ mit $P(\alpha) = 0$ ist ein Vielfaches des Minimalpolynoms. 
+\end{lemma}
+\begin{proofsketch}
+	"Ist klar."
+\end{proofsketch}
+\begin{corollary}
+	Ist $Q \in K[X] ~\setminus 0$ irreduzibel und normiert mit $Q(\alpha) = 0$, so ist $Q$ bereits das Minimalpolynom.
+\end{corollary}
+\begin{lemma}
+	Das Minimalpolynom ist $K[X]$-irreduzibel.
+\end{lemma}
+\begin{proof}
+	Gemäß Isomorphiesatz für Quotientenringe gilt 
+	\begin{align*}
+		(K[X] ~/ \angles{Q}) = (K[X] ~/ \ker(\phi_\alpha)) \cong \Im(\phi_\alpha) = K[\alpha] \subset L
+	\end{align*}
+	Da $K[\alpha] \subset L$ ist $K[\alpha]$ ein kommutativer Integritätsring, also ist $K[X] ~/ Q$ ebenfalls ein kommutativer Integritätsring. Wäre $Q$ nun nicht irreduzibel in $K[X]$, so wären die Faktoren Nullteiler.
+\end{proof}
+\begin{lemma}
+	Ist $d = \deg(\Irr(\alpha,K))$, so ist $\alpha^0, \alpha^1, \hdots, \alpha^{d-1}$ eine $K$-Basis von $K(\alpha)$.
+\end{lemma}
+\begin{example}
+	\phantom{}
+	\begin{enumerate}
+		\item $\Irr(5,\bQ) = X - 5$
+		\item $\Irr(0,\bQ) = X$
+		\item $\Irr(i,\bR) = X^2 + 1$
+		\item $\Irr(i,\bC) = X - i$
+		\item $\Irr(\sqrt{5}, \bQ) = X^2 - 5$
+		\item $\Irr(\sqrt[4]{5}, \bQ) = X^4 - 5$ (Irreduzibel gemäß Eisenstein)
+		\item $\Irr(\sqrt[4]{5}, \bQ) = \Irr(\sqrt{2}, \bQ) = X^2 - 2$
+	\end{enumerate}
+\end{example}
+\begin{definition}
+	Sei $L / K$ eine Körpererweiterung. Wir definieren den \tbf{Grad der Körperwereiterung} als
+	\begin{align*}
+		[L : K] = \dim_K L,
+	\end{align*}
+	also den Grad von $L$ als $K$-Vektorraum.
+\end{definition}
+\begin{example}
+	\phantom{}
+	\begin{enumerate}
+		\item $[\bC : \bR] = \dim_\bR \bC = 2$
+		\item $[\bR : \bQ] = \dim_\bQ \bR = \infty$ (muss sein, da $\bQ$ abzählbar und $\bR$ überabzählbar)
+	\end{enumerate}
+\end{example}
+\begin{proposition}
+	\phantom{}
+	\begin{enumerate}
+		\item Ist $\alpha \in L$ algebraisch über $K$, so ist 
+		\begin{align*}
+			[K(\alpha) : K] = \deg(\Irr(\alpha,K)).
+		\end{align*}
+		\item Ist $\alpha \in L$ transzendent über $K$, so ist
+		\begin{align*}
+			[K(\alpha) : K] = \infty.
+		\end{align*}
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	\phantom{}
+	\begin{enumerate}
+		\item (?)
+		\item Ist $[K(\alpha) : K] < \infty$, so können $\alpha^0, \alpha^1, \hdots$ nicht $K$-linear unabhängig sein. Somit gibt es eine nichttriviale Linearkombination dieser Elemente, welche $0$ ergibt. Diese ist genau ein Polynom mit $\alpha$ als Nullstelle, also ist $\alpha$ in diesem Fall nicht transzendent.
+	\end{enumerate}
+\end{proof}
+\begin{lemma}
+	Sei $L / K$, $\alpha \in L$. Folgenden Aussagen sind äquivalent:
+	\begin{enumerate}
+		\item $\alpha$ ist algebraisch über $K$
+		\item $[K(\alpha) : K] < \infty$
+	\end{enumerate}
+\end{lemma}
+\begin{proposition}
+	Bis auf einen Sonderfall entsteht jede Körpererweiterung mit Grad $2$ durch Adjunktion einer Quadratwurzel. Genauer: Sei $L / K$ eine Körpererweiterung und $\char(K) \neq 2$. Dann ist $[L : K] = 2$ genau dann, wenn es $\alpha \in L \setminus K$ gibt, sodass $\alpha^2 \in K$ und $L = K(\alpha)$
+\end{proposition}
+\begin{theorem}
+	\theoremname{(Turmregel)}
+	Seien $M \supset L \supset K$ Körper. Dann gilt:
+	\begin{align*}
+		[M : K] = [M : L][L : K]
+	\end{align*}
+\end{theorem}
+\begin{proofsketch}
+	Sei $m_1, \hdots, m_r$ eine Basis von $M$ als $L$-Vektorraum und $l_1, \hdots, l_k$ eine Basis von $L$ als $K$-Vektorraum. Behauptung: $(m_il_j)$ ist eine $K$-Bais von $M$.
+\end{proofsketch}
 \end{document}
