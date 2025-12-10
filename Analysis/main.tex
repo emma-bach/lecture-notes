@@ -4507,6 +4507,42 @@ In der Praxis wird leider oft nicht zwischen $L^p$ und $\cL^p$ unterschieden :(
 \begin{proposition}
 	$\dist$ ist lipschitzstetig mit Lipschitzkonstante $1$.
 \end{proposition}
+\section{Satz von Fubini}
+(Nachzuarbeiten: Viel Vorarbeit)
+\begin{theorem}
+	\theoremname{(Satz von Fubini)}
+	Sei $f \in \cL^*(\mu \otimes \nu)$. Dann gilt
+	\begin{align*}
+		\int_{X \times Y} f ~d\mu \otimes \nu 
+		&= \int_X \lr(\int_Y f ~d\nu(y)) ~d\mu(x)\\
+		&= \int_Y \lr(\int_X f ~d\mu(x)) ~d\nu(y)
+	\end{align*}
+\end{theorem}
+\begin{theorem}
+	Der Satz von Fubini ist anwenderbar, wenn:
+	\begin{enumerate}
+		\item $f \geq 0$ und $\mu \otimes \nu$-messbar ist.
+		\item $\int_X \int_Y \abs{f(x,y)} \leq \infty$ oder $\int_Y \int_X \abs{f(x,y)} \leq \infty$
+	\end{enumerate}
+\end{theorem}
+\begin{theorem}
+	Seien $(X, \cA, \mu)$ und $(Y, \cC, \nu)$ vollständige Maßräume. Sei $Q$ der Halbring der messbaren Quader in $X \times Y$ und $\lambda$ das durch die Einschränkung des Produktmaßes $\mu \otimes \nu$ auf $Q$ gegebene Prämaß. Sei $\tau$ die Carathéodory-Fortsezung von $\lambda$.
+	\newpar
+	Dann gilt $(X \times Y, \cA \overline{\otimes} \cC, \mu \overline{\otimes} \nu) = (X \times Y, \cM(\tau), \tau|_{\cM(\tau)})$.
+\end{theorem}
+\begin{corollary}
+	Das Lebesquemaß $\lambda^{n+k}$ auf $\cM(\lambda^{n+k})$ ist die Vervollständigung des Produktmaßes von $\lambda^n$ und $\lambda^k$ auf ihren jeweiligen messbaren Mengen, also als Formel:
+	\begin{align*}
+		\lambda^{n+k} = \lambda^n \overline{\otimes} \lambda^k
+	\end{align*}
+\end{corollary}
+\begin{theorem}
+	\theoremname{(Satz von Fubini 2.0)}
+	Seien $(X, \cA, \mu)$, $(Y, \cC, \nu)$ vollständige, $\sigma$-endliche Maßräume, und sei $f \in \cL^*(\mu \overline{\otimes} \nu)$. Dann ist die Funktion $f(x,\cdot)$ $\nu$-messbar für alle $x \in X$ und die Funktion $f(\cdot, y)$ ist $\mu$-messbar für alle $y \in Y$, und es gilt:
+	\begin{align*}
+		\int_{X \times Y} f d\mu \overline{\otimes} \nu = \int_X \lr(\int_Y f(x,y) ~d\nu(y)) ~d\mu(x) = \int_Y\lr(\int_X f(x,y) ~d\mu(x)) ~d\nu(Y)
+	\end{align*}
+\end{theorem}
 %
 %
 %

@@ -237,4 +237,58 @@
 \begin{anmerkung}
 	Die Umkehrung gilt nicht - viele transzendente Zahlen sind nicht beliebig hoch approximierbar. Insbesondere sind $e$ und $\pi$ nicht zu beliebig hoher Ordnung approximierbar.
 \end{anmerkung}
+\chapter{Charaktersummen}
+\section{Charaktersummen I}
+\begin{theorem}
+	Seien $N \in \bN$, $n \in \bZ / N\bZ$, $b = N / \ggT(N,n)$.
+	Die Gleichung $ny = z$ ist genau dann lösbar, wenn $bz = 0$. In diesem Fall gibt es $\ggT(N,n)$ viele Lösungen.
+\end{theorem}
+\begin{theorem}
+	$\bF_p^\times$ ist zyklisch, also $\bF_p^\times \cong \bZ / (p-1)\bZ$
+\end{theorem}
+\begin{proof}
+	Nach dem sog. Elementarteilersatz gilt $\bF_p^\times \cong \bZ/n_1\bZ \times \hdots \times \bZ/n_m\bZ$ mit $n_1 \mid \hdots \mid n_m$. Pro Komponente $n_i$ gibt es $\ggT(n_1, n_i) = n_1$ viele Elemente mit $n_1y = 0$, also insgesamt $n_1^m$ viele. 
+	\newpar
+	Gleichzeitig Entsprechen die Lösungen in $\bF_p^\times$ den Nullstellen von $X^{n_1} - 1$ in $\bF_p$, davon gibt es höchstens $n_1$ viele, also gilt $m = 1$ und $n_1 = p-1$.
+\end{proof}
+\begin{corollary}
+	Sei $a \in \bF_p^\times$, $n \in \bN$, $d = \ggT(n,p-1)$, $b = (p-1)/d$. Die Gleichung $x^n = a$ ist genau dann lösbar in $\bF_p$, wenn $a^b = 1$.
+\end{corollary}
+\begin{definition}
+	Sei $G$ eine endliche (abelsche) Gruppe. Ein \tbf{Charakter} von $G$ ist Gruppenhomomorphismus  $\chi : G \to (\bC^\times, \cdot)$. Wir bezeichnen mit $X(G)$ die Gruppe aller Charaktere von $G$. Wir bezeichnen mit $\epsilon$ den trivialen Charakter mit $\chi(g) = 1$ für alle $g \in G$. Gemäß Konvention gilt $\chi(0) = 1$ für $\chi = \epsilon$ und $\chi(0) = 0$ für $\chi \neq \epsilon$.
+\end{definition}
+\begin{anmerkung}
+	Im allgemeinen sind Charaktere Abbildungen $\chi : G \to K$ in beliebige Körper $K$, aber $\bC$ ist der bis auf Isomorphismen eindeutige algebraisch abgeschlossene Körper der Charakteristik $0$ und somit der relevanteste Fall. In Körpern positiver Charakteristik ist alles sehr viel komplizierter und in nicht algebraischen Körpern werden Probleme meistens zuerst im algebraischen Abschluss behandelt. 
+\end{anmerkung}
+\begin{definition}
+	Letztendlich wollen wir folgendes Zeigen:
+	Sei $p$ eine feste Primzahl $\neq 2$, $a \in \bF_p$, $n \in \bN$. Dann gilt
+	\begin{align*}
+		\abs{\lr{x \in \bF_p \mid x^n = a}} = \sum_{\chi \in X(\bF_p^\times), \chi^n = \epsilon} \chi(a)
+	\end{align*}
+\end{definition}
+\begin{lemma}
+	\phantom{}
+	Sei $a \in \bF_p^\times$..
+	\begin{enumerate}
+		\item $\chi(1) = 1$.
+		\item $\chi(a)$ für $a \in G$ ist eine $p-1$-te Einheitswurzel.
+		\item $\chi\lr(a^{-1}) = \chi(a)^{-1} = \overline{\chi(a)}$
+	\end{enumerate}
+\end{lemma}
+\begin{corollary}
+	$\bF_p^\times$ hat genau $p-1$ Charaktere.
+\end{corollary}
+\begin{corollary}
+	$X(\bF_p^\times)$ ist zyklisch der Ordnung $p-1$.
+\end{corollary}
+\begin{theorem}
+	Sei $n \in \bN$, $d = \ggT(N,n)$, $b = N / d$ wie zuvor. So gibt es genau $d$ Charaktere von $\bF_p^\times$ mit $\chi^n = \epsilon$.
+\end{theorem}
+\begin{corollary}
+	Unsere Kardinalitätsgleichung gilt, wenn $x^n = a$ lösbar ist.
+\end{corollary}
+\begin{theorem}
+	Die Gleichung gilt auch, wenn $x^n = a$ nicht lösbar ist.
+\end{theorem}
 \end{document}

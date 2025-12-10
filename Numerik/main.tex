@@ -1125,10 +1125,41 @@ Mithilfe der $QR$-Zerlegung bekommen wir ein stabiles Verfahren zur Lösung von 
 	\begin{lemma}
 		Es gilt 
 		\begin{align*}
-			A_{k+1} = Q_k^\top A_k Q_k = (Q_0 \cdot \hdots \cdot Q_k)^\top A_k (Q_0 \cdot \hdots \cdot Q_k)
+			A_{k+1} = Q_k^\top A_k Q_k = (Q_0 \cdot \hdots \cdot Q_k)^\top A (Q_0 \cdot \hdots \cdot Q_k)
 		\end{align*}
 		\begin{align*}
 			A^{k+1} = (Q_0 \cdot \hdots \cdot Q_k)(R_k \cdot \hdots \cdot R_0)
 		\end{align*}
 	\end{lemma}
+	Zur Motivation des $QR$-Verfahrens betrachten wir die erste Spalte von $A^{k+1} = (Q_0\hdots Q_k)(R_k \hdots R_0) := \ol Q_k \ol R_k$:
+	\begin{align*}
+		A^{k+1}e_1 &= \ol{Q}_k \ol R_k e_1 \\
+				   &= \ol Q_k \ol r_{11}^{(k)}e_1\\
+				   &= \ol r_{11}^{(k)} \ol Q_k e_1\\
+				   &= \ol r_{11}^{(k)} \ol q_1^{(k)}\\
+	\end{align*}
+	Mit den Ideen der von-Mises-Potenzmethode ist anzunehmen, dass $\ol q_1^{(k)}$ für große $k$ eine gute Näherung an den Eigenvektor zum betragsmäßig größten Eigenwert $\lambda_1$ ist. $\ol q_1^{(k)}$ hat außerdem als Spalte einer Orthogonalmatrix die Länge $1$. Wir rechnen
+	\begin{align*}
+		A_{k+1} e_1 &= \ol Q_k^\top A \ol Q_k e_1\\
+					&= \ol Q_k^\top A \ol q_1^{(k)}\\
+					&\approx \ol Q_k^\top \lambda_1 q_1^{(k)}\\
+					&= \lambda_1 \ol Q_k^\top \ol q_1^{(k)}\\
+					&= \lambda_1 e_1
+	\end{align*}
+	Angenommen, $A$ sei invertierbar. Wir erhalten
+	\begin{align*}
+		\ol Q_k^\top = \ol R_k A^{-(k+1)}
+	\end{align*}
+	Multiplikation mit $e_n^\top$ von Links liefert:
+	\begin{align*}
+		q_n^{(k)^\top} &= e_n^\top \ol Q_k^\top \\
+				       &= e_n^\top \ol R_k A^{-(k+1)}\\
+				       &= \ol r_{nn}^{(k)} \cdot e_n^\top A^{-(k+1)}\\
+				       &= \ol r_{nn}^{(k)} \cdot \lr(\lr(A^{-(k+1)})^\top e_n)^\top\\
+				       &= \ol r_{nn}^{(k)} \cdot v_n^\top
+	\end{align*}
+	Wobei $v_n^\top$ eine Approximation des Eigenvektors zum betragsmäßig kleinsten Eigenwert von $A^\top$ ist, was auch der kleinste Eigenwert von $A$ ist. Analog zum vorherigen Fall erhalten wir, dass die letzte Spalte von $A$ der Vektor $\lambda_n e_n$ ist.
+	\begin{theorem}
+		Sei $A \in \bRnn$ reell diagonalisierbar mit paarweise verschiedenen Eigenwerten $\abs{\lambda_1} > \abs{\lambda_2} > \hdots > \abs{\lambda_n} > 0$. Sei $\Lambda$ die zugehörige Diagonalmatrix und $X$ die Eigenvektormatrix, also $A = X \Lambda X^{-1}$. Angenommen, $X^{-1}$ besitze eine $LU$-Zerlegung. Dann konvergiert $A_k$ im $QR$-Verfahren gegen eine obere Dreiecksmatrix, deren Diagonale die Matrix $\Lambda$ ist.
+	\end{theorem}
 \end{document}
