@@ -1889,7 +1889,7 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 	\end{enumerate}
 \end{proof}
 \begin{lemma}
-	Sei $L / K$, $\alpha \in L$. Folgenden Aussagen sind äquivalent:
+	Sei $L / K$, $\alpha \in L$. Die f2olgenden Aussagen sind äquivalent:
 	\begin{enumerate}
 		\item $\alpha$ ist algebraisch über $K$
 		\item $[K(\alpha) : K] < \infty$
@@ -1908,4 +1908,178 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 \begin{proofsketch}
 	Sei $m_1, \hdots, m_r$ eine Basis von $M$ als $L$-Vektorraum und $l_1, \hdots, l_k$ eine Basis von $L$ als $K$-Vektorraum. Behauptung: $(m_il_j)$ ist eine $K$-Bais von $M$.
 \end{proofsketch}
+\begin{corollary}
+	Gegeben eine endliche Körpererweiterung ist jedes Element des Oberkörpers algebraisch über dem Unterkörper und sein Grad über dem Unterkörper teilt den Grad der Körpererweiterung.
+\end{corollary}
+\begin{corollary}
+	Es gilt $\sqrt{2} \notin \bQ(\sqrt[3]{2})$.
+\end{corollary}
+\begin{proof}
+	Das Minimalpolynom von $\sqrt{2}$ in $\bQ$ ist $X^2 - 2$ und das Minimalpolynom von $\sqrt[3]{2}$ ist $X^3 - 2$, also hat $\sqrt{2}$ den Grad $2$ und $\sqrt[3]{2}$ den Grad $3$. Wäre nun $\sqrt{2} \in \bQ(\sqrt[3]{2})$, so hätten wir $\bQ(\sqrt[3]{2}) \supset \bQ(\sqrt{2}) \supset \bQ$, also per Turmregel $[\bQ(\sqrt[3]{2}) : \bQ(\sqrt{2})] \cdot 2 = 3$.
+\end{proof}
+\begin{corollary}
+	Seien $L / K$ eine Körpererweiterung und $\alpha_1, \hdots, \alpha_n \in L$ algebraisch über $K$. So ist $K(\alpha_1, \hdots, \alpha_n)$ endlich über $K$ und insbesondere sind alle Elemente dieser Körpererweiterung auch algebraisch über $K$.
+\end{corollary}
+\section{Konstruktionen mit Zirkel und Lineal}
+\begin{definition}
+	Sei $E \subset \bC$.
+	\begin{enumerate}
+		\item Eine reelle affine Gerade durch zwei verschiedene Punkte von $E$ heißt eine \tit{aus $E$ elementar konstruierbare Gerade}
+		\item Ein Kreis durch einen Punkt von $E$ mit Mittelpunkt in einem anderen Punkt von $E$ heißt ein \tit{aus $E$ elementar konstruierbarer Kreis}
+		\item Alle aus $E$ elementar konstruierbaren Geraden und Kreise nennen wir die \tit{aus $E$ konstruierbaren Figuren}
+		\item Ein Punkt $z \in \bC$ heißt \tit{Elementar konstruierbar aus $E$}, wenn er im Schnitt von zwei verschiedenen, aus $E$ elementar konstruierbaren Figuren liegt.
+	\end{enumerate}
+\end{definition}
+\begin{lemma}
+	\phantom{}
+	\begin{enumerate}
+		\item Die Senkrechte zu einer Geraden $AB$ durch einen Punkt $P$ ist aus $AB$ und $P$ elementar konstruierbar.
+		\item Die Parallele zu einer Geraden $AB$ durch einen Punkt $P$ ist aus $AB$ und $P$ elementar konstruierbar.
+	\end{enumerate}
+\end{lemma}
+\begin{theorem}
+	Die Folgenden Teilmengen $K$ und $Q$ von $\bC$ sind identisch:
+	\begin{enumerate}
+		\item Die kleinste Teilmenge $K \subset \bC$, die $0$ und $1$ enthält, sodass jede aus $K$  elementar konstruierbare komplexe Zahl wieder in $K$ liegt (die \tbf{konstruierbaren Zahlen})
+		\item Die kleinste Teilmenge $Q \subset \bC$, die sowohl ein Teilkörper ist als auch stabil unter dem Bilden von Quadratwurzeln.
+	\end{enumerate}
+\end{theorem}
+\begin{proposition}
+	Wir können $K$ und $Q$ bilden, indem wir den Schnitt aller Mengen mit den gefragten Eigenschaften nehmen. Dieser hat wieder die gefragten Eigenschaften.
+\end{proposition}
+\begin{lemma}
+	Sei $a \in \bC^\times$. Folgende Aussagen sind äquivalent:
+	\begin{enumerate}
+		\item $a \in K$,
+		\item $\abs{a} \in K$ und $\frac{a}{\abs{a}} \in K$,
+		\item $\Re(a) \in K$ und $\Im(A) \in K$.r
+	\end{enumerate}
+\end{lemma}
+\begin{lemma}
+	$K$ ist ein Körper.
+\end{lemma}
+\begin{lemma}
+	$K$ ist unter der Bildung von Quadratwurzeln geschlossen.
+\end{lemma}
+\begin{proposition}
+	Sei $L/K$ eine Körpererweiterung und $K$ von Charakteristik ungleich $2$. So ist gleichbedeutend:
+	\begin{enumerate}
+		\item $[L : K] = 2$
+		\item $\exists \alpha \in L$, sodass $\alpha \notin K$, $\alpha^2 \in K$ und $L = K(\alpha)$.
+	\end{enumerate}
+\end{proposition}
+\begin{theorem}
+	Ist $z \in Q$, so ist $z$ algebraisch über $\bQ$ mit Grad $[\bQ(z) : \bQ] = 2^r$.
+\end{theorem}
+\begin{proof}
+	$z \in Q$ gilt genau dann, wenn es eine Körperkette $\bQ = K_0 \subset K_1 \subset \hdots \subset K_r$ gibt, sodass $z \in K_r$. An jeder Stelle wird eine Quadratwurzel adjungiert, also ist für alle $i$ $[K_{i + 1} : K_i] = 2$.
+\end{proof}
+\begin{corollary}
+	$\sqrt[3]{2}$ ist nicht mit Zirkel und Lineal konstruierbar, also kann man zu einem gegebenen Würfel keinen Würfel mit doppeltem Volumen konstruieren.
+\end{corollary}
+\begin{proof}
+	 Das Minimalpolynom $\Irr(\sqrt[3]{2},\bQ)$ von $\sqrt[3]{2}$ über $\bQ$ ist $X^3 - 2$, also gilt $[\bQ(\sqrt[3]{2}) : \bQ] = 3 \neq 2^r : r \in \bN$.
+\end{proof}
+\begin{corollary}
+	$\sqrt[7]{1} = e^\frac{2\pi i}{7}$ ist nicht konstruierbar, also ist das Regelmäßige $7$-Eck nicht konstruierbar.
+\end{corollary}
+\begin{proof}
+	$\Irr(\sqrt[7]{1}, \bQ) = \Phi_7(X) = X^6 + X^5 + \hdots + 1$
+\end{proof}
+\begin{corollary}
+	Es gibt keine Konstruktion zu einer Dreiteilung von Winkeln.
+\end{corollary}
+\begin{proof}
+	$\sqrt[3]{1}$ ist konstruierbar, da $\Irr(\sqrt[3]{1},\bQ) = X^2 + X + 1$, also sind $120$°-Winkel konstruierbar. Allerdings ist $\zeta_9 := \sqrt[9]{1}$ nicht konstruierbar, da $\Irr(\sqrt[9]{1}, \bQ) = X^6 + X^3 + 1$, also kann man innerhalb dieses konstruierten $120$°-Winkel keine $40$°-Winkel konstruieren.
+\end{proof}
+
+\chapter{Einschub: Axiomatik der Natürlichen Zahlen}
+\begin{theorem}
+	Es gibt Paare $(N, s)$ mit $N$ Menge und $s: N \inj N$ eine injektive Abbildung, sodass $N \setminus s(N)$ aus genau einem Element besteht (wir nennen dieses Element $0$) und sodass jede $s$-stabile Teilmenge $M \subset N$ bereits die ganze Menge $N$ ist.
+\end{theorem}
+$s$ ist hier bekannt als die Nachfolgerfunktion ("successor function"), oft auch geschrieben als $\textnormal{suc}$ oder $\textnormal{succ}$. Letztendlich wird dies im Standardmodell der natürlichen Zahlen der Abbildung $s : n \mapsto n+1$ entsprechen.
+\begin{proof}
+	Die Existenz einer Menge $A$ und $s: A \inj A$, sodass $A \setminus s(A) \neq \emptyset$, ist das Unendlichkeitsaxiom der Mengenlehre. Sei $N$ die kleinste $s$-stabile Teilmenge von $A$ mit $0 \in N$, also der Schnitt über alle solchen Mengen.
+\end{proof}
+\begin{theorem}
+	Gegeben $(X,f,x)$ mit einer Menge $X$, $f : X \to X$, $x \in X$ gibt es genau ein $\psi: N \to X$ mit $\psi(0) = x$ und $\psi \circ s = f \circ \psi$
+\end{theorem}
+Im Standardmodell fordern wir genau $\psi(n+1) = f(\psi(n))$ und $\psi(0) = x$, also gilt $\psi(n) = f^n(x)$.
+\begin{proof}
+	Wir betrachten alle $G \subset N \times X$ mit $(0,x) \in G$ und $(n,y) \in G \implies (s(n),f(y)) \in G$. Sei $G'$ der Schnitt aller solcher Teilmengen. Dieses $G'$ ist dann genau der Graph von $\psi$, also die Menge von Tupeln $(n,\psi(n)) = (n,f^n(x))$.
+\end{proof}
+\begin{theorem}
+	Ist $(N',s')$ ein weiteres Paar wie oben, so ist die Eindeutige Abbildung $\psi: N \to N'$ mit $\psi s = s'\psi$ und $\psi(0) = 0'$ eine Bijektion.
+\end{theorem}
+Also sind alle Modelle der natürlichen Zahlen isomorph.
+\section{Die Ganzen Zahlen}
+Wir wollen die Konstruktion der ganzen Zahlen aus den natürlichen Zahlen direkt in verallgemeinerter Form einführen.
+\begin{theorem}
+	Sei $(M, \circ)$ ein kommutatives Monoid und $N \subset M$ ein Untermonoid. So definieren wir die Struktur $N^{-1}M$ folgendermaßen:
+	\begin{align*}
+		N^{-1}M := M \times N / \equiv
+	\end{align*}
+	mit $(m,a) \equiv (n,b)$ genau dann wenn ein $x \in N$ existiert, sodass $m \circ b \circ x = n \circ a \circ x$. Falls die Monoidoperation injektiv ist, reicht bereits $m \circ b = n \circ a$.
+	\newpar
+	Wir erklären nun eine Verknüpfung durch
+	\begin{align*}
+		[(m,a)] \circ [(n,b)] = [(m \circ n, a \circ b)]
+	\end{align*}
+	diese ist wohldefiniert und macht $N^{-1}M$ zu einem kommutativen Monoid.
+\end{theorem}
+\begin{example}
+	\begin{enumerate}
+		\item $(\bQ, \cdot) = (\bZ \setminus \lr{0}, \cdot)^{-1} (\bZ, \cdot)$
+		\item $(\bZ, +) = (\bN, +)^{-1}(\bN, +)$
+	\end{enumerate}
+\end{example}
+\begin{proposition}
+	Für jedes Monoid $M$ ist $M^{-1}M$ eine abelsche Gruppe.
+\end{proposition}
+\begin{theorem}
+	Sei $(R, +, \geq)$ eine angeordnete abelsche Gruppe, also:
+	\begin{enumerate}
+		\item $\geq$ ist eine lineare Ordnung
+		\item $a \geq b \implies a + c \geq b + c$
+	\end{enumerate}
+	Sei auf $R_{\geq 0}$ eine kommutative Monoidstruktur $\cdot$ gegeben, sodass für alle $a,b,c \in R_{> 0}$ das Distributivgesetz gilt. So gibt es genau eine Fortsetzung von $\cdot$ auf ganz $R$, sodass $(R, +, \cdot)$ einen kommutativen Ring bildet. (Insbesondere folgt direkt "$-$ mal $-$ ist $+$")
+\end{theorem}
+\begin{proof}[Beweis (Eindeutigkeit)]
+	Wir brauchen:
+	\begin{align*}
+		a \cdot b =
+		\begin{cases}
+			0 & a = 0 \vee b = 0\\
+			-((-a) \cdot b) & a < 0, b > 0\\
+			-(a \cdot (-b)) & a > 0, b < 0\\
+			(-a) \cdot (-b) & a < 0, b < 0
+		\end{cases}
+	\end{align*}
+	Denn 
+	\begin{align*}
+		ab + (-a)b = (a + (-a)b = 0b = 0,
+	\end{align*}
+	also $ab = -((-a)b)$, und
+	\begin{align*}
+		0 &= (a + (-a))(b + (-b))\\
+		  &= ab +(-a)b + a(-b) + (-a)(-b)\\
+		  &= ab + -(-a)(-b) + -(-a)(-b) + (-a)(-b)\\
+		  &= ab + -(-a)(-b),
+	\end{align*}
+	also $ab = -(-((-a)(-b))) = (-a)(-b)$
+\end{proof}
+\section{Die Reellen Zahlen}
+\begin{align*}
+	\bR := \lr{\alpha \subset \bQ : \begin{array}{c}
+			\textnormal{$\alpha$ hat untere Schranke}\\
+			\textnormal{$x \in \alpha$ und $y > x \implies y \in \alpha$}\\
+			\textnormal{$\alpha$ hat kein kleinstes Element}
+	\end{array}}
+\end{align*}
+\begin{theorem}
+	Sei $y \subset \bR$, sodass $y$ eine untere Schranke hat. Dann gilt 
+	\begin{align*}
+		\inf y = \bigcup_{\alpha \in y} \alpha \in \bR
+	\end{align*}
+\end{theorem}
 \end{document}

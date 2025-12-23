@@ -291,4 +291,53 @@
 \begin{theorem}
 	Die Gleichung gilt auch, wenn $x^n = a$ nicht lösbar ist.
 \end{theorem}
+\section{Charaktersummen II}
+\begin{definition}
+	Definiere die \tbf{Jacobisumme} zweier Charaktere $\chi, \theta$ als:
+	\begin{align*}
+		J(\chi,\theta) = \sum_{a + b = 1} \chi(a) \theta(b)
+	\end{align*}
+\end{definition}
+\begin{lemma}
+	\begin{align*}
+		\sum_{a \in \bF_p} \chi(a) = 
+		\begin{cases}
+			p & \chi = \epsilon\\
+			0 & \chi \neq \epsilon
+		\end{cases}
+	\end{align*}
+\end{lemma}
+\begin{theorem}
+	Seien $\chi, \theta \neq \epsilon$ Charaktere, sodass $\chi \cdot \theta \neq \epsilon$. Dann gilt:
+	\begin{align*}
+		J(\chi,\theta) = \frac{g(\chi)g(\theta)}{g(\chi \cdot \theta)}
+	\end{align*}
+\end{theorem}
+\begin{theorem}
+	Sei $\chi \neq \epsilon, a \neq 0$. Dann gilt
+	\begin{align*}
+		\abs{g_a(\chi)} = \sqrt{p}
+	\end{align*}
+\end{theorem}
+(...)
+\begin{application}
+	Wir wollen für ein festes $n$ und $p \equiv 1 \mod n$ die Anzahl an Lösungen der Gleichung
+	\begin{align*}
+		X^n + Y^n = 1
+	\end{align*}
+	in $\bF_p$ finden. Es wird sich hreausstellen, dass es "in etwa $p$" gibt. Es gilt:
+	\begin{align*}
+		N(X^n + Y^n = 1) &= \sum_{a + b = 1} N(x^n = a)N(y^n = b)\\
+						 &= \sum_{a + b = 1} \sum_{\chi^n = \epsilon} \chi(a) \sum_{\theta^n = \epsilon} \theta(b)\\
+						 &= \sum_{\chi^n = \epsilon, \theta^n = \epsilon} J(\chi,\theta)\\
+						 &= p - \sum_{\chi^n = \epsilon, \chi \neq \epsilon} \chi(-1) + \sum_{{\chi \cdot \theta \neq \epsilon,}{\chi^n = \theta^n = \epsilon}} J(\chi,\theta)\\
+						 &= p + 1 - N(x^n = -1) + \sum_{{\chi \cdot \theta \neq \epsilon,}{\chi^n = \theta^n = \epsilon}} J(\chi,\theta)
+	\end{align*}
+	\begin{align*}
+		\implies N(x^n + y^n = 1) - p - 1 + N(x^n = -1) &= \sum_{{\chi \cdot \theta \neq \epsilon,}{\chi^n = \theta^n = \epsilon}} J(\chi,\theta)\\
+		\implies \abs{N(x^n + y^n = 1) - p - 1 + N(x^n = -1)} &\leq \sum_{{\chi \cdot \theta \neq \epsilon,}{\chi^n = \theta^n = \epsilon}} \abs{J(\chi,\theta)}\\
+		&\leq \sqrt{p}(n^2-n)\\
+		\implies N(x^n + y^n) &\approx p + O(\sqrt{p})
+	\end{align*}
+\end{application}
 \end{document}

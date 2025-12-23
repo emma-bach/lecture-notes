@@ -4543,6 +4543,219 @@ In der Praxis wird leider oft nicht zwischen $L^p$ und $\cL^p$ unterschieden :(
 		\int_{X \times Y} f d\mu \overline{\otimes} \nu = \int_X \lr(\int_Y f(x,y) ~d\nu(y)) ~d\mu(x) = \int_Y\lr(\int_X f(x,y) ~d\mu(x)) ~d\nu(Y)
 	\end{align*}
 \end{theorem}
+\begin{theorem}
+	\theoremname{(Partielle Integration)} Seien $f,g \in C^1(\bR^n)$ Funktionen mit $f,\partial_j f \in L^p(\bR^n)$ und $g, \partial_j g \in L^q(\bR^n)$ für ein $j \in \lr{1, \hdots, n}$ und $p,q \in [1, \infty]$ mit $\frac{1}{p} + \frac{1}{q} = 1$. Dann gilt:
+	\begin{align*}
+		\int_{\bR^n} (\partial_j f)g ~d\lambda^n = -\int_{\bR^n} f(\partial_j g) ~d\lambda^n
+	\end{align*}
+\end{theorem}
+\section{Dichtefunktionen und Satz von Radon-Nikodym}
+\begin{theorem}
+	Seien $(X,\cA,\mu)$ ein Maßraum und $\theta$ eine nichtnegative $\mu$-messbare Funktion auf $X$. Dann ist die Funktion $\nu : \cA \to \barR$ mit
+	\begin{align*}
+		\nu(A) := \int_A \theta ~d\mu
+	\end{align*}
+	ein Maß, welches auch mit $\mu_\theta$ bezeichnet wird.
+\end{theorem}
+\begin{theorem}
+	Es gilt außerdem:
+	\begin{enumerate}
+		\item Aus $\mu(A) = 0$ folgt $\mu_\theta(A) = 0$
+		\item Für alle $\mu$-messbaren nichtnegativen Funktionen gilt
+		\begin{align*}
+			\int_X f ~d\mu_\theta = \int_X f \theta d\mu
+		\end{align*}
+	\end{enumerate}
+\end{theorem}
+\begin{definition}
+	Wir nennen $\theta$ die \tbf{Dichtefunktion} oder einfach \tbf{Dichte} von $\mu_\theta$ bezüglich $\mu$.
+\end{definition}
+Wir können also aus einem gegebenen Maß $\mu$ ein neues Maß $\nu = \mu_\theta$ basteln, indem wir jedem Punkt $x \in X$ eine "Dichte"/"Masse" $\theta(x)$ zuweisen.
+\begin{definition}
+	Seien $(X, \cA, \mu)$ und $(X,\cA,\nu)$ Maßräume. Wir sagen $\nu$ ist \tbf{absolutstetig} bezüglich $\mu$, falls $\nu(A) = 0$ für alle $A \in \cA$ mit $\mu(A) = 0$. Wir notieren dies $\nu \ll \mu$.
+\end{definition}
+\begin{theorem}
+	Seien $(X,\cA,\sigma)$ und $(X,\cA,\nu)$ endliche Maßräume, sodass $\nu(A) \leq \sigma(A)$ für alle $A \in \cA$. Dann existiert eine nichtnegative Funktion $\theta \in L^2(\sigma)$, sodass für alle $A \in \cA$
+	\begin{align*}
+		\nu(A) = \int_A \theta ~d\sigma.
+	\end{align*}
+\end{theorem}
+\begin{anmerkung}
+	Dieser Satz ist ein Spezialfall des sogenannten Rieszschen Darstellungssatzes für Hilberträume. Für $g \in L^2(\sigma)$ und
+	\begin{align*}
+		F(g) = \int_X g ~d\nu
+	\end{align*}
+	ist $F$ ein lineares Funktional auf $L^2$. Durch Hölder kann die Stetigkeit von $F$ gezeigt werden. $L^2$ ist ein Hilbertraum, und der Rieszsche Darstellungssatz besagt nun genau, dass ein $f \in L^2(\sigma)$ existiert, sodass für alle $g \in L^2(\sigma)$
+	\begin{align*}
+		F(g) = \scalar{f}{g}_{L^2(\sigma)} = \int_X fg ~d\sigma.
+	\end{align*}
+	Mit $g = \chi_A$ folgt unser Lemma.
+\end{anmerkung}
+\begin{lemma}
+	Sei $(X, \cA)$ ein messbarer Raum, seien $\mu,\nu$ Maße auf $\cA$, und sei $\sigma := \mu + \nu$. Falls $f \in \cL^*(\sigma)$, dann gilt $f \in \cL(\mu)$ und $f \in \cL(\nu)$, und es gilt
+	\begin{align*}
+		\int_X f ~d\sigma = \int_X f ~d\mu + \int_X f ~d\nu.
+	\end{align*}
+\end{lemma}
+\begin{theorem}
+	\theoremname{(Radon-Nikodym):} Seien $(X,\cA,\mu)$ und $(X,\cA,\nu)$ endliche Maßräume und $\nu \ll \mu$. Dann existiert eine eindeutige nichtnegative Dichtefunktion $\theta \in L^1(\mu)$ von $\nu$ bezüglich $\mu$, sodass für alle $A \in \cA$
+	\begin{align*}
+		\nu(A) = \int_A \theta ~d\mu
+	\end{align*}
+\end{theorem}
+\begin{anmerkung}
+	Wir bezeichnen diese Dichtefunktion $\theta$ auch als die \tbf{Radon-Nikodym-Ableitung}, notiert
+	\begin{align*}
+		\frac{d\nu}{d\mu}
+	\end{align*}
+\end{anmerkung}
+\begin{theorem}
+	Sei $(X, \overline \cA)$ ein messbarer Raum, seien $\mu, \lambda$ endliche Maße auf $\cA$. Dann sind äquivalent:
+	\begin{enumerate}
+		\item $\nu \ll \mu$
+		\item Es existiert eine nichtnegative Funktion $\theta \in L^1(\mu)$, sodass für alle $A \in \cA$
+		\begin{align*}
+			\nu(A) = \int_A \theta ~d\mu
+		\end{align*}
+		\item Für alle $\epsilon > 0$ existiert ein $\delta > 0$, sodass für alle $A \in \cA$
+		\begin{align*}
+			\mu(A) < \delta \implies \nu(A) < \epsilon
+		\end{align*}
+	\end{enumerate}
+\end{theorem}
+\begin{anmerkung}
+	Durch Aussage (iii) ist die Bezeichnung der Relation $\nu \ll \mu$ als eine Form der Steigkeit gerechtfertigt.
+\end{anmerkung}
+Der Satz von Radon-Nikodym gilt auch noch in leicht abgeschwächter Form, wenn $\nu$ und $\mu$ nicht mehr endlich sind, sondern nur noch $\sigma$-endlich (also müssen abzählbare Vereinigungen von Mengen mit endlichem Maß endliches Maß haben):
+\begin{theorem}
+	Sei $(X,\cA)$ ein messbarer Raum. Seien $\mu, \nu$ $\sigma$-endliche Maße mit $\nu \ll \mu$. Dann gibt es eine nichtnegative $\mu$-messbare Funktion $\theta$, sodass für alle $A \in \cA$
+	\begin{align*}
+		\nu(A) = \int_A \theta ~d\mu.
+	\end{align*}
+	$\theta$ ist eindeutig bis auf $\mu$-fast-überall-Gleichheit.
+\end{theorem}
+\begin{theorem}
+	Seien $(X,\cA,\mu)$ und $(X,\cA,\nu)$ Maßräume. Wir sagen, dass die Maße $\mu$ und $\nu$ \tbf{zueinander singulär} sind, in Zeichen $\mu \bot \nu$, falls es eine Menge $M \in \cA$ gibt, sodass $\mu(M) = 0$, aber auch $\nu(X \setminus M) = 0$.
+\end{theorem}
+\begin{proposition}
+	Das Lebesquemaß $\lambda^1$ und die Einschränkung des Diracmaßes $\delta_0$ auf die Lebesque-messbaren Mengen sind zueinander singulär.
+\end{proposition}
+\begin{proof}
+	$\lambda^1(\lr{0}) = 0$ und $\delta_0(\bR \setminus \lr{0}) = 0$.
+\end{proof}
+\begin{theorem}
+	\theoremname{(Zerlegungssatz von Lebesque)} Sei $(X, \cA)$ ein messbarer Raum. Sei $\mu$ ein beliebiges Maß und $\nu$ ein $\sigma$-endliches Maß, beide auf $\cA$. Dann existiert eine eindeutige Zerlegung $\nu = \nu_a + \nu_s$ mit $\nu_a \ll \mu$ und $\nu_s \bot \mu$. Man nennt $\nu_a$ den absolutstetigen Teil und $\nu_s$ den singulären Teil von $\nu$ bezüglich $\mu$.
+\end{theorem}
+\begin{proof}
+	\begin{enumerate}
+		\item Sei $\nu$ endlich und $c := \sup \lr{\nu(B) : B \in \cA, \mu(B) = 0} \in [0,\infty)$. Wähle eine Folge von Mengen $B_j \in \cA$ mit $\nu(B_j) \to c$.
+		Mit $M := \bigcup_j B_j$ folgt $\mu(M) = 0$. Gleichzeitig gilt
+		\begin{align*}
+			c \geq \nu(M) \geq \nu(B_j) \to c,
+		\end{align*}
+		also $\nu(M) = c$.
+		\newpar
+		Für jedes $A \in \cA$ definieren wir nun $\nu_a(A) := \nu(A \setminus M)$ und $\nu_s(A) := \nu(A \cap M)$. Dann folgt direkt $\nu = \nu_a + \nu_b$. Es gilt außerdem $\mu(M) = 0$ und
+		\begin{align*}
+			\nu_s(X \setminus M) = \nu((X \setminus M) \cap M = \nu(\emptyset) = 0
+		\end{align*}
+		also $\nu_s \bot \mu$.
+		\newpar
+		Es bleibt $\nu_a \ll \mu$ zu zeigen. Angenommen, es existiert ein
+		$B' \subseteq X \setminus M$ mit $\mu(B') = 0$ und $\nu(B') > 0$. Sei $\tilde M := M \cap B'$. Dann gilt $\mu(\tilde M) = 0$ und
+		\begin{align*}
+			\mu(\tilde M) = \nu(M) + \nu(B') > \nu(M),
+		\end{align*}
+		was ein Widerspruch ist, da ja $M$ die $\mu$-Nullmenge mit größtem $\nu$-Maß ist. Also gilt für alle $\mu(B') = 0$ auch $\nu(B') = 0$, also $\nu_a(B') = 0$.
+		\item Sei $\nu$ nur $\sigma$-endlich. Dann existieren paarweise disjunkte Mengen $X_k \in \cA$ mit endlichem Maß und $\bigcup_k X_k = X$. Definiere $M := \bigcup_k M_k$.
+		\begin{enumerate}
+			\item 
+			\item $\nu_a \ll \mu$: 
+			\newpar
+			Sei $B' \in \cA$ mit $B' \subset X \setminus M$. Sei $\nu(B') > 0$. Dann muss ein $k \in \bN$ existieren, sodass $\nu(B' \cap X_k) > 0$. Rest wie vorher.
+			\item
+		\end{enumerate}
+	\end{enumerate}
+\end{proof}
+\begin{proposition}
+	Die Zerlegung ist sogar eindeutig.
+\end{proposition}
+\begin{proof}
+	Angenommen, $\nu = \nu_a + \nu_s = \nu_a' + \nu_s'$ mit zugehöriger Zerlegung $M$ zu $\nu_a$ und $M'$ zu $\nu_a'$. Sei $A \in \cA$ und $C := A \cap (M \cup M')$ und $D := A \setminus (M \cup M')$.
+	\begin{align*}
+		\mu(C) \leq \mu(M) + \mu(M') = 0\\
+		\implies \nu_a(c) = \nu_a'(c) = 0\\
+		\implies \nu_s(c) = \nu_s'(c)
+	\end{align*}
+	Es gilt $D \subseteq (X \setminus M) \cap (X \setminus M')$, also $\nu_s(D) = \nu_s'(D) = 0$, also gilt auch $\nu_a(D) = \nu_a'(D)$. Insgesamt folgt $\nu(A) = \nu'(A)$, was zu zeigen war.
+\end{proof}
+\section{Transformationssatz}
+\begin{definition}
+	Eine Abbildung $\phi : U \to V$ zwischen offenen Teilmengen $U$ und $V$ des $\bR^n$ heißt $\cC^1$-Diffeomorphismus, falls sie stetig differenzierbar mit stetig differenzierbarer Umkehrfunktion ist.
+\end{definition}
+Erinnerung: Für $U \subseteq \bR^n$ und $V \subseteq \bR^m$ offen und $f : U \to V$ stetig differenzierbar existiert eine Lineare Abbildung $Df(x)$, welche wir als \tbf{Differential} der Abbildung bezeichnen. Die darstellende Matrix von $Df(x)$ bezüglich der Standardbasen ist die \tbf{Jacobimatrix}
+\begin{align*}
+	Df &= (\partial_1 f, \hdots, \partial_n f)\\
+	   &=
+	   \begin{pmatrix}
+	   \partial_1 f_1 & \hdots & \partial_n f_1\\
+	   \vdots & & \vdots\\
+	   \partial_1f_m & \hdots & \partial_n f_m
+	   \end{pmatrix}
+\end{align*}
+
+\subsection{Polarkoordinaten}
+Im $\bR^2$ können wir jeden Punkt in \tbf{Polarkoordinaten} darstellen.
+\begin{definition}
+	Die Abbildung $\phi : (0,\infty) \times (0,2\pi) := U \to V := \bR^2 \setminus \lr{(x,0) : x \geq 0}$, welche einen Punkt auf seine Polarkoordinaten abbildet, ist gegeben durch:
+	\begin{align*}
+		\phi(r,\omega) := (r \cos \omega, r \sin \omega)^\top
+	\end{align*}
+	Für die Umkehrabbildung gilt:
+	\begin{align*}
+		\phi^{-1}(x,y) = 
+		\begin{cases}
+			(r, \arccos \frac{x}{r})^\top & y \geq 0\\
+			(r, 2\pi - \arccos \frac{x}{r} & y < 0
+		\end{cases}
+	\end{align*}
+\end{definition}
+\begin{definition}
+	\begin{align*}
+		Q(x,\rho) := \lr{y \in \bR^n \mid \abs{x-y}_\infty \leq \rho}
+	\end{align*}
+\end{definition}
+\begin{lemma}
+	Sei $U \subseteq \bR^n$ offen, $x_0 \in U$, $\phi : U \to \bR^n$ eine Abbildung mit Differential $D\phi(x_0) \in GL(\bR^n)$ (also mit invertierbarem Differential). Für eine Folge von Würfeln $Q_j := Q(x_j, \rho_j) \subseteq U$ mit $\rho_j \to 0$ und $x_0 \in Q_j$ gilt dann
+	\begin{align*}
+		\limsup \frac{\lambda^n\lr(\phi(Q_j))}{\lambda^n(Q_j)} \leq \abs{\det D\phi(x_0)}
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Sei durch Translationen $x_0 = 0$ und $\phi(0) = 0$.
+	\begin{enumerate}
+		\item Angenommen, $D\phi(0) = E_n$. Dann gilt
+		\begin{align*}
+			0 &= \lim_{x \to 0} \frac{\norm{\phi(x) - \phi(0) + D\phi(0)x}_\infty}{\norm{x}_\infty}\\
+			  &= \lim_{x \to 0} \frac{\norm{\phi(x) - x}_\infty}{\norm{x}_\infty}\\
+		\end{align*}
+		Sei $\epsilon > 0$, $x \in Q_j$. Dann gilt
+		\begin{align*}
+			\norm{x}_\infty \leq \norm{x - x_j} + \norm{x_j - 0} \leq 2 \rho_j
+		\end{align*}
+		(...)
+	\end{enumerate}
+\end{proof}
+\begin{theorem}
+	Seien $U, V \subset \bR^n$ offen, $\phi : U \to V$ ein $\cC^1$-Diffeomorphismus. Ist $A \subset U$ $\lambda^n$-messbar, so ist $\phi(A)$ $\lambda^n$-messbar und es gilt
+	\begin{align*}
+		\lambda^n(\phi(A)) = \int_A \abs{\det D\phi(x)} ~d\lambda^n(x)
+	\end{align*}
+	Außerdem gilt für jede $\lambda^n$-messbare Funktion $f : V \to \barR$
+	\begin{align*}
+		\int_V f(y) ~d\lambda^n(y) = \int_{\phi^{-1}(V)} f(\phi(x)) \cdot \abs{\det D\phi(x)} ~d\lambda^n(x)
+	\end{align*}
+\end{theorem}
 %
 %
 %
@@ -4683,6 +4896,11 @@ In der Praxis wird leider oft nicht zwischen $L^p$ und $\cL^p$ unterschieden :(
 \end{description}
 \section*{S}
 \begin{description}
+	\item[\tit{$\sigma$-Additivität:}]  Sei $X$ eine beliebige Menge und $\cM \subset \cP(X)$ ein Mengensystem auf $X$. Eine Abbildung $f : M \to \barR_{\geq 0}$ heißt \tit{$\sigma$-additiv}, wenn für jede Folge von paarweise disjunkten Teilmengen $A_i \in \cM$ mit $\bigcup_{i = 1}^\infty A_i \in \cM$ gilt, dass:
+	\begin{align*}
+		f\lr(\bigcup_{i = 1}^\infty A_i) = \sum_{i = 1}^\infty f(A_i).
+	\end{align*}
+	Maße und Prämaße sind per Definition $\sigma$-additiv.
 	\item[\tit{$\sigma$-Algebra:}] Sei $X$ eine beliebige Menge. Eine Menge $\cA \subset \cP(X)$ heißt \tit{$\sigma$-Algebra}, falls:
 	\begin{enumerate}
 		\item $X \in \cA$,
@@ -4693,12 +4911,8 @@ In der Praxis wird leider oft nicht zwischen $L^p$ und $\cL^p$ unterschieden :(
 	$\sigma$-Algebren sind die Mengensysteme, auf denen Maße definiert werden können.
 	\newpar
 	Ist $\cM \subset \cP(X)$ ein Mengensystem, so notieren wir die kleinste $\sigma$-Algebra, die $\cM$ enthält als $\sigma(\cM)$.
-	\item[\tit{$\sigma$-additivität:}]  Sei $X$ eine beliebige Menge und $\cM \subset \cP(X)$ ein Mengensystem auf $X$. Eine Abbildung $f : M \to \barR_{\geq 0}$ heißt \tit{$\sigma$-additiv}, wenn für jede Folge von paarweise disjunkten Teilmengen $A_i \in \cM$ mit $\bigcup_{i = 1}^\infty A_i \in \cM$ gilt, dass:
-	\begin{align*}
-		f\lr(\bigcup_{i = 1}^\infty A_i) = \sum_{i = 1}^\infty f(A_i).
-	\end{align*}
-	Maße und Prämaße sind per Definition $\sigma$-additiv.
-	\item[\tit{$\sigma$-subadditivität:}] Sei $X$ eine beliebige Menge und $\cM \subset \cP(X)$ ein Mengensystem auf $X$. Eine Abbildung $f : M \to \barR_{\geq 0}$ heißt \tit{$\sigma$-subadditiv}, falls für jede Teilmenge $A \in \cM$ und Folge von Teilmengen $A_i \in \cM$ gilt, dass:
+	\item[\tit{$\sigma$-endliches Maß:}] Ein Maß $\mu$ heißt $\sigma$-endlich, falls für jede Familie $M_i$ mit $\mu(M_i) < \infty$ für alle $i$ auch $\mu\lr(\bigcup_{i \in I} M_i)$ endlich ist.
+	\item[\tit{$\sigma$-Subadditivität:}] Sei $X$ eine beliebige Menge und $\cM \subset \cP(X)$ ein Mengensystem auf $X$. Eine Abbildung $f : M \to \barR_{\geq 0}$ heißt \tit{$\sigma$-subadditiv}, falls für jede Teilmenge $A \in \cM$ und Folge von Teilmengen $A_i \in \cM$ gilt, dass:
 	\begin{align*}
 		A \subset \bigcup_{i = 1}^\infty A_i \implies f(A) \leq \sum_{i = 1}^\infty f(A_i).
 	\end{align*}
