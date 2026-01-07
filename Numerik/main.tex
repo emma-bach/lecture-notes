@@ -1162,4 +1162,122 @@ Mithilfe der $QR$-Zerlegung bekommen wir ein stabiles Verfahren zur Lösung von 
 	\begin{theorem}
 		Sei $A \in \bRnn$ reell diagonalisierbar mit paarweise verschiedenen Eigenwerten $\abs{\lambda_1} > \abs{\lambda_2} > \hdots > \abs{\lambda_n} > 0$. Sei $\Lambda$ die zugehörige Diagonalmatrix und $X$ die Eigenvektormatrix, also $A = X \Lambda X^{-1}$. Angenommen, $X^{-1}$ besitze eine $LU$-Zerlegung. Dann konvergiert $A_k$ im $QR$-Verfahren gegen eine obere Dreiecksmatrix, deren Diagonale die Matrix $\Lambda$ ist.
 	\end{theorem}
+	\section{Jacobi-Verfahren}
+	Wir wollen durch geeignete Rotation sukzessiv die Außerdiagonaleinträge einer Matrix verkleinern.
+	\begin{definition}
+		Für $A \in \bRnn$ sei
+		\begin{align*}
+			\cN(A) &= \norm{A}_\cF^2 - \sum_{i = 1}^n a_{ii}^2\\
+			&= \sum_{i \leq j, j \leq n, i \neq j} a_{ii}^2
+		\end{align*}
+	\end{definition}
+	$A$ ist diagonal genau dann, wenn $\cN(A) = 0$. 
+	
+	Mit Gerschgorim folgt, dass zu jedem Eigenwert $\lambda$ von $A$ ein Diagonaleintrag $a_{ii}$ existiert mit
+	\begin{align*}
+		\abs{\lambda - a_{ii}} \leq \sqrt{n-1}\sqrt{\cN(A)}
+	\end{align*}
+	Man kann sogar zeigen, dass 
+	\begin{align*}
+		\abs{\lambda - a_{ii}} \leq \sqrt{\cN(A)}.
+	\end{align*}
+	\begin{definition}
+		Für $c,s \in \bR$ mit $c^2 + s^2 = 1$, $1 \leq p$, $q \neq n$ definieren wir
+		die \tbf{Givens-Rotation} $G_{pq} \in \cO(n)$ durch:
+		\begin{align*}
+			(G_{pq})_{ij} =
+			\begin{cases}
+				1 & i = j, (i \neq p) \vee (i \neq q)\\
+				c & i = j = p \vee i = j = q\\
+				s & i = q, j = p\\
+				-s& i = p, j = q\\
+				0 & 
+			\end{cases}
+		\end{align*}
+		Also ist $G_{pq}$ fast die Einheitsmatrix $I_n$, aber mit vier veränderten Einträgen:
+		\begin{itemize}
+			\item $(G_{pq})_{pp} = (G_{pq})_{qq} = c$,
+			\item $(G_{pq})_{pq} = -s$,
+			\item $(G_{pq})_{qp} = s$.
+		\end{itemize}   
+	\end{definition}
+	\begin{proposition}
+		$G_{pq}$ rotiert einen Vektor in der durch $e_p$, $e_q$ aufgespannten Ebene um den Winkel $\alpha$ mit $c = \cos(\alpha)$, $s = \pm\sin(\alpha)$.
+	\end{proposition}
+	\begin{theorem}
+		Ist $A \in \bRnn$ symmetrisch und $G_{pq}$ eine Givens-Rotation, so gilt für
+		\begin{align*}
+			B = G_{pq}^\top A G_{pq},
+		\end{align*}
+		dass:
+		\begin{align*}
+			\cN(B) = \cN(A) - 2(a_{pq}^2 - b_{pq}^2),
+		\end{align*}
+		wobei 
+		\begin{align*}
+			b_{pq} = cs(a_{qq} - a_{pp}) + (c^2 - s^2)a_{pq}
+		\end{align*}
+	\end{theorem}
+	\begin{lemma}
+		Falls $a_{pq} \neq 0$ und $G_{pq}$ gegeben ist durch 
+		\begin{align*}
+			c = \sqrt{\frac{1 + D}{2}}, \quad s = -\sgn(a_{pq})\sqrt{\frac{1-D}{2}},
+		\end{align*} wobei
+		\begin{align*}
+			D = \frac{a_{pp} - a_{qq}}{\sqrt{(a_{pp} - a_{qq})^2 + 4a_{pq}^2}},
+		\end{align*}
+		so gilt $b_{pq} = 0$.
+	\end{lemma}
+	\begin{theorem}
+		Ist $a_{pq}$ das betragsmäßig größte Außerdiagonalelement von $A$, so gilt mit der Givens-Rotation $G_{pq}$ aus dem vorherigen Lemma für
+		\begin{align*}
+			B = G_{pq}^\top A G_{pq}
+		\end{align*}
+		und 
+		\begin{align*}
+			\epsilon_n = \frac{2}{n(n-1)},
+		\end{align*}
+		dass
+		\begin{align*}
+			\cN(B) \leq (1 - \epsilon_n)\cN(A)
+		\end{align*}
+	\end{theorem}
+	Wir erhalten den folgenden Algorithmus:
+	\begin{theorem}
+		\theoremname{(Jacobi-Verfahren)}
+		Sei $A \in \bRnn$ symmetrisch. Setze $A_0 = A$ und $k = 0$.
+		\begin{enumerate}
+			\item Seien $p,q$ die Indizes des betragsmäßig größten Außerdiagonalelements $a_{pq}$ von $A_k$.
+			\item Sei $G_{pq}$ die Givens-Rotation zu
+			\begin{align*}
+				c = \sqrt{\frac{1 + D}{2}}, \quad s = -\sgn(a_{pq})\sqrt{\frac{1-D}{2}},
+			\end{align*}
+			\begin{align*}
+				D = \frac{a_{pp} - a_{qq}}{\sqrt{(a_{pp} - a_{qq})^2 + 4a_{pq}^2}},
+			\end{align*}
+			\item Setze $A_{k+1} = G^\top_{pq}A_kG_{pq}$.
+			\item Stoppe, falls $\cN(A_{k+1}) \leq \epsilon$, sonst setze $k \gets k+1$ und gehe zu $1$.
+		\end{enumerate}
+	\end{theorem}
+	\begin{proposition}
+		\begin{enumerate}
+			\item Im Allgemeinen werden $\cO(n^2 \log \frac{1}{\epsilon})$ Iterationen benötigt.
+			\item Ein auf Null transponierter Eintrag kann später wieder von $0$ abweichen.
+			\item Suchen des größten Außerdiagonaleintrags ist aufwändig! In der Praxis iteriert man über alle Außerdiagonaleinträge, deren Betrag über einem Schwellwert liegen ("zyklisches Jacobiverfahren").        
+		\end{enumerate}
+	\end{proposition}
+	\chapter{Iterative Lösungsverfahren}
+	Eine Klasse von interativen Verfahren zur Lösung linearer Gleichungssysteme basiert auf dem Banachschen Fixpunktsatz.
+	\section{Lineare Iterationsverfahren}
+	Sei nun $\Phi(x) = Mx + s$ affin mit $M \in \bRnn, s \in \bR^n$. Es gilt:
+	\begin{align*}
+		\norm{\Phi(x) - \Phi(y)} &= \abs{M(x-y)} \leq \norm{M}_{op} \norm{x-y},
+	\end{align*}
+	also ist $\Phi$ eine Kontraktion, wenn eine Operatornorm $\norm{-}_{op}$ existiert, sodass $\norm{M}_{op} < 1$.
+	\begin{theorem}
+		Sei $M \in \bRnn$. Dann ist der Spektralradius $\rho(M)$, also der betragsmäßig maximalen Eigenwert von $M$, das Infimum aller möglichen Operatornormen von $M$:
+		\begin{align*}
+			\rho(M) = \inf_{\norm{-}_{op}} \lr{\norm{M}_{op}}
+		\end{align*}
+	\end{theorem}
 \end{document}

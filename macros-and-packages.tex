@@ -3,6 +3,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{physics}
+\renewcommand{\div}{\tn{div}~}
 
 % Nicer Headers and Footers
 \usepackage{fancyhdr}
@@ -82,6 +83,7 @@
 \newcommand{\symdiff}{\vartriangle}
 \newcommand{\trans}{\twoheadrightarrow}
 \newcommand{\tensor}{\otimes}
+\newcommand{\bigmid}{~\middle|~}
 
 %--- STUFF IN FANCY BRACKETS ---
 \newcommand{\scalar}[2]{\left\langle #1, #2 \right\rangle}
@@ -124,7 +126,7 @@
 \newcommand{\cX}{\mathcal{X}}
 \newcommand{\cZ}{\mathcal{Z}}
 
-%mathfrac
+% mathfrac
 \newcommand{\fa}{\mathfrak{a}}
 
 % real numbers in fancy costumes
@@ -235,3 +237,6 @@
 
 % align with exactly one number for labeling
 \NewDocumentEnvironment{nalign}{}{\equation\aligned}{\endaligned\endequation}
+
+\makeatletter
+\let\amsmath@bigm\bigm

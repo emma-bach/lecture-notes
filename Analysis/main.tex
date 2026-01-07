@@ -1,4 +1,4 @@
-\documentclass{report}
+\documentclass{book}
 
 % custom margins
 \usepackage[a4paper,margin=1.5in]{geometry}
@@ -4755,6 +4755,23 @@ Im $\bR^2$ können wir jeden Punkt in \tbf{Polarkoordinaten} darstellen.
 	\begin{align*}
 		\int_V f(y) ~d\lambda^n(y) = \int_{\phi^{-1}(V)} f(\phi(x)) \cdot \abs{\det D\phi(x)} ~d\lambda^n(x)
 	\end{align*}
+\end{theorem}
+\begin{theorem}
+	Sei $\phi : U \to V$ ein $C^1$-Diffeomorphismus ($U,V \subset \bR^n$) mit zugehöriger Gramscher Matrix $g_{ij}$.
+	\begin{enumerate}
+		\item Für $v \in C^1(V,\bR)$ gilt mit $u = v \circ \phi$:
+		\begin{align*}
+			(\grad v) \circ \phi = (D \phi) \circ \grad_g u
+		\end{align*}
+		Wobei
+		\begin{align*}
+			\grad_g u = \sum_{i,j = 1}^n g^{ij} \partial_i u e_j
+		\end{align*}
+		\item Für $Y \in C^1(V, \bR^n)$ gilt mit $Y \circ \phi = (D\phi)X$
+		\begin{align*}
+			(\div Y) \circ \phi = \div_g~ X = \frac{1}{\sqrt{\det g}} \sum_{j = 1}^n \partial_j(\sqrt{\det g} X_j)
+		\end{align*}
+	\end{enumerate}
 \end{theorem}
 %
 %
