@@ -1992,7 +1992,106 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 \begin{proof}
 	$\sqrt[3]{1}$ ist konstruierbar, da $\Irr(\sqrt[3]{1},\bQ) = X^2 + X + 1$, also sind $120$°-Winkel konstruierbar. Allerdings ist $\zeta_9 := \sqrt[9]{1}$ nicht konstruierbar, da $\Irr(\sqrt[9]{1}, \bQ) = X^6 + X^3 + 1$, also kann man innerhalb dieses konstruierten $120$°-Winkel keine $40$°-Winkel konstruieren.
 \end{proof}
-
+\section{Endliche Körper}
+\begin{theorem}
+	Jeder endliche Schiefkörper ist bereits ein Körper.
+\end{theorem}
+\begin{theorem}
+	Die Kardinalität eines endliches Körpers ist stets eine echte Primzahlpotenz, und zu jeder echten Primzahlpotenz gibt es einen bis auf (nicht eindeutigen) Isomorphismus eindeutig bestimmten endlichen Körper mit dieser Kardinalität. Die Kardinalität ist also eine bijektive Abbildung 
+	\begin{align*}
+		\lr{\tn{endliche Körper modulo Isomorphismus}} \iso \lr{\tn{echte Primzahlprotenzen}}
+	\end{align*}
+\end{theorem}
+\begin{proof}[Beweis (Teil 1)]
+	Ein endlicher Körper $\bF$ hat notwendig eine positive Charakteristik $p$. Wir haben bereits bewiesen, dass diese eine Primzahl ein muss. Wir erhalten also direkt eine Einbettung $\bF_p \to \bF$.
+	\newpar
+	Durch diese Einbettung wird $\bF$ ein endlichdimensionaler $\bF_p$-Vektorraum (?). Mit $r = \dim_{\bF_p} \bF = [\bF : \bF_p]$ gilt dann bereits $\abs{\bF} = p^r$. Somit ist die Kardinalität eines endlichen Körpers stets eine Primzahlpotenz.
+\end{proof}
+Es gilt noch zu zeigen, dass die Kardinalitätsabbildung auf den endlichen Körpern bijektiv ist. Hierfür beweisen wir als Hilfsmittel erst einen weiteren Satz und zwei Hilfslemmata.
+\begin{lemma}
+	\theoremname{(Adjunktion von Nullstellen):} Gegeben ein Körper $K$ und ein nichtkonstantes Polynom $P \in K[X] \setminus K$ gibt es einen Körperhomomorphismus $i : K \to L$ derart, dass unter der von $i$ auf den Polynomringen induzierte Abbildung $i_{[X]} : K[X] \to L[X]$ das Bild $i_{[X]}(P)$ von $P$ eine Nullstelle in $L$ hat.
+\end{lemma}
+\begin{proof}
+	\begin{enumerate}
+		\item Angenommen, $P$ ist irreduzibel in $K[X]$. Da $K[X]$ ein Polynomring in einer Veränderlichen über einem Körper ist, ist $K[X]$ ein Hauptidealring. Somit ist der Quotientenring $L := K[X]/\angles{P}$ ein Körper.
+		\newpar
+		Sei $\ol Q \in L$ die Nebenklasse eines Polynoms $Q \in K[X]$. Wir betrachten den eindeutigen Körperhomomorphismus
+		\begin{align*}
+			i : K &\to L = K[X]/\angles{P}
+			a \mapsto a
+		\end{align*}
+		Dann gilt:
+		\begin{align*}
+			(i_{[X]}(P))(\ol X) 
+			&= \sum_{i = 1}^n \ol a_i \ol X^i\\
+			&= \ol{\lr(\sum_{i = 1}^n a_i X^i)}\\
+			&= \ol P = \ol 0
+		\end{align*}
+		also ist $\ol X$ eine Nullstelle des Polynoms $i_{[X]}(P) \in L[X]$.
+		\item Angenommen, $P$ ist nicht irreduzibel. Dann bilden wir stattdessen den Quotientenring über einen beliebigen irreduziblen Faktor von $P$. Dadurch adjungieren wir einen Nullstelle dieses Faktors, also auch eine Nullstelle von $P$ selbst.
+	\end{enumerate}
+\end{proof}
+Diese Konstruktion wird in manchen Quellen auch als die \tbf{Kronecker-Konstruktion} bezeichnet.
+\begin{proposition}
+	Sei $P \in K[X]$ irreduzibel. Sei $L \supset K$ eine Körpererweiterung von $K$ und $\alpha \in L$ eine Nullstelle von $P$. Dann induziert das Einsetzen von $\alpha$ für $X$ einen Körperisomorphismus
+	\begin{align*}
+		K[X]/\angles{P} \iso K(\alpha)
+	\end{align*}
+\end{proposition}
+\begin{corollary}
+	\theoremname{(Zerfällung von Polynomen in Körpererweiterungen):} Gegeben ein Körper $K$ und ein von Null verschiedenes Polynom $P \in K[X]$ gibt es eine endliche Körpererweiterung $L$ von $K$ derart, dass $P$ als Element von $L[X]$ in Linearfaktoren zerfällt.
+\end{corollary}
+\begin{lemma}
+	Seien $p$ eine Primzahl, $q = p^r$ mit $r \geq 1$, und $L$ ein Körper der Charakteristik $p$. Zerfällt das Polynom $P(X) = X^q - X$ über dem Körper $L$ vollständig in Linearfaktoren, so bilden die Nullstellen von $P(X)$ in $L$ einen Unterkörper der Kardinalität $q$.
+\end{lemma}
+\begin{proof}
+	Die Abbildung $F : L \to L, a \mapsto a^q$ ist ein Körperhomomorphismus. Die Nullstellen unseres Polynoms sind genau die Elemente $a$ mit $a = a^q$, also die Fixpunkte von $F$.
+	\newpar
+	Als Fixpunkte eines Körperautomorphismus bilden sie einen Unterkörper $\bF$ von $L$. Es bleibt nur noch zu zeigen, dass es genau $q$ Elemente hat. Da $X^q - X$ von Grad $q$ ist und in Linearfaktoren zerfällt, hat es genau dann $q$ Nullstellen, wenn es nur einfache Nullstellen hat. Ist aber  $a$ eine Nullstelle, so gilt in $\bF_q[X]$ die Gleichheit:
+	\begin{align*}
+		X^q - X 
+		&= (X - a)^q - (X - a)\\
+		&= ((X - a)^{q-1} - 1)(X-a)
+	\end{align*}
+	und da $a$ keine Nullstelle von $((X - a)^{q-1} - 1)$ sein kann, handelt es sich um eine einfache Nullstelle. Der erste Schritt gilt, da sich durch die Charakteristik $p$ die zusätzlichen Terme in der Binomischen Erweiterung wegfallen:
+	\begin{align*}
+		(X - a)^q - (X - a) &= (X^q - X) + a^q - a + p^r\lr(\sum \hdots)\\
+		&= X^q - X
+	\end{align*}
+\end{proof}
+Wir können nun auch den zweiten Teil unseres Satzes über die Kardinalität endlicher Körper beweisen:
+\begin{proof}[Beweis (Kardinalität endlicher Körper, Teil 2)]
+	\phantom{}
+	\begin{enumerate}
+		\item Als erstes müssen wir noch zeigen, dass es zu jeder echten Potenz $q$ einer Primzahl auch tatsächlich einen Körper mit $q$ Elementen gibt.
+		\newpar
+		Wir wissen nun, dass wir zu $\bF_p$ eine Körpererweiterung von $L$ finden, durch die das Polynom $X^{p^r} - X$ über $\bF_p[X]$ vollständig in Linearfaktoren zerfällt, und dass die Nullstellen einen Unterkörper von $L$ der Kardinalität $p^r$ bilden.
+		\item Als letztes ist noch zu zeigen, dass endliche Körper der selben Kardinalität isomorph sind.
+		\newpar
+		Sei dafür $\bF$ ein endlicher Körper mit $q = p^r$ Elementen. So gilt durch Anwendung des kleinen Satzes von Fermat für alle $a \in \bF^\times$ $a^{q-1} = 1$, also $a^q - a = 0$ für alle $a \in \bF$. 
+		\newpar
+		Insbesondere sind also die Minimalpolynome der Elemente von $\bF$ über $\bF_p$ genau die $\bF_p$-irreduzibeln Faktoren des Polynoms $X^q - X \in \bF_p[X]$. Die Erzeuger der Körpererweiterung $\bF$ sind damit genau die Nullstellen der $\bF_p$-irreduziblen Faktoren $P$ vom Grad $r$ unseres Polynoms $X^q - X$. Da die multiplikative Gruppe eines endlichen Körpers zyklisch ist, gibt es solche Erzeuger. Somit folgt für das Minimalpolynom $P$ dieser Erzeuger
+		\begin{align*}
+			\bF \cong \bF_p[X]/\angles{P}
+		\end{align*}
+		für einen und jeden $\bF_p$-irreduziblen Faktor $P$ vom Grad $r$ des Polynoms $X^q - X$.
+	\end{enumerate}
+\end{proof}
+\begin{theorem}
+	\theoremname{(Unterkörper endlicher Körper):} Gegeben ein endlicher Körper $F$ liefert die Kardinalität eine Bijektion
+	\begin{align*}
+		\lr{\tn{Unterkörper $K \subset \bF$}} \iso \lr{q \in \bN : \exists r \in \bN : q^r = \abs{F}}
+	\end{align*}
+\end{theorem}
+Gegeben zwei endliche Körper lässt sich also insbesondere der eine genau dann in den anderen Einbetten, wenn die Kardinalität des einen eine Potenz der Kardinalität des anderen ist.
+\begin{proof}
+	Wir wissen nun, dass für den Grad $d : [F : K]$ $\abs{F} = \abs{K}^d$ gilt, also liefert die Kardinalität tatsächlich eine Abbildung zwischen den beschriebenen Mengen.
+	\newpar
+	Weiter muss gemäß kleinem Satz von Fermat der Unterkörper $K$, falls es ihn gibt, genau aus den $(\abs{K} - 1)$-ten Einheitswurzeln von $F$ und der Null bestehen. Diese Bedingung definiert den Unterkörper eindeutig, also gibt es genau einen Unterkörper jeder solcher Kardinalität, also ist die Abbildung injektiv.
+	\newpar
+	Für den Nachweis der Surjektivität überlegen wir uns zunächst, dass es in $\bF_{q^r}$ stets genau $(q-1)$ Elemente der Ordnung $q-1$ gibt. Dies folgt, da $\bF^\times_{q^r}$ eine zyklische Gruppe der Ordnung $q^r-1$ ist und da $q-1$ ein Teiler von $q^{r-1}$  ist (?).
+	Also gibt es in $\bF_{q^r}$ genau $q$ Lösungen der Gleichung $X^q - X$. Wir wissen inzwischen, dass diese einen Unterkörper von $\bF_{q^r}$ mit $q$ Elementen bilden.
+\end{proof}
 \chapter{Einschub: Axiomatik der Natürlichen Zahlen}
 \begin{theorem}
 	Es gibt Paare $(N, s)$ mit $N$ Menge und $s: N \inj N$ eine injektive Abbildung, sodass $N \setminus s(N)$ aus genau einem Element besteht (wir nennen dieses Element $0$) und sodass jede $s$-stabile Teilmenge $M \subset N$ bereits die ganze Menge $N$ ist.
