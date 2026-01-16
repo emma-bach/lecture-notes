@@ -2092,7 +2092,151 @@ Gegeben zwei endliche Körper lässt sich also insbesondere der eine genau dann 
 	Für den Nachweis der Surjektivität überlegen wir uns zunächst, dass es in $\bF_{q^r}$ stets genau $(q-1)$ Elemente der Ordnung $q-1$ gibt. Dies folgt, da $\bF^\times_{q^r}$ eine zyklische Gruppe der Ordnung $q^r-1$ ist und da $q-1$ ein Teiler von $q^{r-1}$  ist (?).
 	Also gibt es in $\bF_{q^r}$ genau $q$ Lösungen der Gleichung $X^q - X$. Wir wissen inzwischen, dass diese einen Unterkörper von $\bF_{q^r}$ mit $q$ Elementen bilden.
 \end{proof}
-\chapter{Einschub: Axiomatik der Natürlichen Zahlen}
+\section{Zerfallungskörper}
+\begin{definition}
+	Sei $K$ ein Körper, $P \in K[X] \setminus K$. $L \supset K$ heißt \tbf{minimaler Zerfallungskörper von $P$}, oder einfach \tbf{Zerfallungskörper von $P$}, wenn:
+	\begin{enumerate}
+		\item $P$ in $L[X]$ in Linearfaktoren zerfällt, und
+		\item $L = K(\alpha \in L \mid P(\alpha) = 0)$
+	\end{enumerate}
+\end{definition}
+\begin{theorem}
+	\theoremname{(Existenz und Eindeutigkeit von Zerfallungskörpern):}
+	Seien $K$ ein Körper und $P \in K[X] \setminus 0$. So existieren Zerfallungskörper von $P$, und sind $M / K$ und $M'/K$ zwei Zerfallungskörper von $P$, so gibt es einen Körperisomorphismus $M \iso M'$, der eingeschränkt auf $K$ die Identität induziert.
+\end{theorem}
+\begin{proposition}
+	Gegeben eine Körpererweiterung $j : K \inj M$ und eine primitive algebraische Erweiterung $K(\alpha)$ ihres Unterkörpers $K$ liefert das Auswerten an $\alpha$ eine Bijektion
+	\begin{align*}
+		\tn{Kring}^K(K(\alpha, M) &\iso \lr{\beta \in M \mid \Irr(\alpha, K)(\beta) = 0}\\
+		\phi &\mapsto \phi(\alpha)
+	\end{align*}
+\end{proposition}
+\begin{lemma}
+	Sei ein kommutatives Dreieck von Körperhomomorphismen gegeben, sodass die linke Hälfte des folgenden Diagramms kommutiert:
+	\begin{figure}[h!]
+		% https://q.uiver.app/#q=WzAsNCxbMCwwLCJLIl0sWzIsMCwiTCJdLFsyLDIsIk0iXSxbNCwwLCJMKFxcYWxwaGEpIl0sWzAsMl0sWzEsMl0sWzAsMV0sWzMsMiwiIiwyLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV0sWzEsM11d
+		\[\begin{tikzcd}
+			K && L && {L(\alpha)} \\
+			\\
+			&& M
+			\arrow[from=1-1, to=1-3]
+			\arrow[from=1-1, to=3-3]
+			\arrow[from=1-3, to=1-5]
+			\arrow[from=1-3, to=3-3]
+			\arrow[dashed, from=1-5, to=3-3]
+		\end{tikzcd}\]
+	\end{figure}
+	Sei außerdem $\alpha$ algebraisch über $K$.
+	\newpar
+	Falls $\Irr(\alpha, K)$ über $M[X]$ vollständig in Linearfaktoren zrefällt, so gibt es einen Homomorphismus $\phi : L(\alpha) \to M$, sodass das Diagramm kommutiert.
+\end{lemma}
+\begin{proof}
+	$\Irr(\alpha, L)$ teilt $\Irr(\alpha, K)$. Also zerfllt auf $\Irr(\alpha, L)$ in $M[X]$ und hat also Nullstellen $\beta \in M$.
+\end{proof}
+\begin{theorem}
+	Seien $K \inj L$, $K \inj M$ Körpererweiterungen. Dann gilt:
+	\begin{align*}
+		\abs{\tn{Kring}^K(L,M)} \leq [L : K]
+	\end{align*}
+\end{theorem}
+\begin{definition}
+	Eine Körpererweiterung $L \supset K$ heißt \tbf{algebraisch}, wenn jedes $\alpha \in L$ algebraisch über $K$ ist.
+\end{definition}
+\begin{definition}
+	Eine Körpererweiterung $L \supset K$ heißt \tbf{normal}, wenn sie algebraisch ist und für jedes $\alpha \in L$ das Minimalpolynom $\Irr(\alpha, K)$ über $L$ vollständig in Linearfaktoren zerfällt.
+\end{definition}
+\begin{theorem}
+	Für eine endliche Körpererweiterung $N \supset K$ sind gleichbedeutend:
+	\begin{enumerate}
+		\item $N \supset K$ ist normal,
+		\item $N$ ist der Zerfällungskörper eines Polynoms $P \in K[X]$.
+		\item Gegeben $Q \in K[X]$ und $L/K$ Zerfällungskörper von $Q$ und $\phi, \psi \in \tn{Kring}^K(N, L)$ gilt $\phi(N) = \psi(N)$
+	\end{enumerate}
+\end{theorem}
+\begin{proposition}
+	Sei $N \supset K$ eine normale Körpererweiterung, $L \supset K$ eine beliebige Körpererweiterung. So gilt für alle $\phi, \psi \in \tn{Kring}^K(N,L)$ bereits:
+	\begin{align*}
+		\phi(N) = \psi(N)
+	\end{align*}
+\end{proposition}
+\begin{proof}
+	$\phi(N)$ ist der Teilkörper von $L$, der aus den in $L$ enthaltenen Nullstellen $L$ aller Minimalpolynome $\Irr(\alpha, K)$ für $\alpha \in N$ besteht.
+\end{proof}
+\section{Vielfachheit von Nullstellen}
+\begin{definition}
+	Ist $K$ ein Körper, $P \in K[X]$ ein Polynom, und $\lambda \in K$ eine Nullstelle von $P$. Dann nennen wir
+	\begin{align*}
+		\sup_{n \in \bN} (X - \lambda)^n \mid P
+	\end{align*}
+	die \tbf{Vielfachheit} oder \tbf{Ordnung} von $\lambda$.
+\end{definition}
+\begin{theorem}
+	Ableitungsregeln für Polynome.
+\end{theorem}
+\begin{theorem}
+	Sei $K$ ein Körper, $P \in K[X]$, $\alpha \in K$ mit $P(\alpha) = 0$. Dann ist $\alpha$ eine mehrfache Nullstelle, wenn $P'(\alpha) = 0$.
+\end{theorem}
+\begin{proof}
+	\begin{align*}
+		P(X) &= (X -\alpha)Q(X)\\
+		\implies P'(X) &= Q(X) + (X - \alpha)Q'(X)\\
+		\implies P'(\alpha) &= Q(\alpha)
+	\end{align*}
+\end{proof}
+\begin{definition}
+	Sei $K$ ein Körper, $f,g \in K[X]$ nicht beide Null. Betrachte das Hauptideal $\angles{f,g}_{K[X]} := \angles{d}_{K[X]}$. Dann gibt es genau ein normiertes $d$ mit diesen Eigenschaften. Wir nennen $d$ den \tbf{größtengradigen gemeinsamen normierten Teiler} von $f,g$:
+	\begin{align*}
+		d = \tn{ggnT}_K(f,g)
+	\end{align*}
+\end{definition}
+\begin{proposition}
+	Sei $L/K$ eine Körpererweiterung, $f,g \in K[X]$ Polynome mit $g \neq 0$. Dann gilt:
+	\begin{enumerate}
+		\item Polynomdivision mit Rest von $f$ durch $g$ liefert das selbe Resultat in $K[X]$ und $L[X]$.
+		\item $g$ ist genau dann ein Teiler von $f$ in $L[X]$, wenn dasselbe gilt in $K[X]$.
+		\item $\displaystyle \tn{ggnT}_K(f,g) = \tn{ggnT}_L(f,g)$
+	\end{enumerate}
+\end{proposition}
+\begin{theorem}
+	Sei $K$ ein Körper, $P \in K[X] \setminus 0$. Dann sind gleichbedeutend:
+	\begin{enumerate}
+		\item $P$ hat keine mehrfache Nullstellen in seinem Zerfällungskörper;
+		\item $\tn{ggnT}_K(P,P') = 1$
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	?
+\end{proof}
+\begin{theorem}
+	Sei $K$ ein Körper. Gilt $\tn{char} K = 0$ oder ist $K$ endlich, so hat ein $K$-irreduzibles Polynom $P \in K[X]$ keine mehrfachen Nullstellen in seinem Zerfällungskörper $L$.
+\end{theorem}
+\begin{proof}
+	Zeige $\ggnT(P, P') = 1$. Dies folgt jedoch direkt daraus, dass $P$ irreduzibel ist und $\deg P' < \deg P$ gilt (und gemäß $\tn{char} K = 0$ auch $P' \neq 0$ gilt).
+\end{proof}
+\begin{definition}
+	Sei $K$ ein Körper und $P \in K[X]$. So heißt $P$ \tbf{separabel}, wenn es in seinem Zerfällungskörper $L$ keine mehrfachen Nullstellen hat.
+\end{definition}
+\begin{theorem}
+	Sei $P \in K[X]$ irreduzibel. Dann ist gleichbedeutend:
+	\begin{enumerate}
+		\item $P$ ist nicht separabel,
+		\item $P' = 0$.
+		\item Es gilt $\tn{char} K = p > 0$ und es gibt $Q \in K[X]$ mit $P(X) = Q(X^p)$.
+		\item Jede Nullstelle von $P$ in seinem Zerfällungskörper ist eine mehrfache Nullstelle.
+	\end{enumerate}
+\end{theorem}
+\begin{definition}
+	Ein Körper $K$ heißt \tbf{vollkommen} (eng. \tbf{perfect}) wenn $\tn{char} K = 0$ oder wenn $\tn{\char K} = p > 0$ und
+	\begin{align*}
+		\tn{Fr} : \alpha \mapsto \alpha^p
+	\end{align*}
+	surjektiv ist (also jedes Element eine $p$-te Wurzel hat).
+\end{definition}
+\begin{definition}
+	Eine Körpererweiterung $L/K$ heißt \tbf{separabel}, falls sie algebraisch ist und für alle $\alpha \in L$ das Minimalpolynom von $\alpha$ über $K$ separabel ist.
+\end{definition}
+\appendix
+\chapter{Axiomatik der Natürlichen Zahlen}
 \begin{theorem}
 	Es gibt Paare $(N, s)$ mit $N$ Menge und $s: N \inj N$ eine injektive Abbildung, sodass $N \setminus s(N)$ aus genau einem Element besteht (wir nennen dieses Element $0$) und sodass jede $s$-stabile Teilmenge $M \subset N$ bereits die ganze Menge $N$ ist.
 \end{theorem}

@@ -1280,4 +1280,76 @@ Mithilfe der $QR$-Zerlegung bekommen wir ein stabiles Verfahren zur Lösung von 
 			\rho(M) = \inf_{\norm{-}_{op}} \lr{\norm{M}_{op}}
 		\end{align*}
 	\end{theorem}
+	\begin{corollary}
+		Sei $\rho(M) \leq 1$. Dann ist $\Phi : x \mapsto Mx + b$ eine Kontraktion.
+	\end{corollary}
+	\begin{example}
+		Das Richardson-Verfahren zur approximativen Lösung eines linearen Gleichungssystem $Ax = b$ ist für $\omega > 0$ definiert durch $M = E_n - \omega A$, $c = \omega b$, also:
+			\begin{align*}
+				x^{k+1} = M^k x^{k} + c = x^k - \omega (Ax^k - b)
+			\end{align*}
+			Ist $x^*$ ein Fixpunkt dieses Verfahrens, so gilt $Ax^* = b$.
+			\newpar
+			Falls $A$ symmetrisch und positiv definit ist, sind alle Eigenwerte von $A$ positiv, und für $\omega$ hinreichend klein ist $\rho(M) < 1$, also ist das Verfahren eine Kontraktion.
+			Allerdings ist die Konvergenz extrem langsam, also wird das Verfahren in der Praxis nicht benutzt.
+	\end{example}
+	\section{Jacobi- und Gauß-Seidel-Verfahren}
+	Für $A \in \bRnn$ betrachten wir $D,L,U \in \bRnn$, sodass $D$ die Diagonale von $A$ ist, $L$ der "untere Dreiecksteil", und $U$ der "obere Dreiecksteil". Mit $A = L + D + U$ gilt
+	\begin{align*}
+		Ax = b \Longleftrightarrow Lx + Dx + Ux = b
+	\end{align*}
+	Wir erhalten ein Iterationsverfahren, indem wir $x$ durch $x^{k+1}$ bzw. $x^k$ ersetzen. Zum Beispiel:
+	\begin{align*}
+		Lx^k + Dx^{k+1} + Ux^k = b \Leftrightarrow x^{k+1} &= -D^{-1}(L + U)x^k + D^{-1}b\\
+		&= -D^{-1}(A - D)x^k + D^{-1}b
+	\end{align*}
+	Wieder löst ein Fixpunkt $x^*$ trivial das Gleichungssystem.
+	\begin{definition}
+		Das \tbf{Jacobi-Verfahren} ist gegeben durch:
+		\begin{align*}
+			M^J = -D^{-1}(A - D),\qquad c^J = D^{-1}b
+		\end{align*}
+	\end{definition}
+	\begin{definition}
+		Das \tbf{Gauß-Seidel-Verfahren} ist gegeben durch:
+		\begin{align*}
+			M^{GS} = -(L + D)^{-1} U,\qquad c^{GS} = (L + D)^{-1}b
+		\end{align*}
+	\end{definition}
+	In beiden Fällen muss in jedem Schritt ein einfaches lineares Gleichungssystem gelöst werden. Beide Verfahren sind nicht durchführbar, falls auf der Diagonalen von $A$ eine Null steht, da dann $D$ und $L + D$ nicht invertierbar sind.
+	\section{Diagonaldominanz \& Irreduzibilität}
+	\begin{definition}
+		$A \in \bRnn$ heißt \tbf{diagonaldominant}, falls für $i = 1, \hdots, n$ die Ungleichung
+		\begin{align*}
+			\sum_{j = 1, \hdots, n, j \neq i} \abs{a_{ij}} \leq \abs{a_{ij}}
+		\end{align*}
+		gilt
+		\tbf{und} ein $i$ existiert, sodass die Ungleichung strikt ist. Ist die Ungleichung für alle $i$ strikt, heißt $A$ \tbf{strikt diagonaldominant}.
+	\end{definition}
+	\begin{corollary}
+		\begin{enumerate}
+			\item Ist $A$ strikt diagonaldominant, so ist keiner der Diagonaleinträge $0$, also ist die Diagonale invertierbar.
+			\item Für strikt diagonaldominantes $A$ gilt $\norm{M^J}_\infty < 1$, also $\rho(M^J) < 1$, also konvergiert das Jacobi-Verfahren.
+			\item Für strikt diagonaldominantes $A$ gilt außerdem $\rho(M^{GS}) \leq \rho(M^J)$.
+		\end{enumerate}
+	\end{corollary}
+	Leider ist strikte Diagonaldominanz selten.
+	\begin{definition}
+		Eine Matrix $A \in \bRnn$ heißt \tbf{reduzibel}, falls nichtleere, disjunkte Indexmengen $I,J$ existieren, sodass $I \cup J = \lr{1, \hdots, n}$ und für alle $(i,j) \in I \times J$
+		\begin{align*}
+			a_{ij} = 0
+		\end{align*}
+	\end{definition}
+	\begin{example}
+		Eine $2 \times 2$-Matrix ist genau dann reduzibel, wenn mindestens einer der Einträge außerhalb der Diagonalen $0$ ist.
+	\end{example}
+	\begin{proposition}
+		Für reduzible Matrizen lässt sich das lösen linearer Gleichungssysteme $Ax = b$ Zerlegen: Für $X,Y \subset \lr{1, \hdots, n}$ sei $A_{xy} = (a_{ij})_{i \in X, j \in Y}$. und $x_y = (x_k)_{k \in Y}$. Dann gilt:
+		\begin{align*}
+			A_{II}x_I = b_I, \qquad A_{JJ}x_J = b_J - A_{JI}x_I
+		\end{align*}
+	\end{proposition}
+	\begin{lemma}
+		Ist $M$ irreduzibel und diagonaldominant, so ist $M$ regulär und alle Diagonaleinträge sind von $0$ verschieden.
+	\end{lemma}
 \end{document}

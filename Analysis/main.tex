@@ -4773,6 +4773,187 @@ Im $\bR^2$ können wir jeden Punkt in \tbf{Polarkoordinaten} darstellen.
 		\end{align*}
 	\end{enumerate}
 \end{theorem}
+\begin{corollary}
+	In Polarkoordinaten in $\bR^3$ gilt:
+	\begin{enumerate}
+		\item $\displaystyle \grad_g u = \partial_r u e_r + \frac{1}{r^2} \cdot \partial_\theta u e_\theta + \frac{1}{r^2 \sin^2 \theta} \partial_\omega u e_\omega$
+		\item $\displaystyle \div_g X = \frac{1}{r^2} \cdot (\partial_r r^2 X_r) + \frac{1}{\sin \theta} \cdot \partial_\theta (\sin \theta X_\theta) + \partial_\omega X_\omega$
+		\item $\displaystyle \Delta_g u = \frac{1}{r^2} \cdot \partial_r (r^2 \partial_r u) + \frac{1}{r^2} \sin \theta \cdot \partial_\theta (\sin \theta \cdot \partial_\theta u) + \frac{1}{r^2 \sin^2 \theta} \cdot \partial_\omega^2 u$
+	\end{enumerate}
+\end{corollary}
+\begin{theorem}
+	\theoremname{(Von $\phi$ induzierte Riemannsche Metrik):}
+	Sei $g : U \to \bRnn$ die Gramsche Matrix eines Diffeomorphismus $\phi \in \cC^1(U,V)$. 
+	\newpar
+	So definiert $g$ in jedem Punkt $x \in U$ ein Skalarprodukt und eine zugehörige Euklidische Norm durch:
+	\begin{align*}
+		g(x)(v,w) = \scalar{D\phi(x)v}{D\phi(x)w}
+	\end{align*}
+	\begin{align*}
+		\norm{v}_{g(x)} 
+		&= \sqrt{g(x)(v,v)}\\
+		&= \abs{D \phi(x) v}
+	\end{align*}
+\end{theorem}
+\begin{theorem}
+	Außerdem gilt für die Bogenlänge einer Kurve $\gamma : [a,b] \to U$ in Koordinaten $\phi : U \to V$:
+	\begin{align*}
+		L(\phi \circ \gamma)
+		&= \int_a^b \abs{\frac{d}{dt} \phi(\gamma(t))} ~dt\\
+		&= \int_a^b \abs{D\phi(\gamma(t))\gamma'(t)} ~dt\\
+		&= \int_a^b \sqrt{g(\gamma(t))(\gamma'(t), \gamma'(t))} ~dt
+	\end{align*}
+\end{theorem}
+\section{Das Flächenmaß auf Untermannigfaltigkeiten}
+\begin{definition}
+	Sei $U \subset \bR^n$ offen und $f \in C^1(U, \bR^n+k)$. Wir nennen $f$ eine \tbf{Immersion}, wenn das Differential von $f$ invertierbar ist, also wenn für alle $x \in U$:
+	\begin{align*}
+		\rang Df(x) = n
+		\qquad( \Leftrightarrow \ker Df(x) = \lr{0})
+	\end{align*}
+\end{definition}
+\begin{definition}
+	Ist $f$ eine Immersion, dann bildet $\Im Df(x)$ eine sogenannte \tbf{Untermannigfaltigkeit des $\bR^{n+k}$}. Dieser bildet einen Untervektorraum von $\bR^{n+k}$, von dem die Vektoren $\partial_i f(x)$ eine Basis bilden.
+\end{definition}
+\begin{definition}
+	Wir definieren die Gramsche Matrix in diesem allgemeinen Fall als:
+	\begin{align*}
+		g(x) = Df(x)^\top Df(x) \in \Hom(\bR^{n+k}, \bR^{n+k})
+	\end{align*}
+	bzw.
+	\begin{align*}
+		g_{ij} = \scalar{\partial_i f(x)}{ \partial_j f(x)}
+	\end{align*}
+\end{definition}
+\begin{theorem}
+	$g_f$ ist genau dann strikt positiv definit, und damit auch invertierbar, wenn $f$ eine Immersion ist.
+\end{theorem}
+\begin{proof}
+	Es gilt $\scalar{g(x)v}{v} = \abs{Df(x)v}^2$, also $\ker g(x) = \ker Df(x)$.
+\end{proof}
+\begin{definition}
+	Sei $f \in C^1(U, \bR^{n+k}$ eine $n$-dimensionale Immersion mit Gramscher Matrix und zugehöriger Induzierter Metrik $g$, und sei $E \subset U$ $\lambda^n$-messbar. Der \tbf{$n$-dimensionale Flächeninhalt von $f$ auf $E$} ist dann definiert durch:
+	\begin{align*}
+		A_E(f) = \int_E \sqrt{\det g} ~d\lambda^n
+	\end{align*}
+\end{definition}
+\begin{definition}
+	Wir nennen die Funktion $\sqrt{\det g}$ auch den \tbf{Fächenintegrand} oder die \tbf{Jacobische} von $f$ und schreiben
+	\begin{align*}
+		Jf = \sqrt{\det g}
+	\end{align*}
+\end{definition}
+Angenommen, $f_1 : V \to \bR^{n+k}$ und $f_2 : U \to \bR^{n+k}$ sind zwei verschiedene Parametrisierungen der gleichen Untermannigfaltigkeit $M$. Dann sind per Definition die Bilder Diffeomorph, also existiert per Definition ein $\phi \in \cC^1(U,V)$, sodass $f_2 = f_1 \circ \phi$. 
+\newpar
+Es folgt: $f_1^{-1}(M) = E \implies f_2^{-1}(M) = \phi(E)$. Wollen wir also zeigen, dass der Flächeninhalt der Untermannigfaltigkeit $M$ nicht von der Parametrisierung abhängt, reicht folgender Satz:
+\begin{theorem}
+	
+	Für jeden Diffeomorphismus $\phi \in \cC^1(U,V)$, jede Immersion $f \in \cC^1(V, \bR^{n+k})$ und jede $\lambda^n$-messbare Menge $E \subset U$ gilt:
+	\begin{align*}
+		A_{\phi(E)}(f) = A_E(f \circ \phi)
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	Es gilt:
+	\begin{align*}
+		g_{f \circ \phi}(x)
+		&= D(f \circ \phi)^\top(x) D(f \circ \phi)(x)\\
+		&= D\phi(x)^\top Df(\phi(x))^\top Df(\phi(x))D\phi(x)\\
+		&=D\phi(x)^\top g_f(\phi(x)) D\phi(x)
+	\end{align*}
+	Es folgt
+	\begin{align*}
+		J(f \circ \phi) = (Jf) \circ \phi\abs{\det D\phi}
+	\end{align*}
+	Mit dem Transformationssatz folgt:
+	\begin{align*}
+		A_{\phi(E)} (f) 
+		&= \int_{\phi(E) Jf ~d\lambda^n}\\
+		&= \int_{E} Jf \circ \phi \abs{\det D\phi(x)} ~d\lambda^n\\
+		&= \int_E J(f \circ \phi) ~d\lambda^n\\
+		&= A_E(f \circ \phi)
+	\end{align*}
+\end{proof}
+\begin{corollary}
+	Die Länge $L(f)$ eine Kurve $f : (a,b) \to \bR^{1+k}$ ist gegeben durch:
+	\begin{align*}
+		L(f) = \int_a^b \abs{f'(t)} ~dt
+	\end{align*}
+\end{corollary}
+\begin{corollary}
+	(Inhalt einer Regulären Fläche)
+\end{corollary}
+\begin{lemma}
+	Für $f \in C^1(U, \bR^k)$ ist die Graphenabbildung
+	\begin{align*}
+		\tn{Graph}(f) : \bR^n \supset U &\to \bR^{n+k}\\
+		x &\mapsto (x, f(x))
+	\end{align*}
+	eine Immersion.
+\end{lemma}
+\begin{theorem}
+	Sei $gr(f)$ der Graph von $f : U \to \bR^k$. Dann gilt:
+	\begin{align*}
+		A(\tn{Graph}(f)) = \int_U \sqrt{1 + \abs{Df(x)}^2 ~dx}
+	\end{align*}
+\end{theorem}
+\begin{theorem}
+	Sei $n \in \bN_{> 0}$, $k \in \bN_{\geq 0}$. Für $M \subset \bR^{n+k}$ sind folgende Aussagen äquivalent:
+	\begin{enumerate}
+		\item \theoremname{(Plättbarkeitskriterium):} 
+		Zu jedem $p \in M$ gibt es eine offene Umgebung $W \subset \bR^{n+k}$ und einen $C^1$-Diffeomorphismus $\phi : W \to \phi(W) \subset \bR^{n+k}$ mit
+		\begin{align*}
+			\phi(M \cap W) = \lr{z \in \phi(W) \mid z_{n+1} = \hdots = z_{n+k} = 0}
+		\end{align*} 
+		\item \theoremname{(Niveaumengenkriterium):}
+		Zu jedem $p \in M$ gibt es eine offene Umgebung $W \subset \bR^{n+k}$ und für alle $q \in W$ eine Funktion $h \in C^1(W, \bR^k)$ mit $\rang Dh(q) = k$, sodass:
+		\begin{align*}
+			M \cap W = \lr{q \in W \mid h(q) = 0}
+		\end{align*}
+		\item \theoremname{(Graphenkriterium):} 
+		Zu jedem $p \in M$ gibt es eine Translation $B$ des $\bR^{n+k}$ mit $B(0) = p$, offene Mengen $U \subset \bR^n$, $V \subset \bR^k$ mit $0 \in U \times V$, und eine $C^1$-Funktion $u : U \to V$ mit $u(0) = 0$, sodass
+		\begin{align*}
+			M \cap B(U \times V) = B(\lr{x, u(x) \mid x \in U})
+		\end{align*}
+	\end{enumerate}
+	Wir nennen eine Menge $M \subset \bR^{n+k}$, welche diese Bedingungen erfüllt, eine \tbf{$n-$dimensionale $C^1$-Untermannigfaltigkeit des $\bR^{n+k}$}.
+\end{theorem}
+\begin{definition}
+	\theoremname{(Relativtopologie):}
+	Jede Teilmenge $M$ eines Metrischen Raums $R$ ist, versehen mit der Metrik auf $R$, ebenfalls ein Metrischer Raum. Wir können so eine Topologie auf $M$ definieren: $V \subset M$ ist offen in $M$ bezüglich der \tbf{durch $R$ induzierten Relativtopologie auf $M$}, wenn es zu jedem $p \in V$ ein $\epsilon > 0$ gibt, sodass $M \cap B_\epsilon(p) \subset V$.
+\end{definition}
+\begin{lemma}
+	Sei $M \subset \bR^{n+k}$. Dann gilt:
+	\begin{enumerate}
+		\item $V \subset M$ ist genau dann offen in $M$, wenn es eine offene Menge $W \subset \bR^{n+k}$ gibt, sodass $V = M \cap W$.
+		\item Eine Menge $K \subset M$ ist genau dann kompakt in $M$, wenn $K$ kompakt in $\bR^{n+k}$ ist.
+	\end{enumerate}
+\end{lemma}
+\begin{theorem}
+	\theoremname{($\sigma$-Kompaktheit von Untermannigfaltigkeiten):}
+	Für jede $n$-dimensionale $C^1$-Untermannigfaltigkeit $M$ des $\bR^{n+k}$ existieren Kompakte Mengen $K_i \subset \bR^{n+k}$, sodass
+	\begin{align*}
+		M = \bigcup_{i \in \bN} K_i
+	\end{align*}
+\end{theorem}
+\begin{definition}
+	Sei $M \subset \bR^{n+k}$ eine $n$-dimensionale $C^1$-Untermannigfaltigkeit. Eine \tbf{lokale Parametrisierung} von $M$, auch \tbf{Karte} von $M$ genannt, ist eine injektive $C^1$-Immersion
+	\begin{align*}
+		f : U \to M \subset \bR^{n+k},
+	\end{align*}
+	wobei $U$ offen in $\bR^n$ ist.
+\end{definition}
+\begin{theorem}
+	Sei $M \subset \bR^{n+k}$ eine $n$-Untermannigfaltigkeit. Dann gilt:
+	\begin{enumerate}
+		\item Sei $f : U \to M$ eine Karte von $M$. Dann ist $f(U)$ offen in $M$ und die Umkehrfunktion ist stetig, d.h. $f : U \to f(U)$ ist ein Homeomorphismus.
+		\item Für zwei verschiedene Karten $f_i : U_i \to V_i$ ist der \tbf{Parameterwechsel}
+		\begin{align*}
+			(f_2^{-1} \circ f_1)|_{f^{-1}(V_1 \cap V_2)}
+		\end{align*}
+		ein $C^1$-Diffeomorphismus.
+	\end{enumerate}
+\end{theorem}
 %
 %
 %
