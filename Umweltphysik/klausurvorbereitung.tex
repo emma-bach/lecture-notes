@@ -14,24 +14,148 @@
 \titleformat{\subsection}[display]
 {\centering \normalsize \large  \bfseries \color{black}}{}{}{}
 
+\newcommand{\N}{\tn{N}}
+\newcommand{\Pa}{\tn{Pa}}
+\newcommand{\kg}{\tn{kg}}
+\newcommand{\m}{\tn{m}}
+\newcommand{\s}{\tn{s}}
+\newcommand{\J}{\tn{J}}
+\newcommand{\pot}{\tn{pot}}
+\newcommand{\kin}{\tn{kin}}
+\newcommand{\ges}{\tn{ges}}
+
 \begin{document}
-\twocolumn[\section*{Klausurblatt Umweltphysik}]
-\subsection*{Wege}
+\twocolumn[\section*{Klausurblatt Umweltphysik, Emma Marie Bach :3}]
+\subsection*{Einheiten}
 \vspace{-10pt}
 \begin{multicols}{2}
-	\lipsum[1]
+\noindent
+\tbf{Kraft:}\\ $[F] = 1\tn{N} = 1 \frac{\tn{kg} \cdot \tn{m}}{s^2}$\\
+\tbf{Druck:}\\ $[p] = 1\tn{Pa} = 1 \frac{\N}{\m^2} = 1 \frac{\kg}{\m \cdot \s^2}$\\
+$1 \tn{bar} = 100.000 \Pa = 1000\tn{h}\Pa$\\
+\tbf{Arbeit, Energie:}\\ $[W] = [E] = 1 \J = 1 \N \cdot \m$\\
+\tbf{Leistung:}\\ $[P] = W = 1 \frac{\J}{\s} = 1 \frac{\N \cdot \m}{\s}$\\
+\tbf{Wärmekapazität:}\\
+$[c] = 1 \frac{J}{K} = 1 \frac{\N \cdot \m}{K}$\\
 \end{multicols}
-\subsection*{Masse, Volumen, Dichte}
-\lipsum[1]
+\subsection*{Mathe}
+\tbf{Taylorreihe:} $f(x) \approx \sum_{k = 1}^n f^{(k)} \cdot (x-a)^k$
+\subsection*{Rotierende Systeme}
+\vspace{-10pt}
+\begin{multicols}{2}
+	\centering
+	\tbf{Zentripetalbeschleunigung:}\\ 
+	$\frac{\Delta v}{v} = \frac{\Delta s}{r} \implies a_Z = \frac{v^2}{r}$\\
+	\tbf{Zentripetalkraft:}\\
+	$F_Z = m \cdot a_Z = m \cdot \frac{v^2}{r}$\\
+	\tbf{Umlaufgeschwindigkeit:}\\
+	$F_Z = F_G \implies v = \sqrt{\frac{\gamma M}{r}}$\\
+	\tbf{Umlaufszeit:}\\
+	$v = \omega \cdot r \implies t = 2\pi r \cdot \sqrt{\frac{r}{\gamma M}}$\\
+\end{multicols}
+\iffalse
+\fi
+\subsection*{Kräfte und Wege}
+\vspace{-10pt}
+\begin{multicols}{2}
+\centering
+\tbf{Grundlagen:}\\
+$\vec F = m \cdot \vec a$\\
+$\vec F_{a \to b} = - \vec F_{b \to A}$\\
+\tbf{Kreisbahn:}\\ 
+$s = \phi \cdot R = \omega \cdot R \cdot t$\\
+\tbf{Schwerkraft auf der Erde:}\\
+$F_G = m \cdot g$\\
+\tbf{Schwerkraft allgemein:}\\
+$F_G = \gamma \cdot \frac{m \cdot M}{r^2}$\\
+\tbf{Auftriebskraft ($V$ = Volumen unter Wasser):}\\
+$F_{A} = F_{G_\tn{Fluid}} - F_{G_K} = (\rho_{\tn{Fluid}} - \rho_K) \cdot g \cdot V$
+\tbf{Hangabtriebskraft:}\\
+$F_H = F_G \cdot \sin(\alpha) = F_G \cdot \norm{\grad H}_2$\\
+\tbf{Normalenkraft:}\\
+$F_N = F_G \cdot \cos(\alpha)$\\
+\tbf{Reibungskraft:}\\
+$F_R = \mu \cdot F_N$\\
+\tbf{Druck:}\\
+$p = \frac{F}{A} = \frac{1}{2} \cdot \rho \cdot v^2$\\
+\tbf{Impuls:}\\
+$\vec p = m \cdot \vec v \implies \vec F = \dot{\vec p}$\\
+$\dot{\vec p}_\ges = \vec F_\ges = 0$\\
+\tbf{Drehmoment (Torque) mit Hebelarm $r$:}\\
+$T = F \cdot r$\\
+$T_1 = F_1 \cdot r_1 = F_2 \cdot r_2 = T_2$
+\end{multicols}
+
 \subsection*{Energie, Arbeit, Leistung}
-\lipsum[1]
-\subsection*{Staukraft und Staudruck}
-\lipsum[1]
+\vspace{-10pt}
+\begin{multicols}{2}
+\centering
+\tbf{Arbeit:}\\
+Für $F$ und $\Delta s$ parallel:\\
+$W = F \cdot \Delta s$\\
+\tbf{Arbeit gegen die Schwerkraft:}\\
+$W = F_G \cdot \Delta s = m \cdot g \cdot \Delta h$\\
+$= \gamma \cdot m \cdot M \cdot (\frac{1}{R_0} - \frac{1}{R_0 + h})$
+\tbf{Potentielle Energie:}\\
+$E_{\pot} = m \cdot g \cdot h$\\
+\tbf{Arbeit gegen die Reibungskraft:}\\
+$W = F_R \cdot \Delta s = \mu \cdot m \cdot g \cdot \Delta s$\\
+\tbf{Arbeit gegen die Zentripetalkraft:}\\ 
+$W = 0$, da $F \perp \Delta s$\\
+\tbf{Kinetische Energie:}
+$E_{\kin} = W = F \cdot \Delta s = m \cdot a \cdot \Delta s = m \cdot a \cdot \frac{1}{2} \cdot a \cdot (\Delta t)^2 = \frac{1}{2} \cdot m \cdot v^2$
+\tbf{Wärme / Thermische Energie:}\\
+$Q = m \cdot c \cdot \Delta T$\\
+\tbf{Gespannte Feder:}\\
+$F = k \cdot \Delta x$\\
+$E = \frac{1}{2} \cdot k \cdot s^2$\\
+\tbf{Mechanische Energieerhaltung:}\\
+$E_\ges = E_\pot + E_\kin + Q = \tn{const}$
+inkl. Reibungswärme $Q$\\
+\tbf{Leistung:}\\
+$P = \frac{W}{\Delta t} = \frac{\Delta E}{\Delta t} \to \frac{dW}{dt}$\\
+\tbf{Leistung bei Kraftauswirkung:}\\
+$P = \frac{W}{\Delta t} = \frac{F \cdot \Delta s}{\Delta t} = F \cdot v$\\
+\end{multicols}
+\subsection*{Strömungsdynamik}
+\vspace{-10pt}
+\begin{multicols}{2}
+	\tbf{Staudruck:}\\ 
+	$p =\frac{1}{2} \cdot \rho \cdot v^2$\\
+	\tbf{Staukraft (ohne Umströmung):}\\
+	$F = p \cdot A = \frac{1}{2} \cdot \rho \cdot A \cdot v^2$
+	\tbf{Luftwiderstandskraft:}\\
+	$F_L = \frac{1}{2} \cdot c_w \cdot \rho \cdot A \cdot v^2$\\
+	\tbf{Kontinuitätsgesetz für Inkompressible Fluide:}\\
+	$A \cdot v = \tn{const}$\\
+	\tbf{Volumenarbeit:}\\
+	$W_V = -\int F ~ds
+	= -\int p \cdot A ~ds
+	= -p \cdot \Delta V$\\
+	\tbf{Hydrodynamische Energieerhaltung:}\\
+	$E_\ges = E_\pot + E_\kin + W_V = \tn{const}$\\
+	\tbf{$\implies$ Bernoulli-Gleichung durch Division der Volumen:}\\
+	$\frac{1}{2} \cdot \rho \cdot v^2 + \rho \cdot g \cdot h + p = \tn{const}$\\
+	\tbf{Konsequenz}: An Orten mit hoher Strömungsgeschwindigkeit ist der Druck geringer (Hydrodynamisches Paradoxon)
+	\tbf{Gradientenkraft:}\\
+	$\Delta p = \grad p \cdot \Delta x$\\ 
+	$\implies \Delta F = -\Delta p \cdot A = - \grad p \cdot \Delta x \cdot A$\\
+	$\implies a = \frac{\Delta F}{m} = - \frac{\grad p}{\rho}$\\
+\centering
+\end{multicols}
+\subsection*{Barometrische Höhenformel}
+%\vspace{-10pt}
+%\begin{multicols}{2}
+\tbf{Molare Masse $M$:} $M \cdot n = m$\\
+Es gilt:
+$\frac{dp}{dh} = -\rho \cdot g = -\frac{Mg}{RT} \cdot p$\\
+\tbf{Barometrische Höhenformel für isotherme Atmosphäre:}\\
+$p(h) = p_0 \cdot e^{-\frac{Mg}{RT} \cdot h}$\\
+%\centering
+%\end{multicols}
 \subsection*{Wind}
 \lipsum[1]
 \subsection*{Erster Hauptsatz der Thermodynamik}
-\lipsum[1]
-\subsection*{Druck und Volumenarbeit}
 \lipsum[1]
 \subsection*{Zustandsgleichung des Idealen Gases}
 \lipsum[1]
@@ -39,10 +163,8 @@
 \lipsum[1]
 \subsection*{Wärme, Temperatur, Freiheitsgrade}
 \lipsum[1]
-\subsection*{Bernoulli-Gleichung}
-\lipsum[1]
-\subsection*{Barometrische Höhenformel}
-\lipsum[1]
+
+
 \subsection*{Entropie und Enthalpie}
 \lipsum[1]
 \subsection*{Zweiter Hauptsatz der Thermodynamik}
@@ -57,4 +179,26 @@
 \lipsum[1]
 \subsection*{Treibhauspotential}
 \lipsum[1]
+\subsection*{Corioliskraft}
+Bewegung eines Vektors (Bei Rotationsachse $\Omega$ und Rotation um den Ursprung):
+$\frac{d}{dt} \vv = \Omega \times \vv$\\
+Aus der Produktregel folgt $\vec a_C = -2\vec \Omega \times \vec v$.\\
+Bei Axialbewegung $v_A$ mit der Drehachse gibt es keine Beschleunigung.\\
+Bei Radialbewegung $v_R$ weg von der Drehachse: $a_{\tn{Cor}} = 2 \cdot \omega \cdot v_R$ entgegen der Erdrotation (also nach Westen).
+\newpar
+Bei Tangentialbewegung $v_T$ mit der Drehung (Ost-West):\\ 
+$a_{\tn{Cor}} = 2 \cdot \omega \cdot v_T$. Bei Bewegung mit der Erdrotation würde die Bewegung des Objekts es dazu bringen, sich von der Rotationsachse zu entfernen - wenn es wieder von der Schwerkraft nach unten bewegt wird, "rutscht" es dabei Richtung Äquator.
+\newpar
+Die Tangentialgeschwindigkeit ist bereits identisch zur Geschwindigkeit bei Bewegung nach Westen, also $v_T = -v_O$.\\
+Die Radialgeschwindigkeit hängt vom Breitengrad ab -
+am Breitengrad $\phi \in (-\pi, \pi)$ gilt $v_r = v \sin(\phi)$, es folgt:\\
+$\binom{a_N}{a_O} = 2 \cdot \omega \cdot \sin(\phi) \cdot \binom{v_N}{-v_O} := f_C \cdot \binom{v_N}{-v_O}$\\
+Insgesamt folgt auf der Nordhalbkugel $(\sin(\phi) > 0)$: \vspace{-5pt}
+\begin{itemize}
+	\item Bewegung nach Norden führt zu Beschleunigung nach Osten \vspace{-5pt}
+	\item Bewegung nach Süden führt zu Beschleunigung nach Westen \vspace{-5pt}
+	\item Bewegung nach Osten führt zu Beschleunigung nach Süden \vspace{-5pt}
+	\item Bewegung nach Westen führt zu Beschleunigung nach Norden \vspace{-5pt}
+\end{itemize}
+In der Südhemisphäre gilt $(\sin(\phi) < 0)$, also wird die Bewegung umgekehrt.
 \end{document}
