@@ -1352,4 +1352,31 @@ Mithilfe der $QR$-Zerlegung bekommen wir ein stabiles Verfahren zur Lösung von 
 	\begin{lemma}
 		Ist $M$ irreduzibel und diagonaldominant, so ist $M$ regulär und alle Diagonaleinträge sind von $0$ verschieden.
 	\end{lemma}
+	\section{Das Simplex-Verfahren}
+	\subsection{Lineare Programmierung}
+	\subsection{Der Simplex-Schritt}
+	\begin{enumerate}
+		\item Sei $x \in M$ eine Ecke. Falls diese Entartet ist, so können wir $I_x$ so zu einer $m$-elementigen Mengen $I$ ergänzen, dass $A_I$ regulär ist. Wir setzen dann $J = \lr{1, \hdots, n} \setminus I$.
+		\item Für alle $z \in M$ folgt aus $b = Az = A_Iz_I + A_Jz_J$, dass
+		\begin{align*}
+			z_I = A_I^{-1}b - A_I^{-1}A_Jz_J
+		\end{align*}
+		Somit sind alle Komponenten bezüglich $I$ eindeutig durch die Komponenten bezüglich $J$ festgelegt.
+		
+		Wegen $x_J = 0$ folgt insbesondere $xQ_I = A_I^{-1}b$.
+		
+		Für $f(z) = c^\top z$ folgt
+		\begin{align*}
+			c^\top z
+			&= c_I^\top z_I + c_J^\top z_J\\
+			&= c_I^\top(A_I^{-1}b - A_I^{-1}A_Jz_J) + c_J^\top z_J\\
+			&= c_I^\top x_I + (c_J^\top - c_I^\top A_I^{-1}A_J)z_J\\
+			&= c^\top x + (c_J - A_J^\top A_I^{-\top} c_I)^\top z_J
+		\end{align*}
+		mit $u_j = c_J - A_J^\top A_I^{-\top}c_I$ gilt also
+		\begin{align*}
+			f(z) = f(x) + u_J^\top z_J
+		\end{align*}
+		Da $z \geq 0$ ist eine Verringerung also nur dann möglich, wenn mindestens eine Komponente von $u_j$ negativ ist. Ansonsten ist $x$ bereits eine lokale (und somit auch globale) Lösung des Problems.
+	\end{enumerate}
 \end{document}

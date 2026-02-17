@@ -1,0 +1,43 @@
+\documentclass{report}
+
+% custom margins
+\usepackage[a4paper,margin=1.5in]{geometry}
+\renewcommand{\baselinestretch}{1.2}
+
+% emma's long list of custom macros and universally used packages
+\include{../macros-and-packages.tex}
+
+% colored box behind proofs
+\tcolorboxenvironment{proof}{
+	colback=white,
+	boxrule=0pt,
+	frame hidden,
+	borderline west={1pt}{0pt}{black},
+	before skip=0.75cm,
+	after skip=0.75cm,
+	sharp corners,
+	breakable,
+	enhanced,
+}
+
+\renewcommand*\contentsname{Inhalt}
+\renewcommand*\proofname{Beweis}
+
+% use roman numerals in enumerate
+\renewcommand{\labelenumi}{(\roman{enumi})}
+
+\pagestyle{fancy} %allows headers
+
+\lhead{Emma Bach}
+\rhead{\today}
+
+\begin{document}
+\begin{enumerate}
+	\item Seien $(X, \cA)$ und $(Y, \cB)$ $\sigma$-Algebren. Ist $\cA \cap \cB$ eine $\sigma$-Algebra? Ist $\cA \cup \cB$ eine $\sigma$-Algebra?
+	\item Gibt es Mengen mit leerem Innerem und positiven Maß?
+	\item Gibt es offene Mengen, die dicht in $\bR^n$ sind, aber endliches Maß haben? $\to$ Abzählung von $\bQ^n$, dann Bälle $B_n$ darum, sodass die Summe der Radien konvergiert.
+	\item Stimmt das Regelintegral einer stetigen Funktion immer mit dem Lebesque-Integral überein? Nein, aber über endlichem Intervall Lebesque-Integrierbar = Riemannintegrierbar
+	\item Die Menge der offenen Mengen bilden keine monotone Klasse.
+	\item 
+\end{enumerate}
+\end{document}

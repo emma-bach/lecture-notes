@@ -1026,12 +1026,6 @@ $\ker \phi \subsetneq \bZ$ ist eine Untergruppe, also existiert genau ein $n \in
 		Die Charakteristik von $R$ ist das kleinste $m \geq 1$ mit $\displaystyle \sum_{i = 1}^m 1_R = 0_R$, falls es ein solches $m$ gibt, ansonsten $0$.
 	\end{theorem}
 	\begin{example}
-		\phantom{}
-		\begin{itemize}
-			\item Es gilt $\char(\bZ) = \char(bQ) = \char(\bR) = 0$.
-			\item Der einzige Ring mit Charakteristik $1$ ist der Nullring.
-			\item $\char (\bF_p) = p$. 
-		\end{itemize}
 	\end{example}
 	\begin{theorem}
 		Die Charakteristik eines Körpers ist prim.
@@ -2235,6 +2229,260 @@ Gegeben zwei endliche Körper lässt sich also insbesondere der eine genau dann 
 \begin{definition}
 	Eine Körpererweiterung $L/K$ heißt \tbf{separabel}, falls sie algebraisch ist und für alle $\alpha \in L$ das Minimalpolynom von $\alpha$ über $K$ separabel ist.
 \end{definition}
+\begin{theorem}
+	\theoremname{(Charakterisierung separabler Körpererweiterungen):} Für eine Körpererweiterung $L \supset K$ sind gleichbedeutend:
+	\begin{enumerate}
+		\item $L \supset K$ ist separabel,
+		\item $L$ wird über $K$ von Elementen erzeugt, die separabel über $K$ sind.
+	\end{enumerate}
+	Ist $L \supset K$ endlich, so sind auch gleichbedeutend:
+	\begin{enumerate}
+		\item[3] Für jede Vergrößerung $N \supset L$ von $L$ zu einer normalen Erweiterung von $K$ beträgt die Anzahl der Körperhomomorphisen von $L$ nach $N$ genau $[L : K]$,
+		\item[4] Es gibt mindestens eine Körpererweiterung $N \supset K$ von $K$, sodass es $[L : K]$ viele KKörperhomomorphismen von $L$ nach $N$ gibt.
+	\end{enumerate}
+\end{theorem}
+\section{Satz vom primitiven Element}
+\begin{lemma}
+	Ein affiner Raum über einen unendlichen Körper kann nicht durch endlich viele echte affine Teilräume überdeckt werden.
+\end{lemma}
+\begin{lemma}
+	Ein Vektorraum kann nicht durch endlich viele Untervektorräume von unendlicher Kodimension überdeckt werden.
+\end{lemma}
+\begin{corollary}
+	Ein Körper kann nicht durch endlich viele echte Teilkörper überdeckt werden.
+\end{corollary}
+\begin{corollary}
+	Gegeben Körpererweiterungen $L \supset K$ und $M \supset K$ desselben Grundkörpers $K$ und endlich viele paarweise verschiedene Homomorphismen $\sigma_1, \hdots, \sigma_r$ von $L$ nach $M$ gibt es stets ein Element $\alpha \in L$, sodass die Bilder $\sigma_i(\alpha)$ paarweise verschieden sind.
+\end{corollary}
+\begin{corollary}
+	Eine Körpererweiterung $L \supset K$ ist genau dann endlich und primitiv, wenn es zwischen $L$ und $K$ nur endlich viele Zwischenkörper gibt.
+\end{corollary}
+\begin{proof}
+	\phantom{}
+	\begin{enumerate}
+		\item[$\Longleftarrow$:] Gibt es nur endlich viele Zwischenkörper, so können diese nicht ganz $L$ überdecken. Es gibt also ein $\alpha \in L$, dessen erzeugter Zwischenkörper $K(\alpha)$ eine echte Körpererweiterung von $K$ ist, aber kein echter Teilkörper von $L$, also muss $K(\alpha)$ bereits $L$ sein. 
+		
+		$\alpha$ muss außerdem algebraisch über $K$ sein, denn sonst gäbe es unendlich viele paarweise verschiedene Zwischenkörper der Form $K(\alpha^n)$.
+		
+		\item[$\Longrightarrow$:] Angenommen, $L \supset K$ ist endlich und primitiv, also $L = K(\alpha)$ mit $\alpha$ algebraisch. So können wir eine Abbildung $\phi$ definieren, die jeden echten Zwischenkörper $M$ auf $\Irr(\alpha, M)$ abbildet, welches dann in $L(K)$ ein echter Teiler von $\Irr(\alpha, K)$ ist.
+		
+		Wir zeigen nun, dass die Abbildung injektiv ist. 
+		
+		Sei $M' \subset M$ der Körper, welcher über $K$ von den Koeffizienten von $\Irr(\alpha, M)$ erzeugt wird. 
+		
+		Dann gilt $[L : M'] = \deg(\Irr(\alpha, M')) = \deg(\Irr(\alpha, M)) = [L : M]$, also $L = M(\alpha) = M'(\alpha)$, also $M = M'$. Also existiert für jedes Minimalpolynom ein eindeutiges $M$, also ist die Abbildung injektiv.
+		
+		Dies folgt daraus, dass $M$ bereits von den Koeffizienten von $\Irr(\alpha, M)$ überzeugt wird, was wiederum daraus folgt, dass
+		
+		Nun kann $\Irr(\alpha, K)$ nur endlich viele Teiler haben, also folgt aus der Injektivität bereits, dass es nur endlich viele echte Zwischenkörper gibt.
+	\end{enumerate}
+\end{proof}
+\begin{theorem}
+	\theoremname{Satz vom primitiven Element:}
+	Sei $L \supset K$ endlich und separabel. So gibt es ein $\alpha \in L$ mit $L = K(\alpha)$.
+\end{theorem}
+
+\chapter{Galoistheorie}
+\begin{definition}
+	Sei $L \supset K$ eine Körpererweiterung. So bildet die Menge der bijektiven Körperhomomorphismen $L \to L$, welche $K$ konstant halten, eine Gruppe, welche wir die Galoisgruppe $\tn{Gal}(L/K)$ nennen.
+\end{definition}
+\begin{example}
+	$\tn{Gal}(\bC/\bR)$ besteht aus der Identität und der komplexen Konjugation.
+\end{example}
+\begin{theorem}
+	\theoremname{(Hauptsatz der Galoistheorie):} Sei $L$ ein Körper und $G \subset \tn{Aut}(L)$ eine endliche Untergruppe der Automorphismengruppe von $G$. Sei $L^G$ der Körper, der aus den Fixpunkten von $G$ besteht. So ist
+	\begin{align*}
+		\tn{Gal}(L/L^G) = G
+	\end{align*}
+\end{theorem}
+\begin{definition}
+	Eine Körpererweiterung $L/K$ heißt eine \tbf{Galoiserweiterung}, wenn sie normal und separabel ist.
+\end{definition}
+\begin{theorem}
+	Seien $L$ ein Körper, $G \supset \tn{Aut}(G)$ endlich und $L^G$ der Fixpunktkörper von $G$. So gilt:
+	\begin{enumerate}
+		\item Jedes Element $\alpha \in L$ ist algebraisch über $L^G$ und sein Minimalpolynom über $L^G$ ist
+		\begin{align*}
+			\Irr(\alpha, L^G) = \prod_{\beta \in G\alpha} (X -\beta)
+		\end{align*}
+		\item Die Körpererweiterung $L/L^G$ ist eine endliche Galoiserweiterung vom Grad
+		\begin{align*}
+			[L : L^G] = \abs{G}
+		\end{align*}
+		mit Galoisgruppe
+		\begin{align*}
+			\tn{Gal}(L / L^G) = G
+		\end{align*}
+	\end{enumerate}
+\end{theorem}
+\begin{theorem}
+	Sei $L/K$ eine endliche Körpererweiterung, $G = \tn{Gal}(L/K)$. Dann sind gleichbedeutend:
+	\begin{enumerate}
+		\item $L/K$ ist Galois
+		\item $\abs{G} = [L : K]$
+		\item $K = L^G$
+	\end{enumerate}
+\end{theorem}
+\begin{definition}
+	Eine Wirkung einer Gruppe auf einer Menge heißt \tbf{treu} (en. \tbf{faithful}), wenn nur das neutrale Element jedes Element der Menge festhält.
+\end{definition}
+\begin{definition}
+	Eine Wirkung einer Gruppe auf einer Menge heißt \tbf{transitiv}, wenn die Menge nicht leer ist und je zwei ihrer Elemente durch ein geeignetes Gruppenelement ineinander überführt werden können.
+\end{definition}
+\begin{theorem}
+	\theoremname{(Operation der Galoisgruppe auf Nullstellen):}
+	Sei $L/K$ eine Körpererweiterung und $L$ der Zerfallungskörper von $P \in K[X] \setminus 0$ mit $P$ irreduzibel, so operiert $\Gal(L/K)$ auf der Nullstellenmenge von $P$ treu und transitiv.
+\end{theorem}
+\begin{definition}
+	Sei $K$ ein Körper, $P \in K[X] \setminus 0$. So definieren wir die "Galoisgruppe von $P$" als die Galoisgruppe des Zerfallungskörpers von $P$.
+\end{definition}
+\begin{example}
+	\begin{enumerate}
+		
+		\item Betrachte $P(X) = X^3 -2 \in \bQ[X]$, dann gilt $\bQ \subset \bQ(\sqrt[3]{2}) \supset \bQ(\sqrt[3]{2}, \sqrt[3]{1})$, wobei die erste Erweiterung Grad $3$ hat und die zweite Grad $2$, also hat die entstehende Galoisgruppe $6$ Elemente, also ist es bereits die volle Gruppe $\cS_3$. Dies ist der typische Fall - ein irreduzibles Polynom vom Grad $n$ hat in der Regel $\cS_n$ als Galoisgruppe.
+		\item Betrachte $P(X) = X^3 + X^2 - 2X - 1 \in \bQ[X]$. Dieses Polynom entstand folgendermaßen:
+		\begin{enumerate}
+			\item $\zeta = e^{2\pi i / 7}$
+			\item $\alpha = \zeta + \ol \zeta$
+			\item $\beta = \zeta^2 + \ol \zeta^2$
+			\item $\gamma = \zeta^3 + \ol \zeta^3$
+			\item $P(X) = (X-\alpha)(X-\beta)(X-\gamma)$
+		\end{enumerate}
+		Es gilt also:
+		\begin{enumerate}
+			\item $\alpha^2 = \beta + 2$
+			\item $\beta^2 = \gamma + 2$
+			\item $\gamma^2 = \alpha + 2$
+		\end{enumerate}
+		Und Aufgrund dieser spezifischen Relation ist die Galoisgruppe letztendlich zyklisch.
+	\end{enumerate}
+\end{example}
+\begin{theorem}
+	\theoremname{(Galoiskorrespondenz):}
+\end{theorem}
+\begin{definition}
+	\theoremname{(Biquadratische Erweiterungen):}
+\end{definition}
+\begin{theorem}
+	\theoremname{(Fundamentalsatz der Algebra)}
+\end{theorem}
+\begin{theorem}
+	\theoremname{(Galoisgruppen der Kreisteilungskörper):}
+\end{theorem}
+\begin{definition}
+	\theoremname{(Eulersche $\phi$-Funktion):}
+\end{definition}
+\begin{theorem}
+	\theoremname{(Konstruierbarkeit regelmäßiger $n$-Ecke):}
+	Ein regelmäßiges $n$-Eck ist genau dann mit Zirkel und Lineal konstruierbar, wenn $\phi(n)$ eine Zweierpotenz ist.
+\end{theorem}
+\begin{lemma}
+	\theoremname{(Rechenregeln für die Eulersche $\phi$-Funktion):}
+\end{lemma}
+\begin{definition}
+	Eine Galoiserweiterung mit zyklischer Galoisgruppe heißt \tbf{zyklische Erweiterung}.
+\end{definition}
+\begin{definition}
+	Eine Galoiserweiterung mit abelscher Galoisgruppe heißt \tbf{abelsche Erweiterung}.
+\end{definition}
+\begin{theorem}
+	\theoremname{(Über zyklische Erweiterungen):}
+	Seien $K$ ein Körper und $n \geq 1$ natürlich, sodass $K$ alle $n$-ten Einheitswurzeln enthält und sodass seine Charakteristik $p$ nicht $n$ teilt. So gilt:
+	\begin{enumerate}
+		\item Alle zyklischen Erweiterungen von $K$ vom Grad $n$ entstehen durch die Adjunktion einer $n$-ten Wurzel.
+		\item Adjungieren wir zu $K$ eine $n$-te Wurzel, so erhalten wir eine zyklische Erweiterung, deren Grad $n$ teilt.
+	\end{enumerate} 
+\end{theorem}
+\begin{proof}
+	\begin{enumerate}
+		\item 
+		\item
+		Die Gruppe $\mu_n$ der Einheitswurzeln in $K$ ist eine zyklische Gruppe isomorph zu $(\bZ/n\bZ,+)$.
+		\newpar
+		$(X^n-1)' = nX^{n-1}$ hat als einzige Nullstelle $0$, da $p \nmid n$. Somit hat $(X^n-1)$ nur einfache Nullstellen.
+		\newpar
+		Sei nun $L = K(\alpha)$ mit $\alpha^n \in K$. Dann ist $L$ der Zerfällungskörper von $\Irr(\alpha,K)$, also normal. Es gilt desweiteren:
+		\begin{align*}
+			\Irr(\alpha,K) \mid (X^n - \alpha^n)
+		\end{align*}
+		Das Polynom $(X^n - \alpha^n)$ hat als Nullstellen $\zeta_i \cdot \alpha$, wobei $\zeta_i$ $n$-te Einheitswurzeln sind. Diese Nullstellen sind paarweise verschieden, also ist $L/K$ auch separabel, also Galois.
+		\newpar
+		Sei $\sigma \in \Gal(K(\alpha)/K)$. Dann muss $\sigma(\alpha) = \zeta\alpha$ für $\zeta \in \mu_n$. So können wir eine injektion
+		\begin{align*}
+			\Gal &\to \mu_n\\
+			\sigma &\mapsto \frac{\sigma(\alpha)}{\alpha}
+		\end{align*}
+		definieren. Diese ist sogar ein Gruppenhomomorphismus, da
+		\begin{align*}
+			\frac{(\sigma \tau)(\alpha)}{\alpha}
+			&= \frac{\sigma(\tau(\alpha))}{\tau(\alpha)} \cdot \frac{\tau(\alpha)}{\alpha}\\
+			&= \frac{\sigma(\zeta\alpha)}{\zeta\alpha} \cdot \frac{\tau(\alpha)}{\alpha}\\
+			&= \frac{\zeta\sigma(\alpha)}{\zeta\alpha} \cdot \frac{\tau(\alpha)}{\alpha}\\
+			&= \frac{\sigma(\alpha)}{\alpha} \cdot \frac{\tau(\alpha)}{\alpha}\\
+		\end{align*}
+	\end{enumerate}
+\end{proof}
+\begin{corollary}
+	Seien $p$ eine Primzahl und $K$ ein Körper einer Charakteristik ungleich $p$, der alle $p$-ten Einheitswurzeln enthält. 
+	Dann ist eine echte Erweiterung unseres Körpers genau dann Galois vom Grad $p$, wenn sie durch Adjunktion einer $p$-ten Wurzel entsteht.
+\end{corollary}
+($\hdots$)
+\begin{definition}
+	Eine Gruppe $G$ heißt \tbf{auflösbar}, wenn es eine Folge von Untergruppen
+	\begin{align*}
+		G = G_n \supset G_{n-1} \supset \hdots \supset G_0 = 1
+	\end{align*}
+	gibt, sodass $G_{i-1}$ ein Normalteiler von $G_i$ ist und $G_i/G_{i-1}$ abelsch ist.
+\end{definition}
+\begin{proposition}
+	Ist eine endliche Gruppe $G$ auflösbar, so gibt es sogar eine solche Folge, in der $G_i/G_{i-1}$ sogar zyklisch ist.
+\end{proposition}
+\begin{theorem}
+	Sei $\tn{char} K = 0$, $P \in K[X]$. Dann sind gleichbedeutend:
+	\begin{enumerate}
+		\item Die Gleichung $P(X) = 0$ lässt sich über $K$ durch Radikale auflösen,
+		\item Die Galoisgruppe des Zerfällungskörpers von $P$ über $K$ ist auflösbar.
+	\end{enumerate}
+\end{theorem}
+Wir werden für diesen Satz erst etwas Vorarbeit leisten müssen:
+\begin{theorem}
+	Sei $\char K = 0$.
+	\begin{enumerate}
+		\item Jede Radikalerweiterung $R / K$ lässt sich so in eine endliche Galoiserweiterung $L / K$ einbetten, sodass $\Gal(L/K)$ auflösbar ist.
+		\item Jede endliche Galoiserweiterung $L/K$ mit auflösbarer Galoisgruppe lässt sich in eine Radikalerweiterung $R/K$ einbetten.
+	\end{enumerate}
+\end{theorem}
+\chapter{Algebraischer Abschluss}
+\begin{proposition}
+	\theoremname{Auswahlaxiom:} Sei $f : X \to Y$ surjektiv. So gibt es eine Abbildung $g : Y \to X$, sodass $f \circ g = \id_Y$.
+\end{proposition}
+\begin{theorem}
+	\theoremname{Zornsches Lemma:} Sei $(X, \leq)$ eine teilgeordnete Menge, in der jede total geordnete Teilmenge eine obere Schranke hat. So hat $X$ mindestens ein maximales Element.
+\end{theorem}
+\begin{corollary}
+	\begin{enumerate}
+		\item Jeder Körper $K$ besitzt eine algebraische Körpererweiterung $L/K$, sodass $L$ algebraisch abgeschlossen ist.
+		\item Der algebraische Abschluss ist bis auf einen (nicht eindeutigen) isomorphismus eindeutig.
+	\end{enumerate}
+\end{corollary}
+\begin{proof}
+	\begin{enumerate}
+		\item Sei $K$ ein Körper. Sei $\Omega$ eine Menge, sodass es für $L/K$ algebraisch keine Surjektion $L \surj \Omega$ gibt (also eine Menge mit größerer Kardinalität als alle $L$, die algebraisch über $K$ ist), z.B. existiert $L \inj K[X] \times \bN$, also wähle
+		\begin{align*}
+			\Omega = \cP(K[X] \times \bN).
+		\end{align*}
+		Betrachte nun
+		\begin{align*}
+			X = \lr{(M,\phi,s) \bigmid 
+				\begin{array}{c} 
+					M \subset \Omega\\ 
+					s \tn{ Körperstruktur auf $M$}\\
+					\phi : K \to M \tn{ Körperhomomorphismus, sd. $M/K$ algebraisch.}
+			\end{array}}
+		\end{align*}
+		Durch das Zornsche Lemma finden wir $M_{max}, s_{max}, \phi_{max}$, da jedes $M$ durch $\Omega$ begrenzt ist.
+	\end{enumerate}
+\end{proof}
 \appendix
 \chapter{Axiomatik der Natürlichen Zahlen}
 \begin{theorem}

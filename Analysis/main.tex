@@ -4832,7 +4832,7 @@ Im $\bR^2$ können wir jeden Punkt in \tbf{Polarkoordinaten} darstellen.
 	Es gilt $\scalar{g(x)v}{v} = \abs{Df(x)v}^2$, also $\ker g(x) = \ker Df(x)$.
 \end{proof}
 \begin{definition}
-	Sei $f \in C^1(U, \bR^{n+k}$ eine $n$-dimensionale Immersion mit Gramscher Matrix und zugehöriger Induzierter Metrik $g$, und sei $E \subset U$ $\lambda^n$-messbar. Der \tbf{$n$-dimensionale Flächeninhalt von $f$ auf $E$} ist dann definiert durch:
+	Sei $f \in C^1(U, \bR^{n+k})$ eine $n$-dimensionale Immersion mit Gramscher Matrix und zugehöriger Induzierter Metrik $g$, und sei $E \subset U$ $\lambda^n$-messbar. Der \tbf{$n$-dimensionale Flächeninhalt von $f$ auf $E$} ist dann definiert durch:
 	\begin{align*}
 		A_E(f) = \int_E \sqrt{\det g} ~d\lambda^n
 	\end{align*}
@@ -4954,6 +4954,82 @@ Es folgt: $f_1^{-1}(M) = E \implies f_2^{-1}(M) = \phi(E)$. Wollen wir also zeig
 		ein $C^1$-Diffeomorphismus.
 	\end{enumerate}
 \end{theorem}
+\begin{theorem}
+	\theoremname{(Existenz eines Abzählbaren Atlas):}
+\end{theorem}
+\begin{definition}
+	Ein Vektor $v \in \bR^{n+k}$ heißt \tbf{Tangentialvektor} von $M \subset \bR^{n+k}$ am Punkt $p$, wenn es eine Abbildung $\gamma : (-\delta, \delta) \to M$ gibt, sodass $\gamma(0) = p$ und $\gamma'(0) = v$.
+\end{definition}
+\begin{corollary}
+	\theoremname{(Tangentialraum):} Sei $M$ eine $n$-dimensionale $C^1$-Untermannigfaltigkeit des $\bR^{n+k}$ und $p \in M$. Dann ist die Menge aller Tangentialvektoren von $M$ ein $n$-dimensionaler Untervektorraum, der Tangentialraum $T_pM$.
+\end{corollary}
+\begin{theorem}
+	\theoremname{(Das Oberflächenmaß):}
+	Sei $M$ eine $n$-dimensionale $C^1$-Untermannigfaltigkeit des $\bR^{n+k}$, und sei $\cE$ das System aller Teilmengen $E \subset M$, für die für jede lokale Parametrisierung $f : U \to M$ gilt, dass
+	\begin{align*}
+		f^{-1}(E \cap f(U)) \in \cM(\lambda^n)
+	\end{align*}
+	Dann gibt es genau ein reguläres äußeres Maß $\omega$ auf $M$ mit folgenden Eigenschaften:
+	\begin{enumerate}
+		\item Das System der $\omega$-messbaren Mengen ist $\cE$. Dieses System enthält insbesondere alle Borelmengen in $M$.
+		\item Ist $f : U \to M$ eine lokale Parametrisierung und $E \in \cE$ mit $E \subset f(U)$, so gilt
+		\begin{align*}
+			\omega(E) 
+			&= A_{f^{-1}(E)}(f)\\
+			&=\int_{f^{-1}(E)} Jf ~d\lambda^n\\ 
+			&\lr(= \int_{f^{-1}} \sqrt{\det g_f} ~d\lambda^n)
+		\end{align*}
+	\end{enumerate}
+	Wir nennen dieses Maß das \tbf{Flächenmaß} auf $M$.
+\end{theorem}
+\begin{theorem}
+	Sei $M$ eine $n$-dimensionale $C^1$-Untermannigfaltigkeit des $\bR^{n+k}$ und $u : M \to \bR$ eine integrierbare Funktion bezüglich des Oberflächenmaßes $\omega$. Ist $f : U \to V$ eine lokale Parametrisierung, so gilt:
+	\begin{align*}
+		\int_V u ~d\omega = \int_{f^{-1}(V)} (u \circ f) \cdot  Jf ~d\lambda^n
+	\end{align*}
+\end{theorem}
+\begin{lemma}
+	\theoremname{(Transformation des Flächeninhalts):}
+\end{lemma}
+\begin{theorem}
+	\theoremname{(Zwiebelformel):}
+\end{theorem}
+
+\clearpage
+\section{Integralsatz von Gauß}
+\begin{align*}
+	\int_Q \div X d\lambda^2
+	&= \int_Q \partial_1 X_1 + \partial_2 X_2 ~d\lambda^2\\
+	&= \int_{a_2}^{b_2} \int_{a_1}^{b_1} \partial_1 X_1 ~dx_1x_2 + \int_{a_1}^{b_1} \int_{a_2}^{b_2} \partial_2 X_2 ~dx_2x_1\\
+	&= \int_{a_2}^{b_2} X_1(b_1,x_2) - X_1(a_1 x_2) ~dx_2 + \int_{a_1}^{b_1} X_2(x_1, b_2) - X_2(x_1, a_2) ~dx_1\\
+	&= \int_{a_2}^{b_2} \scalar{X}{e_1}(b_1,x_2) - \scalar{X}{e_1}(a_1, x_2) dx_2 + (...)\\
+	&= \int_{\partial Q} \scalar{X}{\nu} ~d\omega
+\end{align*}
+\begin{definition}
+	Eine offene Menge $\Omega \subset \bR^n$ hat einen \tbf{$C^1$-Rand}, wenn ihr Rand eine $(n-1)$-dimensionale Untermannigfaltigkeit des $\bR^n$ ist, und die Menge lokal auf einer Seite des Randes liegt: Es muss also eine $C^1$-Funktion $u : \bR^{n-1} \supset U \to I \subset \bR$ gibt, sodass nach geeigneter Umnummerierung der Koordinaten gilt:
+	\begin{align*}
+		\Omega \cap (U \times I) = \lr{(x,y) \in U \times I : y < u(x)}
+	\end{align*}
+\end{definition}
+\begin{lemma}
+	Für eine offene Menge $\Omega \subset \bR^n$ mit $C^1$-Rand gilt:
+	\begin{align*}
+		\partial \Omega \cap (U \times I) = \lr{(x,y) \in U \times I : y = u(x)}\\
+		(\bR^n \setminus \ol{\Omega}) \cap (U \times I) = \lr{(x,y) \in U \times I : y > u(x)}
+	\end{align*}
+\end{lemma}
+\begin{lemma}
+	\theoremname{(Äußere Normale):}
+	Sei $\Omega \subset \bR^n$ offen mit $C^1$-Rand. Dann gibt es zu $p \in \partial \Omega$ genau einen Vektor $\nu(p) \in \bR^n$ mit folgenden Eigenschaften:
+	\begin{enumerate}
+		\item $\nu(p) \bot T_p(\partial \Omega)$
+		\item $\norm{\nu(p)} = 1$,
+		\item $p + t\nu(p) \notin \Omega$ for sufficiently small $t > 0$.
+	\end{enumerate}
+\end{lemma}
+\begin{definition}
+	Für $\Omega \subset \bR^n$ offen bezeichnen wir mit $C^1(\ol{\Omega}$ den Vektorraum der Funktionen $f \in C^1(\Omega)$, für die $f$ und das Differential $Df$ stetige Fortsetzungen auf $\ol{\Omega}$ besitzen. Wir bezeichnen die Fortsetzung von $f$ wieder mit $f$. :)
+\end{definition}
 %
 %
 %

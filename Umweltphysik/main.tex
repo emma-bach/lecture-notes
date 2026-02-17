@@ -7,10 +7,14 @@
 % emma's long list of custom macros and universally used packages
 \include{../macros-and-packages.tex}
 
-% fancy box behind proofs
+% Mark proofs by a vertical line on the left side
 \tcolorboxenvironment{proof}{
-	colback=black!5!white,
+	colback=white,
 	boxrule=0pt,
+	frame hidden,
+	borderline west={1.5pt}{0pt}{black!33!white},
+	before skip=0.75cm,
+	after skip=0.75cm,
 	sharp corners,
 	breakable,
 	enhanced,
