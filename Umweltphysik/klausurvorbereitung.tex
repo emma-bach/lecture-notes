@@ -23,6 +23,10 @@
 \newcommand{\pot}{\tn{pot}}
 \newcommand{\kin}{\tn{kin}}
 \newcommand{\ges}{\tn{ges}}
+\usepackage{mhchem}
+\newcommand{\wawer}{\ce{H2O}}
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep} 
 
 \begin{document}
 \twocolumn[\section*{Klausurblatt Umweltphysik, Emma Marie Bach :3}]
@@ -37,6 +41,9 @@ $1 \tn{bar} = 100.000 \Pa = 1000\tn{h}\Pa$\\
 \tbf{Leistung:}\\ $[P] = W = 1 \frac{\J}{\s} = 1 \frac{\N \cdot \m}{\s}$\\
 \tbf{Wärmekapazität:}\\
 $[c] = 1 \frac{J}{K} = 1 \frac{\N \cdot \m}{K}$\\
+\tbf{Teilchenzahl $N$},
+\tbf{Stoffmenge} $n = \frac{N}{N_A}$ in Mol!\\
+\tbf{Masse} $m$, \tbf{Molare Masse} $M = \frac{m}{n}$\\
 \end{multicols}
 \subsection*{Mathe}
 \tbf{Taylorreihe:} $f(x) \approx \sum_{k = 1}^n f^{(k)} \cdot (x-a)^k$
@@ -120,6 +127,7 @@ $P = \frac{W}{\Delta t} = \frac{F \cdot \Delta s}{\Delta t} = F \cdot v$\\
 \subsection*{Strömungsdynamik}
 \vspace{-10pt}
 \begin{multicols}{2}
+	\centering
 	\tbf{Staudruck:}\\ 
 	$p =\frac{1}{2} \cdot \rho \cdot v^2$\\
 	\tbf{Staukraft (ohne Umströmung):}\\
@@ -131,7 +139,7 @@ $P = \frac{W}{\Delta t} = \frac{F \cdot \Delta s}{\Delta t} = F \cdot v$\\
 	\tbf{Volumenarbeit:}\\
 	$W_V = -\int F ~ds
 	= -\int p \cdot A ~ds
-	= -p \cdot \Delta V$\\
+	= -p \cdot \Delta V$\\\newpar
 	\tbf{Hydrodynamische Energieerhaltung:}\\
 	$E_\ges = E_\pot + E_\kin + W_V = \tn{const}$\\
 	\tbf{$\implies$ Bernoulli-Gleichung durch Division der Volumen:}\\
@@ -150,35 +158,9 @@ $P = \frac{W}{\Delta t} = \frac{F \cdot \Delta s}{\Delta t} = F \cdot v$\\
 Es gilt:
 $\frac{dp}{dh} = -\rho \cdot g = -\frac{Mg}{RT} \cdot p$\\
 \tbf{Barometrische Höhenformel für isotherme Atmosphäre:}\\
-$p(h) = p_0 \cdot e^{-\frac{Mg}{RT} \cdot h}$\\
+$p(h) = p_0 \cdot e^{-\frac{Mg}{RT} \cdot h}$
 %\centering
 %\end{multicols}
-\subsection*{Wind}
-\lipsum[1]
-\subsection*{Erster Hauptsatz der Thermodynamik}
-\lipsum[1]
-\subsection*{Zustandsgleichung des Idealen Gases}
-\lipsum[1]
-\subsection*{Zustandsänderungen}
-\lipsum[1]
-\subsection*{Wärme, Temperatur, Freiheitsgrade}
-\lipsum[1]
-
-
-\subsection*{Entropie und Enthalpie}
-\lipsum[1]
-\subsection*{Zweiter Hauptsatz der Thermodynamik}
-\lipsum[1]
-\subsection*{Strahlung}
-\lipsum[1]
-\subsection*{Absorption und Emission}
-\lipsum[1]
-\subsection*{Atmosphärisches Fenster}
-\lipsum[1]
-\subsection*{Strahlungsbilanz der Erde}
-\lipsum[1]
-\subsection*{Treibhauspotential}
-\lipsum[1]
 \subsection*{Corioliskraft}
 Bewegung eines Vektors (Bei Rotationsachse $\Omega$ und Rotation um den Ursprung):
 $\frac{d}{dt} \vv = \Omega \times \vv$\\
@@ -195,10 +177,108 @@ am Breitengrad $\phi \in (-\pi, \pi)$ gilt $v_r = v \sin(\phi)$, es folgt:\\
 $\binom{a_N}{a_O} = 2 \cdot \omega \cdot \sin(\phi) \cdot \binom{v_N}{-v_O} := f_C \cdot \binom{v_N}{-v_O}$\\
 Insgesamt folgt auf der Nordhalbkugel $(\sin(\phi) > 0)$: \vspace{-5pt}
 \begin{itemize}
-	\item Bewegung nach Norden führt zu Beschleunigung nach Osten \vspace{-5pt}
-	\item Bewegung nach Süden führt zu Beschleunigung nach Westen \vspace{-5pt}
-	\item Bewegung nach Osten führt zu Beschleunigung nach Süden \vspace{-5pt}
-	\item Bewegung nach Westen führt zu Beschleunigung nach Norden \vspace{-5pt}
+	\item Bewegung nach Norden führt zu Beschleunigung nach Osten
+	\item Bewegung nach Süden führt zu Beschleunigung nach Westen
+	\item Bewegung nach Osten führt zu Beschleunigung nach Süden
+	\item Bewegung nach Westen führt zu Beschleunigung nach Norden
 \end{itemize}
 In der Südhemisphäre gilt $(\sin(\phi) < 0)$, also wird die Bewegung umgekehrt.
+\subsection*{Wind}
+Wind wird verursacht durch:
+\vspace{-10pt}
+\begin{multicols}{2}
+	\begin{itemize}
+		\item Druckgradientenkraft
+		\item Corioliskraft
+		\item Zentrifugalkraft
+		\item Reibungskraft
+	\end{itemize}
+\end{multicols}
+\vspace{-10pt}
+\noindent
+\tbf{Geostrophischer Wind:} Annahme: Nord-/Südkomponente der Corioliskraft und Druckgradienten heben sich auf, Reibung wird vernachlässigt. Parallel zu den Isobaren. Erklärt die Passatwinde und erklärt, warum Wind nicht direkt von Hoch nach Tief weht.\\
+$F_D = -F_C \Leftrightarrow - \frac{1}{\rho} \frac{\Delta p}{\Delta x} = f_c \cdot v$\\
+\tbf{Zyklostrophischer Wind:} Annahme: Nord-/Südkomponente der Druckgradientenkraft und der Zentrifugalkraft heben sich auf. $F_C$ und $F_R$ werden nicht berücksichtigt. Erklärt Tornados.\\
+$F_D = F_Z \Leftrightarrow - \frac{1}{\rho} \frac{\Delta p}{\Delta x} = \frac{v^2}{R}$\\
+\tbf{Gradientenwind / Geostropisch-Zyklostrophischer Wind:}\\ 
+Berücksichtigt $F_D$, $F_C$ und $F_Z$. Reibung wird weiterhin vernachlässigt. Bestes Windmodell, welches trotzdem noch relativ genau rein durch Wetterkarten und Höhenwindmessungen vorhergesagt werden kann.\\
+\tbf{Zyklonaler Gradientenwind:}\\
+Die Luft dreht sich um ein Tiefdruckgebiet, es gilt:\\
+$F_C + F_Z = F_D \Leftrightarrow f_c \cdot v + \frac{v^2}{R} = -\frac{1}{\rho} \frac{\Delta p}{\Delta x}$\\
+\tbf{Antizyklonaler Gradientenwind:}\\
+Die Luft dreht sich um ein Hochdruckgebiet, die Richtungen von $F_C$ und $F_D$ sind umgekehrt:\\
+$F_C - F_Z = F_D \Leftrightarrow f_c \cdot v - \frac{v^2}{R} = -\frac{1}{\rho} \frac{\Delta p}{\Delta x}$\\
+\subsection*{Wärme, Temperatur, Freiheitsgrade}
+\vspace{-10pt}
+\begin{multicols}{2}
+	\centering
+	\tbf{Stoßrate gegen eine Quaderförmige Wand bei Teilchendichte $D$:}\\
+	$\dot N = \frac{D}{6} \cdot v$\\
+	\tbf{Druck durch Impulsübertragung:}\\
+	$p = \frac{F}{A} = \frac{\norm{\dot {\vec p}}}{A} = m \cdot \frac{\norm{\dot v}}{A} = \frac{1}{3} \frac{N}{V} mv^2$\\
+	\tbf{Freiheitsgrade:}\\
+	Im Allgemeinen $f = 3n$ für $n$-atomiges Molekül\\
+	\tbf{Effektive Freiheitsgrade} (bei realistischen Temperaturen):
+	\vspace{-10pt}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item  He: $3$
+			\item $\tn{N}_2, \tn{O}_2$: $5$
+			\item $\tn{CO}_2$: $\sim 7$\\
+			\item $\tn{H}_2\tn{O}$: $\sim 7$\\ 
+		\end{itemize}
+	\end{multicols}
+	\vspace{-10pt}
+	\tbf{Energie pro Teilchen pro Freiheitsgrad:}\\
+	$E = \frac{1}{2}kT$\\
+	\tbf{Ideale Gasgleichung:}\\
+	$pV = nRT = N k T$, mit $n = \frac{N}{N_A}$\\
+	\tbf{Energie für $N$ Teilchen mit jeweils $f$ Freiheitsgraden:}\\
+	$U = f \cdot N \cdot E = \frac{f}{2} NkT = \frac{f}{2} nRT$\\
+	\tbf{Molare Wärmekapazität $[c_V] = 1 \frac{\J}{\tn{mol} \cdot \tn K}$ bei konstantem Volumen}:\\
+	$c_V = \frac{f}{2} \cdot R$\\
+	\tbf{Spezifische Wärmekapazität $[C_V] = 1 \frac{\J}{\kg \cdot \tn K}$ bei konstantem\\ Volumen}:\\
+	$C_V = \frac{c_V}{M}$\\
+	\tbf{Mittlere freie Weglänge:}\\
+	$\lambda = \frac{1}{\sqrt 2 \pi \frac{N}{V}d^2}$\\
+	\tbf{Boltzmann-Verteilung:}\\
+	$p(E) \sim e^{- \frac{E}{kT}}$, wahrscheinlichste Energie
+	$E_{\kin_p} = kT$, aber mittlere Energie $E_{\kin_m} = \frac{3}{2}kT$!
+	\tbf{Maxwell-Verteilung:}\\
+	$p(v) \sim 4\pi v^2 \cdot e^{-\frac{mv^2}{2kT}}$, wahrscheinlichste Geschwindigkeit $v_p = \sqrt{\frac{2kT}{m}} = \sqrt{\frac{RkT}{M}}$
+	\tbf{Arrheniusgleichung für Reaktionsgeschwindigkeit $c$:}\\
+	$c = A \cdot e^{-\frac{E_A}{RT}}$
+\end{multicols}
+\subsection*{Partialdruck, Dampfdruck}
+\vspace{-10pt}
+\begin{multicols}{2}
+	\centering
+	\tbf{Partialdruck $p$ / Dampfdruck $p_{\tn H_2 \tn O}$}: Experimentell bestimmt. Maximaler Dampfdruck (Sättigungsdampfdruck) hängt von der Temperatur ab.
+	\tbf{Absolute Luftfeuchtigkeit:}\\
+	$f = \frac{m_{\ce{H2O}}}{V}$ $f = \frac{m_{\tn{H}_2\tn O, \tn{max}}}{V}$\\
+	\tbf{Relative Luftfeuchtigkeit:}\\
+	$\phi = \frac{f}{f_{\tn{max}}}$\\
+	\tbf{Zusammenhang Dampfdruck/Luftfeuchtigkeit:}\\
+	$p_{\ce{H2O}}  = \frac{n_{\wawer}RT}{V}$\\ 
+	$= \frac{m_{\wawer}RT}{M_{\wawer}V} = f \cdot \frac{RT}{M_{\wawer}}$\\
+\end{multicols}
+\subsection*{Erster Hauptsatz der Thermodynamik}
+\lipsum[1]
+\subsection*{Zustandsänderungen}
+\lipsum[1]
+
+\subsection*{Entropie und Enthalpie}
+\lipsum[1]
+\subsection*{Zweiter Hauptsatz der Thermodynamik}
+\lipsum[1]
+\subsection*{Strahlung}
+\lipsum[1]
+\subsection*{Absorption und Emission}
+\lipsum[1]
+\subsection*{Atmosphärisches Fenster}
+\lipsum[1]
+\subsection*{Strahlungsbilanz der Erde}
+\lipsum[1]
+\subsection*{Treibhauspotential}
+\lipsum[1]
 \end{document}
