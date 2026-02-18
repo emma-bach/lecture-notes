@@ -111,8 +111,6 @@ $W = F_R \cdot \Delta s = \mu \cdot m \cdot g \cdot \Delta s$\\
 $W = 0$, da $F \perp \Delta s$\\
 \tbf{Kinetische Energie:}
 $E_{\kin} = W = F \cdot \Delta s = m \cdot a \cdot \Delta s = m \cdot a \cdot \frac{1}{2} \cdot a \cdot (\Delta t)^2 = \frac{1}{2} \cdot m \cdot v^2$
-\tbf{Wärme / Thermische Energie:}\\
-$Q = m \cdot c \cdot \Delta T$\\
 \tbf{Gespannte Feder:}\\
 $F = k \cdot \Delta x$\\
 $E = \frac{1}{2} \cdot k \cdot s^2$\\
@@ -137,9 +135,10 @@ $P = \frac{W}{\Delta t} = \frac{F \cdot \Delta s}{\Delta t} = F \cdot v$\\
 	\tbf{Kontinuitätsgesetz für Inkompressible Fluide:}\\
 	$A \cdot v = \tn{const}$\\
 	\tbf{Volumenarbeit:}\\
-	$W_V = -\int F ~ds
-	= -\int p \cdot A ~ds
-	= -p \cdot \Delta V$\\\newpar
+	$W_V = - \int F ~ds
+	= - \int p \cdot A ~ds
+	= - p \cdot \Delta V$\\
+	Vorzeichen zu Gewählt, das für die Kompression positive Arbeit nötig ist.\\
 	\tbf{Hydrodynamische Energieerhaltung:}\\
 	$E_\ges = E_\pot + E_\kin + W_V = \tn{const}$\\
 	\tbf{$\implies$ Bernoulli-Gleichung durch Division der Volumen:}\\
@@ -155,36 +154,26 @@ $P = \frac{W}{\Delta t} = \frac{F \cdot \Delta s}{\Delta t} = F \cdot v$\\
 %\vspace{-10pt}
 %\begin{multicols}{2}
 \tbf{Molare Masse $M$:} $M \cdot n = m$\\
-Es gilt:
+Aus der idealen Gasgleichung folgt:
 $\frac{dp}{dh} = -\rho \cdot g = -\frac{Mg}{RT} \cdot p$\\
 \tbf{Barometrische Höhenformel für isotherme Atmosphäre:}\\
 $p(h) = p_0 \cdot e^{-\frac{Mg}{RT} \cdot h}$
 %\centering
 %\end{multicols}
-\subsection*{Corioliskraft}
-Bewegung eines Vektors (Bei Rotationsachse $\Omega$ und Rotation um den Ursprung):
-$\frac{d}{dt} \vv = \Omega \times \vv$\\
-Aus der Produktregel folgt $\vec a_C = -2\vec \Omega \times \vec v$.\\
-Bei Axialbewegung $v_A$ mit der Drehachse gibt es keine Beschleunigung.\\
-Bei Radialbewegung $v_R$ weg von der Drehachse: $a_{\tn{Cor}} = 2 \cdot \omega \cdot v_R$ entgegen der Erdrotation (also nach Westen).
-\newpar
-Bei Tangentialbewegung $v_T$ mit der Drehung (Ost-West):\\ 
-$a_{\tn{Cor}} = 2 \cdot \omega \cdot v_T$. Bei Bewegung mit der Erdrotation würde die Bewegung des Objekts es dazu bringen, sich von der Rotationsachse zu entfernen - wenn es wieder von der Schwerkraft nach unten bewegt wird, "rutscht" es dabei Richtung Äquator.
-\newpar
-Die Tangentialgeschwindigkeit ist bereits identisch zur Geschwindigkeit bei Bewegung nach Westen, also $v_T = -v_O$.\\
-Die Radialgeschwindigkeit hängt vom Breitengrad ab -
-am Breitengrad $\phi \in (-\pi, \pi)$ gilt $v_r = v \sin(\phi)$, es folgt:\\
-$\binom{a_N}{a_O} = 2 \cdot \omega \cdot \sin(\phi) \cdot \binom{v_N}{-v_O} := f_C \cdot \binom{v_N}{-v_O}$\\
-Insgesamt folgt auf der Nordhalbkugel $(\sin(\phi) > 0)$: \vspace{-5pt}
-\begin{itemize}
-	\item Bewegung nach Norden führt zu Beschleunigung nach Osten
-	\item Bewegung nach Süden führt zu Beschleunigung nach Westen
-	\item Bewegung nach Osten führt zu Beschleunigung nach Süden
-	\item Bewegung nach Westen führt zu Beschleunigung nach Norden
-\end{itemize}
-In der Südhemisphäre gilt $(\sin(\phi) < 0)$, also wird die Bewegung umgekehrt.
+\subsection*{Partialdruck, Dampfdruck}
+\vspace{-10pt}
+\begin{multicols}{2}
+	\centering
+	\tbf{Partialdruck $p$ / Dampfdruck $p_{\tn H_2 \tn O}$}: Experimentell bestimmt. Maximaler Dampfdruck (Sättigungsdampfdruck) hängt von der Temperatur ab.
+	\tbf{Absolute Luftfeuchtigkeit:}\\
+	$f = \frac{m_{\ce{H2O}}}{V}$ $f = \frac{m_{\tn{H}_2\tn O, \tn{max}}}{V}$\\
+	\tbf{Relative Luftfeuchtigkeit:}\\
+	$\phi = \frac{f}{f_{\tn{max}}}$\\
+	\tbf{Zusammenhang Dampfdruck/Luftfeuchtigkeit:}\\
+	$p_{\ce{H2O}}  = \frac{n_{\wawer}RT}{V}$\\ 
+	$= \frac{m_{\wawer}RT}{M_{\wawer}V} = f \cdot \frac{RT}{M_{\wawer}}$\\
+\end{multicols}
 \subsection*{Wind}
-Wind wird verursacht durch:
 \vspace{-10pt}
 \begin{multicols}{2}
 	\begin{itemize}
@@ -235,10 +224,6 @@ $F_C - F_Z = F_D \Leftrightarrow f_c \cdot v - \frac{v^2}{R} = -\frac{1}{\rho} \
 	$pV = nRT = N k T$, mit $n = \frac{N}{N_A}$\\
 	\tbf{Energie für $N$ Teilchen mit jeweils $f$ Freiheitsgraden:}\\
 	$U = f \cdot N \cdot E = \frac{f}{2} NkT = \frac{f}{2} nRT$\\
-	\tbf{Molare Wärmekapazität $[c_V] = 1 \frac{\J}{\tn{mol} \cdot \tn K}$ bei konstantem Volumen}:\\
-	$c_V = \frac{f}{2} \cdot R$\\
-	\tbf{Spezifische Wärmekapazität $[C_V] = 1 \frac{\J}{\kg \cdot \tn K}$ bei konstantem\\ Volumen}:\\
-	$C_V = \frac{c_V}{M}$\\
 	\tbf{Mittlere freie Weglänge:}\\
 	$\lambda = \frac{1}{\sqrt 2 \pi \frac{N}{V}d^2}$\\
 	\tbf{Boltzmann-Verteilung:}\\
@@ -249,36 +234,110 @@ $F_C - F_Z = F_D \Leftrightarrow f_c \cdot v - \frac{v^2}{R} = -\frac{1}{\rho} \
 	\tbf{Arrheniusgleichung für Reaktionsgeschwindigkeit $c$:}\\
 	$c = A \cdot e^{-\frac{E_A}{RT}}$
 \end{multicols}
-\subsection*{Partialdruck, Dampfdruck}
-\vspace{-10pt}
+\subsection*{Thermodynamik}
 \begin{multicols}{2}
 	\centering
-	\tbf{Partialdruck $p$ / Dampfdruck $p_{\tn H_2 \tn O}$}: Experimentell bestimmt. Maximaler Dampfdruck (Sättigungsdampfdruck) hängt von der Temperatur ab.
-	\tbf{Absolute Luftfeuchtigkeit:}\\
-	$f = \frac{m_{\ce{H2O}}}{V}$ $f = \frac{m_{\tn{H}_2\tn O, \tn{max}}}{V}$\\
-	\tbf{Relative Luftfeuchtigkeit:}\\
-	$\phi = \frac{f}{f_{\tn{max}}}$\\
-	\tbf{Zusammenhang Dampfdruck/Luftfeuchtigkeit:}\\
-	$p_{\ce{H2O}}  = \frac{n_{\wawer}RT}{V}$\\ 
-	$= \frac{m_{\wawer}RT}{M_{\wawer}V} = f \cdot \frac{RT}{M_{\wawer}}$\\
+	\tbf{Abgeschlossenes (isoliertes) System:} Weder Energie-, noch Materialaustausch.\\
+	\tbf{Geschlossenes System:} Energieaustausch, aber kein Materialaustausch.\\
+	\tbf{Offenes System:} Energie- und Materialaustausch.\\
+	\tbf{Adiabatisches System:} Kein Wärmeaustausch.\\
+	\tbf{Arbeitsdichtessystem:} Kein Arbeitsaustausch.\\
+	\tbf{Molare Wärmekapazität $[c_V] = 1 \frac{\J}{\tn{mol} \cdot \tn K}$ bei konstantem Volumen}:\\
+	$c_V = \frac{f}{2} \cdot R$\\
+	\tbf{Spezifische Wärmekapazität $[C_V] = 1 \frac{\J}{\kg \cdot \tn K}$ bei konstantem\\ Volumen}:\\
+	$C_V = \frac{c_V}{M}$\\
+	\tbf{Wärme / Thermische Energie:}\\
+	$Q = m \cdot C \cdot \Delta T$\\
+	\tbf{Wärmeströmung:}\\
+	$\dot Q = \dot m \cdot C \cdot \Delta T$,
+	$\dot m = \rho \cdot A \cdot v$
+	\tbf{Erster Hauptsatz der Thermodynamik:}
+	$\Delta U := \Delta E = \Delta Q + \Delta W$
 \end{multicols}
-\subsection*{Erster Hauptsatz der Thermodynamik}
-\lipsum[1]
 \subsection*{Zustandsänderungen}
-\lipsum[1]
-
-\subsection*{Entropie und Enthalpie}
-\lipsum[1]
-\subsection*{Zweiter Hauptsatz der Thermodynamik}
-\lipsum[1]
+Für Phasenübergang ist Energie nötig! $H = C \cdot \Delta T$\\
+\tbf{Isotherme Zustandsänderung:}\\
+Keine Änderung der \tbf{Temperatur} - bei Expansion ist aber mehr Wärme nötig um die gleiche Temperatur beizubehalten.\\
+Langsame Kompression von Luft mit gleichzeitiger Abkühlung,\\
+ näherungsweise Beschreibung technischer Prozesse.\\
+$\Delta T = 0 \implies \Delta U = 0 \implies \Delta Q = - \Delta W$\\
+Für die Volumenarbeit folgt für ideale Gase $W = nRT \cdot \ln\lr(\frac{V_1}{V_2})$\\
+\tbf{Isochore Zustandsänderung:}\\
+Konstantes Volumen. Es gilt $\Delta W = 0$, also $\Delta U = \Delta Q$\\
+\tbf{Isobare Zustandsänderung:}\\
+Konstanter Druck. Chemische Reaktionen, Ausdehung von Luft und Wasser bei Erwärmung.
+Ein Teil der Zugefügten Energie geht in Ausdehnung über, also muss für die Erwärmung mehr
+Energie hinzugefügt werden als unter isochoren Verhältnissen.\\
+\tbf{Wärmekapazität bei konstantem Druck:}\\
+$c_P = c_V + R$, $C_P = C_V + \frac{R}{M}$\\
+\tbf{Adiabatische Zustandsänderung:}\\
+Keine Änderung der \tbf{Wärme}. $\Delta Q = 0$, also $\Delta U = \Delta W$ Beschreibt sehr gut isolierte Systeme, Verbrennungsmotoren, Ausbreitung von Schall, aufsteigende Luftmassen.\\
+\tbf{Adiabatengleichung:} $T \cdot V^\frac{R}{c_V} = \tn{const}$, $p \cdot V^\frac{c_p}{c_v} = \tn{const}$\\
+Es folgt $\frac{dp}{dT} = \frac{c_p p}{RT}$\\
+\tbf{Aufstieg Trockener Luft:}\\
+Durch Gleichsetzen von $dp$ in der Adiabatengleichung\\ und der Barometrischen Höhenformel folgt\\ 
+$\frac{dT}{dh} = - \frac{M \cdot g}{c_p} = - \frac{g}{C_p}$\\
+\tbf{Aufstieg feuchter Luft:}\\
+Durch Adiabatische Abkühlung kann beim Aufstieg der Taupunkt erreicht werden, wodurch Wolken entstehen! Dabei wird Kondensationswärme frei und der Temperaturgradient $\frac{dT}{dh}$ wird geringer, desto feuchter die Luft war!
+\subsection*{Entropie}
+\tbf{Entropie:} $S = k \cdot \ln(W(n))$, wobei $W(n)$ die Gesamtzahl der\\ Mikrozustände der $n$ Teilchen ist. $\Delta S \geq \frac{\Delta Q}{T}$!!\\
+\tbf{Zweiter Hauptsatz der Thermodynamik:} Wärme kann nicht von niedrigerer Temperatur zu höherer Tempatur fließen. Es gibt keine periodisch arbeitende Maschine, die Wärme perfekt in Energie umwandelt. Ausgleichs- und Mischungsvorgänge sind irreversibel. Entropie nimmt durch jeden spontan ablaufenden Prozess zu, ebenso durch Zufuhr von Wärme oder Materie. Entropie kann innerhalb eines Systems nur abnehmen, wenn Wärme oder Materie abgegeben wird.\\
+\tbf{Wirkungsgrad einer reversiblen Wärmemaschine:} Angenommen, eine Maschine entnimmt Wärme von einer Stelle $A$ und überträgt sie auf eine andere Stelle $B$. Dann gilt $\Delta S_A = \frac{Q_A}{T_A}$, $\Delta S_B = \frac{Q_B}{T_B}$, und da die Entropie nicht abnimmt gilt $\Delta S_A = \Delta S_B$, also $\frac{Q_A}{T_A} = \frac{Q_B}{T_B}$. Da ein Teil der Wärme $Q_A$ zu Arbeit $W$ wird, und der Rest zu Wärme $Q_B$, gilt $Q_B = Q_A + W$. Es folgt $\eta := \frac{W}{Q_B} = 1 - \frac{T_A}{T_B} < 1$.\\
+\tbf{Entropieänderung bei der freien Expansion ins Vakuum:}\\ 
+$\Delta S = nR \cdot \ln\lr(\frac{V_2}{V_1})$
+\clearpage
+\subsection*{Enthalpie}
+\tbf{Enthalpie} $H = U + p \cdot V$
+Viele Prozesse in Umwelt und Technik sind isobar, dann gilt: $\Delta U = \Delta Q + \Delta W = \Delta Q - p\Delta V \implies \Delta Q = \Delta H$\\
+Verdampfungsenthalpie $\Delta H_V$, Kondensationsenthalpie $\Delta H_K = - \Delta H_V$
+\tbf{Freie Enthalpie / Gibbs-Energie:} $G = U + pV - TS$, jedes System verringert von alleine diese Größe, bis es nicht weiter geht.\\
+\tbf{Phasenübergänge:} $\Delta G_1 = \Delta G_2 \implies \frac{\Delta p}{\Delta T} = \frac{S_2 - S_1}{V_2 - V_1}$\\
+$\implies \frac{dp_s}{dT} = \frac{h_V}{\Delta V_m \cdot T} \approx \frac{h_v \cdot p_s}{R \cdot T^2}$, $\frac{dp_s}{p_s} \approx -\frac{h_V}{R} \cdot (\frac{1}{T_2} - \frac{1}{T_2})$\\
+Folge: Wasserkapazität der Atmosphäre steigt pro Kelvin Erwärmung um ca. $7\%$
 \subsection*{Strahlung}
-\lipsum[1]
-\subsection*{Absorption und Emission}
-\lipsum[1]
-\subsection*{Atmosphärisches Fenster}
-\lipsum[1]
-\subsection*{Strahlungsbilanz der Erde}
-\lipsum[1]
+Entstehung durch spontane Emmision, Bremsung von Ladungsträgern, Molekülschwingungen, zeitlich veränderlicher Strom, Paarvernichtung
+\vspace{-10pt}
+\begin{multicols}{2}
+	$c = \lambda f$\\
+	\tbf{Rydbergformel:}\\ 
+	$\frac{1}{\lambda_{\tn{vac}}} = R \cdot \lr(\frac{1}{n_1^2} - \frac{1}{n_2^2})$\\
+	\tbf{Energie im Photon:} $E = h \cdot f$\\
+	\tbf{Lambertstrahler:} Gleich hell aus allen Richtungen, es gilt $I = I_{\tn{max}} \cdot \cos(\theta)$\\
+	\tbf{Schwarzkörperstrahlung:}\\ 
+	$P = \sigma \cdot A \cdot T^4$, Sonne ist in etwa ein Schwarzkörper\\
+	\tbf{Abgestrahlte Energie pro Sekunde/Intervall/Winkel:}\\
+	$L(f,T) = \frac{2hf^3}{c^2}\frac{1}{e^{hf/kT}-1}$\\
+	\tbf{Atmosphärisches Fenster:} Bezeichnet den Wellenlängen- bereich, für den die Atmosphäre größtenteils durchlässig ist. Entsteht durch die Gaskomposition der Atmosphäre, insbesondere Wasserdampf und \ce{CO2}. Sichtbares Licht, knapp drüber, und kurzwellige Radiowellen.\\
+	\tbf{Strahlungsbilanz:}\\ 
+	Netto-Absorption $\to$ Erwärmung!\\
+\end{multicols}
 \subsection*{Treibhauspotential}
-\lipsum[1]
+\tbf{Notation für Bestände und Flüsse:} Bestand $S$, Input $I$, Output $O$, $I = O + \Delta S$\\
+Tiefsee und Tiefseeboden sind mit Abstand die größten \ce{CO2}-Speicher\\
+\tbf{Anorganischer Kohlenstoffzyklus:}\\
+\ce{CO2} (Luft) $\leftrightarrow$ \ce{HCO3-} (Wasser) $\leftrightarrow$ \ce{CaSiO3}, \ce{CaCO3} (Gestein)\\
+\tbf{Organischer Kohlenstoffzyklus:}\\
+\ce{CO2}, \ce{CH4} (Luft) $\leftrightarrow$ \ce{CH4} etc. (Organismen) $\leftrightarrow$ Kohle, Erdöl, etc. (Böden)\\
+\tbf{Zerfall von Methan:} \ce{CH4} + 2\ce{O2} $\to$ \ce{CO2} + 2\ce{H2O}\\
+\tbf{Radiative Forcing $F$:}\\
+Änderung der Energiebilanz der Erde durch Änderung der Wirkung von Weltraumstrahlung, Gemessen in $\tn{W}/\m^2$. Eines der wichtigsten quantitativen Maße des Klimawandels.\\
+$\Delta F \approx \alpha \cdot \ln \lr(\frac{C_0 + \Delta C}{C_0})$ mit $\alpha \approx 5,35 \frac{\tn{W}}{\m^2}$ bei Erhöhung des \ce{CO2}-Volumentanteils von $C_0$ um $\Delta C$.\\
+\tbf{Spezifischer Strahlenantrieb:} $a_{\ce{CO2}} = \frac{\Delta F}{\Delta C} \approx \frac{\alpha}{C_0}$\\
+\tbf{Treibhauspotential:} Spezifischer Strahlenantrieb mal Korrekturfaktor für weitere Zerfallsauswirkung mal Integral über die Konzentration eines Gases pro Zeit, zum Normieren durch das Treibhauspotential von \ce{CO2} geteilt.\\
+\tbf{Korrekturfaktor}: $c_{\ce{CH4}} = (1 + f_1 + f_2)$, $f_1 = 0.5$ entspricht dem Abbau von Ozon durch die Reaktion \ce{CH4 + OH- -> CH3- + H2O}, $f_2 = 0.15$ entspricht der Entstehung von Wasser.
+\subsection*{Corioliskraft}
+Bewegung eines Vektors (Bei Rotationsachse $\Omega$ und Rotation um den Ursprung):
+$\frac{d}{dt} \vv = \Omega \times \vv$\\
+Aus der Produktregel folgt $\vec a_C = -2\vec \Omega \times \vec v$.\\
+Bei Axialbewegung $v_A$ mit der Drehachse gibt es keine Beschleunigung.\\
+Bei Radialbewegung $v_R$ weg von der Drehachse: $a_{\tn{Cor}} = 2 \cdot \omega \cdot v_R$ entgegen der Erdrotation (also nach Westen).
+\newpar
+Bei Tangentialbewegung $v_T$ mit der Drehung (Ost-West):\\ 
+$a_{\tn{Cor}} = 2 \cdot \omega \cdot v_T$. Bei Bewegung mit der Erdrotation würde die Bewegung des Objekts es dazu bringen, sich von der Rotationsachse zu entfernen - wenn es wieder von der Schwerkraft nach unten bewegt wird, "rutscht" es dabei Richtung Äquator.
+\newpar
+Die Tangentialgeschwindigkeit ist bereits identisch zur Geschwindigkeit bei Bewegung nach Westen, also $v_T = -v_O$.\\
+Die Radialgeschwindigkeit hängt vom Breitengrad ab -
+am Breitengrad $\phi \in (-\pi, \pi)$ gilt $v_r = v \sin(\phi)$, es folgt:\\
+$\binom{a_N}{a_O} = 2 \cdot \omega \cdot \sin(\phi) \cdot \binom{v_N}{-v_O} := f_C \cdot \binom{v_N}{-v_O}$\\
+Insgesamt führt auf der Nordhalbkugel $(\sin(\phi) > 0)$ jede Bewegung zu einer Kraft nach Rechts, auf der Südhalbkugel umgekehrt.
 \end{document}
