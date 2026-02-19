@@ -31,7 +31,6 @@
 \begin{document}
 \twocolumn[\section*{Klausurblatt Umweltphysik, Emma Marie Bach :3}]
 \subsection*{Einheiten}
-\vspace{-10pt}
 \begin{multicols}{2}
 \noindent
 \tbf{Kraft:}\\ $[F] = 1\tn{N} = 1 \frac{\tn{kg} \cdot \tn{m}}{s^2}$\\
@@ -47,23 +46,8 @@ $[c] = 1 \frac{J}{K} = 1 \frac{\N \cdot \m}{K}$\\
 \end{multicols}
 \subsection*{Mathe}
 \tbf{Taylorreihe:} $f(x) \approx \sum_{k = 1}^n f^{(k)} \cdot (x-a)^k$
-\subsection*{Rotierende Systeme}
-\vspace{-10pt}
-\begin{multicols}{2}
-	\centering
-	\tbf{Zentripetalbeschleunigung:}\\ 
-	$\frac{\Delta v}{v} = \frac{\Delta s}{r} \implies a_Z = \frac{v^2}{r}$\\
-	\tbf{Zentripetalkraft:}\\
-	$F_Z = m \cdot a_Z = m \cdot \frac{v^2}{r}$\\
-	\tbf{Umlaufgeschwindigkeit:}\\
-	$F_Z = F_G \implies v = \sqrt{\frac{\gamma M}{r}}$\\
-	\tbf{Umlaufszeit:}\\
-	$v = \omega \cdot r \implies t = 2\pi r \cdot \sqrt{\frac{r}{\gamma M}}$\\
-\end{multicols}
-\iffalse
-\fi
+
 \subsection*{Kräfte und Wege}
-\vspace{-10pt}
 \begin{multicols}{2}
 \centering
 \tbf{Grundlagen:}\\
@@ -94,7 +78,6 @@ $T_1 = F_1 \cdot r_1 = F_2 \cdot r_2 = T_2$
 \end{multicols}
 
 \subsection*{Energie, Arbeit, Leistung}
-\vspace{-10pt}
 \begin{multicols}{2}
 \centering
 \tbf{Arbeit:}\\
@@ -123,7 +106,6 @@ $P = \frac{W}{\Delta t} = \frac{\Delta E}{\Delta t} \to \frac{dW}{dt}$\\
 $P = \frac{W}{\Delta t} = \frac{F \cdot \Delta s}{\Delta t} = F \cdot v$\\
 \end{multicols}
 \subsection*{Strömungsdynamik}
-\vspace{-10pt}
 \begin{multicols}{2}
 	\centering
 	\tbf{Staudruck:}\\ 
@@ -150,6 +132,34 @@ $P = \frac{W}{\Delta t} = \frac{F \cdot \Delta s}{\Delta t} = F \cdot v$\\
 	$\implies a = \frac{\Delta F}{m} = - \frac{\grad p}{\rho}$\\
 \centering
 \end{multicols}
+\vspace{5cm}
+\subsection*{Rotierende Systeme}
+\begin{multicols}{2}
+	\centering
+	\tbf{Zentripetalbeschleunigung:}\\ 
+	$\frac{\Delta v}{v} = \frac{\Delta s}{r} \implies a_Z = \frac{v^2}{r}$\\
+	\tbf{Zentripetalkraft:}\\
+	$F_Z = m \cdot a_Z = m \cdot \frac{v^2}{r}$\\
+	\tbf{Umlaufgeschwindigkeit:}\\
+	$F_Z = F_G \implies v = \sqrt{\frac{\gamma M}{r}}$\\
+	\tbf{Umlaufszeit:}\\
+	$v = \omega \cdot r \implies t = 2\pi r \cdot \sqrt{\frac{r}{\gamma M}}$\\
+\end{multicols}
+\subsection*{Corioliskraft}
+Bewegung eines Vektors (Bei Rotationsachse $\Omega$ und Rotation um den Ursprung):
+$\frac{d}{dt} \vv = \Omega \times \vv$\\
+Aus der Produktregel folgt $\vec a_C = -2\vec \Omega \times \vec v$.\\
+Bei Axialbewegung $v_A$ mit der Drehachse gibt es keine Beschleunigung.\\
+Bei Radialbewegung $v_R$ weg von der Drehachse: $a_{\tn{Cor}} = 2 \cdot \omega \cdot v_R$ entgegen der Erdrotation (also nach Westen).
+\newpar
+Bei Tangentialbewegung $v_T$ mit der Drehung (Ost-West):\\ 
+$a_{\tn{Cor}} = 2 \cdot \omega \cdot v_T$. Bei Bewegung mit der Erdrotation würde die Bewegung des Objekts es dazu bringen, sich von der Rotationsachse zu entfernen - wenn es wieder von der Schwerkraft nach unten bewegt wird, "rutscht" es dabei Richtung Äquator.
+\newpar
+Die Tangentialgeschwindigkeit ist bereits identisch zur Geschwindigkeit bei Bewegung nach Westen, also $v_T = -v_O$.\\
+Die Radialgeschwindigkeit hängt vom Breitengrad ab -
+am Breitengrad $\phi \in (-\pi, \pi)$ gilt $v_r = v \sin(\phi)$, es folgt:\\
+$\binom{a_N}{a_O} = 2 \cdot \omega \cdot \sin(\phi) \cdot \binom{v_N}{-v_O} := f_C \cdot \binom{v_N}{-v_O}$\\
+Insgesamt führt auf der Nordhalbkugel $(\sin(\phi) > 0)$ jede Bewegung zu einer Kraft nach Rechts, auf der Südhalbkugel umgekehrt.
 \subsection*{Barometrische Höhenformel}
 %\vspace{-10pt}
 %\begin{multicols}{2}
@@ -197,6 +207,7 @@ $F_C + F_Z = F_D \Leftrightarrow f_c \cdot v + \frac{v^2}{R} = -\frac{1}{\rho} \
 \tbf{Antizyklonaler Gradientenwind:}\\
 Die Luft dreht sich um ein Hochdruckgebiet, die Richtungen von $F_C$ und $F_D$ sind umgekehrt:\\
 $F_C - F_Z = F_D \Leftrightarrow f_c \cdot v - \frac{v^2}{R} = -\frac{1}{\rho} \frac{\Delta p}{\Delta x}$\\
+\clearpage
 \subsection*{Wärme, Temperatur, Freiheitsgrade}
 \vspace{-10pt}
 \begin{multicols}{2}
@@ -252,7 +263,9 @@ $F_C - F_Z = F_D \Leftrightarrow f_c \cdot v - \frac{v^2}{R} = -\frac{1}{\rho} \
 	$\dot Q = \dot m \cdot C \cdot \Delta T$,
 	$\dot m = \rho \cdot A \cdot v$
 	\tbf{Erster Hauptsatz der Thermodynamik:}
-	$\Delta U := \Delta E = \Delta Q + \Delta W$
+	$\Delta U := \Delta E = \Delta Q + \Delta W$\\
+	\tbf{Wärmeströmungen der Ozeane:}\\
+	$Q = Q_{\tn{SW}} + Q_{\tn{LW}} + Q_{\tn{Kond}} + Q_{\tn{Dampf}} + Q_{\tn{Strö}}$
 \end{multicols}
 \subsection*{Zustandsänderungen}
 Für Phasenübergang ist Energie nötig! $H = C \cdot \Delta T$\\
@@ -279,13 +292,13 @@ Durch Gleichsetzen von $dp$ in der Adiabatengleichung\\ und der Barometrischen H
 $\frac{dT}{dh} = - \frac{M \cdot g}{c_p} = - \frac{g}{C_p}$\\
 \tbf{Aufstieg feuchter Luft:}\\
 Durch Adiabatische Abkühlung kann beim Aufstieg der Taupunkt erreicht werden, wodurch Wolken entstehen! Dabei wird Kondensationswärme frei und der Temperaturgradient $\frac{dT}{dh}$ wird geringer, desto feuchter die Luft war!
+\vspace{10cm}
 \subsection*{Entropie}
 \tbf{Entropie:} $S = k \cdot \ln(W(n))$, wobei $W(n)$ die Gesamtzahl der\\ Mikrozustände der $n$ Teilchen ist. $\Delta S \geq \frac{\Delta Q}{T}$!!\\
 \tbf{Zweiter Hauptsatz der Thermodynamik:} Wärme kann nicht von niedrigerer Temperatur zu höherer Tempatur fließen. Es gibt keine periodisch arbeitende Maschine, die Wärme perfekt in Energie umwandelt. Ausgleichs- und Mischungsvorgänge sind irreversibel. Entropie nimmt durch jeden spontan ablaufenden Prozess zu, ebenso durch Zufuhr von Wärme oder Materie. Entropie kann innerhalb eines Systems nur abnehmen, wenn Wärme oder Materie abgegeben wird.\\
 \tbf{Wirkungsgrad einer reversiblen Wärmemaschine:} Angenommen, eine Maschine entnimmt Wärme von einer Stelle $A$ und überträgt sie auf eine andere Stelle $B$. Dann gilt $\Delta S_A = \frac{Q_A}{T_A}$, $\Delta S_B = \frac{Q_B}{T_B}$, und da die Entropie nicht abnimmt gilt $\Delta S_A = \Delta S_B$, also $\frac{Q_A}{T_A} = \frac{Q_B}{T_B}$. Da ein Teil der Wärme $Q_A$ zu Arbeit $W$ wird, und der Rest zu Wärme $Q_B$, gilt $Q_B = Q_A + W$. Es folgt $\eta := \frac{W}{Q_B} = 1 - \frac{T_A}{T_B} < 1$.\\
 \tbf{Entropieänderung bei der freien Expansion ins Vakuum:}\\ 
 $\Delta S = nR \cdot \ln\lr(\frac{V_2}{V_1})$
-\clearpage
 \subsection*{Enthalpie}
 \tbf{Enthalpie} $H = U + p \cdot V$
 Viele Prozesse in Umwelt und Technik sind isobar, dann gilt: $\Delta U = \Delta Q + \Delta W = \Delta Q - p\Delta V \implies \Delta Q = \Delta H$\\
@@ -321,23 +334,13 @@ Tiefsee und Tiefseeboden sind mit Abstand die größten \ce{CO2}-Speicher\\
 \tbf{Zerfall von Methan:} \ce{CH4} + 2\ce{O2} $\to$ \ce{CO2} + 2\ce{H2O}\\
 \tbf{Radiative Forcing $F$:}\\
 Änderung der Energiebilanz der Erde durch Änderung der Wirkung von Weltraumstrahlung, Gemessen in $\tn{W}/\m^2$. Eines der wichtigsten quantitativen Maße des Klimawandels.\\
-$\Delta F \approx \alpha \cdot \ln \lr(\frac{C_0 + \Delta C}{C_0})$ mit $\alpha \approx 5,35 \frac{\tn{W}}{\m^2}$ bei Erhöhung des \ce{CO2}-Volumentanteils von $C_0$ um $\Delta C$.\\
+$\Delta F \approx \alpha \cdot \ln \lr(\frac{C_0 + \Delta C}{C_0})$ mit $\alpha \approx 5,35 \frac{\tn{W}}{\m^2}$\\ 
+bei Erhöhung des \ce{CO2}-Volumentanteils von $C_0$ um $\Delta C$.\\
 \tbf{Spezifischer Strahlenantrieb:} $a_{\ce{CO2}} = \frac{\Delta F}{\Delta C} \approx \frac{\alpha}{C_0}$\\
 \tbf{Treibhauspotential:} Spezifischer Strahlenantrieb mal Korrekturfaktor für weitere Zerfallsauswirkung mal Integral über die Konzentration eines Gases pro Zeit, zum Normieren durch das Treibhauspotential von \ce{CO2} geteilt.\\
-\tbf{Korrekturfaktor}: $c_{\ce{CH4}} = (1 + f_1 + f_2)$, $f_1 = 0.5$ entspricht dem Abbau von Ozon durch die Reaktion \ce{CH4 + OH- -> CH3- + H2O}, $f_2 = 0.15$ entspricht der Entstehung von Wasser.
-\subsection*{Corioliskraft}
-Bewegung eines Vektors (Bei Rotationsachse $\Omega$ und Rotation um den Ursprung):
-$\frac{d}{dt} \vv = \Omega \times \vv$\\
-Aus der Produktregel folgt $\vec a_C = -2\vec \Omega \times \vec v$.\\
-Bei Axialbewegung $v_A$ mit der Drehachse gibt es keine Beschleunigung.\\
-Bei Radialbewegung $v_R$ weg von der Drehachse: $a_{\tn{Cor}} = 2 \cdot \omega \cdot v_R$ entgegen der Erdrotation (also nach Westen).
-\newpar
-Bei Tangentialbewegung $v_T$ mit der Drehung (Ost-West):\\ 
-$a_{\tn{Cor}} = 2 \cdot \omega \cdot v_T$. Bei Bewegung mit der Erdrotation würde die Bewegung des Objekts es dazu bringen, sich von der Rotationsachse zu entfernen - wenn es wieder von der Schwerkraft nach unten bewegt wird, "rutscht" es dabei Richtung Äquator.
-\newpar
-Die Tangentialgeschwindigkeit ist bereits identisch zur Geschwindigkeit bei Bewegung nach Westen, also $v_T = -v_O$.\\
-Die Radialgeschwindigkeit hängt vom Breitengrad ab -
-am Breitengrad $\phi \in (-\pi, \pi)$ gilt $v_r = v \sin(\phi)$, es folgt:\\
-$\binom{a_N}{a_O} = 2 \cdot \omega \cdot \sin(\phi) \cdot \binom{v_N}{-v_O} := f_C \cdot \binom{v_N}{-v_O}$\\
-Insgesamt führt auf der Nordhalbkugel $(\sin(\phi) > 0)$ jede Bewegung zu einer Kraft nach Rechts, auf der Südhalbkugel umgekehrt.
+\tbf{Korrekturfaktor}: $c_{\ce{CH4}} = (1 + f_1 + f_2)$, $f_1 = 0.5$ entspricht dem Abbau von Ozon durch die Reaktion \ce{CH4 + OH- -> CH3- + H2O}, $f_2 = 0.15$ entspricht der Entstehung von Wasser.\\
+\tbf{Erwärmung der Ozeane durch Strahlung}\\
+$\Delta Q = F_S \cdot A \cdot \Delta T = m \cdot C \cdot \Delta T = \rho \cdot V \cdot C \cdot \Delta T = \rho \cdot A \cdot h \cdot C \cdot \Delta T$
+\tbf{Wärmeenergie des Golfstroms:} $Q = C_p \cdot \rho \cdot V \cdot T$
+\tbf{Wärmetransport des Golfstroms:} $\Phi_H = \dot Q = C_p \cdot \rho \cdot V \cdot \Delta T \cdot v$
 \end{document}
