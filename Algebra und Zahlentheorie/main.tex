@@ -2284,11 +2284,35 @@ Gegeben zwei endliche Körper lässt sich also insbesondere der eine genau dann 
 
 \chapter{Galoistheorie}
 \begin{definition}
-	Sei $L \supset K$ eine Körpererweiterung. So bildet die Menge der bijektiven Körperhomomorphismen $L \to L$, welche $K$ konstant halten, eine Gruppe, welche wir die Galoisgruppe $\tn{Gal}(L/K)$ nennen.
+	Sei $L \supset K$ eine Körpererweiterung. So bildet die Menge der bijektiven Körperhomomorphismen $L \to L$, welche auf $K$ die Identität sind, eine Gruppe, welche wir die Galoisgruppe $\tn{Gal}(L/K)$ nennen.
 \end{definition}
 \begin{example}
-	$\tn{Gal}(\bC/\bR)$ besteht aus der Identität und der komplexen Konjugation.
+	$\tn{Gal}(\bC/\bR)$ besteht aus der Identität und der komplexen Konjugation, also gilt $\tn{Gal}(\bC/\bR) \iso \bZ/2\bZ$
 \end{example}
+\begin{proposition}
+	$\Gal(\bQ(\sqrt[3]{2})/\bQ)$ besteht nur aus der Identität.
+\end{proposition}
+\begin{proof}
+	Die Elemente von $\Gal(\bQ(\sqrt[3]{2})/\bQ)$ sind per Definition Körperhomomorphismen $\phi : \bQ(\sqrt[3]{2}) \to \bQ(\sqrt[3]{2})$, welche $\bQ$ invariant halten. Da $\sqrt[3]{2}$ in $\bQ(\sqrt[3]{2})$ die einzige Lösung der Gleichung $x^3 = 2$ ist, muss also gelten:
+	\begin{align*}
+		\phi(\sqrt[3]{2}) \cdot \phi(\sqrt[3]{2}) \cdot \phi(\sqrt[3]{2}) = \phi(2) = 2
+		\implies \phi(\sqrt[3]{2}) = \sqrt[3]{2}
+	\end{align*}
+	Somit hält $\phi$ sowohl $\bQ$ als auch $\sqrt[3]{2}$ punktweise konstant, also muss es den ganzen Körper konstant halten. Es handelt sich somit um die Identität.
+\end{proof}
+\begin{lemma}
+	Es gilt
+	\begin{align*}
+		\abs{\Gal(L/K)} \leq [L : K]
+	\end{align*}
+\end{lemma}
+\begin{theorem}
+	Sei $q$ eine echte Primzahlpotenz und $r \geq 1$. So ist die Galoisgruppe $\Gal(\bF_{q^r} / \bF_q)$ eine zyklische Gruppe, erzeugt vom Frobeniushomomorphismus
+	\begin{align*}
+		F : \bF_{q^r} &\iso \bF_{q^r}\\
+		a &\mapsto a^q
+	\end{align*}
+\end{theorem}
 \begin{theorem}
 	\theoremname{(Hauptsatz der Galoistheorie):} Sei $L$ ein Körper und $G \subset \tn{Aut}(L)$ eine endliche Untergruppe der Automorphismengruppe von $G$. Sei $L^G$ der Körper, der aus den Fixpunkten von $G$ besteht. So ist
 	\begin{align*}
