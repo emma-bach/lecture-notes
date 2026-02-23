@@ -1,0 +1,370 @@
+\documentclass{article}
+
+% custom margins
+\usepackage[a4paper,margin=1.5in]{geometry}
+\renewcommand{\baselinestretch}{1.2}
+%\AddToHook{cmd/section/before}{\clearpage}
+
+% emma's long list of custom macros and universally used packages
+\include{../macros-and-packages.tex}
+\newcommand{\seperator}{\vspace{-8pt}\hline\vspace{8pt}}
+
+% colored box behind proofs
+\tcolorboxenvironment{proof}{
+	colback=white,
+	boxrule=0pt,
+	frame hidden,
+	borderline west={1pt}{0pt}{black},
+	before skip=0.75cm,
+	after skip=0.75cm,
+	sharp corners,
+	breakable,
+	enhanced,
+}
+
+\renewcommand*\contentsname{Inhalt}
+\renewcommand*\proofname{Lösung}
+
+\newcommand{\ex}[1]{\tit{Übung} #1.}
+\pagestyle{fancy} %allows headers
+
+\lhead{Emma Bach}
+\rhead{\today}
+\title{\bfseries Aufgabensammlung Algebra und Zahlentheorie}
+\date{Wintersemester 25/26}
+\author{Emma Bach}
+\begin{document}
+	\maketitle
+	\section*{\centering - Gruppen -}
+		\ex{0.2} Man gebe ein unverkürzbares Erzeugendensystem der Gruppe $\bZ^2$ an, welches aus drei Elementen besteht.
+		\newpar
+		\ex{1.2} Wie viele Untergruppen hat die additive Gruppe eines dreidimensionalen Vektorraums über dem Körper mit drei Elementen?
+		\newpar
+		\ex{1.2.B} Wie viele Untergruppen hat allgemein $(\bZ/q\bZ)^n$?
+		\newpar
+		\ex{1.3} Man bestimme alle Untergruppen von $\bZ/20\bZ$.
+		\newpar
+		\ex{1.4} Sind $H, K \subset G$ zwei Untergruppen einer endlichen Gruppe $G$ mit $\abs{H}$ teilerfremd zu $\abs{K}$ und $\abs{H} \cdot \abs{K} = \abs{G}$, so induziert die Verknüpfung eine Bijektion $H \times K \to G$.
+		\newpar
+		\ex{2.1.a)} Gegeben zwei Elemente $x,y$ endlicher Ordnung einer abelschen Gruppe $G$ teilt die Ordung von $xy$ das kleinste gemeinsame Vielfache der Ordnungen von $x,y$.
+		\newpar
+		\ex{2.1.b)} Sind die Ordnungen von $x$ und $y$ Teilerfremd, so gilt sogar
+		\begin{align*}
+			\ord(xy) = (\ord x) \cdot (\ord y)
+		\end{align*}
+		\newpar
+		\ex{2.3} Wie viele Gruppenhomomorphismen gibt es von $\bZ/8\bZ$ zur symmetrischen Gruppe $\cS_4$?
+		\newpar
+		\ex{2.4} Gegeben einen surjektiven Gruppenhomomorphismus $\phi : G \surj \ol G$ und einen Normalteiler $\ol N \subset \ol G$ mit Urbild $\phi^{-1}(\ol N) := N \subset G$ induziert $\phi$ einen Gruppenisomorphismus
+		\begin{align*}
+			\phi_s : G/N \iso \ol G / \ol N
+		\end{align*}
+		\newpar
+		\ex{3.2} Für beliebiges $m \in \bN$ hat jede Untergruppe von $\bZ/m\bZ$ die Form $d\bZ/m\bZ$ für einen Teiler $d$ von $m$, und jeder Teiler liefert eine solche Untergruppe.
+		\newpar
+		\ex{3.3} 
+		\begin{enumerate}
+			\item Wie viele Erzeuger hat die multiplikative Gruppe eines Körpers mit elf Elementen?
+			\item Man gebe einen solchen Erzeuger an.
+			\item Wie viele Elemente des Körpers mit elf Elementen sind Quadrate?
+			\item Wie viele Elemente des Körpers mit elf Elementen sind dritte Potenzen?
+		\end{enumerate}
+		\newpar
+		\ex{4.1} Seien $H \supset N$ eine Gruppe mit einem Normalteiler und $X$ eine Menge mit $H$-Operation. Man zeige, dass es auf dem Bahnenraum $X/N$ genau eine Operation der Quotientengruppe $H/N$ gibt, sodass
+		\begin{align*}
+			(hN)(Nx) = Nhx
+		\end{align*}
+		\newpar
+		\ex{4.3} Man gebe ein Repräsentantensystem an für die Konjugationsklassen der Gruppe aller Isometrien der euklidischen Ebene.
+		\newpar
+		\ex{4.4} Man bestimme alle Kompositionsreihen der Gruppe der Drehsymmetrien eines Würfels.
+		\newpar
+		\ex{5.1} Sei $G$ eine endliche Gruppe mit einem Normalteiler $N$ und $p$ prim. Dann ist eine Untergruppe $P \subset G$ genau dann eine $p$-Sylow von $G$, wenn $P \cap N$ eine $p$-Sylow von $N$ ist und das Bild von $P$ in $G/N$ eine $p$-Sylow von $G/N$.
+		\newpar
+		\ex{5.2} Für jede Primzahl $p$ sind die einzigen Gruppen der Ordnung $2p$ bis auf Isomorphismus die zyklische Gruppe $\bZ/2p\bZ$ und die Diedergruppe $D_p$
+		\newpar
+		\ex{5.3} Sei $p > q$ und $q$ kein Teiler von $p-1$. So ist jede Gruppe der Ordnung $pq$ zyklisch.
+	\section*{\centering - Ringe -}
+		\ex{5.4} In jedem Ring $R$ gilt für alle $a,b \in R$:
+		\begin{enumerate}
+			\item $0 \cdot a = 0$
+			\item $-a = (-1) \cdot a$
+			\item $(-1) \cdot (-1) = 1$
+			\item $(-a) \cdot (-b) = ab$
+		\end{enumerate}
+		\ex{6.8} 
+		\begin{enumerate}
+			\item Jeder Ringhomomorphismus bildet Einheiten auf Einheiten ab.
+			\item Jeder Ringhomomorphismus $R \to S$ in einen Ring $S$ mit $0_S \neq 1_S$ ist injektiv.
+		\end{enumerate}
+		\newpar
+		\ex{7.9} $\bZ[X]$ ist kein Hauptidealring
+		\newpar
+		\ex{7.10} Im Quotientenring eines faktoriellen Rings $R$ nach einem Hauptideal zu einem Element $a \neq 0$ ist das Bild von $b \in \bR$ genau dann kürzbar, wenn $a$ und $b$ kürzbar sind.
+		\newpar
+		\ex{8.15} Ist $R$ ein faktorieller Ring mit Bruchkörper $K$ und sind $P,Q \in K[X]$ normierte Polynome mit $PQ \in R[X]$, so folgt bereits $P, Q \in R[X]$
+		\newpar
+		\ex{8.16} Sei $p$ prim und $r \geq 1$. So erfüllt das $p^r$-te Kreisteilungspolynom die Identität
+		\begin{align*}
+			\Phi_{p^r}(X) = \Phi_p\lr(X^{p^{r-1}})
+		\end{align*}
+	\section*{\centering - Körper -}
+		\ex{6.7} Man konstruiere einen Körper mit $169 = 13^2$ Elementen.
+		\begin{proof}
+			Gemäß der folgenden Aufgabe ist $\bF_{13}/\angles{X^2 - 7}$ ein solcher Körper.
+		\end{proof}
+		\newpar
+		\ex{6.7.B} Sei $K$ ein endlicher Körper mit $q$ Elementen und $P$ vom Grad $n$ über $K$ irreduzibel. Dann ist $K/\angles{P}$ ein Körper mit $q^n$ Elementen.
+		\newpar
+		\ex{7.11} Sei $k$ ein Körper.
+		\begin{enumerate}
+			\item Alle Polynome vom Grad $1$ sind irreduzibel in $k[X]$.
+			\item Ist $P \in k[X]$ irreduzibel und vom Grad $\deg P > 1$, so hat $P$ keine Nullstelle in $k$.
+			\item Ist $P \in k[X]\ k$ vom Grad $\deg P \leq 3$ und hat $P$ keine Nullstelle in $k$, so ist $P$ irreduzibel in $k[X]$.
+			\item Ist $k$ algebraisch abgeschlossen, so sind die irreduziblen Polynome in $k[X]$ genau die Polynome vom Grad $1$.
+			\item Man gebe ein Polynom positiven Grades in $\bR[X]$ an, das keine Nullstelle hat, aber dennoch nicht irreduzibel ist.
+		\end{enumerate}
+		\newpar
+		\ex{8.13} Die Definition der Summation in Bruchkörpern über Integritätsringen ist wohldefiniert.
+		\newpar
+		\ex{9.20} Sei $K \subset L$ ein Körper der Charakteristik ungleich zwei. Sei $\alpha, \beta \in L^\times$ mit $\alpha^2, \beta^2 \in K$: Dann gilt $K(\alpha) = K(\beta)$ genau dann, wenn $\alpha/\beta \in K$.
+		\newpar
+		\ex{10.21.b} Man bringe das Inverse von $7 + \sqrt[3]{2}$ in diese Standardform.
+		\newpar
+		\ex{10.23} Seien $R \supset K$ ein kommutativer Ring mit einem Teilring, der sogar ein Körper ist. Sei $R$ endlichdimensional als $K$-Vektorraum und ein Integritätsring. Dann ist $R$ auch selbst bereits ein Körper.
+		\newpar
+		\ex{11.25} Man zeige, dass es im Polynomring über einem endlichen Körper irreduzible Polynome von jedem positiven Grad gibt.
+		\newpar
+		\ex{11.26} Man gebe die Verknüpfungstafeln des Körpers mit vier Elementen an.
+		\newpar
+		\ex{12.1} Gegeben eine endliche Körpererweiterung $K \subset L$ ist jedes Polynom aus dem Polynomring $L[X]$ Teiler eines Polynoms aus $K[X]$
+		\newpar
+		\ex{12.2} Sei $p$ eine Primzahl und seien $\zeta, \xi \in \bC$ zwei primitive $p$-te Einheitswurzeln.
+		\begin{enumerate}
+			\item Es gilt $\bQ(\zeta) = \bQ(\xi)$.
+			\item Es gibt genau einen Körperhomomorphismus $\bQ(\zeta) \to \bQ(\zeta)$ mit $\zeta \mapsto \xi$.
+		\end{enumerate}
+		\newpar
+		\ex{12.3.a} Seien $M/L$ und $L/K$ algebraische Körpererweiterungen.
+		\begin{enumerate}
+			\item Ist $M/K$ normal, so ist auch $M/L$ normal.
+			\item Sind $L_1 L_2 \subset M$ normale Körpererweiterungen von $K$, so ist $L_1 \cap L_2$ normal über $K$.
+		\end{enumerate}
+		\ex{12.3.b} Man finde Körper $M \supset L \supset K$, sodass $M/L$ und $L/K$ normal sind, aber $M/K$ nicht.
+		\newpar
+		\ex{12.4} Es sei $K$ ein Körper, $P \in K[X]$ ein Polynom vom Grad $n$ und $L/K$ der Zerfallungskörper von $P$. Man zeige:
+		\begin{enumerate}
+			\item $[L:K] \leq n!$
+			\item $[L:K] \mid n!$
+		\end{enumerate}
+		\newpar
+		\ex{13.2} Gegeben ein Körper $K$ und $p,q \in K$ ist das Polynom $P = X^3 + pX + q$ genau dann nicht separabel, wenn $27q^2 + 4p^3 = 0$.
+		\begin{proof}
+			Per Definition ist $P$ nicht separabel, wenn es in seinem Zerfallungskörper keine mehrfachen Nullstellen hat, also wenn $P$ und $P'$ über dem Zerfallungskörper keine gemeinsamen Nullstellen haben.
+			\begin{enumerate}
+				\item 
+			Angenommen, es gäbe eine gemeinsame Nullstelle $\alpha$. Dann hätten wir:
+			\begin{align*}
+				P(\alpha) = \alpha^3 + p\alpha + q = 0
+			\end{align*}
+			und:
+			\begin{align*}
+				P'(\alpha) = 3\alpha^2 + p = 0
+			\end{align*}
+			\begin{enumerate}
+				\item Angenommen, $\char K = 3$. Dann hätten wir
+				\begin{align*}
+					3\alpha^2 + p = 0\\ 
+					\implies p = 0\\
+					\implies 27q^2 + 4p^3 = 4p^3 = 0
+				\end{align*}
+				\item Angenommen, $\char K \neq 3$. Dann gilt:
+				\begin{align*}
+					 P'(\alpha) = 3\alpha^2 + p = 0 \implies \alpha^2 = -\frac{p}{3},
+				\end{align*}
+				also folgt:
+				\begin{align*}
+					0 &= P(\alpha)\\ 
+					&= \alpha^3 + p\alpha + q\\
+					&= \alpha \cdot \lr(-\frac{p}{3}) + p\alpha + q\\
+					&= \frac{2p}{3}\alpha + q
+				\end{align*}
+				\begin{enumerate}
+					\item In $\char K = 2$ erhalten wir $q = 0$, es folgt
+					\begin{align*}
+						27q^2 + 4p^3 = 27q^2 = 0
+					\end{align*}
+					\item
+					In $\char K \notin \lr{2,3}$ stellen wir die Gleichung um zu:
+					\begin{align*}
+						&\frac{2p}{3}\alpha + q = 0\\
+						\Leftrightarrow  &\frac{2p}{3}\alpha = -q\\
+						\Leftrightarrow  &\alpha = -\frac{3q}{2p}\\
+					\end{align*}
+					Setzen wir dies in $P$ ein, erhalten wir:
+					\begin{align*}
+						\lr(-\frac{3q}{2p})^3 + \lr(-\frac{3q}{2p}) + q &= 0\\
+					\Leftrightarrow -\frac{27q^3}{8p^3} -\frac{3q}{2p} + q &= 0\\
+					\Leftrightarrow -27q^3 - 12qp^3 + 8qp^3 &= 0\\
+					\Leftrightarrow 27q^3 + 4p^3 &= 0
+					\end{align*}
+				\end{enumerate}
+			\end{enumerate} 
+			\item Sei nun $27q^3 + 4p^3 = 0$. Dann folgt in Charakteristik $2$ $q = 0$ und in Charakteristik $3$ $p = 0$. Für $p = 0$ folgt $P = \alpha^3 + q = (X + \sqrt[3]{q})^3$, und für $q = 0$ folgt $P = X^3 + pX = X (X^2 + p)$, und in anderer Charakteristik kann wie in der vorherigen Rechnung $27q^3 + 4p^3 = 0$ auf $P\lr(-\frac{3q}{2p}) = 0$ zurückgeführt werden.
+			\end{enumerate}
+		\end{proof}
+		\newpar
+		\ex{13.3} Seien $M \supset L \supset K$ Körper. Ist $M/L$ separabel und $L/K$ separabel, so ist $M/K$ separabel.
+		\newpar
+		\ex{13.4} Seien $K$ ein Körper, $a \in K^\times$ und $n \geq 1$.
+		\begin{enumerate}
+			\item Im Zerfällungskörper des Polynoms $X^n - a$ zerfällt auch das Polynom $X^n - 1$ stets in Linearfaktoren.
+			\item Im Zerfallungskörper des Polynoms $X^n-1$ zerfällt $X^n-a$ nicht notwendig in Linearfaktoren.
+		\end{enumerate}
+		\begin{proof}
+		\begin{enumerate}
+			\item Seien $\alpha_i$ die Nullstellen von $X^n - a$. Dann sind $\alpha_i/\alpha_1$ Nullstellen von $X^n - 1$.
+			\item Über $\bQ$ zerfällt $X^2 - 1$ in Linearfaktoren, aber nicht $X^2 - 2$.
+		\end{enumerate}
+		\end{proof}
+	\section*{\centering - Zahlentheorie -}
+		\ex{0.1} Man führe an einem Beispiel den euklidischen Algorithmus aus und finde eine Darstellung des ggT als Linearkombination der beiden Ausgangszahlen.
+		\newpar
+		\ex{2.2} Man gebe alle Zahlen an, die bei Division durch $8$ Rest $4$ lassen, bei Division durch $13$ Rest $2$, und bei Division durch $11$ Rest $9$.
+		\newpar
+		\ex{3.1} \tbf{(Verallgemeinerte Fermat'sche Kongruenz)} Gegeben paarweise verschiedene Primzahlen $p_1, \hdots, p_r$ und eine Zahl $e$, sodass für alle $i \in \lr{1, \hdots r}$  $e \equiv 1 \mod (p_i-1)$ gilt, gilt für alle $a \in \bZ$ die Kongruenz
+		\begin{align*}
+			a^e \equiv a \mod (p_1 \cdot \hdots \cdot p_r)
+		\end{align*}
+		\newpar
+		\ex{3.4} Gibt es ein Vielfaches von $23$, dessen letzte Ziffern $45$ sind? Gibt es eine Potenz von $23$, deren letzte Ziffern $45$ sind?
+		\newpar
+		\ex{6.5} Man finde das multiplikative Inverse der Nebenklasse von $21$ in $\bF_{31}$.
+		\newpar
+		\ex{6.6} Sei $n \in \bN$ mit $n \equiv 7 \mod 8$. Dann ist $n$ keine Summe von drei Quadraten.
+		\newpar
+		\ex{7.12} Man schreibe $130$ als Produkt von Gaußprimzahlen.
+		\newpar
+		\ex{9.19} Was ist die Summe der dritten Potenzen der vier Komplexen Nullstellen $\lambda_1, \lambda_2, \lambda_3, \lambda_4$ des Polynoms $X^4 + 3X^3 - 5X^2 + X + 13$?
+		\newpar
+		\ex{10.21} Alle Elemente von $\bQ(\sqrt[3]{2})$ lassen sich eindeutig in der Form
+		\begin{align*}
+			a + b \sqrt[3]{2} + c \sqrt[3]{2}^2
+		\end{align*}
+		mit $a,b,c \in \bQ$ schreiben.
+		\newpar
+		\ex{10.24.a} Ist $\sqrt 2 + \sqrt 3$ algebraisch über $\bQ$?
+		\newpar
+		\ex{10.24.b} Was ist das Minimalpolynom von $\sqrt 2 + \sqrt 3$ über $\bQ$?
+		\newpar
+		\ex{10.24.c} Liegt $\sqrt{2}$ in $\bQ(\sqrt{2} + \sqrt{3})$?
+		\newpar
+		\ex{11.27} Man zeige mithilfe der Axiomatischen Definition der natürlichen Zahlen, dass es für $a,b \in \bN$ mit $b \neq 0$ eindeutig bestimmte $c,d \in \bN$ gibt, sodass $d < b$ und $a = bc + d$.
+		\newpar
+		\ex{11.28} Man gebe einen linearen Körperisomorphismus $\bF_7(\sqrt 3) \iso \bF_7(\sqrt 5)$.
+	\section*{\centering - Sonstiges zu Polynomen -}
+		\ex{8.14} Gegeben ein Polynomen
+		\begin{align*}
+			a_n T^n + \hdots + a_1T + a_0
+		\end{align*}
+		mit ganzzahligen Koeffizienten und eine rationale Wurzel $p/q$ mit $p,q$ teilerfremden ganzen Zahlen ist $p$ ein Teiler von $a_0$ und $q$ ein Teiler von $a_n$
+		\begin{proof}
+			\begin{align*}
+				\sum_{k = 0}^n a_k \lr(\frac{p}{q})^k &= 0\\
+				\implies a_0 + \lr(\sum_{k = 1}^{n-1} a_k \lr(\frac{p}{q})^k) + a_n \lr(\frac{p}{q})^n &= 0\\
+				\implies p \mid a_0 &= - \lr(\sum_{k = 1}^{n-1} a_k \lr(\frac{p}{q})^k) - a_n \lr(\frac{p}{q})^n\\
+				q \mid a_n &= -\lr(\frac{q}{p})^n\lr(a_0 + \lr(\sum_{k = 1}^{n-1} a_k \lr(\frac{p}{q})^k))
+			\end{align*}
+		\end{proof}
+		\newpar
+		\ex{9.17} $P = X^7 - 9$ ist irreduzibel in $\bZ[X]$.
+		\begin{proof}
+			Sei $I : \bZ[X] \to \bZ[Y]$ die Injektion $X \to Y^2$. Dann gilt $I(P) = Y^{14} - 9 = (Y^7 - 3)(Y^7 + 3) := P_1P_2$. Nach Eisenstein sind $P_1$ und $P_2$ über $\bQ$ irreduzibel.
+			\newpar
+			Sei nun $P = QR$, sodass $R$ keine Einheit ist. Dann gilt $I(P) = I(QR) = I(Q) I(R)$, also $I(R) \mid I(P)$, also $I(R) \in \lr{P_1, P_2}$. Allerdings besteht das Bild von $I$ nur aus Polynomen mit geradem Grad, wir erhalten einen Widerspruch.
+		\end{proof}
+		\newpar
+		\ex{9.18} Man faktorisiere $(X^n + Y^n)$ über $\bC[X,Y]$.
+		\begin{proof}
+			\begin{align*}
+				X^n + Y^n &= \frac{X^{2n} + Y^{2n}}{X^n - Y^n}\\
+				&= \frac{Y^{2n} \lr((\frac{X}{Y})^{2n} - 1)}{Y^n \lr((\frac{X}{Y})^{n} - 1)}\\
+				&= \frac{Y^{2n} \prod_{\zeta^{2n} = 1}\lr(\frac{X}{Y} - \zeta)}{Y^n \prod_{\xi^n = 1}\lr(\frac{X}{Y} - \xi)}\\
+				&= \frac{\prod_{\zeta^{2n} = 1}\lr(X - \zeta Y)}{\prod_{\xi^n = 1}\lr(X - \xi Y)}\\
+				&= \prod_{\substack{\zeta^{2n} = 1, \\\zeta^n \neq 1}}\lr(X - \zeta Y)
+			\end{align*}
+		\end{proof}´
+		\newpar
+		\ex{10.22.B} Das Minimalpolynom von $z = a + bi \in \bC \setminus \bR$ über $\bR$ ist
+		\begin{align*}
+			P = (X - z)(X - \ol z)
+		\end{align*}
+		\begin{proof}
+			Da $z \notin \bR$ kann es kein Minimalpolynom vom Grad $1$ geben. Gleichzeitig gilt:
+			\begin{align*}
+				&(X - z)(X - \ol z) = (X - (a + bi))(X - (a - bi))\\
+				=& X^2 - X(a+bi) - X(a-bi) + (a+bi)(a-bi)\\
+				=& X^2 - 2aX + a^2 + b^2 \in \bR
+			\end{align*} 
+			also ist $P \in \bR[X]$ normiert vom Grad $2$ mit $z$ als Nullstelle, also das Minimalpolynom.
+		\end{proof}
+		\newpar
+		\ex{13.1} Man finde alle komplexen mehrfachen Nullstellen des Polynoms
+		\begin{align*}
+			P = X^4 - 4X^3 + 5X^2 - 4X + 4
+		\end{align*}
+		\begin{proof}
+			$\lambda$ ist genau dann eine mehrfache Nullstelle von $P$, wenn es eine Nullstelle der Ableitung $P'$ ist. Die Ableitung ist:
+			\begin{align*}
+				P' = 4X^3 - 12X^2 + 10X - 4
+			\end{align*}
+			Wir berechnen den größten gemeinsamen Teiler der beiden Polynome, und den dazugehörigen Rest, durch Polynomdivision:
+			\begin{align*}
+				&X^4 - 4X^3 + 5X^2 - 4X + 4\\
+				= &\lr(\frac{1}{4} X) \cdot \lr(4X^3 - 12X^2 + 10X - 4) - X^3 + 2.5X^2 - 3X + 4\\
+				\\
+				&-X^3 + 2.5X^2 - 3X + 4\\
+				= &\lr(- \frac{1}{4}) \cdot \lr(4X^3 - 12X^2 + 10X - 4) - 0.5X^2 - 0.5X + 3
+			\end{align*}
+			\begin{align*}
+				\implies P &= \lr(\frac{1}{4}X - \frac{1}{4}) P' + (- 0.5X^2 - 0.5X + 3)\\
+				&:= t_1 \cdot P' + r_1
+			\end{align*}
+			Wir teilen nun $P'$ durch $r_1$ mit Rest:
+			\begin{align*}
+				&4X^3 - 12X^2 + 10X - 4\\ 
+				= &\lr(-8X) \cdot \lr(- 0.5X^2 - 0.5X + 3) - 16X^2 + 34X - 4\\
+				\\
+				&-16X^2 + 34X - 4\\
+				=&\lr(32) \cdot \lr(- 0.5X^2 - 0.5X + 3) + 50X - 100\\
+			\end{align*}
+			\begin{align*}
+				P' 
+				&= (-8X + 32) \cdot r_1 + 50X - 100\\
+				&:= t_2 \cdot r_1 + r_2
+			\end{align*}
+			Zuletzt teilen wir $r_1$ durch $r_2$ ohne Rest:
+			\begin{align*}
+				(- 0.5X^2 - 0.5X + 3) : (50X - 100) &= -\frac{1}{100}X\\
+				(-0.5X^2 + X)\\
+				(-1.5X + 3): (50X - 100) &= -\frac{3}{100}\\
+			\end{align*}
+			Also ist $r_2 = 50X - 100 = 50 (X - 2)$ der größte gemeinsame Teiler von $P$ und $P'$. Insbesondere ist $2$ eine Nullstelle von $P'$, also eine mehrfache Nullstelle von $P$, also ist $(X-2)^2 = X^2 - 4X + 4$ ein Faktor von $P$. Wir erhalten durch erneute Polynomdivision:
+			\begin{align*}
+				&X^4 - 4X^3 + 5X^2 - 4X + 4 : X^2 - 4X + 4 = X^2 + 1\\
+				&\underline{X^4 - 4X^3 + 4X^2}\\
+				&\phantom{X^4 - X^3 + 4} X^2 - 4X + 4\\
+				&\phantom{X^4 - X^3 + 4} \underline{X^2 - 4X + 4}\\
+				&\phantom{X^4 - X^3 + 4 X^2 - 4X +}~0
+			\end{align*}
+			Also gilt $P = (X-2)^2(X-i)(X+i)$.
+		\end{proof}
+	\section*{\centering - Sonstiges -}
+		\ex{0.3} Seien $(M, \top)$ ein Monoid und $e$ sein neutrales Element. Man zeige: $M$ ist genau dann eine Gruppe, wenn es für jedes $a \in M$ ein $\ol a \in M$ gibt, sodass $\ol a \top a = e$, und dieses Element $\ol a$ ist dann notwendig bereits das Inverse von $a$ in $M$.
+		\newpar
+		\ex{0.4} Ein endliches Monoid $(M, \top)$, in dem für jedes Element $a \in M$ die Multiplikationsabbildung injektiv ist, muß bereits eine Gruppe sein.
+		\newpar
+		\ex{1.1} Ein Element $a$ eines Monoids $M$ ist genau dann invertierbar, wenn es $b, c \in M$ gibt, sodass $b \top a = e = a \top c$.
+		\newpar
+		\ex{4.2} Gegeben $p,q \in \bN$ mit $q \geq 1$ gibt es genau $\frac{(pq)!}{p!(q!)^p}$ Partitionen einer Menge mit $pq$ Elementen in $p$ Teilmengen mit jeweils $q$ Elementen.
+\end{document}
