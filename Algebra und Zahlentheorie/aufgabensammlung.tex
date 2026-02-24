@@ -39,28 +39,160 @@
 		\ex{0.2} Man gebe ein unverkürzbares Erzeugendensystem der Gruppe $\bZ^2$ an, welches aus drei Elementen besteht.
 		\newpar
 		\ex{1.2} Wie viele Untergruppen hat die additive Gruppe eines dreidimensionalen Vektorraums über dem Körper mit drei Elementen?
+		\begin{proof}
+			\begin{enumerate}
+				\item Das neutrale Element erzeugt die triviale Untergruppe.
+				\item Jedes der 26 anderen Elemente erzeugt eine Untergruppe, welche zu $\bZ/3\bZ$ isomorph ist. Dabei erzeugen $v$ und $-v$ die selbe Untergruppe, es gibt also $13$ "Klassen" von linear unabhängigen Vektoren.
+				\item Jedes Paar von linear unabhängigen Vektoren erzeugt ein Untergruppe, welche zu $\bZ/3\bZ \times \bZ/3\bZ$ isomorph ist. Da ein solches Paar dadurch definiert werden kann, welche linear unabhängige Klasse nicht enthalten ist, gibt es hiervon ebenfalls $13$.
+				\item Zuletzt ist $\bZ/3\bZ \times \bZ/3\bZ \times \bZ/3\bZ$ selbst eine Untergruppe.
+			\end{enumerate}
+			Insgesamt gibt es also $28$ Untergruppen.
+		\end{proof}
 		\newpar
 		\ex{1.2.B} Wie viele Untergruppen hat allgemein $(\bZ/q\bZ)^n$?
 		\newpar
 		\ex{1.3} Man bestimme alle Untergruppen von $\bZ/20\bZ$.
+		\begin{proof}
+			Die Untergruppen sind $d\bZ/20\bZ \cong (\bZ/\frac{20}{d}\bZ)$, für jeden Teiler $d$ von $20$.
+		\end{proof}
 		\newpar
 		\ex{1.4} Sind $H, K \subset G$ zwei Untergruppen einer endlichen Gruppe $G$ mit $\abs{H}$ teilerfremd zu $\abs{K}$ und $\abs{H} \cdot \abs{K} = \abs{G}$, so induziert die Verknüpfung eine Bijektion $H \times K \to G$.
+		\begin{proof}
+			Betrachte die Multiplikationsabbildung $m : H \times K \to G$, $(h,k) \mapsto hk$. Wir wollen zeigen, dass diese injektiv ist, dann folgt aus $\abs{H \times K} = \abs{H} \cdot \abs{K} = \abs{G}$ gemäß Schubfachprinzip auch Bijektivität.
+			\newpar
+			Sei also $h_1k_1 = h_2k_2$. Durch Multiplikation mit $h_2^{-1}$ von Links und mit $k_1^{-1}$ von Rechts folgt
+			\begin{align*}
+				h_2^{-1}h_1 
+				&= h_2^{-1} h_1 k_1 k_1^{-1}\\
+				&= h_2^{-1} h_2 k_2 k_1^{-1}\\
+				&= k_2k_1^{-1},
+			\end{align*}
+			also insbesondere
+			\begin{align*}
+				h_2^{-1}h_1 = k_2k_1^{-1} \in H \cap K
+			\end{align*}
+			$H \cap K$ ist sowohl von $H$ als auch von $K$ eine Untergruppe. Da $\abs{H}$ und $\abs{K}$ teilerfremd sind, muss $H \cap K$ also die triviale Gruppe sein, also gilt insbesondere $h_2^{-1}h_1 = k_2k_1^{-1} = 1$, woraus $h_1 = h_2$ und $k_1 = k_2$ folgt. Somit ist die Abbildung injektiv, also bijektiv.
+		\end{proof}
 		\newpar
 		\ex{2.1.a)} Gegeben zwei Elemente $x,y$ endlicher Ordnung einer abelschen Gruppe $G$ teilt die Ordung von $xy$ das kleinste gemeinsame Vielfache der Ordnungen von $x,y$.
+		\begin{proof}
+			Es gilt $g^k = e$ gdw. $\ord(g) \mid k$. Sei also $n = \kgV(\ord x, \ord y)$. Dann folgt direkt $x^n = e = y^n$. Da $G$ abelsch ist, folgt
+			\begin{align*}
+				(xy)^n = x^ny^n = e,
+			\end{align*}
+			also $\ord(xy) \mid \kgV(\ord x, \ord y)$.
+		\end{proof}
 		\newpar
 		\ex{2.1.b)} Sind die Ordnungen von $x$ und $y$ Teilerfremd, so gilt sogar
 		\begin{align*}
 			\ord(xy) = (\ord x) \cdot (\ord y)
 		\end{align*}
+		\begin{proof}
+			Da $\ggT(\ord x, \ord y) = 1$ folgt 
+			\begin{align*}
+				\ord x \cdot \ord y = \kgV(\ord x, \ord y).
+			\end{align*} 
+			Wir wissen bereits $\ord(xy) \mid \kgV(\ord x, \ord y)$, also folgt $\ord(xy) = \kgV(\ord x, \ord y)$ bereits, falls wir 
+			\begin{align*}
+				\kgV(\ord x, \ord y) = \ord x \cdot \ord y \mid \ord(xy)
+			\end{align*} zeigen können.
+			\newpar
+			Es gilt per per Definition 
+			\begin{align*}
+				(xy)^{\ord xy} = e,
+			\end{align*}
+			also folgt aus der Kommutativität der Gruppenoperation wieder
+			\begin{align*}
+				x^{\ord xy} y^{\ord xy} = e,
+			\end{align*}
+			also insbesondere
+			\begin{align*}
+				x^{\ord xy} = y^{-{\ord xy}}
+			\end{align*}
+			Es gilt also $x^{\ord xy} \in \angles{y}$ und $y^{-{\ord xy}} \in \angles{x}$, also wie in 1.4 insbesondere 
+			\begin{align*}
+				x^{\ord xy} \in \angles{y} \cap \angles{x}.
+			\end{align*}
+			Da die Ordnungen von $x$ und $y$ teilerfremd sind folgt wieder durch Lagrange $\angles{y} \cap \angles{x} = \angles{e}$. Also gilt $x^{\ord xy} = e$ und $y^{\ord xy} = (y^{-{\ord xy}})^{-1} = e^{-1} = e$, also sind $\ord x$ und $\ord y$ beides Teiler von $\ord xy$, also folgt aus der Teilerfremdheit der beiden Ordnungen
+			\begin{align*}
+				\kgV(\ord x, \ord y) = \ord x \cdot \ord y \mid \ord(xy),
+			\end{align*}
+			was zu zeigen war.
+		\end{proof}
 		\newpar
 		\ex{2.3} Wie viele Gruppenhomomorphismen gibt es von $\bZ/8\bZ$ zur symmetrischen Gruppe $\cS_4$?
+		\begin{proof}
+			Gemäß universeller Eigenschaft des Quotienten gilt
+			\begin{align*}
+				\Hom(\bZ/8\bZ, \cS_4) = \lr{f \in \Hom(\bZ, \cS_4) \mid f(8\bZ) = \id}
+			\end{align*}
+			Gemäß Vorlesung gilt $\Grp(\bZ, G) \cong G$, also
+			\begin{align*}
+				\lr{f \in \Hom(\bZ, \cS_4) \mid f(8\bZ) = \id}
+				= \lr{\sigma \in \cS_4 \mid \sigma^8 = \id}
+			\end{align*}
+			Wir suchen also alle Elemente von $\cS_4$, deren Ordnung $8$ teilt. Die Elemente von $\cS_4$ sind:
+			\begin{enumerate}
+				\item Die Identität (Ordnung $1$),
+				\item Sechs Transpositionen (Ordnung $2$),
+				\item Drei Doppeltransmutationen (Ordnung $2$),
+				\item Acht $3$-Zyklen (Ordnung $3$),
+				\item Sechs $4$-Zyklen (Ordnung $4$).
+			\end{enumerate}
+			Es kommen also alle Elemente bis auf die $3$-Zyklen in Frage, insgesamt gibt es also $24 - 8 = 16$ Gruppenhomomorphismen.
+		\end{proof}
 		\newpar
 		\ex{2.4} Gegeben einen surjektiven Gruppenhomomorphismus $\phi : G \surj \ol G$ und einen Normalteiler $\ol N \subset \ol G$ mit Urbild $\phi^{-1}(\ol N) := N \subset G$ induziert $\phi$ einen Gruppenisomorphismus
 		\begin{align*}
-			\phi_s : G/N \iso \ol G / \ol N
+			\phi_q : G/N \iso \ol G / \ol N
 		\end{align*}
+		\begin{proof}
+			Sei $q : \ol G \to \ol G / \ol N$ die kanonische Quotientenabbildung. Wir betrachten die Verktettung $\phi_q := q \circ \phi$. Da $q$ und $\phi$ beide surjektiv sind, ist $\phi_q$ ebenfalls surjektiv. Der Kern-Bild-Isomorphiesatz gibt uns nun
+			\begin{align*}
+				\phi_q : G/\ker \phi_q \iso \im~ \phi_q = \ol G / \ol N
+			\end{align*}
+			Und für den Kern gilt:
+			\begin{align*}
+				\ker(\phi_q) 
+				&= (q \cdot \phi)^{-1}([e_{\ol G}])\\
+				&= \phi^{-1} q^{-1} ([e_{\ol G}])\\
+				&= \phi^{-1}(\ol N)\\
+				&= N.
+			\end{align*}
+			Also haben wir wie gewünscht
+			\begin{align*}
+				\phi_q : G/N \im~ \phi_q = \ol G / \ol N.
+			\end{align*}
+		\end{proof}
 		\newpar
-		\ex{3.2} Für beliebiges $m \in \bN$ hat jede Untergruppe von $\bZ/m\bZ$ die Form $d\bZ/m\bZ$ für einen Teiler $d$ von $m$, und jeder Teiler liefert eine solche Untergruppe.
+		\ex{3.2.a} Jede Untergruppe einer zyklischen Gruppe ist zyklisch.
+		\begin{proof}
+			Sei $(G,+)$ eine zyklische Gruppe mit Erzeuger $a \in G$. Sei $H$ eine Untergruppe von $G$. Wäre $H$ nicht zyklisch, so gäbe es Elemente $h, h' \in H$, sodass kein Element von $H$ sie beide erzeugt.
+			\newpar
+			Da $G$ selbst zyklisch ist, existieren $n, n' \in \bZ$, sodass $h = n \cdot a$ und $h' = n' = a$. Durch den Euklidischen Algorithmus finden wir $r,s \in \bZ$, sodass
+			\begin{align*}
+				\kgV(n, n') = rn + sn'
+			\end{align*}
+			Nun gilt allerdings:
+			\begin{align*}
+				\kgV(n, n') \cdot a
+				&= (rn + sn') \cdot a\\
+				&= rna + sn'a\\
+				&= rh + sh' \in H,
+			\end{align*}
+			und da $\kgV(n, n')$ sowohl $n$ als auch $n'$ teilt, erzeugt $\kgV(n, n') \cdot a \in H$ sowohl $h$ als auch $h'$.
+		\end{proof}
+		\newpar
+		\ex{3.2.b} Für beliebiges $m \in \bN$ hat jede Untergruppe von $\bZ/m\bZ$ die Form $d\bZ/m\bZ$ für einen Teiler $d$ von $m$, und jeder Teiler liefert eine solche Untergruppe.
+		\begin{proof}
+			Wir haben soeben gezeigt, dass jede Untergruppe von $\bZ/m\bZ$ zyklisch ist. Da nach Lagrange die Ordnung jeder Untergruppe die Ordnung der Gruppe teilt, muss sie also auch von einem Element der entsprechenden Ordnung erzeugt werden.
+			\newpar
+			Jedes Element $k \in \bZ/m\bZ$ hat Ordnung
+			\begin{align*}
+				\ord k = \frac{m}{\ggT(k,m)}
+			\end{align*} 
+			Sei also $H$ eine Untergruppe von $\bZ/m\bZ$ der Ordnung $\frac{m}{d}$. Gemäß der eben genannten Gleichung muss jeder Erzeuger $k$ von $H$ $d$ als Teiler haben. Somit muss jedes solches $k$ in der von $d$ erzeugten Untergruppe $d\bZ/m\bZ$ liegen, welche ebenfalls Ordnung $\frac{m}{d}$ hat. Somit erzeugt jedes solches $k$ die selbe Untergruppe. Gleichzeitig gibt es für jedes $d$ nur eine solche Untergruppe, also stehen die gefragten Mengen in Bijektion.
+		\end{proof}
 		\newpar
 		\ex{3.3} 
 		\begin{enumerate}
@@ -69,21 +201,128 @@
 			\item Wie viele Elemente des Körpers mit elf Elementen sind Quadrate?
 			\item Wie viele Elemente des Körpers mit elf Elementen sind dritte Potenzen?
 		\end{enumerate}
+		\begin{proof}
+			Durch Ausprobieren trivial :)
+		\end{proof}
 		\newpar
 		\ex{4.1} Seien $H \supset N$ eine Gruppe mit einem Normalteiler und $X$ eine Menge mit $H$-Operation. Man zeige, dass es auf dem Bahnenraum $X/N$ genau eine Operation der Quotientengruppe $H/N$ gibt, sodass
 		\begin{align*}
 			(hN)(Nx) = Nhx
 		\end{align*}
+		\begin{proof}
+			\begin{enumerate}
+				\item 
+					Wir wollen zuerst zeigen, dass aus $Nx = Ny$ für jedes $h \in H$ auch $Nhx = Nhy$ folgt.
+					\newpar
+					Da $Nx = Ny$ existiert ein $n \in N$, sodass $x = ny$. Es folgt $hx = hny$. Da $N$ ein Normalteiler ist, gilt desweiteren  
+					\begin{align*}
+						n' := hnh^{-1} \in N.
+					\end{align*}
+					Für dieses $n'$ folgt $hn = n'h$, also $hx = n'hy$. Da $n' \in N$ folgt also
+					\begin{align*}
+						Nhx = Nhy
+					\end{align*}
+				\item Als nächstes wollen wir aus dieser Vorüberlegung die Wohldefiniertheit der definierten Operation folgern, also zeigen, dass zusätzlich für $g,h \in H$ aus $gN = hN$ auch $(gN)(Nx) = (hN)(Nx)$ folgt.
+				\newpar
+				Da $N$ ein Normalteiler ist, gilt auch $gN = Nh$, also gibt es ein $n \in N$, sodass $g = nh$, also $gx = nhx$, also $Ngx = Nhx$. Somit gilt
+				\begin{align*}
+					(gN)(Nx) = Ngx = Nhx = (hN)(Nx).
+				\end{align*}
+				\item Zuletzt wollen wir zeigen, dass diese Verknüpfung tatsächlich eine Gruppenoperation definiert. Zu zeigen ist also:
+				\begin{enumerate}
+					\item $(1N)(Nx) = Nx$. Dies gilt trivial, da $(1N)(Nx) = N1x = Nx$.
+					\item Sei $g,h \in G$. Dann wollen wir 
+					\begin{align*}
+						((gN)(hN))(Nx) = (gN)((hN)(Nx))
+					\end{align*}
+					Dies folgt ebenfalls recht schnell:
+					\begin{align*}
+						((gN)(hN))(Nx) 
+						&= (ghN)(Nx)\\
+						&= N(gh)x\\
+						&= N(g)(hx)\\
+						&= (gN)(Nhx)\\
+						&= (gN)((hN)(Nx)
+					\end{align*}
+				\end{enumerate}
+			\end{enumerate}
+		\end{proof}
 		\newpar
 		\ex{4.3} Man gebe ein Repräsentantensystem an für die Konjugationsklassen der Gruppe aller Isometrien der euklidischen Ebene.
 		\newpar
 		\ex{4.4} Man bestimme alle Kompositionsreihen der Gruppe der Drehsymmetrien eines Würfels.
 		\newpar
 		\ex{5.1} Sei $G$ eine endliche Gruppe mit einem Normalteiler $N$ und $p$ prim. Dann ist eine Untergruppe $P \subset G$ genau dann eine $p$-Sylow von $G$, wenn $P \cap N$ eine $p$-Sylow von $N$ ist und das Bild von $P$ in $G/N$ eine $p$-Sylow von $G/N$.
+		\begin{proof}\phantom{}
+			\begin{enumerate}
+				\item Sei $P$ eine $p$-Sylow von $G$.
+				\begin{enumerate}
+					\item Da $P$ eine $p$-Sylow ist, gilt $p \nmid \frac{\abs{G}}{\abs{P}}$. Da $NP$ eine Untergruppe von $G$ ist, gilt $\frac{\abs{NP}}{\abs{P}} \mid \frac{\abs{G}}{\abs{P}}$, also insbesondere $p \nmid \frac{\abs{NP}}{\abs{P}}$.
+					\newpar
+					Wenden wir den Isomorphiesatz auf $f : P \to NP/N$, $p \mapsto Np$ an, erhalten wir
+					\begin{align*}
+						P/(P \cap N) = P/(\ker f) \cong \im f = NP/N
+					\end{align*}
+					somit gilt
+					\begin{align*}
+						p \nmid \frac{\abs{NP}}{\abs{P}} = \frac{\abs{N}}{\abs{N \cap P}}
+					\end{align*}
+					Da $N \cap P$ eine $p$-Gruppe in $N$ ist, folgt daraus auch, dass $N \cap P$ eine $p$-Sylow von $N$ ist.
+					\item (...)
+				\end{enumerate}
+				\item Sei $N \cap P$ eine $p$-Sylow von $N$ und $q(P) = P/N$ eine $p$-Sylow von $G/N$. Dann ist $P$ "offensichtlich" eine $p$-Gruppe in $G$. Es bleibt noch zu zeigen, dass $p \nmid \frac{\abs{G}}{\abs{P}} = [G : P]$. Durch den Isomorphiesatz folgt weiterhin
+				\begin{align*}
+					\frac{\abs{NP}}{\abs{P}} = \frac{\abs{N}}{\abs{N \cap P}}
+				\end{align*}
+				Desweiteren gilt
+				\begin{align*}
+					[G : NP] = [G/N : P/N]
+				\end{align*}
+				Es gilt nun
+				\begin{align*}
+					[G : P] &= [G : NP][NP : P]\\
+					&= [G/N : P/N][N : N \cap P]
+				\end{align*}
+				Da $P/N$ eine $p$-Sylow von $G/N$ und $N \cap P$ eine $p$-Sylow von $N$ ist, teilt $p$ keinen dieser beiden Terme, also auch nicht $[G:P]$, was zu zeigen war.
+			\end{enumerate}
+		\end{proof}
 		\newpar
-		\ex{5.2} Für jede Primzahl $p$ sind die einzigen Gruppen der Ordnung $2p$ bis auf Isomorphismus die zyklische Gruppe $\bZ/2p\bZ$ und die Diedergruppe $D_p$
+		\ex{5.2} Für jede Primzahl $p$ sind die einzigen Gruppen der Ordnung $2p$ bis auf Isomorphismus die zyklische Gruppe $\bZ/2p\bZ$ und die Diedergruppe $D_p$.
+		\begin{proof}
+			Sei $G$ eine Gruppe der Ordnung $2p$. Gemäß viertem Sylowsatz ist die Zahl $n_2$ der $2$-Sylows von $G$ ein Teiler von $\frac{\abs{\bZ/2p\bZ}}{2} = p$, also entweder $1$ oder $p$. Das zweite Kriterium aus dem vierten Sylowsatz besagt $n_2 \cong 1 \mod 2$, was keinen der beiden Fälle ausschließt.
+			\newpar
+			Desweiteren ist die Anzahl $n_p$ der $p$-Sylows von $G$ ein Teiler von $\frac{\abs{\bZ/2p\bZ}}{2} = 2$, also entweder $1$ oder $2$. In diesem Fall besagt das zweite Kriterium $n_p \cong 1 \mod p$, was den Fall $n_p = 2$ ausschließt.
+			\newpar
+			Der Fall $p = 2$ ist bereits bekannt, sei also $p > 2$ angenommen.
+			\begin{enumerate}
+				\item Angenommen, $n_2 = p$. Jede dieser Gruppen hat per Definition $2$ Elemente, ist also isomorph zur zyklischen Gruppe $\bZ/2\bZ$. Somit hat $G$ $p$ Elemente der Ordnung $2$. Sei $a$ ein solches Element. Gemäß Satz von Cauchy existiert desweiteren ein Element $b$ der Ordnung $p$.
+				\newpar
+				Gemäß Satz von Lagrange gilt $\ord ab \in \lr{1,2,p,2p}$.
+				\begin{enumerate}
+					\item Im Fall $(\ord ab) = 2p$ wäre $G$ zyklisch, was der Annahme wiedersprechen würde, dass $G$ $p$ $2$-Sylows hat.
+					\item Im Fall $(\ord ab) = 1$ hätten wir $p = 2$, (?) was wir ausgeschlossen hatten. 
+					\item Im Fall $(\ord ab) = p$ wäre $\angles{ab}$ eine zweite $p$-Sylow, was wir ausgeschlossen hatten.
+				\end{enumerate} 
+				Somit gilt $(\ord ab) = 2$. Wir erhalten die Präsentation
+				\begin{align*}
+					G = \angles{a,b \mid \ord b = p, \ord a = \ord ab = 2},
+				\end{align*}
+				welche eindeutig die Diedergruppe $D_p$ definiert.
+				\item Angenommen, $n_2 = 1$. Da $G$ auch nur eine $p$-Sylow hat, sind beide Sylowuntergruppen normal. Es folgt, dass der Schnitt der beiden Gruppen die triviale Gruppe ist, also ist $G$ das direkte Produkt der beiden, also $G \cong \bZ/2\bZ \times \bZ/p\bZ$. Gemäß Chinesischem Restsatz ist nun $\bZ/2\bZ \times \bZ/p\bZ$ isomorph zu $\bZ/2p\bZ$, also $G$ zyklisch.
+			\end{enumerate}
+		\end{proof}
 		\newpar
 		\ex{5.3} Sei $p > q$ und $q$ kein Teiler von $p-1$. So ist jede Gruppe der Ordnung $pq$ zyklisch.
+		\begin{proof}
+			Sei $G$ eine Gruppe der Ordnung $pq$. Gemäß Lagrange hat jedes Element von $G$ die Ordnung $1,p,q,$ oder $pq$. Insbesondere erzeugen die Elemente der Ordnung $p$ und $q$ die jeweiligen Sylowgruppen.
+			\newpar
+			Gemäß der Sylowsätze ist die Anzahl $n_p$ der $p$-Sylows von $G$ ein Teiler von $q$, also $n_p = 1$ oder $n_p = q$. Gleichzeitig muss $n_p \cong 1 \mod \frac{\abs{G}}{q} = p$, also $p \mid n_p - 1$. Da $p > q$ und beide Zahlen prim sind, ist dies im Fall $n_p > 1$ unmöglich, also folgt $n_p = 1$. Diese $p$-Sylow enthält $p$ Elemente, von denen $p-1$ Erzeuger sind. Somit gibt es $p-1$ Elemente der Ordnung $p$.
+			\newpar
+			Analog ist die Anzahl $n_q$ der $q$-Sylows von $G$ ein Teiler von $p$, der Kongruent zu $1$ modulo $q$ ist. Wäre $n_q = p$, hätten wir $p \cong 1 \mod q$, also $q \mid p-1$, was wir ausgeschlossen hatten. Also existiert auch genau eine $q$-Sylow, also existieren $q-1$ Elemente der Ordnung $q$.
+			\newpar
+			Zusammen mit dem Neutralen Element erhalten wir $p + q - 1$ Elemente der Ordnung ungleich $pq$. Für Primzahlen $p > q$ gilt $p + q - 1 < pq$, also ist mindestens ein Element übrig, welches demenstprechend Ordnung $pq$ hat und somit die Gruppe $G$ erzeugt. Somit ist $G$ zyklisch.
+		\end{proof}
+	\clearpage
 	\section*{\centering - Ringe -}
 		\ex{5.4} In jedem Ring $R$ gilt für alle $a,b \in R$:
 		\begin{enumerate}
@@ -92,15 +331,80 @@
 			\item $(-1) \cdot (-1) = 1$
 			\item $(-a) \cdot (-b) = ab$
 		\end{enumerate}
+		\begin{proof}
+			\begin{enumerate}
+				\item 
+				\begin{align*}
+					0 
+					&= 0a + (-0a)\\ 
+					&= (0 + 0)a + (-0a)\\
+					&= 0a + 0a + (-0a)\\
+					&= 0a
+				\end{align*}
+				\item
+				\begin{align*}
+					a + (-1) \cdot a 
+					&= 1 \cdot a + (-1) \cdot a\\
+					&= (1 + (-1)) \cdot a\\
+					&= 0a\\
+					&= 0
+				\end{align*}
+				Analog gilt auch $(-1) \cdot a = -a$.
+				\item $(-1) \cdot (-1) = -(-1) = 1$
+				\item 
+				\begin{align*}
+					(-a) \cdot (-b) 
+					&= a \cdot (-1) \cdot (-b)\\
+					&= a \cdot (-(-b))\\
+					&= a \cdot b
+				\end{align*}
+			\end{enumerate}
+		\end{proof}
 		\ex{6.8} 
 		\begin{enumerate}
 			\item Jeder Ringhomomorphismus bildet Einheiten auf Einheiten ab.
-			\item Jeder Ringhomomorphismus $R \to S$ in einen Ring $S$ mit $0_S \neq 1_S$ ist injektiv.
+			\item Jeder Ringhomomorphismus $K \to R$ von einem Körper $K$ in einen Ring $R$ mit $0_R \neq 1_R$ ist injektiv.
 		\end{enumerate}
+		\begin{proof}
+			Sei $\phi : R \to S$ ein Ringhomomorphismus.
+			\begin{enumerate}
+				\item Sei $x$ eine Einheit. Dann gilt
+				\begin{align*}
+					1_S 
+					&= \phi(1_R)\\
+					&= \phi(x \cdot x^{-1})\\
+					&= \phi(x) \cdot \phi(x^{-1})
+				\end{align*}
+				und analog $1_S  = \phi(x^{-1}) \cdot \phi(x)$. Somit ist $\phi(x)$ ebenfalls eine Einheit, mit $\phi(x)^{-1} = \phi(x^{-1})$.
+				\item Sei nun $K$ ein Körper und $\phi : K \to R$ ein Ringhomomorphismus. Dann ist jedes $x \in K \setminus \lr{0_K}$ invertierbar, also gemäß der letzten Teilaufgabe ebenso jedes $\phi(x) \in \im~ \phi \setminus \lr{0_R}$. 
+				\newpar
+				Angenommen, $\phi$ wäre nicht injektiv. Dann gäbe es $x,y \in K$ mit $x - y \neq 0_K$, aber $\phi(x) - \phi(y) = 0_R$. Da $x - y \neq 0_K$, ist $(x-y)$ invertierbar. Es folgt:
+				\begin{align*}
+					\phi(x) - \phi(y) &= 0_R\\
+					\implies \phi(x-y) &= 0_R\\
+					\implies \phi(x-y)\phi(x-y)^{-1} &= 0_R\\
+					\implies 1_R &= 0_R
+				\end{align*}
+				Ist nun $1_R \neq 0_R$ gegeben, ist dies ein Widerspruch, also $\phi$ injektiv. 
+			\end{enumerate}
+		\end{proof}
 		\newpar
-		\ex{7.9} $\bZ[X]$ ist kein Hauptidealring
+		\ex{7.9} $\bZ[X]$ ist kein Hauptidealring.
+		\begin{proof}
+			Wäre $\bZ[X]$ ein Hauptidealring, so könnte $\angles{2,X}$ von einem einzigen Element $a$ erzeugt werden. Dieses müsste ein gemeinsamer Teiler von $2$ und $X$ sein, also $a = \pm 1$. Es müsste also $\angles{\pm 1} = \angles{2,X}$. Allerdings gilt $1 \notin \angles{2,X}$.
+		\end{proof}
 		\newpar
-		\ex{7.10} Im Quotientenring eines faktoriellen Rings $R$ nach einem Hauptideal zu einem Element $a \neq 0$ ist das Bild von $b \in \bR$ genau dann kürzbar, wenn $a$ und $b$ kürzbar sind.
+		\ex{7.10} Im Quotientenring eines faktoriellen Rings $R$ nach einem Hauptideal zu einem Element $a \neq 0$ ist das Bild von $b \in \bR$ genau dann kürzbar, wenn $a$ und $b$ teilerfremd sind.
+		\begin{proof}
+			\begin{enumerate}
+				\item Seien $a,b \in R$ gegeben, sodass $\ol b \in R / \angles{a}$ kürzbar ist. Wären $a$ und $b$ nicht teilerfremd, gäbe es ein irreduzibles $p \in R$ mit $p \mid a$ und $p \mid b$. Es gibt also ein $d \in R$, sodass $pd = a$. Es gilt außerdem $d \notin \angles{a}$, sonst wäre $p$ eine Einheit, also nicht irreduzibel. Nun ist gleichzeitig $b$ ein Vielfaches von $p$, also $bd$ ein Vielfaches von $pd = a$, also
+				\begin{align*}
+					\ol{b \cdot d} = \ol 0 = \ol {b \cdot 0}
+				\end{align*}
+				Mit $d \neq 0$. Also wäre $\ol b$ nicht kürzbar. Dies ist ein Widerspruch, also müssen $a$ und $b$ doch teilerfremd sein.
+				\item 
+			\end{enumerate}
+		\end{proof}
 		\newpar
 		\ex{8.15} Ist $R$ ein faktorieller Ring mit Bruchkörper $K$ und sind $P,Q \in K[X]$ normierte Polynome mit $PQ \in R[X]$, so folgt bereits $P, Q \in R[X]$
 		\newpar
@@ -108,6 +412,7 @@
 		\begin{align*}
 			\Phi_{p^r}(X) = \Phi_p\lr(X^{p^{r-1}})
 		\end{align*}
+	\clearpage
 	\section*{\centering - Körper -}
 		\ex{6.7} Man konstruiere einen Körper mit $169 = 13^2$ Elementen.
 		\begin{proof}
@@ -120,7 +425,7 @@
 		\begin{enumerate}
 			\item Alle Polynome vom Grad $1$ sind irreduzibel in $k[X]$.
 			\item Ist $P \in k[X]$ irreduzibel und vom Grad $\deg P > 1$, so hat $P$ keine Nullstelle in $k$.
-			\item Ist $P \in k[X]\ k$ vom Grad $\deg P \leq 3$ und hat $P$ keine Nullstelle in $k$, so ist $P$ irreduzibel in $k[X]$.
+			\item Ist $P \in k[X] \setminus k$ vom Grad $\deg P \leq 3$ und hat $P$ keine Nullstelle in $k$, so ist $P$ irreduzibel in $k[X]$.
 			\item Ist $k$ algebraisch abgeschlossen, so sind die irreduziblen Polynome in $k[X]$ genau die Polynome vom Grad $1$.
 			\item Man gebe ein Polynom positiven Grades in $\bR[X]$ an, das keine Nullstelle hat, aber dennoch nicht irreduzibel ist.
 		\end{enumerate}
@@ -172,7 +477,7 @@
 				P'(\alpha) = 3\alpha^2 + p = 0
 			\end{align*}
 			\begin{enumerate}
-				\item Angenommen, $\char K = 3$. Dann hätten wir
+				\item Angenommen, $\char~ K = 3$. Dann hätten wir
 				\begin{align*}
 					3\alpha^2 + p = 0\\ 
 					\implies p = 0\\
@@ -190,7 +495,7 @@
 					&= \frac{2p}{3}\alpha + q
 				\end{align*}
 				\begin{enumerate}
-					\item In $\char K = 2$ erhalten wir $q = 0$, es folgt
+					\item In $\char~ K = 2$ erhalten wir $q = 0$, es folgt
 					\begin{align*}
 						27q^2 + 4p^3 = 27q^2 = 0
 					\end{align*}
@@ -227,7 +532,8 @@
 			\item Über $\bQ$ zerfällt $X^2 - 1$ in Linearfaktoren, aber nicht $X^2 - 2$.
 		\end{enumerate}
 		\end{proof}
-	\section*{\centering - Zahlentheorie -}
+	\clearpage
+	\section*{\centering - Zahlen -}
 		\ex{0.1} Man führe an einem Beispiel den euklidischen Algorithmus aus und finde eine Darstellung des ggT als Linearkombination der beiden Ausgangszahlen.
 		\newpar
 		\ex{2.2} Man gebe alle Zahlen an, die bei Division durch $8$ Rest $4$ lassen, bei Division durch $13$ Rest $2$, und bei Division durch $11$ Rest $9$.
@@ -261,7 +567,8 @@
 		\newpar
 		\ex{11.27} Man zeige mithilfe der Axiomatischen Definition der natürlichen Zahlen, dass es für $a,b \in \bN$ mit $b \neq 0$ eindeutig bestimmte $c,d \in \bN$ gibt, sodass $d < b$ und $a = bc + d$.
 		\newpar
-		\ex{11.28} Man gebe einen linearen Körperisomorphismus $\bF_7(\sqrt 3) \iso \bF_7(\sqrt 5)$.
+		\ex{11.28} Man gebe einen Körperisomorphismus $\bF_7(\sqrt 3) \iso \bF_7(\sqrt 5)$ an.
+	\clearpage
 	\section*{\centering - Sonstiges zu Polynomen -}
 		\ex{8.14} Gegeben ein Polynomen
 		\begin{align*}
@@ -359,12 +666,38 @@
 			\end{align*}
 			Also gilt $P = (X-2)^2(X-i)(X+i)$.
 		\end{proof}
+	\clearpage
 	\section*{\centering - Sonstiges -}
 		\ex{0.3} Seien $(M, \top)$ ein Monoid und $e$ sein neutrales Element. Man zeige: $M$ ist genau dann eine Gruppe, wenn es für jedes $a \in M$ ein $\ol a \in M$ gibt, sodass $\ol a \top a = e$, und dieses Element $\ol a$ ist dann notwendig bereits das Inverse von $a$ in $M$.
+		\begin{proof}
+			\begin{align*}
+				  a \top \ol a 
+				  &= e \top (a \top \ol a)\\
+				  &= (\ol{\ol a} \top \ol a) \top a \top \ol a\\
+				  &= \ol{\ol a} \top (\ol a \top a) \top \ol a\\
+				  &= \ol{\ol a} \top e \top \ol a\\
+				  &= \ol{\ol a} \top \ol a\\
+				  &= e
+			\end{align*}
+			Also ist das Linksinverse auch das Rechtsinverse, also bildet $M$ eine Gruppe.
+		\end{proof}
 		\newpar
 		\ex{0.4} Ein endliches Monoid $(M, \top)$, in dem für jedes Element $a \in M$ die Multiplikationsabbildung injektiv ist, muß bereits eine Gruppe sein.
+		\begin{proof}
+			Die Multiplikationsabbildung ist eine Abbildung $M \to M$, also folgt gemäß Schubfachprinzip aus Injektivität bereits Surjektivität. Somit existiert für jedes $a$ ein $b$ mit $a \top b = e$, und gemäß Übung 0.3 ist dieses $b$ auch das Linksinverse und $M$ ist eine Gruppe.
+		\end{proof}
 		\newpar
 		\ex{1.1} Ein Element $a$ eines Monoids $M$ ist genau dann invertierbar, wenn es $b, c \in M$ gibt, sodass $b \top a = e = a \top c$.
+		\begin{proof}
+			\begin{align*}
+				b 
+				&= b \top e\\
+				&= b \top (a \top c)\\
+				&= (b \top a) \top c\\
+				&= e \top c\\
+				&= c
+			\end{align*}
+		\end{proof}
 		\newpar
 		\ex{4.2} Gegeben $p,q \in \bN$ mit $q \geq 1$ gibt es genau $\frac{(pq)!}{p!(q!)^p}$ Partitionen einer Menge mit $pq$ Elementen in $p$ Teilmengen mit jeweils $q$ Elementen.
 \end{document}
