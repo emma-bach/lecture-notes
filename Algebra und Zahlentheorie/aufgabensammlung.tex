@@ -402,16 +402,63 @@
 					\ol{b \cdot d} = \ol 0 = \ol {b \cdot 0}
 				\end{align*}
 				Mit $d \neq 0$. Also wäre $\ol b$ nicht kürzbar. Dies ist ein Widerspruch, also müssen $a$ und $b$ doch teilerfremd sein.
-				\item 
+				\item Seien $a$ und $b$ teilerfremd. Da $R$ faktoriell ist finden wir eine bis auf Reihenfolge eindeutige Primfaktorzerlegung, und da $a$ und $b$ teilerfremd sind haben sie keinen Primfaktor gemeinsam. Gilt nun $\ol{b \cdot c} = \ol {b \cdot d} \in R/\angles{a}$, so folgt $\ol{b(c-d)} = \ol 0$, also ist $b(c-d)$ ein Vielfaches von $a$ und muss dementsprechend alle Primfaktoren von $a$ in seiner Primfaktorisierung enthalten. Da $a$ und $b$ teilerfremd sind, müssen alle dieser Faktoren in $c-d$ enthalten sein. Somit gilt aber $\ol{c-d} = \ol 0$, was zu zeigen war.
 			\end{enumerate}
 		\end{proof}
 		\newpar
 		\ex{8.15} Ist $R$ ein faktorieller Ring mit Bruchkörper $K$ und sind $P,Q \in K[X]$ normierte Polynome mit $PQ \in R[X]$, so folgt bereits $P, Q \in R[X]$
+		\begin{proof}
+			Sei $p$ ein beliebiges irreduzibles Element von $R$. Per Definition ist $p$ keine Einheit, also $p^{-1} \notin R$. Es folgt $\forall r \in R: v_p(r) \geq 0$. Insbesondere folgt für $PQ \in R[X]$ $w_p(PQ) \geq 0$.
+			\newpar
+			Gemäß Lemma von Gauss gilt nun
+			\begin{align*}
+				0 \leq w_p(PQ) = w_p(P) + w_p(Q) \leq 0
+			\end{align*}
+			Da $P$ und $Q$ desweiteren normiert sind, gilt $0 \geq w_p(P), w_p(Q)$, also $w_p(P) = w_p(Q) = 0$, also $P, Q \in R[X]$.
+		\end{proof}
 		\newpar
 		\ex{8.16} Sei $p$ prim und $r \geq 1$. So erfüllt das $p^r$-te Kreisteilungspolynom die Identität
 		\begin{align*}
 			\Phi_{p^r}(X) = \Phi_p\lr(X^{p^{r-1}})
 		\end{align*}
+		\begin{proof}
+			Per Definition der Kreisteilungspolynome gilt:
+			\begin{align*}
+				X^n - 1 
+				&= \prod_{\zeta^n = 1} (X - \zeta)\\
+				&= \prod_{(\ord \zeta) \mid n} (X - \zeta)\\
+				&= \prod_{d \mid n} \Phi_d(X)
+			\end{align*}
+			Also insbesondere:
+			\begin{align*}
+				X^{p^r} - 1 
+				&= \prod_{d \mid p^r} \Phi_d(X)\\
+				&= \Phi_{p^r}(X) \cdot \prod_{d \mid p^{r-1}} \Phi_d(X)\\
+				&= \Phi_{p^r}(X) \cdot (X^{p^{r-1}} - 1).
+			\end{align*}
+			Wir stellen dies nach $\Phi_{p^r}(X)$ um und erhalten:
+			\begin{align*}
+				\Phi_{p^r}(X) &= \frac{X^{p^r} - 1}{X^{p^{r-1}} - 1}
+			\end{align*}
+			Gleichzeitig gilt für $p$ prim:
+			\begin{align*}
+				X^p - 1 
+				&= \prod_{d \mid n} \Phi_d(X)\\
+				&= \Phi_1(X) \cdot \Phi_p(X)\\
+				&= (X - 1) \cdot \Phi_p(X),
+			\end{align*}
+			also:
+			\begin{align*}
+				\Phi_p(X) &= \frac{X^p - 1}{X - 1}
+			\end{align*}
+			Es folgt also:
+			\begin{align*}
+				\Phi_p(X^{p^{r-1}}) 
+				&= \frac{(X^{p^{r-1}})^p - 1}{X^{p^{r-1}} - 1}\\
+				&= \frac{X^{p^{r}} - 1}{X^{p^{r-1}} - 1}\\
+				&= \Phi_{p^r}(X)
+			\end{align*}
+		\end{proof}
 	\clearpage
 	\section*{\centering - Körper -}
 		\ex{6.7} Man konstruiere einen Körper mit $169 = 13^2$ Elementen.
@@ -433,35 +480,122 @@
 		\ex{8.13} Die Definition der Summation in Bruchkörpern über Integritätsringen ist wohldefiniert.
 		\newpar
 		\ex{9.20} Sei $K \subset L$ ein Körper der Charakteristik ungleich zwei. Sei $\alpha, \beta \in L^\times$ mit $\alpha^2, \beta^2 \in K$: Dann gilt $K(\alpha) = K(\beta)$ genau dann, wenn $\alpha/\beta \in K$.
-		\newpar
-		\ex{10.21.b} Man bringe das Inverse von $7 + \sqrt[3]{2}$ in diese Standardform.
+		\begin{proof}
+			\begin{enumerate}
+				\item Sei $K(\alpha) = K(\beta)$. Dann existieren $x,y \in K$, sodass
+				\begin{align*}
+					\alpha = x + \beta y
+				\end{align*}
+				Im Fall $x = 0$ folgt aus $\beta \in L^\times$ direkt $\frac{\alpha}{\beta} = y \in K$.
+				\newpar
+				Im Fall $y = 0$ gilt $\alpha = x \in K$, und da symmetrisch auch $z,w \in K$ existieren, sodass $\beta = z + \alpha w \in K$, giltv auch $\frac{\alpha}{\beta} \in K$.
+				\newpar
+				Im Fall $x,y \neq 0$ folgt:
+				\begin{align*}
+					\alpha^2 = x^2 + 2\beta xy + \beta^2y^2
+					\implies \beta = \frac{\alpha^2 - x^2 - \beta^2y^2}{2xy} \in K
+				\end{align*}
+				Analog gilt $\alpha \in K$, also auch $\frac{\alpha}{\beta} \in K$.
+				\item Sei $\frac{\alpha}{\beta} \in K$. Dann gilt $\alpha = k\beta$, also $K(\alpha) = K(\beta)$.
+			\end{enumerate}
+		\end{proof}
 		\newpar
 		\ex{10.23} Seien $R \supset K$ ein kommutativer Ring mit einem Teilring, der sogar ein Körper ist. Sei $R$ endlichdimensional als $K$-Vektorraum und ein Integritätsring. Dann ist $R$ auch selbst bereits ein Körper.
+		\begin{proof}[Musterlösung]
+			Zu zeigen ist nur, dass für jedes $\alpha \in R \setminus \lr{0}$ ein Inverses existiert. Wir betrachten $K[\alpha] = \angles{K, \alpha}$. $K[\alpha]$ ist offensichtlich (?) das Bild der Einsetzungsabbildung $\phi_\alpha : K[X] \to R$. Somit gilt gemäß Isomorphiesatz
+			\begin{align*}
+				K[X]/(\ker \phi_\alpha) \cong K[\alpha]
+			\end{align*}
+			Da $R$ endlichdimensional über $K$ ist, ist der Kern von $\phi_\alpha$ nichttrivial. Da $K[X]$ ein Körper ist ist es insbesondere ein Hauptidealring, also gilt $\ker \phi_\alpha = \angles{P}$ für ein $P \in K[X]$. Da $R$ zusätzlich ein Integritätsring ist, muss dieses $P$ irreduzibel sein. Aber dann ist $K[X]/(\ker \phi_\alpha) \cong K[\alpha]$ ein Körper, also existiert in $K[\alpha] \subset R$ ein Inverses von $\alpha$.
+		\end{proof}
+		\begin{proof}[Alternative Lösung]
+			Betrachte die Lineare Abbildung $Ax : R \to R; r \mapsto rx$. Da $R$ ein Integritätsring ist, existiert kein $r \in R \setminus \lr{0}$, sodass $rx = 0$, also ist $A_x$ injektiv. Da $R$ als $K$-Vektorraum endlichdimensional ist, gilt außerdem die Dimensionsformel. Aus $\dim(\ker A_x) = 0$ folgt also $\dim(\im(A_x)) = \dim R$, also ist die Abbildung surjektiv. Somit existiert für jedes $x$ ein $y$, sodass $xy = 1$, also $y = x^{-1}$. Somit ist $R$ ein Körper.
+		\end{proof}
 		\newpar
 		\ex{11.25} Man zeige, dass es im Polynomring über einem endlichen Körper irreduzible Polynome von jedem positiven Grad gibt.
+		\begin{proof}
+			Jeder endliche Körper ist von der Form $\bF_q$ mit $q = p^r$. Sei ein solcher Körper und ein $n \in \bN$ gegeben. Wir wissen bereits, dass dann ein Körper der Mächtigkeit $q^n = p^{r \cdot n}$ mit einer Einbettung $\bF_q \inj \bF_{q^n}$ existiert.
+			\newpar
+			Zusätzlich ist die multiplikative Gruppe eines endlichen Körpers immer zyklisch, also gibt es einen Erzeuger $\alpha \in \bF_{q^n}^\times$ mit $\bF_{q^n} = \bF_q(\alpha)$, insbesondere ist diese Erweiterung primitiv.
+			\newpar
+			Damit ist der Grad des Minimalpolynoms von $\alpha$ gleich dem Grad der Körpererweiterung $[\bF_{q^n} : \bF_q] = n$. Per Definition ist dieses Polynom irreduzibel.
+		\end{proof}
 		\newpar
 		\ex{11.26} Man gebe die Verknüpfungstafeln des Körpers mit vier Elementen an.
+		\begin{proof}
+			Es kommen für die Addition zwei Tafeln in Frage, die korrekte Tafel wird dadurch klar, dass die Charakteristik nicht $4$ sein kann, also ist die Additionsgruppe nicht zu $\bZ/4\bZ$ isomorph, es muss also $V = (\bZ/2\bZ)^2$ sein.
+		\end{proof}
 		\newpar
-		\ex{12.1} Gegeben eine endliche Körpererweiterung $K \subset L$ ist jedes Polynom aus dem Polynomring $L[X]$ Teiler eines Polynoms aus $K[X]$
+		\ex{12.1} Gegeben eine endliche Körpererweiterung $K \subset L$ ist jedes Polynom aus dem Polynomring $L[X]$ Teiler eines Polynoms aus $K[X]$.
+		\begin{proof}
+			\begin{enumerate}
+				\item Sei $P \in L[X]$ zunächst irreduzibel und normiert. Sei $L \subset L'$ eine endliche Körpererweiterung, in der $P$ eine Nullstelle $\alpha$ hat. Da $P$ über $L[X]$ irreduzibel und normiert ist, ist es das Minimalpolynom von $\alpha$. Da $L/K$ und $L'/L$ endlich sind, ist gemäß Turmregel auch $L'/K$ endlich. Dementsprechend hat $\alpha$ auch ein Minimalpolynom $P' \in K[X]$. Da $P' \in L[X]$ und da $P$ das Minimalpolynom über $L[X]$ ist, folgt $P \mid P'$.
+				\item Sei $P \in L[X]$ nun irreduzibel und nicht normiert. Dann teilt $P$ trotzdem die selben Polynome wie die normierte Version, also funktioniert die selbe Konstruktion.
+				\item Sei zuletzt $P \in L[X]$ reduzibel. Da $L$ ein Körper ist, ist $L[X]$ faktoriell, also existiert eine Zerlegung $Q = \prod_{i = 1}^n P_i$ in reduzible Polynome. Für jedes dieser Polynome existiert ein $P'_i \in K[X]$ sodass $P'_i \mid K[X]$, es folgt $Q \mid \prod_{i = 1}^n P'_i \in K[X2]$.
+			\end{enumerate}
+		\end{proof}
 		\newpar
 		\ex{12.2} Sei $p$ eine Primzahl und seien $\zeta, \xi \in \bC$ zwei primitive $p$-te Einheitswurzeln.
 		\begin{enumerate}
 			\item Es gilt $\bQ(\zeta) = \bQ(\xi)$.
 			\item Es gibt genau einen Körperhomomorphismus $\bQ(\zeta) \to \bQ(\zeta)$ mit $\zeta \mapsto \xi$.
 		\end{enumerate}
+		\begin{proof}
+			\begin{enumerate}
+				\item Folgt daraus, dass alle primitiven $p$-ten Einheitswurzeln bereits die gesamte Gruppe der $p$-ten Einheitswurzeln erzeugen.
+				\item Aus der Vorlesung ist bekannt, dass der einzige Körperhomomorphismus $\bQ \to \bQ$ die Identität ist. Somit lässt sich jedes $x \in \bQ(\zeta)$ als $x = \sum_{i = 0}^{p-1} \alpha_i \zeta^i$ schreiben, woraufhin die Invarianz von $\bQ$ und die Vorschrift $\phi(\zeta) = \xi$ bereits das Bild von $x$ eindeutig festlegen.
+			\end{enumerate}
+		\end{proof}
 		\newpar
 		\ex{12.3.a} Seien $M/L$ und $L/K$ algebraische Körpererweiterungen.
 		\begin{enumerate}
 			\item Ist $M/K$ normal, so ist auch $M/L$ normal.
 			\item Sind $L_1 L_2 \subset M$ normale Körpererweiterungen von $K$, so ist $L_1 \cap L_2$ normal über $K$.
 		\end{enumerate}
+		\begin{proof}
+			\begin{enumerate}
+				\item Per Definition zerfällt für jedes $\alpha \in M$ das Minimalpolynom $\Irr(\alpha, K)$ über $M$ komplett in Linearfaktoren. Zu zeigen ist, dass auch $\Irr(\alpha, L)$ über $M$ in Linearfaktoren zerfällt.
+				\begin{enumerate}
+					\item Angenommen, $\Irr(\alpha, K)$ ist über $L[X]$ irreduzibel. Dann gilt $\Irr(\alpha, K) = \Irr(\alpha, L)$, also zerfällt $\Irr(\alpha, L)$ über $M$ ebenfalls in Linearfaktoren.
+					\item (?)
+				\end{enumerate}
+				\item $\Irr(\alpha, K)$ zerfällt über $L_1$ und $L_2$ in Linearfaktoren, und da alle Polynomringe über Körpern faktoriell sind, sind diese Zerlegungen bis auf Reihenfolge eindeutig. Somit müssen alle dieser Linearfaktoren bereits in $L_1 \cap L_2$ liegen, also zerfällt das Polynom auch über $L_1 \cap L_2$ in Linearfaktoren.
+			\end{enumerate}
+		\end{proof}
 		\ex{12.3.b} Man finde Körper $M \supset L \supset K$, sodass $M/L$ und $L/K$ normal sind, aber $M/K$ nicht.
+		\begin{proof}
+			$K = \bQ$, $L = \bQ(\sqrt{2})$, $M = \bQ(\sqrt[4]{2})$. $L$ ist der Zerfällungskörper von $x^2 - 2$, und $M$ ist der Zerfällungskörper von $x^2 - \sqrt{2}$. Aber $\Irr(\sqrt[4]{2}, \bQ) = x^4 - 2$ zerfällt über $\bQ(\sqrt[4]{2})$ nicht in Linearfaktoren, da die komplexen Nullstellen fehlen.
+		\end{proof}
 		\newpar
-		\ex{12.4} Es sei $K$ ein Körper, $P \in K[X]$ ein Polynom vom Grad $n$ und $L/K$ der Zerfallungskörper von $P$. Man zeige:
-		\begin{enumerate}
-			\item $[L:K] \leq n!$
-			\item $[L:K] \mid n!$
-		\end{enumerate}
+		\ex{12.4} Es sei $K$ ein Körper, $P \in K[X]$ ein Polynom vom Grad $n$ und $L/K$ der Zerfallungskörper von $P$. Man zeige $[L:K] \mid n!$.
+		\begin{proof}
+			Wir führen einen Beweis per Induktion über $\deg P := n$.
+			\begin{enumerate}
+				\item $n = 1$: Dann ist $P$ bereits ein Linearfaktor, also zerfällt es bereits über $K$, also $L = K$ und $[L:K] = 1 \mid 1 = 1!$.
+				\item Sei nun $P \in K[X]$ vom Grad $n$. Wir unterscheiden zwei Fälle.
+				\begin{enumerate}
+					\item Sei $P$ zuerst irreduzibel. Sei $\alpha$ eine Nullstelle von $P$. Da $P$ irreduzibel ist, ist es das Minimalpolynom von $\alpha$ über $K$, also gilt
+					\begin{align*}
+						[K(\alpha) : K] = n
+					\end{align*}
+					Über $K(\alpha)$ gilt nun $P(X) = (x - \alpha)Q(X)$, wobei $Q \in K(\alpha)[X]$. Es gilt $\deg Q = n-1$. Sei nun $L$ der Zerfällungskörper von $P$ über $K$. Dann ist $L$ auch der Zerfällungskörper von $Q$ über $K(\alpha)$. Gemäß Induktionshypothese gilt also
+					\begin{align*}
+						[L : K(\alpha)] \mid (n-1)!,
+					\end{align*}
+					und per Turmregel folgt
+					\begin{align*}
+						[L : K] = [L : K(\alpha)] \cdot [K(\alpha) : K] \mid n!
+					\end{align*}
+					\item Sei nun $P = P_1 \cdot P_2$ reduzibel. Sei $\deg P_1 := n_1$, $\deg P_2 := n_2$. Seien $L_1$ und $L_2$ die Zerfällungskörper von $P_1$ und $P_2$. Dann ist der Zerfällungskörper von $P$ der Körper $L = \angles{L_1, L_2}$. Es gilt per Induktionshypothese $[L_1 : K] \mid n_1!$, $[L_2 : K] \mid n_2!$. 
+					\newpar
+					Wir behaupten nun ohne Beweis
+					\begin{align*}
+						[L : K] \mid [L_1 : K] \cdot [L_2 : K],
+					\end{align*}
+					woraus das gewünschte Ergebnis folgt.
+				\end{enumerate}
+			\end{enumerate}
+		\end{proof}
 		\newpar
 		\ex{13.2} Gegeben ein Körper $K$ und $p,q \in K$ ist das Polynom $P = X^3 + pX + q$ genau dann nicht separabel, wenn $27q^2 + 4p^3 = 0$.
 		\begin{proof}
@@ -535,35 +669,119 @@
 	\clearpage
 	\section*{\centering - Zahlen -}
 		\ex{0.1} Man führe an einem Beispiel den euklidischen Algorithmus aus und finde eine Darstellung des ggT als Linearkombination der beiden Ausgangszahlen.
+		\begin{proof}
+			Sei $a = 21$, $b = 13$. Dann gilt
+			\begin{align*}
+				21 = 1 \cdot 13 + 8\\
+				13 = 1 \cdot 8 + 5\\
+				8 = 1 \cdot 5 + 3\\
+				5 = 1 \cdot 3 + 2\\
+				2 = 1 \cdot 1 + 1
+			\end{align*}
+			Zurückeinsetzen ergibt:
+			\begin{align*}
+				1 
+				&= (-1 \cdot 1 + 1 \cdot 2)\\
+				&= (2 - (3 - 2))\\
+				&= (-1 \cdot 3 + 2 \cdot 2)\\
+				&= (-1 \cdot 3 + 2 \cdot (5 - 3))\\
+				&= (-3 \cdot 3 + 2 \cdot 5)\\
+				&= (-3 \cdot (8 - 5) + 2 \cdot 5)\\
+				&= (-3 \cdot 8 + 5 \cdot 5)\\
+				&= (-3 \cdot 8 + 5 \cdot (13 - 8))\\
+				&= (-8 \cdot 8 + 5 \cdot 13)\\
+				&= (-8 \cdot (21 - 13) + 5 \cdot 13)\\
+				&= (-8 \cdot 21 + 13 \cdot 13)
+			\end{align*}
+		\end{proof}
+		
 		\newpar
 		\ex{2.2} Man gebe alle Zahlen an, die bei Division durch $8$ Rest $4$ lassen, bei Division durch $13$ Rest $2$, und bei Division durch $11$ Rest $9$.
+		\begin{proof}
+			Da $8,11$ und $13$ teilerfremd sind, existiert gemäß Chinesischem Restsatz eine eindeutige Lösung modulo $8 \cdot 11 \cdot 13 = 1144$.
+			\begin{align*}
+				x &= 4 + 8a\\\\
+				4 + 8a &\equiv 2 \mod 13\\
+				\implies 8a &\equiv 11 \mod 13\\
+				\implies 40a &\equiv 55 \mod 13\\
+				\implies a &\equiv 3 \mod 13\\
+				\implies x 
+				&= 4 + 8a\\
+				&= 4 + 8 \cdot (3 + 13b)\\
+				&= 28 + 104b\\\\
+				28 + 104b &\equiv 9 \mod 11\\
+				104b &\equiv -19 \mod 11\\
+				&\equiv -8 \mod 11\\
+				&\equiv 3 \mod 11\\
+				\implies 5b &\equiv 3 \mod 11\\
+				\implies b \equiv 25b &\equiv 27 \equiv 5 \mod 11\\
+				\implies b &= 5 + 11c\\
+				\implies x &= 28 + 104 \cdot (5 + 11c)\\
+				&= 28 + 520 + 1144c\\
+				&= 548 + 1144c
+			\end{align*}
+		\end{proof}
 		\newpar
 		\ex{3.1} \tbf{(Verallgemeinerte Fermat'sche Kongruenz)} Gegeben paarweise verschiedene Primzahlen $p_1, \hdots, p_r$ und eine Zahl $e$, sodass für alle $i \in \lr{1, \hdots r}$  $e \equiv 1 \mod (p_i-1)$ gilt, gilt für alle $a \in \bZ$ die Kongruenz
 		\begin{align*}
 			a^e \equiv a \mod (p_1 \cdot \hdots \cdot p_r)
 		\end{align*}
+		\begin{proof}
+			Wir wollen $a^e = a$ für alle $a \in \bZ/\prod p_i \bZ$. Gemäß Chinesischem Restsatz ist dies Isomorph zu $\prod \bZ/p_i \bZ$. Wir müssen also nur $a_i^e = a_i$ für alle $a_i \in \bZ/p_i$ zeigen. Für $a_i = 0$ gilt dies sowieso. Für alle anderen Zahlen folgt das Ergebnis aus dem kleinen Satz von Fermat, nach dem gilt
+			\begin{align*}
+				a_i^{p_i - 1} = 1,
+			\end{align*}
+			also
+			\begin{align*}
+				a_i^e = 1^\frac{e-1}{p_i - 1} \cdot a_i = a_i
+			\end{align*}
+		\end{proof}
 		\newpar
 		\ex{3.4} Gibt es ein Vielfaches von $23$, dessen letzte Ziffern $45$ sind? Gibt es eine Potenz von $23$, deren letzte Ziffern $45$ sind?
 		\newpar
 		\ex{6.5} Man finde das multiplikative Inverse der Nebenklasse von $21$ in $\bF_{31}$.
+		\begin{proof}
+			Der euklidische Algorithmus gibt eine Darstellung $1 = a21 + b31$, dann ist $a$ das Inverse.
+		\end{proof}
 		\newpar
 		\ex{6.6} Sei $n \in \bN$ mit $n \equiv 7 \mod 8$. Dann ist $n$ keine Summe von drei Quadraten.
+		\begin{proof}
+			Summen von $3$ Quadraten mod $8$ ausprobieren.
+		\end{proof}
 		\newpar
 		\ex{7.12} Man schreibe $130$ als Produkt von Gaußprimzahlen.
+		\begin{proof}
+			$130 = 2 \cdot 5 \cdot 13 = (1 + i)(1 - i) \cdot (1 + 2i)(1 - 3i) \cdot (2 + 3i)(2-3i)$
+		\end{proof}
 		\newpar
 		\ex{9.19} Was ist die Summe der dritten Potenzen der vier Komplexen Nullstellen $\lambda_1, \lambda_2, \lambda_3, \lambda_4$ des Polynoms $X^4 + 3X^3 - 5X^2 + X + 13$?
 		\newpar
-		\ex{10.21} Alle Elemente von $\bQ(\sqrt[3]{2})$ lassen sich eindeutig in der Form
-		\begin{align*}
-			a + b \sqrt[3]{2} + c \sqrt[3]{2}^2
-		\end{align*}
-		mit $a,b,c \in \bQ$ schreiben.
+		\ex{10.21} Man bringe das Inverse von $7 + \sqrt[3]{2} \in \bQ(\sqrt[3]{2})$ in die Form $a + b\sqrt[3]{2} + c\sqrt[3]{2}^2$.
 		\newpar
 		\ex{10.24.a} Ist $\sqrt 2 + \sqrt 3$ algebraisch über $\bQ$?
 		\newpar
 		\ex{10.24.b} Was ist das Minimalpolynom von $\sqrt 2 + \sqrt 3$ über $\bQ$?
+		\begin{proof}
+			Ein Kandidat ist $x^4 - 10x^2 + 1$. Gemäß 8.14 müsste für rationale Nullstellen $p/q$ $p \mid 1$ und $q \mid 1$ gelten, also $p/1 = \pm 1$. Dies sind keine Nullstellen, also gibt es keine Faktorisierung in ein Polynom vom Grad $1$ enthält. Die Einzige Möglichkeit ist nun $x^4 - 10x^2 + 1 = (x^2 + ax + b)(x^2 + cx + d)$, aber ein Koeffizientenvergleich liefert, dass auch diese Lösung unmöglich ist.
+		\end{proof}
 		\newpar
 		\ex{10.24.c} Liegt $\sqrt{2}$ in $\bQ(\sqrt{2} + \sqrt{3})$?
+		\begin{proof}
+			Es gilt trivial $\bQ(\sqrt{2} + \sqrt{3}) \subset \bQ(\sqrt{2},\sqrt{3})$.
+			Das Minimalpolynom von $\sqrt{2} + \sqrt{3}$ hat Grad $4$, also gilt auch $\bQ(\bQ(\sqrt{2} + \sqrt{3})) = 4$. Es gilt jedoch auch
+			\begin{align*}
+				[\bQ(\sqrt{2},\sqrt{3}) : \bQ] = [\bQ(\sqrt{2},\sqrt{3}) : \bQ(\sqrt{2})] \cdot [\bQ(\sqrt{2}) : \bQ] = 4.
+			\end{align*} 
+			Da also die beiden Körpererweiterungen den gleichen Grad haben, und eine eine Teilmenge der anderen ist, muss bereits Gleichheit herrschen.
+		\end{proof}
+		\begin{proof}[Explizitere Lösung:]
+			\begin{align*}
+				\frac{1}{\sqrt{2} + \sqrt{3}} 
+				&= \frac{1}{\sqrt{2} + \sqrt{3}} \cdot \frac{\sqrt{3} - \sqrt{2}}{\sqrt{3} - \sqrt{2}}\\
+				&= \sqrt{2} - \sqrt{3},
+			\end{align*}
+			also $\frac{1}{2} \cdot (\sqrt{2} + \sqrt{3} + \sqrt{2} - \sqrt{3}) = \sqrt{2} \in \bQ(\sqrt{2} + \sqrt{3})$.
+		\end{proof}
 		\newpar
 		\ex{11.27} Man zeige mithilfe der Axiomatischen Definition der natürlichen Zahlen, dass es für $a,b \in \bN$ mit $b \neq 0$ eindeutig bestimmte $c,d \in \bN$ gibt, sodass $d < b$ und $a = bc + d$.
 		\newpar
