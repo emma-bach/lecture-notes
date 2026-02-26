@@ -263,9 +263,10 @@
 			\begin{enumerate}
 				\item Sei $P$ eine $p$-Sylow von $G$. $P \cap N$ ist eine $p$-Untergruppe von $N$, also $\abs{P \cap N} = p^c$ mit $c \leq a$. Gemäß Lagrange gilt
 				\begin{align*}
-					\abs{P} = \abs{P \cap N} \cdot \abs{P / N}
+					\abs{P} = \abs{P \cap N} \cdot \abs{P / P \cap N},
 				\end{align*}
-				und da $P/N$ eine $p$-Untergruppe von $G/N$ ist gilt $\abs{P/N} = p^d$ mit $d \leq b$. Es folgt:
+				wobei $P/(P \cap N) = P/N$.
+				Da $P/N$ eine $p$-Untergruppe von $G/N$ ist gilt $\abs{P/N} = p^d$ mit $d \leq b$. Es folgt:
 				\begin{align*}
 					p^{c+d} = \abs{P \cap N} \cdot \abs{P/N} = \abs{P} = p^{a + b}
 				\end{align*}
