@@ -254,36 +254,23 @@
 		\newpar
 		\ex{5.1} Sei $G$ eine endliche Gruppe mit einem Normalteiler $N$ und $p$ prim. Dann ist eine Untergruppe $P \subset G$ genau dann eine $p$-Sylow von $G$, wenn $P \cap N$ eine $p$-Sylow von $N$ ist und das Bild von $P$ in $G/N$ eine $p$-Sylow von $G/N$.
 		\begin{proof}\phantom{}
+			Sei $p^a$ die höchste $p$-Potenz, die $\abs{N}$ teilt. Sei $p^b$ die höchste $p$-Potenz, die $\abs{G/N}$ teilt. Gemäß Lagrange gilt:
+			\begin{align*}
+				\abs{G}
+				&= \abs{N} \cdot \abs{G/N},
+			\end{align*}
+			also ist $p^{a+b}$ die höchste $p$-Potenz, die $\abs{G}$ teilt.
 			\begin{enumerate}
-				\item Sei $P$ eine $p$-Sylow von $G$.
-				\begin{enumerate}
-					\item Da $P$ eine $p$-Sylow ist, gilt $p \nmid \frac{\abs{G}}{\abs{P}}$. Da $NP$ eine Untergruppe von $G$ ist, gilt $\frac{\abs{NP}}{\abs{P}} \mid \frac{\abs{G}}{\abs{P}}$, also insbesondere $p \nmid \frac{\abs{NP}}{\abs{P}}$.
-					\newpar
-					Wenden wir den Isomorphiesatz auf $f : P \to NP/N$, $p \mapsto Np$ an, erhalten wir
-					\begin{align*}
-						P/(P \cap N) = P/(\ker f) \cong \im f = NP/N
-					\end{align*}
-					somit gilt
-					\begin{align*}
-						p \nmid \frac{\abs{NP}}{\abs{P}} = \frac{\abs{N}}{\abs{N \cap P}}
-					\end{align*}
-					Da $N \cap P$ eine $p$-Gruppe in $N$ ist, folgt daraus auch, dass $N \cap P$ eine $p$-Sylow von $N$ ist.
-					\item (...)
-				\end{enumerate}
-				\item Sei $N \cap P$ eine $p$-Sylow von $N$ und $q(P) = P/N$ eine $p$-Sylow von $G/N$. Dann ist $P$ "offensichtlich" eine $p$-Gruppe in $G$. Es bleibt noch zu zeigen, dass $p \nmid \frac{\abs{G}}{\abs{P}} = [G : P]$. Durch den Isomorphiesatz folgt weiterhin
+				\item Sei $P$ eine $p$-Sylow von $G$. $P \cap N$ ist eine $p$-Untergruppe von $N$, also $\abs{P \cap N} = p^c$ mit $c \leq a$. Gemäß Lagrange gilt
 				\begin{align*}
-					\frac{\abs{NP}}{\abs{P}} = \frac{\abs{N}}{\abs{N \cap P}}
+					\abs{P} = \abs{P \cap N} \cdot \abs{P / N}
 				\end{align*}
-				Desweiteren gilt
+				und da $P/N$ eine $p$-Untergruppe von $G/N$ ist gilt $\abs{P/N} = p^d$ mit $d \leq b$. Es folgt:
 				\begin{align*}
-					[G : NP] = [G/N : P/N]
+					p^{c+d} = \abs{P \cap N} \cdot \abs{P/N} = \abs{P} = p^{a + b}
 				\end{align*}
-				Es gilt nun
-				\begin{align*}
-					[G : P] &= [G : NP][NP : P]\\
-					&= [G/N : P/N][N : N \cap P]
-				\end{align*}
-				Da $P/N$ eine $p$-Sylow von $G/N$ und $N \cap P$ eine $p$-Sylow von $N$ ist, teilt $p$ keinen dieser beiden Terme, also auch nicht $[G:P]$, was zu zeigen war.
+				Und aus $a \leq c$ und $b \leq d$ folgt $a = c, b = d$, also ist $P \cap N$ eine $p$-Sylow von $N$ und $P/N$ eine $p$-Sylow von $G/N$.
+				\item Analog zur letzten Aufgabe gilt $\abs{P} = \abs{P \cap N} \cdot \abs{P/N} = p^{a+b}$, also ist $P$ eine $p$-Sylow von $G$.
 			\end{enumerate}
 		\end{proof}
 		\newpar
@@ -555,11 +542,9 @@
 		\begin{proof}
 			\begin{enumerate}
 				\item Per Definition zerfällt für jedes $\alpha \in M$ das Minimalpolynom $\Irr(\alpha, K)$ über $M$ komplett in Linearfaktoren. Zu zeigen ist, dass auch $\Irr(\alpha, L)$ über $M$ in Linearfaktoren zerfällt.
-				\begin{enumerate}
-					\item Angenommen, $\Irr(\alpha, K)$ ist über $L[X]$ irreduzibel. Dann gilt $\Irr(\alpha, K) = \Irr(\alpha, L)$, also zerfällt $\Irr(\alpha, L)$ über $M$ ebenfalls in Linearfaktoren.
-					\item (?)
-				\end{enumerate}
-				\item $\Irr(\alpha, K)$ zerfällt über $L_1$ und $L_2$ in Linearfaktoren, und da alle Polynomringe über Körpern faktoriell sind, sind diese Zerlegungen bis auf Reihenfolge eindeutig. Somit müssen alle dieser Linearfaktoren bereits in $L_1 \cap L_2$ liegen, also zerfällt das Polynom auch über $L_1 \cap L_2$ in Linearfaktoren.
+				\newpar
+				Dies folgt direkt aus der Definition des Minimalpolynoms: Es gilt $\Irr(\alpha, L) \mid \Irr(\alpha, K)$, also ist jeder Linearfaktor von $\Irr(\alpha, L)$ auch ein Linearfaktor von $\Irr(\alpha, K)$ und somit in $M$ enthalten.
+				\item Da $L_1/L_1 \cap L_2$ und $L_1 \cap L_2 / K$ folgt das Ergebnis aus der ersten Teilaufgabe.
 			\end{enumerate}
 		\end{proof}
 		\ex{12.3.b} Man finde Körper $M \supset L \supset K$, sodass $M/L$ und $L/K$ normal sind, aber $M/K$ nicht.
