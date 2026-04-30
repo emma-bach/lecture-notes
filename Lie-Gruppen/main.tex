@@ -1,0 +1,258 @@
+\documentclass{report}
+
+% custom margins
+\usepackage[a4paper,margin=1.5in]{geometry}
+\renewcommand{\baselinestretch}{1.2}
+%\AddToHook{cmd/section/before}{\clearpage}
+
+% emma's long list of custom macros and universally used packages
+\include{../macros-and-packages.tex}
+
+% colored box behind proofs
+\tcolorboxenvironment{proof}{
+	colback=white,
+	boxrule=0pt,
+	frame hidden,
+	borderline west={1pt}{0pt}{black},
+	before skip=0.75cm,
+	after skip=0.75cm,
+	sharp corners,
+	breakable,
+	enhanced,
+}
+
+\renewcommand*\contentsname{Inhalt}
+\renewcommand*\proofname{Beweis}
+
+\begin{document}
+
+\include{title}
+\tableofcontents
+\chapter{Vorkenntnisse}
+\section{Die Matrixexponentialfunktion}
+\begin{theorem}
+	$$\det(\exp(A)) = \exp(\tr A)$$
+\end{theorem}
+\chapter{Matrixliegruppen}
+\section{Vorlesung 1}
+\begin{definition}
+	Seien $G$ eine Gruppe und $V$ ein Vektorraum. Eine \tbf{Darstellung} von $G$ über einem Körper $k$ ist ein Paar $(V,\rho)$ bestehend aus einen $k$-Vektorraum $V$ und einem Gruppenhomomorphismus $\rho : G \to GL(V)$.
+\end{definition}
+\begin{definition}
+	Eine Darstellung $(V, \rho)$ heißt \tbf{irreduzibel}, falls $V \neq \lr{0}$ ist und es keinen Untervektorraum $0 \subsetneq U \subsetneq V$ gibt, sodass $\forall g \in G : \forall u \in U : \rho(g)(u) \subset U$.
+\end{definition}
+\begin{proposition}
+	Die Dimensionen irreduzibler Darstellungen von $SO(3)$ sind genau die ungeraden (natürlichen) Zahlen.
+\end{proposition}
+\begin{theorem}
+	Jeder stetige Gruppenhomomorphismus $\rho : (\bR, +) \to (\bR, +)$ hat die Form $t \to \lambda t$ für $t \in \bR$.
+\end{theorem}
+\begin{proof}
+	Wir brauchen $\rho(0) = 0$. Es gilt desweiteren $1 \mapsto \lambda$ für $\lambda \in \bR$. Verträglichkeit mit Addition gibt uns nun $\rho\lr(\frac{a}{b}) = \frac{a}{b}\lambda$ für alle $\frac{a}{b} \in \bQ$, und da $\rho$ stetig sein soll ist die Erweiterung auf ganz $\bR$ eindeutig.
+\end{proof}
+\begin{corollary}
+	Jeder stetige Gruppenhomomorphismus $\rho : (\bR, +) \to (\bR^\times_{> 0}, \cdot)$ hat die Form $t \to e^{\lambda t}$ für $\lambda \in \bR$.
+\end{corollary}
+\begin{proof}
+	Die Exponentialfunktion ist ein Isomorphismus $(\bR, +) \cong (\bR^\times_{> 0}, \cdot)$.
+\end{proof}
+\begin{theorem}
+	Jeder stetige Gruppenhomomorphismus $\phi : (\bR,+) \to \bC^\times$ hat die Form $t \to e^{\alpha t}$ für $\alpha \in \bC$.
+\end{theorem}
+\begin{proof}
+	Es gilt $\phi(0) = 1$. Man finde also $\epsilon > 0$, sodass $\phi([-\epsilon,\epsilon]) \subset \bR_{> 0} + i\bR$. Auf dieser Halbebene ist die Logarithmusfunktion bijektiv. Wir können nun wie zuvor durch rationale Zahlen interpolieren - es gilt $\phi\lr(\frac{\epsilon}{n}) = \sqrt[n]{\epsilon}$. Die Abbildung 
+	\begin{align*}
+		\tn{log} \circ \phi : [-\epsilon, \epsilon] \to \bC
+	\end{align*} 
+	ist also linear, hat also die Form $t \mapsto \alpha t$. Wir erhalten also $\phi(t) = e^{\alpha t}$ für $t \in [-\epsilon, \epsilon]$. Für $t \in \bR$ gilt nun $t = n \cdot s$ für $s \in [-\epsilon, \epsilon]$, also $\phi(t) = \phi(n \cdot s) = \phi(s)^n = {e^{\alpha s}}^n = e^{\alpha ns} = e^{\alpha t}$.
+\end{proof}
+\begin{definition}
+	$S^1 := \lr{z \in \bC^\times : \norm{z} = 1}$
+\end{definition}
+\begin{proposition}
+	$t \mapsto e^{\alpha t}, \alpha \in \bC$ faktorisiert über $t \to e^{it}$, $t \in \bR$ genau dann, wenn $e^{2\pi\alpha} = 1$, also $\alpha \in i \bZ$.
+\end{proposition}
+\begin{theorem}
+	Jeder stetige Gruppenhomomorphismus $S^1 \to \bC^\times$ hat die Form $\rho_n : z \mapsto z^n$ für ein $n \in \bZ$.
+\end{theorem}
+\begin{proof}
+	Sei $\rho : S^1 \to \bC^\times$ ein stetiger Gruppenhomomorphismus. Dann ist $\rho(S^1)$ eine kompakte Untergruppe von $\bC^\times$, also $\rho(S^1) \subset S^1$. Wir wissen außerdem, dass $\phi : (\bR, +) \to S^1$ die Form $t \to e^{\alpha t}$ für ein $\alpha \in i \bR$ hat.
+\end{proof}
+\begin{theorem}
+	Die irreduziblen stetigen endlichdimensionalen $\bC$-Darstellungen von $SO(2)$ (= $S^1$) stehen in Bijektion mit den stetigen Gruppenhomomorphismen $S^1 \to \bC^\times$. Insbesondere ist jede solche Darstellung eindimensional.
+\end{theorem}
+\begin{theorem}
+	Jeder stetige Gruppenhomomorphismus $\phi : (\bR,+) \to GL(n, \bC)$ hat die Form $t \to e^{A t}$ für $A \in \bC^{n \times n}$.
+\end{theorem}
+\section{Vorlesung 2}
+\begin{lemma}
+	\tbf{Produktformel von Trotter:} Sei $V$ ein endlichdimensionaler reeller Vektorraum. So gilt für alle $X,Y \in \GL(V)$ die Formel
+	\begin{align*}
+		\exp(X + Y) = \lim_{n \to \infty} \lr(\exp\lr(\frac{X}{n}) \exp\lr(\frac{Y}{n}))^n
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Sei $U$ eine offene Umgebung der Nullmatrix in $\End~ V$. So ist $\exp(U) := W$ eine offene Umgebung der Einheitsmatrix in $\GL(V)$. Somit existiert $\eta > 0$, sodass 
+	\begin{align*}
+		\exp(tX)\exp(tY) \in W \quad \forall t \in (-\eta, \eta)
+	\end{align*}
+	Somit existiert genau eine (glatte) Kurve $Z : (-\eta, \eta) \to U$, sodass
+	\begin{align*}
+		\exp(tX)\exp(tY) = \exp(Z(t))
+	\end{align*}
+	(also sodass $Z$ das Urbild der Kurve $t \mapsto \exp(tX)\exp(tY)$ ist.)
+	\newpar
+	Behauptung:
+	\begin{align*}
+		X + Y = \frac{d}{dt} Z(0)
+	\end{align*}
+	Dies folgt aus der Produktregel für Bilineare Abbildungen: Seien $v \in V$, $w \in W$, $b : V \times W \to U$, dann gilt:
+	\begin{align*}
+		T_{(v,w)} b \in \Hom(V \times W, U)\\
+		(h,k) \mapsto b(h,w) + b(v,k)
+	\end{align*}
+	Diese Regel folgt wiederum analog zur Herleitung der Ableitung der Multiplikationsfunktion.
+	\newpar
+	Es folgt
+	\begin{align*}
+		Z(t) = t(X + Y) + tO(t)
+	\end{align*}
+	mit 
+	\begin{align*}
+		\lim_{t \to 0} O(t) = 0.
+	\end{align*}
+	Es folgt
+	\begin{align*}
+		(\exp(tX)\exp(tY))^n 
+		&= \exp\lr(Z(\frac{1}{n}))^n\\
+		&= \exp\lr(n Z \lr(\frac{1}{n}))\\
+		&= \exp\lr(X + Y + O\lr(\frac{1}{n}))\\
+		&\overset{n \to \infty}{\longrightarrow} \exp(X+Y)
+	\end{align*}
+\end{proof}
+\begin{theorem}
+	Sei $G$ abgeschlossen in $\GL(V)$. So gilt:
+	\begin{enumerate}
+		\item $T_e G = \lr{X \in \End~ V : \exp(\bR X) \subset G}$
+		\item $\exp: T_e G \to G$ ist glatt und induziert einen Diffeomorphismus von offenen Umgebungen der $0^{n \times n} \in T_e G$ mit offenen Umgebungen von $1 \in G$.
+		\item $T_0(\exp) = \id$
+	\end{enumerate}
+\end{theorem}
+Beispiel: Sei $G = S^1$. Dann ist $T_1 S^1 = i\bR = \lr{a \in \bC : \exp(\bR a) \subset S^1}$
+\begin{proof}
+	Sei $G$ abgeschlossen in $\GL(V)$. Sei
+	\begin{align*}
+		g := \lr{X \in \End~ V : \exp(\bR X) \subset G}
+	\end{align*}
+	\begin{enumerate}
+		\item Wir wollen zeigen, dass $g$ ein Untervektorraum von $V$ ist. Wir haben $0 \in G$, dan $\exp(0) = 1 \in G$. Für $X \in g, \lambda \in \bR$ gilt weiterhin per Definition $\lambda X \in g$.
+		Seien nun $X,Y \in g$. Dann folgt $X + Y \in g$ aus der Trotterformel.
+		Somit ist $g$ ein Untervektorraum von $\End V$.
+		Sei nun $\End V = g \oplus t$. Betrachte die Abbildung 
+		\begin{align*}
+			\psi : \End V &\mapsto \Aut V\\
+			X + Y &\mapsto (\exp X)(\exp Y)
+		\end{align*}
+		Für $X \in g$, $Y \in t$. Dann ist $\psi^{-1}$ unter Addition von Vektoren aus $g$ geschlossen.
+	\end{enumerate}
+\end{proof}
+\begin{lemma}
+	Sei $M$ ein endlichdimensionaler $\bR$-Vektorraum. Sei $C \subset V$ abgeschlossen und stabil unter Multiplikation mit ganzen Zahlen. So enthält $C$ eine Ursprungsgerade.
+\end{lemma}
+\begin{corollary}
+	Sei $\dim_\bR V < \infty$ und $G \subset GL(V)$ eine abgeschlossene Untergruppe von $\GL V$. So ist $G$ eine glatte Untermannigfaltigkeit von End $V$ (gemäß einer beliebigen Normtopologie), und wir nennen $G$ eine \tbf{Matrixliegruppe}.
+\end{corollary}
+Beispiele:
+\begin{enumerate}
+	\item $S^1 \subset \GL(1,\bC)$
+	\item $\bR^\times = \GL(1, \bR)$
+	\item $\bQ^\times \subset \GL(1, \bR)$
+	\item $\SO(n) \subset \GL(n, \bR)$ (Abgeschlossen, da Urbild von $\lr{1}$ unter der stetigen Determinantenabbildung geschnitten mit Urbild von $\lr{E}$ unter der stetigen Abbildung $A \mapsto A^\top A$.)
+\end{enumerate}
+\begin{corollary}
+	\begin{enumerate}
+		\item $T_eGL(n, K) = \Mat(n, K)$
+		\item $T_eSL(n, \bR) = \lr{A : \tr A = 0}$
+	\end{enumerate}
+\end{corollary}
+\begin{proof}
+	\begin{enumerate}
+		\item 
+		\item $\det (\exp(tX)) = \exp(\tr(tX))$, also $\det(\exp(tx)) = 1 \implies \tr(tX) = 0$ 
+	\end{enumerate}
+\end{proof}
+\begin{corollary}
+	Der Tangentialraum von $O(n)$ ist die Menge der Schiefsymmetrischen $n \times n$-Matrizen:
+	\begin{align*}
+		T_eO(n) 
+		&= \lr{X : \forall t : \exp(tX) \cdot \exp(tX)^\top = I}\\
+		&= \lr{X : \forall t : \exp(tX) \cdot \exp(tX^\top) = I}\\
+		&= \lr{X : X = -X^\top}
+	\end{align*}
+	Insbesondere $\dim O(n) = \dim T_eO(n) = \frac{n(n-1)}{2}$
+\end{corollary}
+\begin{proposition}
+	Sei $M$ eine Mannigfaltigkeit. Dann ist $X \subset M$ zusammenhängend genau dann, wenn $X$ wegzusammenhängend ist.
+\end{proposition}
+\begin{definition}
+	Für $p \in X$ notieren wir mit $X^p$ die Zusammenhangskomponente von $p$.
+\end{definition}
+\begin{theorem}
+	Sei $G$ eine Matrixliegruppe. So ist die Einskomponente $G^0$ auch eine Matrixliegruppe.
+\end{theorem}
+\begin{lemma}
+	Sei $G$ eine zusammenhängende Matrixliegruppe. Dann wird $G$ durch jede Umgebung des neutralen Elements erzeugt. (Dies gilt sogar für $G$ eine beliebige Topologische Gruppe).
+\end{lemma}
+\begin{corollary}
+	Sei $G$ eine zusammenhängende Matrixliegruppe. Dann wird $G$ durch $\exp(T_eG)$ erzeugt.
+\end{corollary}
+\begin{theorem}
+	Sei $G$ eine Matrixliegruppe. Seien $X,Y \in T_e(G)$. Dann gilt auch $XY - YX \in T_eG$.
+\end{theorem}
+\begin{definition}
+	Eine $k-$Algebra ist ein Vektorraum $A$ über einem Körper $k$ mit einer $k$-bilinearen Verknüpfung $A \times A \to A$.
+\end{definition}
+\begin{definition}
+	Eine \tib{Lie-Algebra} über einem Körper $k$ ist eine $k$-Algebra $g$ mit einer Verknüpfung $[x,y]$, sodass:
+	\begin{enumerate}
+		\item $[x,x] = 0$
+		\item $[x,[y,z]] + [z,[x,y]] + [y,[z,x]] = 0$ (die \tib{Jacobi-Identität})
+	\end{enumerate}
+\end{definition}
+\begin{theorem}
+	Gegeben eine Matrixliegruppe $G$ wird der Einstangentialraum $T_eG$ mit der Verknüpfung
+	\begin{align*}
+		(X,Y) \mapsto [X,Y] = XY - YX
+	\end{align*}
+	zu einer Lie-Algebra, genannt die \tib{Lie-Algebra von $G$}.
+\end{theorem}
+\begin{proposition}
+	Jede endlichdimensionale komplexe/reelle Liealgebra lässt sich in einen endlichddimensionalen Vektorraum $V$ als Unterliealgebra von $\GL(V)$ einbetten.
+\end{proposition}
+\begin{proposition}
+	Seien $G,H$ Matrixliegruppen. So gilt
+	\begin{align*}
+		\Lie(G \cap H) = (\Lie~ G) \cap (\Lie~ H)
+	\end{align*}
+\end{proposition}
+\begin{theorem}
+	Sei $G$ eine Matrixliegruppe. So hat jeder stetige Gruppenhomomorphismus $\phi : \bR \to G$ die Form $\phi(t) = e^{tA}$ für genau ein $A \in \Lie(G)$
+\end{theorem}
+\begin{theorem}
+	Jeder stetige Matrixliegruppenhomomorphismus $\phi: G \to H$ ist glatt. Für jedes solche $\phi$ ist $T_e\phi : \Lie~G \to \Lie~G$ ein Lialgebrenhomomorphismus mit
+	\begin{align*}
+		\phi \circ \exp_G = \exp_H \circ T_e\phi
+	\end{align*}
+\end{theorem}
+Beispiel: Wir hatten bereits $\exp(\tr A) = \det \exp(A)$, also folgendes Diagramm:
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXE1hdChuLFxcYlIpIl0sWzIsMCwiXFxiUiJdLFsyLDIsIlxcYlIiXSxbMCwyLCJcXEdMKG4sXFxiUikiXSxbMCwzLCJcXGV4cCJdLFsxLDIsIlxcZXhwIl0sWzMsMiwiXFxkZXQiLDFdLFswLDEsIlRfSVxcZGV0IiwxXV0=
+\[\begin{tikzcd}
+	{\Mat(n,\bR)} && \bR \\
+	\\
+	{\GL(n,\bR)} && \bR^\times
+	\arrow["{T_I\det = \tr}"{description}, from=1-1, to=1-3]
+	\arrow["\exp", from=1-1, to=3-1]
+	\arrow["\exp", from=1-3, to=3-3]
+	\arrow["\det"{description}, from=3-1, to=3-3]
+\end{tikzcd}\]
+\end{document}

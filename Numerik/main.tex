@@ -1379,4 +1379,67 @@ Mithilfe der $QR$-Zerlegung bekommen wir ein stabiles Verfahren zur Lösung von 
 		\end{align*}
 		Da $z \geq 0$ ist eine Verringerung also nur dann möglich, wenn mindestens eine Komponente von $u_j$ negativ ist. Ansonsten ist $x$ bereits eine lokale (und somit auch globale) Lösung des Problems.
 	\end{enumerate}
+	\chapter{Konditionszahlen und Gleitkommaarithmetik}
+	Gegeben sei als "mathematische Aufgabe" die Approximation einer Funktion $\Phi(x) : X \to Y$ zwischen normierten Vektorräumen.
+	\begin{definition}
+		Die relative Konditionszahl $\kappa_\Phi(x)$ der Funktion $\Phi : X \to Y$ für $x \neq 0, \Phi(x) \neq 0$ ist gegeben durch $$\inf \lr{\kappa > 0 : \exists \delta > 0 : \forall \frac{\norm{h}}{\norm{x}} < \delta : \frac{\norm{\Phi(x + h) - \Phi(x)}}{\norm{\Phi(x)}} < \kappa \frac{\norm{h}}{\norm{x}}}$$
+	\end{definition}
+	(Also die Lipschitzkonstante!)
+	\newpar
+	Ist $\kappa_\Phi(x) \gg 1$, heißt $\Phi(x)$ schlecht konditioniert. Ist $K_\Phi(x)$ nicht definiert, heißt $\Phi(x)$ schlecht gestellt.
+	\begin{theorem}
+		Falls $\Phi$ differenzierbar ist, gilt
+		\begin{align*}
+			\kappa_\Phi(x) = \frac{\norm{D \Phi} \cdot \norm{x}}{\norm{\Phi(x)}}
+		\end{align*}
+	\end{theorem}
+	\begin{example}
+		\begin{enumerate}
+			\item $\Phi(x) = \abs{x-1}^s + 1$ ist bei $x = 1$ für $s \geq 1$ gut konditioniert.
+			\item $\Phi(x) = \sgn(x - 1)$ ist schlecht gestellt bei $x = 1$.
+			\item Für $\Phi(b) = A^{-1}(b)$ gilt $\kappa_\Phi(b) = \cond(A)$.
+			\item Für $\Phi(A) = A^{-1}(b)$ gilt ebenfalls $\kappa_\Phi(b) = \cond(A)$!
+			\item Auslöschungseffekte werden erfasst: Für $\Phi(x,y) = x + y$ gilt $D \Phi = (1,1)$, also
+			\begin{align*}
+				\kappa_\Phi(x,y) = \frac{\abs{x} + \abs{y}}{\abs{x + y}}
+			\end{align*}
+		\end{enumerate}
+	\end{example}
+	\begin{definition}
+		Für eine Basis $b \geq 2$, Präzision $p \geq 1$, und Exponentenschranken $e_{\min} \leq e_{\max}$ mit $b,p,e_{\min},e_{\max} \in \bZ$ ist die Menge der \tbf{Gleitkommazahlen} gegeben durch
+		\begin{align*}
+			G = \lr{\pm m \cdot b^{e-p} : m,e \in \bZ; 0 \leq m \leq b^p-1; e_{\min} \leq e \leq e_{\max}}.
+		\end{align*}
+		Eine Gleitkommazahl $g \in G$ heißt \tbf{normalisiert}, falls $m \geq b^{p-1}$ (also falls die vorderste Ziffer nicht Null ist).
+		\newpar
+		Gleitkommazahlen lassen sich trivial \tbf{$b$-adisch} darstellen:
+		\begin{align*}
+			g = \pm (d_1 b^{-1} + \hdots + d_p b^{-p}) \cdot b^e
+		\end{align*}
+	\end{definition}
+	\begin{definition}
+		Sei $g_\epsilon \in G$ die kleinste Gleitkommazahl, für die gilt $g_\epsilon > 1$. Dann ist $g_\epsilon - 1$ die sog. Maschinengenauigkeit (oder auch einfach \tbf{Rundungsfehler} $m_\epsilon$).
+	\end{definition}
+	\begin{definition}
+		Für eine Menge an Maschinenzahlen heißt eine Abbildung
+		\begin{align*}
+			r : \bR \supset [-g_{\min},g_{\max}] \to G
+		\end{align*}
+		eine \tbf{Rundungsabbildung}, falls für jede Zahl $x \in [-g_{\max}, g_{\max}]$ gilt, dass
+		\begin{align*}
+			\abs{x - r(x)} = \min_{g \in G} \abs{x - g}
+		\end{align*}
+	\end{definition}
+	\begin{lemma}
+		Für jedes $x \in \bR$ mit $\abs{x} \in [-g_{\min}, g_{\max}]$ gilt
+		$$\frac{\abs{x-r(x)}}{\abs{x}} \leq \frac{1}{2}m_\epsilon$$
+	\end{lemma}
+	\begin{definition}
+		Das sogenannte Standardmodell der Gleitkommaarithmetik fordert, dass für $x,y \in \bR$, $\abs{x}, \abs{y} \leq g_{\max}$, und jede arithmetische Standardoperation $\circ \in \lr{+,-,\cdot,\frac{\cdot}{\cdot}}$ mit $\abs{x \circ y} < g_{\max}$ und der jeweiligen numerischen Realisierung $\circ_G$ gilt, dass ein $\delta \in \bR$ mit $\delta < \frac{m_\epsilon}{2}$ existiert, sodass
+		\begin{align*}
+			r(x) \circ_G r(y) = (x \circ y)(1 + \delta)
+		\end{align*}
+	\end{definition}
+	(...)
+	
 \end{document}

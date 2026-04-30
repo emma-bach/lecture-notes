@@ -1,0 +1,225 @@
+\documentclass{report}
+
+% custom margins
+\usepackage[a4paper,margin=1.5in]{geometry}
+\renewcommand{\baselinestretch}{1.2}
+%\AddToHook{cmd/section/before}{\clearpage}
+
+% emma's long list of custom macros and universally used packages
+\include{../macros-and-packages.tex}
+
+% colored box behind proofs
+\tcolorboxenvironment{proof}{
+	colback=white,
+	boxrule=0pt,
+	frame hidden,
+	borderline west={1pt}{0pt}{black},
+	before skip=0.75cm,
+	after skip=0.75cm,
+	sharp corners,
+	breakable,
+	enhanced,
+}
+
+\renewcommand*\contentsname{Inhalt}
+\renewcommand*\proofname{Beweis}
+
+\begin{document}
+
+\include{title}
+\tableofcontents
+\chapter{Topologische Räume}
+\begin{proposition}
+	Sei $(X, <)$ eine nichtleere linear geordnete Menge. So bildet
+	\begin{align*}
+		\cB = \lr{\lr{x \in X : a < x < b} : a,b \in X}
+	\end{align*}
+	die Basis einer Topologie auf $X$, genannt die \tib{Ordnungstopologie}.
+\end{proposition}
+\begin{theorem}
+	Die Ordnungstopologie auf $\bR$ entspricht der metrischen Topologie.
+\end{theorem}
+\begin{proposition}
+	Es sei $X$ unendlich. So ist
+	\begin{align*}
+		\cO_k : \lr{X \setminus A : A \subseteq X, A \tbf{ endlich }}
+	\end{align*}
+	eine Topologie auf $X$, genannt die \tbf{kofinite Topologie}.
+\end{proposition}
+\begin{proposition}
+	$\lr{[a,b) : a,b \in \bR}$ bildet eine Subbasis einer Topologie auf $\bR$, welche als die \tib{Sorgenfrey-Gerade} bekannt ist.
+\end{proposition}
+\begin{definition}
+	Sei $(X, \cO)$ ein topologischer Raum. Sei $x \in X$. So nennen wir $U \subseteq X$ eine \tib{Umgebung von $x$}, falls ein $O \in \cO$ existiert, sodass $x \in O \subseteq U$.
+\end{definition}
+\begin{definition}
+	Die Menge $U(x)$ aller Umgebungen von $x \in X$ heißt das \tib{Umgebungssystem von $X$}.
+\end{definition}
+\begin{definition}
+	$\cB \subseteq U(x)$ heißt \tib{Umgebungsbasis} von $x$ (bezüglich $\cO$), falls $\cB$ nichtleer ist und falls jede Umgebung von $x$ ein $B \in \cB$ als Teilmenge enthält.
+\end{definition}
+\begin{definition}
+	\begin{enumerate}
+		\item Ein topologischer Raum erfüllt das \tib{erste Abzählbarkeitsaxiom}, wenn jeder Punkt eine abzählbare Umgebungsbasis hat.
+		\item Ein topologischer Raum erfüllt das \tib{zweite Abzählbarkeitsaxiom}, wenn er eine abzählbare Basis hat.
+	\end{enumerate}
+\end{definition}
+\begin{proposition}
+	Jeder metrische Raum erfüllt das erste Abzählbarkeitsaxiom, da $\lr{B_{\frac{1}{n+1}}(x) : n \in \bN}$ eine abzählbare Umgebungsbasis von jedem $x$ ist.
+\end{proposition}
+\begin{proposition}
+	$\bR^n$ erfüllt mit der Standardtopologie das zweite Abzählbarkeitsaxiom, $\lr{B_r(x) : r \in \bQ, x \in \bQ}$ ist eine abzählbare Basis.
+\end{proposition}
+\begin{proposition}
+	Die "long line", gegeben durch die Ordnungstopologie einer Wohlordnung auf $\aleph_1$, erfüllt das erste Abzählbarkeitsaxiom, aber nicht das zweite Abzählbarkeitsaxiom.
+\end{proposition}
+\begin{definition}
+	Es sei $(X, \cO)$ ein topologischer Raum. Sei $A \subseteq X$.
+	\begin{enumerate}
+		\item Das \tib{offene Innere} von $A \subseteq X$ ist:
+		\begin{align*}
+			\Int~ A = \bigcup\lr{O \in \cO : O \subset A}
+		\end{align*}
+		\item Der \tib{Abschluss} von $A$ in $X$ ist:
+		\begin{align*}
+			\bar A = \lr{x \in X: \forall U \in U(x) : U \cap A \neq \emptyset}
+		\end{align*}
+		\item Der \tib{Rand von $X$} ist:
+		\begin{align*}
+			\partial A : \bar A \setminus \Int~ A
+		\end{align*}
+	\end{enumerate}
+\end{definition}
+\begin{theorem}
+	Die Cantormenge ist abgeschlossen, und überabzählbar aber in $\bR$ nirgends dicht.
+\end{theorem}
+\chapter{Die Erzeugung Topologischer Räume}
+\section{Die Spurtopologie (Unterraumtopologie)}
+\begin{theorem}
+	Sei $(X, \cO)$ ein topologischer Raum und $A \subseteq X$ beliebig. Dann ist
+	\begin{align*}
+		\cO_A = \lr{A \cap O : O \in \cO}
+	\end{align*}
+	eine Topologie auf $A$, genannt die \tib{Spurtopologie von $X$ auf $A$}.
+\end{theorem}
+\begin{definition}
+	$(X, \cO)$ ein topologischer Raum und $A \subseteq X$. Dann nennen wir $(A, \cO_A)$ einen topologischen Unterraum von $(X, \cO)$.
+\end{definition}
+\begin{definition}
+	$A \subseteq X$ heißt \tib{diskret} in $(X, \cO)$, falls $(A, \cO_A)$ die diskrete Topologie auf $A$ ist.
+\end{definition}
+\begin{theorem}
+	$A \subseteq X$ ist diskret in $(X, \cO)$ genau dann, wenn jeder Punkt $a \in A$ eine Umgebung $U \in \cO$ besitzt, sodass $a$ der einzige Punkt aus $A$ ist, der in $U$ liegt.
+\end{theorem}
+\begin{definition}
+	Eine Abbildung $f: (X, \cO) \to (X', \cO')$ heißt \tib{Einbettung}, falls
+	\begin{align*}
+		f : (X, \cO) \to \lr(f[X], \cO'_{f[X]})
+	\end{align*}
+	ein Homöomorphismus ist.
+\end{definition}
+\begin{lemma}
+	Eine Einbettung $f: (X, \cO) \to (X', \cO')$ ist offen, wenn $f[X]$ offen ist.
+\end{lemma}
+\begin{lemma}
+	Eine Einbettung $f: (X, \cO) \to (X', \cO')$ mit $f[X] = X'$ ist ein Homöomorphismus.
+\end{lemma}
+\begin{theorem}
+	Es sei $(X, \cO)$ ein topologischer Raum, $A \subseteq X$, und $i : A \to X$ die Inklusionsabbildung. So gilt:
+	\begin{enumerate}
+		\item $i$ ist eine stetige Einbettung.
+		\item $\cO_A$ ist die gröbste Topologie, auf der $i$ stetig ist.
+		\item Sei $(Y, \cO_Y)$ ein weiterer topologischer Raum. Dann ist $g : (Y, \cO_Y) \to (A, \cO_A)$ stetig genau dann, wenn $i \circ g$ stetig ist.
+	\end{enumerate}
+\end{theorem}
+\begin{theorem}
+	Es seien $(X, \cO_X)$ und $(Y, \cO_Y$ topologische Räume. Es seien $A_1, \hdots, A_n \in X$ abgeschlossen, sodass $\bigcup_{i = 1}^n A_i = X$. Es sei $f : X \to Y$ eine Abbildung so, dass $f|_{A_i} : (A_i, \cO_{A_i}) \to (Y, \cO_Y)$ für jedes $i$ stetig ist. Dann ist $f$ stetig.
+\end{theorem}
+Intuitiv werden hier unstetige Funktionen vermeidet, da aus $\bigcup_{i = 1}^n A_i = X$ folgt, dass sich die $A_i$ mindestens in ihren Rändern überschneiden müssen, und somit die $f|_{A_i}$ auf diesen Schnitten übereinstimmen müssen.´
+\section{Die Produkttopologie}
+\begin{definition}
+	Sei $I$ eine beliebige Menge. Sei für jedes $i \in I$ $X_i$ eine nichtleere Menge. Dann ist
+	\begin{align*}
+		\angles{x_i : i \in I} 
+		:= \prod_{i \in I}
+		:= \lr{f : I \to \bigcup_{i \in I} X_i : \forall i \in I : f(i) \in X_i}
+	\end{align*}
+	die \tib{Produktmenge} der $X_i$.
+\end{definition}
+\begin{definition}
+	Gegeben eine Produktmenge nennen wir die Funktion
+	\begin{align*}
+		p_i : \prod_{j \in I} X_j &\to X_j\\
+		\angles{x_j : j \in I} &\mapsto x_i
+	\end{align*}
+	die Projektion auf $X_i$.
+\end{definition}
+\begin{definition}
+	Es sei $I$ eine beliebige Indexmenge. Für jedes $i \in I$ sei $(X_i, \cO_i)$ ein topologischer Raum. Dann ist
+	\begin{align*}
+		\cB := \lr{\prod_{i \in I} U_i \bigmid \forall i \in I : U_i \in \cO_i, U_i \neq X_i \tn{ für nur endlich viele $i$}}
+	\end{align*}
+	eine Basis der sogenannten \tib{Produkttopologie}.
+\end{definition}
+\begin{theorem}
+	Die Produkttopologie ist die gröbste Topologie auf $\prod_{i \in I} X_i$, sodass alle Projektionen $p_i$ stetig sind. Alle Projektionen sind außerdem offen. 
+\end{theorem}
+\begin{theorem}
+	$g : (Y, O_Y) \to \prod_{i \in I} (X_i, \cO_i)$ ist genau dann stetig, wenn alle Projektionen $p_i \circ g$ stetig sind.
+\end{theorem}
+\begin{definition}
+	Es seien $f_i : (X_i, \cO_i) \to (Y_i, O_i')$ Abbildungen für alle $i \in I$. Wir definieren die \tib{Produktabbildung} $f$ der $f_i$ durch
+	\begin{align*}
+		f(\angles{x_i : i \in I}) = \angles{f_i(x_i) : i \in I}
+	\end{align*}
+\end{definition}
+\begin{corollary}
+	Eine Produktabbildung $f$ ist genau dann stetig, wenn alle Komponenten $f_i$ stetig sind.
+\end{corollary}
+\section{Die Initialtopologie}
+\begin{definition}
+	Es sei $Y$ eine Menge, $I$ eine Indexmenge und $f_i : Y \to (X_i, \cO_i)$ für alle $i \in I$ gegeben. Dann heißt die durch die Subbasis
+	\begin{align*}
+		\cS := \lr{f_i^{-1}(U_i) : U_i \in \cO, i \in I}
+	\end{align*}
+	auf $Y$ erzeugte Topologie die \tib{Inifitaltopologie} von $(Y, (f_i, X_i, \cO_i)_{i \in I})$
+\end{definition}
+\begin{theorem}
+	Es sei $\cO_Y$ die Initialtopologie von $(Y, (f_i, X_i, \cO_i)_{i \in I})$. Dann gilt:
+	 \begin{enumerate}
+		\item $\cO_Y$ ist die gröbste Topologie auf $Y$, sodass alle $f_i$ stetig sind.
+		\item $g : (Z, \cO_Z) \to (Y, \cO_Y)$ ist genau dann stetig, wenn $f_i \circ g$ für alle $i$ stetig ist.
+	\end{enumerate} 
+\end{theorem}
+\section{Die Finaltopologie}
+\begin{definition}
+	Es sei $Y$ eine Menge, $I$ eine Indexmenge und $(f_i : (X_i, \cO_i) \to Y)_{i \in I}$ eine Menge von Funktionen. Dann heißt die durch die Subbasis
+	\begin{align*}
+		\cS := \lr{O \subseteq Y \bigmid \forall i \in I : f_i^{-1}(O) \in \cO_i}
+	\end{align*}
+	auf $Y$ erzeugte Topologie die \tib{Finaltopologie} von $((f_i, X_i, \cO_i)_{i \in I}, Y)$.
+\end{definition}
+\begin{theorem}
+	Es sei $\cO_Y$ die Finaltopologie von $\lr((f_i, X_i, \cO_i)_{i \in I}, Y)$. Dann ist $\cO_Y$ die feinste Topologie auf $Y$, sodass alle $f_i$ stetig sind. Jedes $g : (Y, \cO_Y) \to (Z, \cO_Z)$ ist genau dann stetig, wenn $g \circ f_i$ für alle $i$ stetig ist.
+\end{theorem}
+\section{Die Quotiententopologie}
+\begin{definition}
+	Es sei $(X, \cO)$ ein topologischer Raum, $R$ eine Äquivalenzklasse und $q$ die zugehörige Quotientenabbildung. Die \tbf{Quotiententopologie $O_{X/R}$} ist die durch $q$ gegebene Finaltopologie auf $X/R$, also:
+	\begin{align*}
+		O_{X/R} = \lr{A \subseteq X/R : q^{-1}[A] \in \cO}
+	\end{align*}
+	In diesem Fall haben wir nicht nur eine Subbasis, sondern bereits eine Topologie.
+\end{definition}
+\begin{lemma}
+	Es sei $f : (X,\cO_X) \to (Y, \cO_Y)$ eine Abbildung und $R$ eine Äquivalenzklasse auf $X$.
+	\begin{enumerate}
+		\item 
+		Falls $xRx' \implies f(x) = f(x')$ ist $\ol f : X/R \to Y : [x]_r \mapsto f(x)$ wohldefiniert.
+		\item 
+		Falls $xRx' \Longleftrightarrow f(x) = f(x')$ ist $\ol f$ außerdem injektiv.
+	\end{enumerate}
+\end{lemma}
+\begin{definition}
+	Seien $f$ stetig und $R$ eine Äquivalenzrelation mit $xRx' \Longleftrightarrow f(x) = f(x')$. Ist $\ol f : X/R \to f[X]$ offen, so heißt $f$ \tib{identifizierende Abbildung}.
+\end{definition}
+\end{document}
