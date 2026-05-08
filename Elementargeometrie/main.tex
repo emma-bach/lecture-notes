@@ -1,0 +1,153 @@
+\documentclass{report}
+
+% custom margins
+\usepackage[a4paper,margin=1.5in]{geometry}
+\renewcommand{\baselinestretch}{1.2}
+%\AddToHook{cmd/section/before}{\clearpage}
+
+% emma's long list of custom macros and universally used packages
+\include{../macros-and-packages.tex}
+
+% colored box behind proofs
+\tcolorboxenvironment{proof}{
+	colback=white,
+	boxrule=0pt,
+	frame hidden,
+	borderline west={1pt}{0pt}{black},
+	before skip=0.75cm,
+	after skip=0.75cm,
+	sharp corners,
+	breakable,
+	enhanced,
+}
+
+\renewcommand*\contentsname{Inhalt}
+\renewcommand*\proofname{Beweis}
+
+\begin{document}
+
+\include{title}
+\tableofcontents
+\chapter{Drehgruppen}
+
+
+\begin{lemma}
+	Sei $Z$ ein zweidimensionaler reeller Vektorraum mit Drehspiegelgruppe $D$. So werden je zwei Strahlen $A, B \subseteq Z$ durch genau eine Spiegelung aus $D$ miteinander vertauscht.
+\end{lemma}
+\begin{lemma}
+	Sei $Z$ ein zweidimensionaler reeller Vektorraum mit Drehspiegelgruppe $D$.
+	So ist jedes Element von $D$ ist entweder eine Spiegelung oder ein Produkt von zwei Spiegelungen aus $D$.
+\end{lemma}
+\begin{lemma}
+	Sei $Z$ ein zweidimensionaler reeller Vektorraum mit Drehspiegelgruppe $D$. So hat jedes Element der Drehspiegelgruppe Determinante $\pm 1$.
+\end{lemma}
+\begin{lemma}
+	Sei $Z$ ein zweidimensionaler reeller Vektorraum mit Drehspiegelgruppe $D$. So gilt: 
+	\begin{enumerate}
+		\item Die Elemente von $D$ mit Determinante $1$ bilden eine kommutative Untergruppe $D^{or}$.
+		\item Für jede Spiegelung $r \in D$ und alle $d \in D^{or}$ gilt:
+		\begin{align*}
+			rdr = d^{-1}
+		\end{align*}
+		\item Es gilt $-\id_Z \in D^{or}$.
+	\end{enumerate}
+\end{lemma}
+\begin{lemma}
+	Sei $Z$ ein zweidimensionaler reeller Vektorraum mit Drehspiegelgruppe $D$. So gilt:
+	\begin{enumerate}
+		\item Es gibt genau zwei Elemente $R \in D$ mit $R^2 = -\id_Z$. 
+		\item Für jedes $v \in Z$ sind $v$ und $Rv$ linear unabhängig.
+	\end{enumerate} 
+\end{lemma}
+
+\begin{lemma}
+	Sei $Z$ ein zweidimensionaler reeller Vektorraum mit Drehspiegelgruppe $D$. So ist der Raum $\Alt^2(Z)$ der alternierenden bilinearformen auf $Z$ eindimensional.
+\end{lemma}
+Die Elemente von $\Alt^2$ entsprechen den orientierten Flächenmaßen.
+\begin{lemma}
+	Sei $Z$ ein zweidimensionaler reeller Vektorraum mit Drehspiegelgruppe $D$. So kehrt jede Spiegelung $r \in D$ die Orientierung von $Z$ um.
+\end{lemma}
+\begin{corollary}
+	Sei $Z$ ein zweidimensionaler reeller Vektorraum mit Drehspiegelgruppe $D$. Sei $F \in \Alt^2(Z)$. Dann gilt für jede Spiegelung $r$ $F(rv, rw) = -F(v,w)$.
+\end{corollary}
+\begin{theorem}
+	Sei $Z$ ein zweidimensionaler reeller Vektorraum mit Drehspiegelgruppe $D$. So gibt es ein Skalarprodukt $s : Z \times Z \to \bR$, sodass
+	\begin{align*}
+		\forall k \in D : s(kv, kw) = s(v,w).
+	\end{align*}
+	Jedes weitere $D$-invariante Skalarprodukt ist ein skalares Vielfaches von $s$.
+\end{theorem}
+\begin{proof}
+	Sei $F \in \Alt^2(Z)$. So finden wir ein $R \in D$ mit $R^2 = \id_Z$ und defineren nun
+	\begin{align*}
+		s(v,w) = F(v,Rw).
+	\end{align*}
+	\begin{enumerate}
+		\item \ul{Invarianz:} Da $D$ von den Spiegelungen erzeugt wird, reicht es zu zeigen, dass $s$ unter Spiegelungen invariant ist. Für diese gilt $Rr = -rR$, also:
+		\begin{align*}
+			s(rv,rw) 
+			&= F(rv,Rrw)\\
+			&= F(rv, -rRw)\\
+			&= -F(rv, rRw)\\
+			&= F(v,Rw)\\
+			&= s(v,w)
+		\end{align*}
+		\item \ul{Symmetrie:}
+		\begin{align*}
+			s(v,w) 
+			&= F(v,Rw)\\
+			&= F(Rw, -v)\\
+			&= F(Rw, R^2v)\\
+			&= s(Rw,Rv)\\
+			&= s(w,v)
+		\end{align*}
+		\item \ul{Positive Definitheit:} Für $v \neq 0$ gilt $s(v,v) = 0$, da $v$ und $Rv$ linear unabhängig sind. (...)
+	\end{enumerate}
+\end{proof}
+\begin{theorem}
+	Sei $Z$ ein zweidimensionaler reeller Vektorraum mit Drehspiegelgruppe $D$. Sei $s$ ein $D$-invariantes Skalarprodukt auf $Z$. So gilt
+	\begin{align*}
+		D = O(Z,s)
+	\end{align*}
+\end{theorem}
+\begin{definition}
+	Sei $Z$ ein zweidimensionaler reeller Vektorraum mit Drehspiegelgruppe $D$. So definieren wir:
+	\begin{align*}
+		v \perp w \Leftrightarrow  \exists r \in D : r \tn{ Spiegelung}, r(v) = v, r(w = -w)
+	\end{align*}
+\end{definition}
+\begin{theorem}
+	Sei $Z$ ein zweidimensionaler reeller Vektorraum mit Drehspiegelgruppe $D$. Sei $\scalar{}{}$ ein $D$-invariantes Skalarprodukt. So gilt:
+	$$v \perp w \Leftrightarrow \scalar{v}{w} = 0$$
+\end{theorem}
+\begin{proof}
+	\begin{enumerate}
+		\item[$\Longrightarrow$:] Aus $v \perp w$ folgt $\scalar{v}{w} = \scalar{rv}{rw} = \scalar{v}{-w} = -\scalar{v}{w}$, also $\scalar{v}{w} = 0$.
+		\item[$\Longleftarrow$:] Sei $\scalar{v}{w} = 0$. So gilt $F(v,Rw) = 0$, also $Rw \in \bR v$, also $r_v R w = Rw$, also $r_vw = -w$.
+	\end{enumerate}
+\end{proof}
+\begin{definition}
+	$\norm{u}_s := \sqrt{\scalar{u}{u}_s}$
+\end{definition}
+\begin{theorem}
+	\tib{Pythagoras:} Sei $Z$ ein zweidimensionaler reeller Vektorraum mit Drehspiegelgruppe $D$. Sei $\scalar{}{}_s$ $D$-invariant. So gilt für $v,w \in Z$:
+	\begin{align*}
+		v \perp w \Leftrightarrow \norm{v + w}_s^2 = \norm{v}_s^2 + \norm{w}_s^2
+	\end{align*}
+\end{theorem}
+\begin{definition}
+	Sei $Z$ ein zweidimensionaler reeller Vektorraum mit Drehspiegelgruppe $D$. Wir definieren den \tib{Bahnenraum} $L_Z := Z/D$. 
+\end{definition}
+\begin{definition}
+	Wir notieren die Projektion $Z \surj L$ als $v \mapsto \norm{v}_Z$ und nennen $\norm{v}_Z$ die \tib{Länge} von $v$.
+\end{definition}
+\begin{theorem}
+	Jeder Strahl $A \subseteq Z$ trifft $Z/D$ in genau einem Punkt.
+\end{theorem}
+\begin{corollary}
+	Die Verknüpfung $A \rightarrow L \Leftarrow B$ ist eine Restriktion einer linearen Abbildung.
+\end{corollary}
+\begin{corollary}
+	Es gibt genau eine Operation des multiplikativen Monoids $\bR_{\geq 0}$ auf  $L_Z$, sodass $\forall \lambda \in \bR : \lambda \norm{v}_Z = \norm{\lambda v}_Z$ und genau eine Addition auf $L$, sodass $\norm{v}_Z + \norm{w}_Z = \norm{v + w}_Z$ für alle $v,w \in A \subset Z$.
+\end{corollary}
+\end{document}

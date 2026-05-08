@@ -222,4 +222,181 @@ Intuitiv werden hier unstetige Funktionen vermeidet, da aus $\bigcup_{i = 1}^n A
 \begin{definition}
 	Seien $f$ stetig und $R$ eine Äquivalenzrelation mit $xRx' \Longleftrightarrow f(x) = f(x')$. Ist $\ol f : X/R \to f[X]$ offen, so heißt $f$ \tib{identifizierende Abbildung}.
 \end{definition}
+\section{Der Summenraum}
+\begin{definition}
+	Es sei $I$ eine Indexmenge und $(X_i, \cO_i)_{i \in I}$ topologische Räume mit paarweise disjunkten $X_i$. So ist die \tib{topologische Summe} der Räume definiert als
+	\begin{align*}
+		\sum_{i \in I} (X_i, \cO_i) := \lr(\bigcup_{i \in I} X_i, \lr{Z  \subseteq \bigcup_{i \in I} X_i \mid \forall i \in I : Z \cap X_i \in \cO_I})
+	\end{align*}
+\end{definition}
+(Also alle Mengen aus der Vereinigung, deren Schnitt mit jedem $X_i$ in $\cO_i$ offen ist.)
+\section{Adjunktion}
+\begin{definition}
+	Es seien $X,Y$ disjunkt und $(X, \cO_X)$, $(Y, \cO_Y)$ topologische Räume. Es sei $f : X \supseteq A \to Y$ stetig bezüglich der Spurtopologie auf $A$. Auf $X \cup Y$ definieren wir die durch $f$ erzeugte Äquivalenzrelation $R$ durch
+	\begin{align*}
+		z_1~R~z_2 := 
+		\begin{cases}
+			z_1,z_2 \in A, f(z_1) = f(z_2), &\tn{oder}\\
+			z_1 \in A, f(z_1) = z_2,
+			&\tn{oder}\\
+			z_2 \in A, f(z_2) = z_1,
+			&\tn{oder}\\
+			z_1 = z_2.
+		\end{cases} 
+	\end{align*}
+	So heißt der Raum 
+	\begin{align*}
+		Y \cup_f X := \lr((X, \cO_x) + (Y, \cO_Y) / R)
+	\end{align*}
+	die \tib{Adjunktion, Anheftung} oder \tib{Zusammenklebung} von $X$ and $Y$ durch $f$.
+\end{definition}
+Genauer sind die Äquivalenzklassen:
+\begin{enumerate}
+	\item Falls $z \in A$, so ist 
+	$[z]_R = \lr{f(z)} \cup f^{-1}[\lr{f(z)}]$
+	\item Falls $z \in f[A]$, so ist
+	$[z]_R = \lr{z} \cup f^{-1}[z]$
+	\item Ansonsten ist $[z]_R = \lr{z}$
+\end{enumerate}
+\begin{definition}
+	Im Fall $Y = \lr{1}$ gilt $x~R~x' \Leftrightarrow x = x' \vee x, x' \in A$. Dann heißt $Y \cup_f X$ \tib{Zusammenschlagen von $A$} und wird auch $X / A$ geschrieben.
+\end{definition}
+\begin{proposition}
+	Unter geeigneten Zusatzvorraussetzungen gilt:
+	\begin{enumerate}
+		\item Die Inklusion $i : Y \to Y \cup_f X$ ist eine stetige injektive Einbettung.
+		\item Die Inklusion $X \setminus A \to Y \cup_f X$ ist eine abgeschlossene Einbettung.
+	\end{enumerate}
+\end{proposition}
+\begin{definition}
+	Die folgenden Konstruktionen bilden das Möbiusband:
+	\begin{enumerate}
+		\item Es seien $X = [0,1)_\bR \times [0,1]_\bR$ und $Y = \lr{1} \times [0,1]_\bR$. Es sei
+		\begin{align*}
+			A = \lr{0} \times [0,1]_\bR.
+		\end{align*}
+		So verklebt die Funktion
+		\begin{align*}
+			f : A &\to Y\\
+			(0,y) &\mapsto (1,1-y)
+		\end{align*}
+		die Ränder $A$ und $Y$ "verdreht".
+		\item Es sei $X = [0,1]_\bR \times [0,1]_\bR$ und $Y = [0,1]_\bR$. Es sei
+		\begin{align*}
+			A = \lr{(x,z) \in X : x = 0 \vee x = 1}.
+		\end{align*}
+		So verklebt die Funktion
+		\begin{align*}
+			f : A &\to Y\\
+			(0,y) &\mapsto 1-y\\
+			(1,y) &\mapsto y
+		\end{align*}
+		analog die Ränder
+	\end{enumerate}
+\end{definition}
+\chapter{Zusammenhang}
+\begin{definition}
+	Ein topologischer Raum $(X, \cO)$ heißt \tib{zusammenhängend}, wenn es keine nichtleeren, disjunkten, offenen Mengen $U_1, U_2$ gibt, sodass $U_1 \cap U_2 = X$.
+\end{definition}
+\begin{lemma}
+	$(X, \cO)$ ist genau dann zusammenhängend, wenn $\emptyset$ und $X$ die einzigen geschloffenen Teilmengen von $X$ sind.
+\end{lemma}
+\begin{theorem}
+	Jedes offene Intervall $(a,b) \subset \bR$ ist zusammenhängend.
+\end{theorem}
+\begin{proof}
+	Angenommen, $(a,b)$ sei nicht zusammenhängend. Es seien $O_1, O_2$ nichtleere disjunkte offene Mengen mit $O_1 \cup O_2 = (a,b)$. OBdA gebe es $x_1 \in O_1$, $x_2 \in O_2$, sodass $x_1 < x_2$. Wir setzten
+	\begin{align*}
+		S := \lr{s \in (a,b) \mid [x_1, s] \subseteq O_1}
+	\end{align*}
+	So ist $S$ durch $x_2$ nach oben beschränkt. Da $\bR$ vollständig ist, hat $S$ ein reelles Supremum $m$. 
+	\begin{enumerate}
+		\item Angenommen, $m \in O_1$. Dann existiert ein $\epsilon > 0$, sodass $U_\epsilon(m) \subseteq O_1$. Dann ist aber $m + \frac{\epsilon}{2} \in O_1$, also ist $m$ keine obere Schranke von $S$.
+		\item Angenommen, $m \in O_2$. Dann existiert ein $\epsilon \in > 0$, sodass $U_\epsilon(m) \subseteq O_2$. Dann ist aber $m - \frac{\epsilon}{2} \in O_2$, also $m - \frac{\epsilon}{2} \notin S$, also existiert eine kleinere obere Schranke von $S$.
+	\end{enumerate}
+	Da beide Fälle zum Widerspruch führen muss $(a,b)$ zusammenhängend sein.
+\end{proof}
+\begin{corollary}
+	$\bQ = (-\infty, \sqrt{2}) \cup (\sqrt{2}, \infty)$ ist als Teilmenge von $\bR$ nicht zusammenhängend.
+\end{corollary}
+\pagebreak
+\begin{theorem}
+	Sei $(X, \cO)$ ein topologischer Raum, $A \subseteq X$ zusammenhängend und $B$ beliebig. Dann gilt:
+	\begin{enumerate}
+		\item Wenn $A \subseteq B \subseteq \ol A$ gilt, ist $B$ zusammenhängend.
+		\item Wenn $A$ sowohl Punkte aus dem Inneren als auch aus dem Äußeren von $B$ enthält, so enthält $A$ auch Punkte aus $\partial B$.
+	\end{enumerate}
+\end{theorem}
+\begin{theorem}
+	Es seien $(X, \cO_X)$, $(Y, \cO_Y)$ topologische Räume. Es sei $X$ zusammenhängend und $f : X \to Y$ stetig. Dann ist $f[X]$ zusammenhängend.
+\end{theorem}
+\begin{lemma}
+	Ein topologischer Raum $(X, \cO)$ ist genau dann zusammenhängend, wenn es zu jeder offenen Überdeckung $U$ von $X$ und für alle $a,b \in X$ eine endliche Teilüberdeckung $U_1, \hdots, U_n$ gibt, sodass:
+	\begin{enumerate}
+		\item $U_1$ ist das einzige $U_i$, welches $a$ enthält: 
+		$$\forall j > 1: a \in U_1 \setminus U_j$$
+		\item $U_n$ ist das einzige $U_i$, welches $b$ enthält: 
+		$$\forall j < n: b \in U_n \setminus U_j$$
+		\item Jedes $U_i$ überschneidet sich nur mit $U_{i-1}$, $U_i$ und $U_{i+1}$:
+		$$U_i \cap U_j \Leftrightarrow \abs{i-j} \leq 1$$
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	\begin{enumerate}
+		\item[$\Leftarrow$] Sei $X$ nicht zusammenhängend. Dann gilt $X = U_1 \cup U_2$ mit $U_1, U_2$ disjunkt, also gibt es für $a \in U_1$, $b \in U_2$, $U = \lr{U_1, U_2}$ keine Möglichkeit, Eigenschaft $3$ zu erfüllen.
+		\item
+	\end{enumerate}
+\end{proof}
+\begin{theorem}
+	Es sei $(X, \cO)$ ein topologischer Raum. Es seien $A,B \subseteq X$ zusammenhängendund $A \cap B \neq \emptyset$. Dann ist $A \cup B$ zusammenhängend.
+\end{theorem}
+\begin{theorem}
+	Es seien $I$ eine Indexmenge und $(X_i, \cO_i)_{i \in I}$ topologische Räume. Dann ist der Produktraum $\prod_{i \in I} X_i$ genau dann zusammenhängend, wenn alle $(X_i, \cO_i)$ zusammenhängend sind.
+\end{theorem}
+\begin{proof}
+	(...)\\
+	$Z_j$ ist zusammenhängend, da $X_j$ zusammenhängend ist und jede disjunkte Zerlegung von $Z_j$ in Teilmengen auch $X_j$ zerlegen müsste.
+	(...)
+\end{proof}
+\begin{theorem}
+	Sei $(X, \cO)$ ein topologischer Raum.
+	Die \tib{Zusammenhangskomponente} eines Punkts $x \in X$ ist
+	\begin{align*}
+		K(x) = \bigcup \lr{Y \subseteq X : x \in Y, Y \tn{ zusammenhängend}}
+	\end{align*}
+\end{theorem}
+\begin{theorem}
+	Ein topologischer Raum $(X, \cO)$ heißt \tib{total unzusammenhängend}, falls $\forall x \in X : K(x) = \lr{x}$.
+\end{theorem}
+\begin{definition}
+	Sei $(X, \cO)$ ein topologischer Raum. Es seien $x, y \in X$. Ein \tib{Weg von $x$ nach $y$} ist eine stetige Abbildung $\gamma : [0,1]_\bR \to X$, sodass $\gamma(0) = x$ und $\gamma(1) = y$.
+	Eine Abbildung $\gamma : [0,1]_\bR \to X$ 
+\end{definition}
+\begin{definition}
+	Ein topologischer Raum $(X, \cO)$ heißt \tib{wegzusammenhängend}, falls es für jedes paar $x, y \in X$ einen Weg von $x$ nach $y$ gibt. $K_w(x)$ ist die \tib{Wegzusammenhangskomponente} von $X$.
+\end{definition}
+\begin{definition}
+	Ein topologischer Raum $(X, \cO)$ heißt \tib{lokal zusammenhängend,} falls für jeden Punkt $x \in X$ und jede Umgebung $U \in U(x)$ eine Umgebung $V \in U(x)$ gibt, sodass $V \subseteq U$ und sodass $V$ zusammenhängend ist. Ein topologischer Raum $(X, \cO)$ heißt \tib{lokal wegzusammenhängend}, falls ein solches $V$ existiert, welches wegzusammenhngend ist.
+\end{definition}
+\begin{theorem}
+	Jeder wegzusammenhängende Raum ist zusammenhängend.
+\end{theorem}
+\begin{proof}
+	Es sei $X$ nicht zusammenhängend und $X = U \cup V$ mit $U,V$ disunkt, nichtleer und offen. Angenommen, es gäbe einen Weg $\gamma$ von $x \in U$ nach $y \in V$. So gilt $[0,1]_\bR = \gamma^{-1}(U) \cup \gamma^{-1}(V)$, aber da $\gamma$ stetig ist sind $\gamma^{-1}(U)$, $\gamma^{-1}(V)$ nichtleer und offen, und da $U$ und $V$ disjunkt sind, sind auch die Urbilder disjunkt. Somit wäre $[0,1]_\bR$ nicht zusammenhängend. Widerspruch!!!
+\end{proof}
+\begin{theorem}
+	Wenn $X$ lokal wegzusammenhängend ist, ist $K_w(x)$ offen für alle $x$.
+\end{theorem}
+\begin{theorem}
+	Wenn $X$ lokal zusammenhängend ist, ist $K(x)$ offen für alle $x$.
+\end{theorem}
+\begin{theorem}
+	$\prod_{j \in J} X_j$ ist lokal zusammenhängend genau dann, wenn jedes $X_i$ lokal zusammenhängend ist und alle bis auf eindlich viele $X_i$ zusammenhängend sind.
+\end{theorem}
+\begin{theorem}
+	Der Graph des topologischen Sinus ist zusammenhängend, aber nicht lokal wegzusammenhängend.
+\end{theorem}
+\begin{theorem}
+	Der topologische Besen ist wegzusammenhängend, aber nicht lokal zusammenhängend.
+\end{theorem}
 \end{document}

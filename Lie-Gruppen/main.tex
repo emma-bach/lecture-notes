@@ -255,4 +255,21 @@ Beispiel: Wir hatten bereits $\exp(\tr A) = \det \exp(A)$, also folgendes Diagra
 	\arrow["\exp", from=1-3, to=3-3]
 	\arrow["\det"{description}, from=3-1, to=3-3]
 \end{tikzcd}\]
+\begin{theorem}
+	$\Ad$ ist ein stetiger surjektiver Gruppenhomomorphismus $SU(2) \surj \SO(3)$ mit Kern $\lr{\pm id}$.
+\end{theorem}
+\begin{proposition}
+	$SU(2) \cong S^3 = \lr{q \in \bH : \norm{q} = 1}$
+\end{proposition}
+\chapter{Endlichdimensionale Darstellungen}
+\begin{definition}
+	Sei $g$ eine Liealgebra über einem Körper $k$. Eine Darstellung $(V, \rho)$ von $g$ besteht aus einem $k$-Vektorraum $V$ und einem Liealgebrenhomomorphismus $\rho : g \to \gl(V)$
+\end{definition}
+\begin{definition}
+	Sei $G$ eine Liegruppe und $\rho : G \to \GL(V)$ eine stetige Darstellung. So ist $V$ mit
+	\begin{align*}
+		T_e \rho : T_e(G) = \Lie~ G \to \gl(V) = \Mat(V \to V)
+	\end{align*}
+	eine Darstellung der Liealgebra $\Lie~ G$. Wir nennen diese Darstellung die \tib{abgeleitete Darstellung} zur Darstellung von $G$. 
+\end{definition}
 \end{document}
