@@ -399,4 +399,80 @@ Genauer sind die Äquivalenzklassen:
 \begin{theorem}
 	Der topologische Besen ist wegzusammenhängend, aber nicht lokal zusammenhängend.
 \end{theorem}
+\chapter{Filter und Konvergenz}
+\begin{definition}
+	Es sei $(X, \cO)$ ein topologischer Raum. Eine Folge $(x_n)_{n \in \bN}$ in $X$ \tib{konvergiert gegen $x$}, wir schreiben $x_n \to x$, wenn
+	\begin{align*}
+		\forall U \in U(x) : \exists n_0 \in \bN : \forall n \geq n_0 ; x_n \in U
+	\end{align*}
+\end{definition}
+\begin{definition}
+	Ein Punkt $x \in X$ heißt \tib{Häufungspunkt einer Folge} $(x_n)_{n \in \bN}$, wenn
+	\begin{align*}
+		\forall U \in U(x) : \forall n_0 \in \bN : \exists n \geq n_0 : x_n \in U
+	\end{align*}
+\end{definition}
+\begin{definition}
+	Ein Punkt $x \in X$ heißt \tib{Berührungspunkt einer Menge} $A \subseteq X$, wenn
+	\begin{align*}
+		\forall U \in U(x) : U \cap A \neq \emptyset
+	\end{align*}
+\end{definition}
+\begin{theorem}
+	Es sei $(X, \cO_X)$ ein topologischer Raum mit abzählbarer Umgebungsbasis, und sei $x \in X$. Dann gilt $x \in \ol A$ genau dann, wenn es eine Folge in $A$ gibt, die gegen $x$ konvergiert.
+\end{theorem}
+\begin{theorem}
+	Es seien $(X, \cO_X)$ und $(Y, \cO_Y)$ topologische Räume mit abzählbarer Umgebungsbasis, und sei $x \in X$. Dann ist $f : X \to Y$ stetig in $x$ genau dann, wenn
+	\begin{align*}
+		\forall (x_n)_{n \in \bN} : x_n \to x \implies f(x_n) \to f(x)
+	\end{align*}
+\end{theorem}
+\begin{definition}
+	Eine Teilmenge $\cF \subseteq \cP(X)$ heißt \tib{Filter über $X$}, wenn:
+	\begin{enumerate}
+		\item $X \in \cF$, $\emptyset \notin \cF$.
+		\item Ist $A \in \cF$ und $A \subseteq B$, so ist $B \in \cF$.
+		\item Sind $A$ und $B$ in $\cF$, so auch $A \cap B$.
+	\end{enumerate}
+\end{definition}	
+\begin{theorem}
+	Es sei $(X, \cO)$ ein topologischer Raum und $x \in X$. Dann ist die Menge $U(x)$ der Umgebungen von $x$ ein Filter über $X$, genannt der \tib{Umgebungsfilter}.
+\end{theorem}
+\begin{definition}
+	Ein Filter $\cF$ heißt \tib{frei} (en: non-principal), wenn $\bigcap F = \emptyset$. Falls $\cF$ nicht frei ist, so heißt $\cF$ \tib{fixiert}.
+\end{definition}
+\begin{theorem}
+	Der \tib{Fréchet-Filter} 
+	\begin{align*}
+		\cF = \lr{A \subseteq \bN : \bN \setminus A \tn{ ist endlich}}
+	\end{align*}
+	ist ein freier Filter über $\bN$.
+\end{theorem}
+\begin{definition}
+	Es sei $\cF$ ein Filter über $X$. So heißt eine Teilmenge $\cB \subseteq \cF$ eine \tib{Filterbasis von $\cF$}, wenn
+	\begin{align*}
+		\forall F \in \cF : \exists B \in \cB : B \subseteq F
+	\end{align*}
+\end{definition}
+\begin{example}
+	Jede Umgebungsbasis eines Punkts ist gleichzeitig eine Filterbasis des Umgebungsfilters, und umgekehrt.
+\end{example}
+\begin{theorem}
+	$\cB \subseteq \cP(X)$ ist Basis eines Filters aus $X$ genau dann, wenn $\emptyset \neq \cB$ und
+	\begin{align*}
+		\forall B_1, B_2 \in \cB: \exists B_3 \in \cB : B_3 \subseteq B_1 \cap B_2
+	\end{align*}
+\end{theorem}
+\begin{definition}
+	Ein Filter $U \subseteq \cP(X)$ heißt \tib{Ultrafilter}, falls $U$ bezüglich der Inklusion maximal ist.
+\end{definition}
+\begin{theorem}
+	\theoremname{Lemma von Zorn:} Jede induktive Halbordnung hat ein maximales Element.
+\end{theorem}
+\begin{corollary}
+	Jeder Filter kann zu einem Ultrafilter erweitert werden.
+\end{corollary}
+\begin{definition}
+	Eine Halbordnung heißt \tib{induktiv}, falls jede Kette eine obere Schranke hat.
+\end{definition}
 \end{document}
