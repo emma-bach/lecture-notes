@@ -1,0 +1,326 @@
+\documentclass[10pt]{article}
+\makeatletter
+
+% custom margins
+\usepackage[a4paper,margin=1in,rmargin=2.5in,marginparsep=16pt, marginparwidth=1.5in]{geometry}
+\renewcommand{\baselinestretch}{1.2}
+
+\usepackage[open=true]{bookmark}
+\usepackage{chngcntr}
+
+% emma's long list of custom macros and universally used packages
+\include{macros-and-packages-atlas.tex}
+
+% Mark proofs by a vertical line on the left side
+\tcolorboxenvironment{proof}{
+	colback=white,
+	boxrule=0pt,
+	frame hidden,
+	borderline west={1.5pt}{0pt}{black!33!white},
+	before skip=0.75cm,
+	after skip=0.75cm,
+	sharp corners,
+	breakable,
+	enhanced,
+}
+
+\tcolorboxenvironment{definition}{
+	colback=white,
+	size=tight,
+	enhanced,
+	frame hidden,
+	center
+}
+
+\newtcbtheorem[use counter = lemma, number within = section]{importanttheorem}{Satz}{colback=white,
+	colframe=black,
+	sharp corners,
+	enhanced,
+	attach boxed title to top left ={
+		xshift = 8pt, 
+		yshift = -\tcboxedtitleheight/2,
+		yshifttext=-\tcboxedtitleheight/2
+	},
+	boxed title style={
+		colframe = white
+	},
+	colbacktitle=white,
+	coltitle=black,
+	fonttitle=\bfseries,
+	boxrule=1.5pt
+}{th}
+
+\newtcbtheorem[use counter = lemma, number within = section]{importantdefinition}{Definition}{colback=white,
+	colframe=black,
+	sharp corners,
+	enhanced,
+	attach boxed title to top left ={
+		xshift = 8pt, 
+		yshift = -\tcboxedtitleheight/2,
+		yshifttext=-\tcboxedtitleheight/2
+	},
+	%minipage boxed title*=-3cm,
+	boxed title style={
+		colframe = white
+	},
+	colbacktitle=white,
+	coltitle=black,
+	fonttitle=\bfseries,
+	boxrule=1.5pt}{th}
+
+\newtcbtheorem[use counter = lemma, number within = section]{importantcorollary}{Korollar}{colback=white,
+	colframe=black,
+	sharp corners,
+	enhanced,
+	attach boxed title to top left ={
+		xshift = 8pt, 
+		yshift = -\tcboxedtitleheight/2,
+		yshifttext=-\tcboxedtitleheight/2
+	},
+	%minipage boxed title*=-3cm,
+	boxed title style={
+		colframe = white
+	},
+	colbacktitle=white,
+	coltitle=black,
+	fonttitle=\bfseries,
+	boxrule=1.5pt
+}{th}
+
+\newtcbtheorem[use counter = lemma, number within = section]{importantlemma}{Lemma}{colback=white,
+	colframe=black,
+	sharp corners,
+	enhanced,
+	attach boxed title to top left ={
+		xshift = 8pt, 
+		yshift = -\tcboxedtitleheight/2,
+		yshifttext=-\tcboxedtitleheight/2
+	},
+	%minipage boxed title*=-3cm,
+	boxed title style={
+		colframe = white
+	},
+	colbacktitle=white,
+	coltitle=black,
+	fonttitle=\bfseries,
+	boxrule=1.5pt
+}{th}
+
+\renewenvironment{proofsketch}{\begin{proof}[Proof Sketch]\renewcommand*{\qedsymbol}{\("\square"\)}}{\end{proof}}
+
+\begin{document}
+	\title{\Huge\vspace{-1.5cm}\textbf{Zusammenfassung Jordan-Normalform}}
+	\author{Emma Bach}
+	\maketitle
+	
+	Wir beginnen diese Notizen mit einer Wiederholung der verallgemeinerte Hauptraumzerlegung. Basierend darauf entwicklen wir einen (nicht konstruktiven, aber hoffentlich verständlicheren) Beweis für die Existenz der Jordan-Normalform. Alle im Folgenden behandelten Vektorräume sind endlichdimensional, $\Bbbk$ ist immer ein Körper.
+	
+	
+	\section{Verallgemeinerte Hauptraumzerlegung}
+	\begin{exercise}
+		Sei $V$ ein $\Bbbk$-Vektorraum. Dann wird $V$ durch die Operation $F.v := F(v)$ zu einem $\End(V)$-Modul.
+	\end{exercise}
+	\begin{theorem}
+		Jeder $\Bbbk[X]$-Modul kann als $\Bbbk$-Vektorraum $V$ mit einem ausgezeichneten Endomorphismus $F : V \to V$ dargestellt werden, und umgekehrt.
+	\end{theorem}
+	\begin{proof}
+		\begin{enumerate}
+			\item Sei $V$ ein $\Bbbk$-Vektorraum. Wir wissen aus der vorherigen Übung, dass $V$ mit $F.v = F(v)$ ein $\End(V)$-Modul ist. Dementsprechend wird $V$ durch die Polynomauswertungsabbildung $\ev_F : \Bbbk[X] \to \End(V)$ zu einem $\Bbbk$-Modul mit Skalarmultiplikation
+			\begin{align*}
+				P._Mv = \ev_F(P)(v) = P(F)(v)
+			\end{align*}
+			\item Sei nun $M$ ein $\Bbbk[X]$-Modul. Dann wird $M$ ein $\Bbbk$-Module, also ein $\Bbbk$-Vektorraum, wenn wir die Skalarmultiplikation auf konstante Polynome einschränken. Zusätzlich ist $G(v) = X.v$ ein Endomorphismus.
+		\end{enumerate}
+		\newpar
+		Wenn wir nun mit einem Vektorraum $(V,F)$ anfangen, dann daraus wie gegeben durch $P.v = P(F)(v)$ ein Modul $M$ konstruieren, und dann daraus durch $G = X.v$ wieder einen Vektorraum $(V,G)$ erhalten, so ist $G$ wieder unser urspüngliches $F$, da $$G(v) = X._Mv = X(F)(v) = F(v)$$ 
+		Wenn wir umgekehrt mit einem Modul $M$ anfangen, dann daraus einen Vektorraum $(V,F)$ konstruieren, und dann daraus wieder ein neues Modul $N$ basteln, so erhalten wir unsere ursprüngliche Skalarmultiplikation zurück, denn für $P(X) := \sum_{k = 0}^m a_k X^k$ gilt:
+		\begin{align*}
+			P._Nv = P(G)(v) 
+			&= P(X._M)(v)\\
+			&= \lr(\sum_{k = 0}^m a_k (X._M)^k)(v)\\
+			&= \lr(\sum_{k = 0}^m a_k X^k._M)(v)\\
+			&= \lr(\sum_{k = 0}^m a_k X^k._Mv)\\
+			&= \lr(\sum_{k = 0}^m a_k X^k)._Mv\\
+			&= P._Mv
+		\end{align*}
+		Somit sind unsere beiden Konstruktionen invers zueinander, also haben wir tatsächlich eine Bijektion.
+	\end{proof}
+	Wir können also für jeden $\Bbbk[X]$-Modul $M$ äquivalent $M = (V,F)$ schreiben.
+	\begin{exercise}
+		Sei $M$ ein $R$-Modul.
+		\begin{enumerate}
+			\item Zeige, dass für festes $r \in R$ die Skalarmultiplikationsabbildung
+			\begin{align*}
+				r. : M &\to M\\
+				m &\mapsto r.m
+			\end{align*}
+			$R$-linear ist.
+			\item Folgere, dass $\ker(r.)$ und $\im(r.)$ Untermoduln von $M$ sind.
+		\end{enumerate}
+	\end{exercise}
+	\begin{importanttheorem}{Struktursatz für Euklidische Moduln}{struktursatz}
+		Sei $M$ ein Modul über einem Euklidischen Ring $R$ (also einem Ring, über dem der Euklidische Algorithmus anwendbar ist). Sei $a = bc \in R$ mit $b,c$ teilerfremd und $a.m = 0$ für alle $m \in M$. Dann gilt:
+		\begin{enumerate}
+			\item $\ker(b.) = \im(c.)$,
+			\item $\im(b.) = \ker(c.)$,
+			\item $M = \ker(b.) \oplus \ker(c.)$.
+		\end{enumerate}
+	\end{importanttheorem}
+	\begin{proof}
+		\begin{enumerate}
+			\item Sei $m \in M$ und $c.m \in \im(c.)$. Dann gilt $b.(c.m) = a.m = 0$, also $\im(c.) \subseteq \ker(b.)$. 
+			\newpar
+			Wenden wir nun den Euklidischen Algorithmus an, finden wir $\beta, \gamma \in R$ mit $1 = \ggT(b,c) = \beta b + \gamma c$. Gilt nun $m \in \ker(b.)$, so folgt:
+			\begin{align*}
+				m 
+				&= 1.m \\
+				&= (\beta b + \gamma c).m \\
+				&= \beta.\underbrace{(b.m)}_{= 0} + \gamma.(c.m) \\
+				&= c.(\gamma.m) \in \im(c.)
+			\end{align*}
+			Also gilt auch $\ker(b.) \subseteq \im(c.)$, also insgesamt $\ker(b.) = \im(c.)$.
+			\item $\ker(c.) = \im(b.)$ folgt durch Vertauschung von $b$ und $c$ im vorherigen Beweis.
+			\item Sei nun $m \in M$. Wenden wir wie zuvor den Euklidischen Algorithmus an, erhalten wir
+			\begin{align*}
+				m &= (\beta b + \gamma c).m\\
+				&= b.(\beta.m) + c.(\gamma.m)\\
+				&\in \im(b.) + \im(c.)\\
+				&= \ker(b.) + \ker(c.),
+			\end{align*}
+			und wir erhalten $M = \ker(b.) + \ker(c.)$ wie gewünscht.
+			\newpar
+			Gilt nun $m \in \ker(b.) \cap \ker(c.)$, so folgt direkt:
+			\begin{align*}
+				m = k_1(b(m)) + k_2(c(m)) = 0,
+			\end{align*}
+			somit gilt $\ker(b.) \cap \ker(c.) = \lr{0}$, also ist unsere Summe direkt.
+		\end{enumerate}	
+	\end{proof}
+	\begin{corollary}
+		\label{res:strukturkorollar}
+		Sei $V$ ein $\Bbbk$-Vektorraum und $F : V \to V$ ein Endomorphismus. Sei $P = QR \in \Bbbk[X]$ mit $Q,R$ teilerfremd und $P.v = P(F)(v) = 0$ für alle $v \in V$. Dann gilt:
+		$$V = \ker(Q(F)) \oplus \ker(R(F)).$$
+	\end{corollary}
+	\begin{proof}
+		Wir verwenden die Äquivalenz von $\Bbbk[X]$-Moduln und $\Bbbk$-Vektorräumen mit Endomorphismus $F$, dann ist das einfach der Fall $R = \Bbbk[X]$ im eben bewiesenen Struktursatz \ref{th:struktursatz}.
+	\end{proof}
+	\begin{importantcorollary}{Verallgemeinerte Hauptraumzerlegung}{verallgemeinert}
+		Sei $V$ ein $\Bbbk$-Vektorraum und $F : V \to V$ ein Endomorphismus. Sei $P \in \Bbbk[X]$ normiert und sei $P = P_1^{n_1} \cdot \hdots \cdot P_k^{n_k}$ seine Primfaktorzerlegung. Dann gilt:
+		\begin{align*}
+			V = \bigoplus_{i = 1}^k \ker(P_i^{n_i}(F))
+		\end{align*}
+	\end{importantcorollary}
+	\begin{proof}
+		Folgt durch Induktion über $k$ direkt aus dem eben bewiesenen Korollar \ref{res:strukturkorollar}.
+	\end{proof}
+	
+	\section{Die Jordan-Normalform}
+	\begin{importantcorollary}{Hauptraumzerlegung}{res:geneigenspace}
+		\label{res:geneigenspace}
+		Sei $V$ $\Bbbk$-Vektorraum und $F : V \to V$ ein Endomorphismus so, dass das Minimalpolynom $\mu_F(X) = \prod_{i = 1}^k(X - \lambda_i)^{n_i}$ über $\Bbbk$ in Linearfaktoren zerfällt. Dann gilt
+		\begin{align*}
+			V = \bigoplus_{i = 1}^k \ker((F - \lambda_i \id_V)^{n_i})
+		\end{align*}
+		Wir nennen $\ker((F - \lambda_i \id_V)^{n_i})$ den \tib{$\lambda_i$-Hauptraum von $F$}, geschrieben $H(F, \lambda_i)$.
+	\end{importantcorollary}
+	\begin{proof}
+		Folgt aus der verallgemeinerten Hauptraumzerlegung \ref{th:verallgemeinert} direkt durch Einsetzen von $P = \mu_F$.
+	\end{proof}
+	\begin{exercise}
+		Zeige, dass $H(F,\lambda_i)$ alle $\lambda_i$-Eigenvektoren von $F$ enthält.
+	\end{exercise}
+	\begin{exercise}
+		\label{res:hauptrauminvariant}
+		Zeige, dass $H(F,\lambda_i)$ ein $F$-invarianter Untervektorraum von $V$ ist, also $F(H(F,\lambda_i)) \subseteq H(F,\lambda_i)$.
+	\end{exercise}
+	\begin{exercise}
+		\label{res:matrixdirectsum}
+		Sei $V = V_1 \oplus V_2$ eine Zerlegung von $V$ in $F$-invariante Untervektorräume. Sei $B_1$ eine Basis von $V_1$ und $B_2$ eine Basis von $V_2$. Zeige:
+		\begin{enumerate}
+			\item $B = B_1 \cup B_2$ ist eine Basis von $V$
+			\item Wenn die Einschränkung $F|_{V_1}$ von $F$ auf $V_1$ in der Basis $B_1$ durch die Matrix $A_1$ dargestellt wird, und die Einschränkung $F|_{V_2}$ von $F$ auf $V_2$ in der Basis $B_2$ durch die Matrix $A_2$, dann ist $F$ in der Basis $B$ durch
+			\begin{align*}
+				A = 
+				\begin{pmatrix}
+					A_1 & 0\\
+					0 & A_2
+				\end{pmatrix}
+			\end{align*}
+			dargestellt.
+		\end{enumerate}
+	\end{exercise}
+	\begin{definition}
+		Motiviert durch diese Erkenntnis kann man $A_1 \oplus A_2 = A$ definieren, d.h. das direkte Produkt von Matrizen ist die Blockdiagonalmatrix mit den entsprechenden Matrizen auf der Diagonalen.
+	\end{definition}
+	\begin{exercise}
+		\label{res:twobases}
+		Sei $F : V \to W$ linear. Sei $A$ eine Basis von $\ker~ F$ und $B$ ein Tupel von Vektoren so, dass $F(B)$ eine Basis von $\im~ F$ ist. Dann ist $A \cup B$ eine Basis von $V$.
+	\end{exercise}
+	\begin{definition}
+		Wir nennen einen Endomorphismus $N : V \to V$ \tib{nilpotent}, falls ein $n \in \bN$ so existiert, dass $N^n = 0$.
+	\end{definition}
+	Wir können nun unsere Erkentnisse verwenden, um die Existenz der Jordan-Normalform erst für nilpotenten Endomorphismen, und dann für beliebige Endomorphismen zu zeigen.
+	\begin{theorem}
+		\label{res:jordanbasis}
+		Sei $N : V \to V$ ein nilpotenter Endomorphismus. Dann existiert eine Basis $B$ von $V$ so, dass:
+		\begin{enumerate}
+			\item $B \cup \lr{0}$ $F$-invariant ist, und
+			\item für jedes $b \in B$ höchstens ein $b' \in B$ mit $F(b') = b$ existiert.
+		\end{enumerate}
+		Wir nennen eine solche Basis eine \tib{Jordanbasis}.
+	\end{theorem}
+	\begin{proof}
+		Wir beweisen diesen Satz in drei Schritten: Wir konstruieren eine basis $B$, dann zeigen wir, dass sie $F$-invariant ist, dann zeigen wir, dass jedes Element von $B$ höchstens ein Urbild in $B$ hat.
+		\begin{enumerate}
+			\item  
+			Wir konstruieren unsere Basis durch Induktion über $n = \dim V$.
+			\newpar
+			Falls $n = 0$, dann ist die leere Menge eine Basis (da eine Summe über die leere Menge der additiven Identität, also in diesem Fall dem Nullvektor, entspricht). Diese leere Basis erfüllt trivial unsere Forderungen.
+			\newpar
+			Da der Kern von $N$ nichttrivial ist, gilt $\dim \im~ N < \dim V$. Somit können wir per Induktionsannahme annehmen, dass eine Jordanbasis $A$ von $\im~ N$ existiert. Wir teilen diese Basis in zwei Teile auf:
+			\begin{enumerate}
+				\item $A_0 := \lr{a \in A \mid N(a) = 0},$
+				\item $A_{\neq 0} := \lr{a \in A \mid N(a) \neq 0}$.
+			\end{enumerate}
+			$A_0$ ist per Definition eine linear unabhängige Teilmenge von $\ker A$. Mit dem Basisergänzungssatz von Steinitz folgt die Existenz einer Menge $C$, durch die $A_0 \cup C$ zu einer Basis von $\ker A$ wird.
+			\newpar
+			$A_\neq 0$ ist die Menge aller $A$ so, dass $N(A_{\neq 0}) \subseteq A$. Wir fügen eine Menge $D$ hinzu, welche Urbilder aller übrigen Elemente von $A$ enthält (diese muss existieren, da $A \subseteq \im~ N$). Dann gilt per Definition $F(A_{\neq 0} \cup D) = A$.
+			\newpar
+			Insgesamt ist also $A_0 \cup C$ eine Basis von $\ker~ N$ und $F(A_{\neq 0} \cup D) = A$ eine Basis von $\im~ N$. Somit ist gemäß Übung \ref{res:twobases} $B = A \cup C \cup D$ eine Basis von $V$.
+			\item
+			$B \cup \lr{0}$ ist $F$-invariant, da $A$ per Definition $F$-invariant ist, $C$ im Kern von $N$ enthalten ist, und $D$ aus Urbildern von $A$ besteht.
+			\item
+			Außerdem sind alle Urbilder von $A$ in $B$ entweder in $A_{\neq 0}$ oder in $D$ enthalten, diese sind linear unabhängig, also sind die Urbilder eindeutig.
+		\end{enumerate}
+	\end{proof}
+	\begin{exercise}
+		\label{cor:nilpotentjordan}
+		Die Darstellungsmatrix von $N$ in $B$ ist in Jordan-Normalform mit Nullen auf der Diagonalen.
+	\end{exercise}
+	\begin{corollary}
+		Sei $F : V \to V$ eine Matrix, deren charakteristisches Polynom in Linearfaktoren zerfällt. Dann existiert eine Basis $B$ von $V$ so, dass $_BF_B$ Jordan-Normalform hat.
+	\end{corollary}
+	\begin{proof}
+		Gemäß Hauptraumzerlegung \ref{res:geneigenspace} ist $V$ die direkte Summe der Haupträume von $F$.
+		Gemäß Übung \ref{res:hauptrauminvariant} sind die Haupträume $F$-invariant. Finden wir also eine Basis $B_i$ für jeden Hauptraum $H(F, \lambda_i)$ so, dass $F|_{H(F, \lambda_i)}$ Jordan-Normalform hat, so ist gemäß \ref{res:matrixdirectsum} $F$ in der Basis $B = \bigcup_{i = 0}^n B_i$ eine Blockdiagonalmatrix aus Jordanblöcken, also ebenfalls in Jordan-Normalform.
+		\newpar
+		Sei also $F_i$ die Einschränkung von $(F - \lambda_i \id_V)$ auf $H(F, \lambda_i)$.
+		Per Definition der Haupträume gilt
+		\begin{align*}
+			H(F, \lambda_i) = \ker((F - \lambda_i \id_V)^{n_i}),
+		\end{align*}
+		also ist $F_i$ is nilpotent. Gemäß Übung \ref{cor:nilpotentjordan} existiert also eine Basis $B_i$ so, dass $_{B_i}{F_i}_{B_i}$ in Jordan-Normalform mit Nullen auf der Diagonalen ist. 
+		Da $$F|_{H(F, \lambda_i)} = F_i + \lambda{\id_{H(F, \lambda_i)}}$$
+		folgt nun direkt, dass die Darstellungsmatrix von $F|_{H(F, \lambda_i)}$ ebenfalls Jordan-Normalform hat, da wir einfach $\lambda$ auf die Diagonale von $_{B_i}{F_i}_{B_i}$ addieren.
+		\newpar
+		Dementsprechend ist die Einschränkung von $F$ auf die einzelnen Haupträume in der entsprechenden Basis $B_i$ jeweils in Jordan-Normalform. Wie am Anfang des Beweises besprochen ist die Darstellungsmatrix von $F$ in der Basis $B = \bigcup_{i = 1}^n B_i$ dann ebenfalls Jordan-Normalform.
+	\end{proof}
+	\begin{exercise}
+		Sei $F : V \to V$ ein Endomorphismus, dessen Charakteristisches Polynom in Linearfaktoren zerfällt. Sei $J_F$ die dazugehörige Jordanmatrix. Man zeige:
+		\begin{enumerate}
+			\item Die geometrische Vielfachheit eines Eigenwerts von $F$ entspricht der Anzahl der Jordanblöcke zu diesem Eigenwert in $J_F$.
+			\item Die algebraische Vielfachheit eines Eigenwerts von $F$ entspricht der Summe der Größen der Jordanblöcke zu diesem Eigenwert in $J_F$.
+			\item Der Exponent des Linearfaktors $(X - \lambda)$ im Minimalpolynom $\mu_F$ entspricht der Größe des größten Jordanblocks zu $\lambda$ in $J_F$.
+		\end{enumerate}
+	\end{exercise}
+\end{document}

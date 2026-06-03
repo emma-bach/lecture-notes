@@ -475,4 +475,84 @@ Genauer sind die Äquivalenzklassen:
 \begin{definition}
 	Eine Halbordnung heißt \tib{induktiv}, falls jede Kette eine obere Schranke hat.
 \end{definition}
+(...)
+\chapter{Trennungseigenschaften}
+\begin{definition}
+	Ein topologischer Raum $(X, \cO)$ heißt:
+	\begin{enumerate}
+		\item \tib{T0}, falls je zwei Punkte unterschiedliche Umgebungsfilter haben:
+		\begin{align*}
+			\forall x \neq y : U(x) \neq U(y)
+		\end{align*}
+		\item \tib{T1}, falls je zwei Punkte Umgebungen haben, die jeweils nicht den anderen Punkt enthalten:
+		\begin{align*}
+			\forall x \neq y : \exists U_x \in U(x), U_y \in U(y) : x \notin U_y, y \notin U_x
+		\end{align*}
+		\item \tib{T2} oder \tib{Hausdorffsch}, falls je zwei Punkte disjunkte Umgebungen haben:
+		\begin{align*}
+			\forall x \neq y : \exists U_x \in U(x), U_y \in U(y) : U_x \cap U_y \neq \emptyset
+		\end{align*}
+		\item \tib{T3}, falls jede abgeschlossene Menge zu jedem Punkt außerhalb der Menge disjunkte Umgebungen haben:
+		\item \tib{T3a} (oder \tib{T3$\frac{1}{2}$}), falls jede abgeschlossene Menge von jedem Punkt außerhalb der Menge durch eine stetige Funktion getrennt werden kann.
+		\item \tib{T4}, falls je zwei disjunkte geschlossene Mengen disjunkte Umgebungen haben.
+		\item \tib{Regulär}, falls er sowohl $T1$ als auch $T3$ ist,
+		\item \tib{Vollständig regulär,} falls er sowohl $T1$ als auch $T3a$ ist,
+		\item \tib{Normal}, falls er sowohl $T1$ als auch $T4$ ist.
+	\end{enumerate}
+\end{definition}
+\begin{theorem}
+	Die folgenden Aussagen sind äquivalent:
+	\begin{enumerate}
+		\item $(X, \cO)$ ist $T1$,
+		\item Alle einelementigen Teilmengen von $X$ sind abgeschlossen,
+		\item Jedes $A \subseteq X$ ist der Schnitt seiner offenen Obermengen.
+	\end{enumerate}
+\end{theorem}
+\begin{theorem}
+	Die folgenden Aussagen sind äquivalent:
+	\begin{enumerate}
+		\item $(X, \cO)$ ist Hausdorff,
+		\item Die Diagonalmenge
+		\begin{align*}
+			\Delta = \lr{(x,x) : x \in X}
+		\end{align*}
+		ist in der Produkttopologie abgeschlossen,
+		\item Jedes $x \in X$ ist der Schnitt der Abschlüsse seiner Umgebungen,
+		\item Jeder konvergente Filter hat genau einen Berührpunkt.
+	\end{enumerate}
+\end{theorem}
+\begin{theorem}
+	Sei $(X, \cO)$ ein vollständig regulärer Raum. Dann ist die Abbildung $e$, definiert durch
+	\begin{align*}
+		L &= \lr{f : f : X \to [0,1] \tn{stetig}}\\
+		e : X &\to \prod_{f \in L} [0,1]\\
+		x &\mapsto (f(x))_{f \in L},
+	\end{align*}
+	eine Einbettung in einen Produktraum $\prod_{f \in L} [0,1]$.
+\end{theorem}
+\begin{theorem}
+	Jeder Unterraum eines $T0$-Raumes ist $T0$.
+\end{theorem}
+\begin{theorem}
+	Jeder Unterraum eines $T1$-Raumes ist $T1$.
+\end{theorem}
+\begin{theorem}
+	Jeder Unterraum eines $T2$-Raumes ist $T2$.
+\end{theorem}
+\begin{theorem}
+	Jeder Unterraum eines $T3$-Raumes ist $T3$.
+\end{theorem}
+\begin{theorem}
+	Jeder Unterraum eines $T3a$-Raumes ist $T3a$.
+\end{theorem}
+\begin{corollary}
+	Es seien $X_i$, $i \in I$ nichtleere topologische Räume. Dann ist der Produktraum $\prod_{i \in I} X_i$ genau dann $T0/T1/T2/T3/T3a$, wenn jedes $X_i$ $T0/T1/T2/T3/T3a$ ist.
+\end{corollary}
+\begin{theorem}
+	Jeder \ul{abgeschlossene} Unterraum eines $T4$-Raumes ist $T4$.
+\end{theorem}
+\begin{theorem}
+	Die $T4$-Eigenschaft ist nicht gegen Produkte abgeschlossen:
+	Die Sorgenfreygerade $\bR$ mit der durch $[a,b)$ erzeugten Topologie ist normal, ihr Produkt mit sich selbst aber nicht.
+\end{theorem}
 \end{document}
