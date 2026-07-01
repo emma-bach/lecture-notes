@@ -28,6 +28,7 @@
 
 \include{title}
 \tableofcontents
+\part{Mengentheoretische Topologie}
 \chapter{Topologische Räume}
 \begin{proposition}
 	Sei $(X, <)$ eine nichtleere linear geordnete Menge. So bildet
@@ -554,5 +555,88 @@ Genauer sind die Äquivalenzklassen:
 \begin{theorem}
 	Die $T4$-Eigenschaft ist nicht gegen Produkte abgeschlossen:
 	Die Sorgenfreygerade $\bR$ mit der durch $[a,b)$ erzeugten Topologie ist normal, ihr Produkt mit sich selbst aber nicht.
+\end{theorem}
+\part{Algebraische Topologie}
+\chapter{Quotienten und Gruppenoperationen}
+\begin{theorem}
+	Sei $(X, \cO)$ ein Topologischer Raum und $\sim$ eine Äquivalenzrelation. So gilt:
+	\begin{enumerate}
+		\item Ist $(X, \cO)$ kompakt, so auch $(X/\sim, \cO_\sim)$.
+		\item Ist $(X, \cO)$ (weg)zusammenhängend, so auch $(X/\sim, \cO_\sim)$.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	Die Quotientenabbildung $p$ ist stetig.
+\end{proof}
+\chapter{Gruppenoperationen}
+\begin{definition}
+	Es sei $(G, \circ_G, e)$ eine Gruppe und $X$ eine Menge. Eine Abbildung $. : G \times X \to X$ heißt \tib{Gruppenoperation}, wenn sie das neutrale Element respektiert, und mit der Gruppenoperation assoziiert.
+\end{definition}
+\begin{definition}
+	Es sei $x \in X$, $G$ eine Gruppe, und $.$ eine Operation von $G$ auf $X$. Dann heißt
+	\begin{align*}
+		Gx := \lr{g.x \mid g \in G}
+	\end{align*}
+	die \tib{Bahn} oder das \tib{Orbit} von $x$.
+\end{definition}
+\begin{definition}
+	Die Menge aller Bahnen von $G$ auf $X$ heißt der \tib{Bahnenraum} von $G$ auf $X$.
+\end{definition}
+\begin{lemma}
+	Es sei $x \in X$, $G$ eine Gruppe, und $.$ eine Operation von $G$ auf $X$. Dann ist
+	\begin{align*}
+		x \sim y \Leftrightarrow \exists g \in G : g.x = y
+	\end{align*}
+	eine Äquivalenzrelation mit $[x] = Gx$.
+\end{lemma}
+\begin{definition}
+	Es sei $x \in X$, $G$ eine Gruppe, und $.$ eine Operation von $G$ auf $X$. Dann heißt
+	\begin{align*}
+		G_x := \lr{g \in G \mid g.x = x}
+	\end{align*}
+	die \tib{Standgruppe} oder \tib{Isotropiegruppe} von $x$.
+\end{definition}
+\begin{definition}
+	Es sei $A \subseteq X$, $G$ eine Gruppe, und $.$ eine Operation von $G$ auf $X$. Dann heißt
+	\begin{align*}
+		G_A := \lr{g \in G \mid g.A = A} = \lr{g \in G \mid \lr{g.a \mid a \in A} = A}
+	\end{align*}
+	die \tib{Standgruppe} oder \tib{Isotropiegruppe} von $x$.
+\end{definition}
+\begin{lemma}
+	$G_x$ ist eine Untergruppe von $G$.
+\end{lemma}
+\begin{definition}
+	Es sei $x \in X$, $G$ eine Gruppe, und $.$ eine Operation von $G$ auf $X$. Dann heißt $.$ \tib{transitiv}, falls für jedes $x \in X$
+	\begin{align*}
+		Gx = X
+	\end{align*}
+	gilt.
+\end{definition}
+\begin{lemma}
+	Eine Abbildung $. : (g,x) \mapsto g.x$ ist genau dann eine Gruppenoperation, wenn die Abbildung $\phi : G \to \tn{Sym}(X)$ mit $\phi(g) = (x \mapsto g.x)$ ein Gruppenhomomorphismus ist.
+\end{lemma}
+\begin{lemma}
+	Sei $.$ eine transitive Operation einer Gruppe $G$ auf einer Menge $X$. Dann ist für jedes $x \in X$ die Abbildung
+	\begin{align*}
+		\phi_x : G/G_x &\to X\\
+		[g] &\mapsto gx
+	\end{align*}
+	eine wohldefinierte Bijektion.
+\end{lemma}
+\begin{definition}
+	Es sei $(G, \circ)$ eine Gruppe, $\cO$ eine Topologie auf $G$. Dann heißt $(G, \circ, \cO)$ \tib{topologische Gruppe}, falls $\circ : G \times G \to G$ und $^{-1} : G \to G$ stetig sind.
+\end{definition}
+\begin{corollary}
+	Multiplikation von Links und Rechts mit einem Gegebenen Element einer topologischen Gruppe sind Homöomorphismen.
+\end{corollary}
+\begin{proposition}
+	Sei $(X, \cO)$ ein topologischer Raum. Dann ist $\prod_{x \in X} \cO$ eine Topologie auf $\tn{Sym}(X)$.
+\end{proposition}
+\begin{theorem}
+	Es sei $G$ eine topologische Gruppe und $H$ eine Untergruppe. Dann ist die Projektion $p : G \to G/H$ stetig und offen.
+\end{theorem}
+\begin{theorem}
+	Ist $(G, \circ, \cO)$ Hausdorff und $H$ abgeschlossen, so ist $G/H$ Hausdorff.
 \end{theorem}
 \end{document}

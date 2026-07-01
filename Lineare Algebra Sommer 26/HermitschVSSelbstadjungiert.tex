@@ -1,0 +1,179 @@
+\documentclass[10pt]{article}
+\makeatletter
+
+% custom margins
+\usepackage[a4paper,margin=1in,rmargin=2.5in,marginparsep=16pt, marginparwidth=1.5in]{geometry}
+\renewcommand{\baselinestretch}{1.2}
+
+\usepackage[open=true]{bookmark}
+\usepackage{chngcntr}
+
+% emma's long list of custom macros and universally used packages
+\include{macros-and-packages-atlas.tex}
+
+% Mark proofs by a vertical line on the left side
+\tcolorboxenvironment{proof}{
+	colback=white,
+	boxrule=0pt,
+	frame hidden,
+	borderline west={1.5pt}{0pt}{black!33!white},
+	before skip=0.75cm,
+	after skip=0.75cm,
+	sharp corners,
+	breakable,
+	enhanced,
+}
+
+\tcolorboxenvironment{definition}{
+	colback=white,
+	size=tight,
+	enhanced,
+	frame hidden,
+	center
+}
+
+\newtcbtheorem[use counter = lemma, number within = section]{importanttheorem}{Satz}{colback=white,
+	colframe=black,
+	sharp corners,
+	enhanced,
+	attach boxed title to top left ={
+		xshift = 8pt, 
+		yshift = -\tcboxedtitleheight/2,
+		yshifttext=-\tcboxedtitleheight/2
+	},
+	boxed title style={
+		colframe = white
+	},
+	colbacktitle=white,
+	coltitle=black,
+	fonttitle=\bfseries,
+	boxrule=1.5pt
+}{th}
+
+\newtcbtheorem[use counter = lemma, number within = section]{importantdefinition}{Definition}{colback=white,
+	colframe=black,
+	sharp corners,
+	enhanced,
+	attach boxed title to top left ={
+		xshift = 8pt, 
+		yshift = -\tcboxedtitleheight/2,
+		yshifttext=-\tcboxedtitleheight/2
+	},
+	%minipage boxed title*=-3cm,
+	boxed title style={
+		colframe = white
+	},
+	colbacktitle=white,
+	coltitle=black,
+	fonttitle=\bfseries,
+	boxrule=1.5pt}{th}
+
+\newtcbtheorem[use counter = lemma, number within = section]{importantcorollary}{Korollar}{colback=white,
+	colframe=black,
+	sharp corners,
+	enhanced,
+	attach boxed title to top left ={
+		xshift = 8pt, 
+		yshift = -\tcboxedtitleheight/2,
+		yshifttext=-\tcboxedtitleheight/2
+	},
+	%minipage boxed title*=-3cm,
+	boxed title style={
+		colframe = white
+	},
+	colbacktitle=white,
+	coltitle=black,
+	fonttitle=\bfseries,
+	boxrule=1.5pt
+}{th}
+
+\newtcbtheorem[use counter = lemma, number within = section]{importantlemma}{Lemma}{colback=white,
+	colframe=black,
+	sharp corners,
+	enhanced,
+	attach boxed title to top left ={
+		xshift = 8pt, 
+		yshift = -\tcboxedtitleheight/2,
+		yshifttext=-\tcboxedtitleheight/2
+	},
+	%minipage boxed title*=-3cm,
+	boxed title style={
+		colframe = white
+	},
+	colbacktitle=white,
+	coltitle=black,
+	fonttitle=\bfseries,
+	boxrule=1.5pt
+}{th}
+
+\renewenvironment{proofsketch}{\begin{proof}[Proof Sketch]\renewcommand*{\qedsymbol}{\("\square"\)}}{\end{proof}}
+
+\begin{document}
+	\section*{Übung zu Skalarprodukten und selbstadjungierten Matrizen}
+	\begin{lemma}
+		Sei $B = (b_1, \hdots, b_n)$ eine Orthogonalbasis von $(V,g)$. Dann gilt für jedes $v \in V$
+		\begin{align*}
+			v = \sum_{i = 1}^n g(b_i,v).b_i
+		\end{align*}
+	\end{lemma}
+	\begin{proof}
+		$v$ lässt sich bezüglich Basis $B$ darstellen als $v = \sum_{j = 1}^n \lambda_j.b_j$. Es folgt:
+		\begin{align*}
+			\sum_{i = 1}^n g(b_i,v).b_i
+			&=
+			\sum_{i = 1}^n g\lr(b_i,\sum_{j = 1}^n \lambda_j.b_j).b_i\\
+			&=
+			\sum_{i = 1}^n \lr(\sum_{j = 1}^n \lambda_j g\lr(b_i,b_j)).b_i\\
+			&=
+			\sum_{i = 1}^n \lr(\sum_{j = 1}^n \lambda_j \delta_{ij}).b_i\\
+			&=
+			\sum_{i = 1}^n \lambda_i.b_i
+		\end{align*}
+	\end{proof}
+	\begin{theorem}
+		Sei $s$ das Standardskalarprodukt. Dann gilt $A = A^*$ genau dann, wenn $s(Av,w) = s(v,Aw)$ für alle $v,w \in V$ gilt.
+	\end{theorem}
+	\begin{proof}
+		\begin{enumerate}
+			\item[$\Rightarrow$] $s(Av,w) = (Av)^* w = v^* A^*w = v^*Aw = s(v,Aw)$
+			\item[$\Leftarrow$] Es gilt $v^* A w = s(v,Aw) = s(Av,w) = \ol{s(w,Av)} = \ol{w^* Av}$. Setzen wir nun $v = e_i$ und $w = e_j$, so gilt $v^*Aw = a_{ij}$ und $\ol{w^* Av} = \ol{a_{ji}}$, also $a_{ij} = \ol{a_{ji}}$, also $A = A^*$.
+		\end{enumerate}
+	\end{proof}
+	Für allgemeine  Skalarprodukte ist der Beweis komplizierter, aber die Aussage ist trotzdem weiterhin korrekt, solange die Basis, in der wir arbeiten, Orthonormal ist:
+	\begin{theorem}
+		Sei eine Orthonormalbasis $B = (b_1, \hdots, b_n)$ von $V$ gegeben. Dann gilt bezüglich dieser Basis $A = A^*$ genau dann, wenn $g(Av, w) = g(v, Aw)$ für alle $v,w \in V$ gilt.
+	\end{theorem}
+	\begin{proof}
+		\begin{enumerate}
+			\item{$\Rightarrow$} Die Multiplikation einer Matrix mit einem Basisvektor $b_i$ ergibt immer die $i$-te Spalte der Matrix, also $Ab_i = \sum_{j = 1}^n a_{ji}.b_j$.
+			\newpar
+			Mit unserem Lemma gilt aber auch $Ab_i = \sum_{j = 1}^n g(b_j, Ab_i).b_j$, also folgt
+			\begin{align*}
+				a_{ji} 
+				= g(b_j, Ab_i)
+				= g(Ab_j, b_i)
+				= \ol{g(b_i, Ab_j)}
+				= \ol{a_{ij}},
+			\end{align*}
+			Also $A = A^*$.
+			\item{$\Leftarrow$}
+			Wir verwenden die selbe Kette von Gleichungen in anderer Reihenfolge:
+			\begin{align*}
+				g(Ab_j, b_i)
+				= \ol{g(b_i, Ab_j)}
+				= \ol{a_{ij}}
+				= a_{ji} 
+				= g(b_j, Ab_i)
+			\end{align*}
+			Durch die Bilinearität von $g$ und die Distributivität der Matrixmultiplikation folgt nun, dass die Gleichheit auch für alle $v,w \in V$ gilt:
+			\begin{align*}
+				g(Av, w)
+				&= g\lr(A\lr(\sum_{j = 1}^n \lambda_j b_j), \lr(\sum_{i = 1}^n \mu_i b_i))\\
+				&= \sum_{j = 1}^n \sum_{i = 1}^n \lambda_j \mu_i g\lr(Ab_j, b_i)\\
+				&= \sum_{j = 1}^n \sum_{i = 1}^n \lambda_j \mu_i g\lr(b_j, Ab_i)\\
+				&= g\lr(\lr(\sum_{j = 1}^n \lambda_j b_j), A\lr(\sum_{i = 1}^n \mu_i b_i))\\
+				&= g(v,Aw)
+			\end{align*}
+		\end{enumerate}
+	\end{proof}
+\end{document}
