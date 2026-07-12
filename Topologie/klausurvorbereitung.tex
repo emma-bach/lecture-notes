@@ -1,0 +1,90 @@
+\documentclass[8pt]{extarticle}
+\usepackage{extsizes}
+
+% custom margins
+\usepackage[a4paper,margin=1cm]{geometry}
+\usepackage{lipsum}
+
+% emma's long list of custom macros and universally used packages
+\include{../macros-and-packages.tex}
+
+\usepackage{titlesec}
+\titleformat{\section}[display]
+{\centering \normalsize \Large  \bfseries \color{black}}{}{}{}
+\titleformat{\subsection}[display]
+{\centering \normalsize \large  \bfseries \color{black}}{}{}{}
+
+
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep} 
+
+\begin{document}
+\twocolumn[\section*{Klausurblatt Topologie, Emma Marie Bach :3}]
+\subsection*{Topologische Räume}
+\begin{itemize}
+	\item \tbf{Metriken} sind positiv definit, symmetrisch, und erfüllen die Dreiecksungleichung.
+	\item \tbf{Topologien} sind gegen endliche Schnitte und beliebige Vereinigungen abgeschlossen.
+	\item \tbf{Basis} = Jede offene Menge ist eine Vereinigung von Basismengen. \tbf{S}ystem ist Basis einer Topologie, wenn endliche Schnitte erzeugt werden. \tbf{A}lternativ: Jeder Punkt aus endlichem Schnitt hat Basisumgebung im Schnitt.
+	\item \tbf{Subbasis} = Offene Mengen sind genau die Schnitte von Subbasismengen. \tbf{J}ede Teilmenge ist Subbasis einer Topologie.
+	\item \tbf{Umgebungsbasis} = Jede Umgebung enthält Basisumgebung. \tbf{Erstes Abz.axiom} = Abzählbare Umgebungsbasis um jeden Punkt. \tbf{Zweites Abz.axiom} = Abzählbare Basis.
+	\item \tbf{Inneres} = Vereinigung offener Teilmengen. \tbf{Abschluss} = Alle Punkte, die keine zur Menge disjunkte Umgebung haben. \tbf{Rand} = Abschluss$\setminus$ Inneres. \tbf{Dicht} = Raum liegt im Abschluss einer Teilmenge. \tbf{Nirgends Dicht} = Inneres des Abschlusses ist leer. \tbf{Cantormenge} ist abgeschlossen, nirgends dicht, überabzählbar.
+	\item \tbf{Spurtopologie} = Schnitte von offenen Mengen mit Teilmenge. \tbf{G}röbste Topologie, auf der Inklusion stetig ist. \tbf{A}bbildung $g$ auf Teilmenge ist stetig gdw. $\iota \circ g$ stetig. \tbf{Einbettung} = Homöomorphismus auf Bild.
+	\item \tbf{Initialtopologie} = Urbilder von offenen Mengen als Subbasis, evtl. mehrere Abbildungen $f_i$. Gröbste Topologie, auf der alle $f_i$ stetig sind. Im Allgemeinen $f_i$ nicht offen. $g : Z \to Y$ stetig gdw. alle $f_i \circ g$ stetig.
+	\tbf{Produkttopologie} = Initialtopologie der $p_i$. $p_i$ sind offen.
+	\item \tbf{Finaltopologie} = Mengen, deren Urbilder offen sind, als Subbasis. Feinste Topologie, auf der alle $f_i$ stetig sind. $g : Y \to Z$ stetig gdw. alle $g \circ f_i$ stetig. \tbf{Quotiententopologie} = Finaltopologie der Quotientenabbildung.
+	\item \tbf{Summenraum} = $Z$ offen $\Leftrightarrow$ Schnitt mit allen $X_i$ offen.
+\end{itemize}
+\subsection*{Stetige Abbildungen}
+\begin{itemize}
+	\item $f$ \tbf{stetig} $\Leftrightarrow$ Urbilder von Subbasismengen sind in offenen Mengen enthalten. $f$ stetig $\Leftrightarrow$ Einschränkungen auf abgeschlossene Überdeckungsmengen stetig.
+\end{itemize}
+\subsection*{Zusammenhang}
+\begin{itemize}
+	\item Teilmenge zusammenhängend, wenn zusammenhängend in der Spurtopologie. \tbf{Abschluss} zusammenhängender Mengen ist zsh. \tbf{Bild} zusammenhängender Mengen unter stetiger Abbildung ist zsh (ZWS). \tbf{Vereinigung} zusammenhängender Mengen mit nichtleerem Schnitt ist zsh. \tbf{Produkt} zsh $\Leftrightarrow$ Faktoren zsh.
+	\item Zusammenhängend $\Leftrightarrow$ offene Überdeckung hat für je zwei Punkte \tbf{Kette} an offenen Mengen, die diese verbinden. 
+	\item \tbf{Zusammenhangskomponente} = Vereinigung aller zsh. Obermengen. \tbf{Total unzusammenhängend} = alle Zshkomponenten einelementig.
+	\item 
+	\tbf{Lokal (weg-)zusammenhängend} = Jede Umgebung erhält (weg)-zsh. Umgebung. 
+	\item (Lokal) wegzsh $\implies$ (lokal) zsh. 
+	\item Lokal (weg)zsh $\implies$ \tbf{alle (Weg)zshkomponenten offen.}
+	\item Zsh + lokal wegzsh $\implies$ wegzsh.
+	\item \tbf{Produkt} lokal zsh gdw. Jeder Faktor lokal zsh und fast alle Faktoren zsh.
+	\item Wzsh $\not \rightarrow$ lokal wzsh, wzsh $\not \rightarrow$ lokal zsh (Topologischer Sinus mit Enden verbunden)
+\end{itemize}
+\subsection*{Filter}
+\begin{itemize}
+	\item Folgenkonvergenz reicht, falls abzählbare Umgebungsbasis existiert.
+	\item \tbf{Filter} = $X$, Obermengen, Schnitte enthalten.
+	\item \tbf{Filterbasis} = Filter besteht aus Obermengen.
+	\item \tbf{Frei} = Schnitt aller Mengen ist leer. Sonst \tbf{fixiert}. \tbf{Fréchet-Filter} = Kofinit auf $\bN$ ist frei.
+	\item \tbf{Ultrafilter} = $A$ oder $X \setminus A$ enthalten. Jeder Filter kann zu einem Ultrafilter erweitert werden.
+	\item \tbf{Filterkonvergenz} = Alle Umgebungen enthalten. \tbf{Berührungspunkt} = Alle Umgebungen haben nichtleeren Schnitt mit einer Filtermenge = Existiert feinerer Filter, der gegen Punkt konvergiert. \tbf{Abschluss} = Menge aller Berührpunkte.
+\end{itemize}
+\subsection*{Trennungseigenschaften}
+\begin{itemize}
+	\item \tbf{T0} = $\cU(y) \neq \cU(x)$. \tbf{T1} = $\exists U_x, U_y$, $x \notin U_y$ und $y \notin U_x$. \tbf{T2} = $U_x \cap U_y = \emptyset$. \tbf{T3} = $U_x \cap U_A = \emptyset$ für $A$ abgeschlossen. \tbf{T3a} = $\exists f : X \to [0,1]_\bR$ stetig mit $f(x) = 1, f[A] \subseteq \lr{0}$. \tbf{T4} = $U_A \cap U_B = \emptyset$.
+	\item T1 + T3 = \tbf{regulär}. T1 + T3a = \tbf{vollständig regulär}. T1 + T4 = \tbf{normal}.
+	\item T0 bis T3a vererben sich auf \tbf{beliebige Unterräume}. T4 vererbt sich auf \tbf{abgeschlossene Unterräume}.
+	\item \tbf{Indiskrete Topologie} hat T3, T3a und T4, aber nicht T0. \tbf{Kofinite Topologie} auf $\bN$ hat T1, aber nicht T2.
+	\item T1 $\Leftrightarrow$ \tbf{Alle Punkte abgeschlossen} $\Leftrightarrow$ Jede Menge ist Schnitt ihrer offenen Obermengen.
+	\item T2 $\Leftrightarrow$ \tbf{Diagonale ist im Produkt abgeschlossen} $\Leftrightarrow$ Jeder Punkt ist Schnitt seiner geschlossenen Umgebungen $\Leftrightarrow$ jeder konvergente Filter hat genau einen Berührpunkt.
+	\item Jeder vollständig reguläre Raum kann \tbf{in ein Produkt} $\prod_{f \in L}[0,1]$ eingebettet werden ($L = \lr{f \in C(X, [0,1])}$).
+	\item \tbf{Produkt nichtleerer Räume} ist T0 bis T3a genau dann, wenn Faktoren T0 bis T3a sind.
+	\item \tbf{Sorgenfrey} ist vollständig regulär. \tbf{Sorgenfrey} ist normal, aber \tbf{Sorgenfrey}$^2$ nicht. 
+	\item \tbf{Quotiententopologie} ist genau dann T1, wenn alle Äquivalenzklassen abgeschlossen sind. 
+	\item Ist Quotient Hausdorff, ist Relation im Produkt des Basisraums abgeschlossen. 
+	\item Ist $R$ abgeschlossen und $p$ offen, ist $X/\sim$ Hausdorff.
+	\item Ist $X$ regulär und $p$ offen und abgeschlossen, ist $X/\sim$ Hausdorff.
+	\item Ist $X$ T4 und $p$ abgeschlossen, ist $X/\sim$ T4.
+	\item Seien $f,g : X \to Y$ stetig und $Y$ Hausdorff. Dann gilt:
+	\begin{enumerate}
+		\item $\lr{f(x) = g(x)}$ ist abgeschlossen.
+		\item $f,g$ sind eindeutig durch ihr Bild auf dichten Teilmengen bestimmt.
+		\item $\lr{f(x) = y}$ ist abgeschlossen.
+		\item Ist $f$ injektiv, ist $X$ Hausdorff.
+		\item Sei $x \sim y \Leftrightarrow f(x) = f(y)$. Dann ist $X/\sim$ Hausdorff.
+	\end{enumerate}
+	\item $X$ ist T3 genau dann, wenn jede Umgebung eine abgeschlossene Umgebung enthält.
+	\item $X$ ist T4 genau dann, wenn zwischen jeder offenen Menge mit abgeschlossener Teilmenge eine offene Menge und ihr Abschluss liegen.
+\end{itemize}
+\end{document}
