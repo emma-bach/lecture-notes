@@ -25,22 +25,432 @@
 
 \renewcommand*\contentsname{Inhalt}
 \renewcommand*\proofname{Lösung}
-
 \newcommand{\ex}[1]{\tit{Übung} #1.}
 \pagestyle{fancy} %allows headers
 
 \lhead{Emma Bach}
 \rhead{\today}
 \title{\bfseries Klausuraufschrieb Elementargeometrie}
-\date{Sommersemester 26}
+\date{Sommersemester 2026}
 \author{Emma Bach}
 \begin{document}
 	\maketitle
-	\section*{\centering - 5 -}
+	\section*{Lineare Algebra}
 	\begin{enumerate}
-		\item[5.1] \tit{Man betrachte die komplexe Zahlenebene als euklidische Ebene und betrachte die Drehung $d$ mit Fixpunkt $p \in \bC$ gegen den Uhrzeigersinn um den Rechten Winkel, in Formeln gegeben durch $d : p + z \mapsto p + iz$. Man schreibe für einen beliebigen Richtungsvektor $w \in \bC$ die Verknüpfung $(w+) \circ d$ wieder als eine Drehung. Was ist der Fixpunkt dieser neuen Drehung?}
-		\item[6.1] \tit{Man betrachte in der komplexen Zahlenebene die Kreisspiegelung am Kreis mit Radius $2$ und Zentrum in $i$. Was ist das Bild von $2$? Was ist das Bild des Einheitskreises?}
-		\item[8.3] \tit{Welche Abbildung ist die Zentralprojektion mit Zentrum in $(0,0,1$ auf die $xy$-Ebene in Koordinaten?}
+		\item[5.1 - \tbf{5}] 
+		\tit{Man betrachte die komplexe Zahlenebene als euklidische Ebene und betrachte die Drehung $d$ mit Fixpunkt $p \in \bC$ gegen den Uhrzeigersinn um den Rechten Winkel, in Formeln gegeben durch $d : p + z \mapsto p + iz$. Man schreibe für einen beliebigen Richtungsvektor $w \in \bC$ die Verknüpfung $(w+) \circ d$ wieder als eine Drehung. Was ist der Fixpunkt dieser neuen Drehung?}
+		
+		Substituieren durch $z = x-p$ liefert:
+		\begin{align*}
+			d : x 
+			&\mapsto p + i(x-p)\\
+			&= ix + p(1-i)
+		\end{align*}
+		Komposition mit $(w+)$ liefert also
+		\begin{align*}
+			d : x 
+			&\mapsto ix + p(1-i) + w
+		\end{align*}
+		Der Fixpunkt ist nun $x'$ mit
+		\begin{align*}
+			x'
+			&= ix' + p(1-i) + w\\
+			\Leftrightarrow
+			x' - ix' &= p(1-i) + w\\
+			\Leftrightarrow
+			x'(1-i) &= p(1-i) + w\\
+			\Leftrightarrow
+			x' &= p + \frac{w}{1-i}\\
+		\end{align*}
+		\item[3.3 - \tbf{4}]
+		\tit{Man berechne den Arcuscosinus des Winkels, den zwei Flächen eines Tetraeders längs einer Kante einschließen. Der Winkel von Flächen ist dabei erklärt als der kleinstmögliche Winkel zwischen darauf senkrechten Strahlen.}
+		
+		Wir betten den Tetraeder durch $V_1 = (1,1,1)$, $V_2 = (-1,-1,1)$, $V_3 = (-1,1,-1)$, $V_4 = (1,-1,-1)$ in den $\bR^3$ ein. Wir betrachten die Flächen $(V_1,V_2,V_3)$ und $(V_1,V_2,V_4)$. Wir berechnen die Normalenvektoren als normiertes Kreuzprodukt der Kanten. Es gilt
+		\begin{align*}
+			v_{12} \times v_{13} 
+			&= 
+			(V_2 - V_1) \times (V_3 - V_1)\\
+			&=
+			(-2,-2,0) 
+			\times 
+			(-2,0,-2)\\
+			&= (4-0,0-4,0-4)\\
+			&= (4,-4,-4)
+		\end{align*}
+		und
+		\begin{align*}
+			v_{12} \times v_{14}
+			&= (V_2 - V_1) \times (V_4 - V_1)\\
+			&= (-2,-2,0) 
+			\times
+			(0,-2,-2)\\
+			&= (4-0,0-4,4-0)\\
+			&= (4,-4,4)
+		\end{align*}
+		Normierung beider Vektoren liefert
+		\begin{align*}
+			n_1 = \frac{1}{\sqrt{3}}(1,-1,-1)\\
+			n_2 =
+			\frac{1}{\sqrt{3}}(1,-1,1)
+		\end{align*}
+		also:
+		\begin{align*}
+			\cos \theta 
+			&= \frac{\scalar{n_1}{n_2}}{\norm{n_1}\norm{n_2}}\\
+			&=
+			\scalar{n_1}{n_2}\\
+			&=
+			\frac{1}{3}(1+1-1)\\
+			&=
+			\frac{1}{3}
+		\end{align*}
+		\item[3.4 - \tbf{4}]
+		\tit{Man zeige: Gegeben vier von Null verschiedene Vektoren in einem Dreidimensionalen Skalarproduktraum, von denen je zwei einen Winkel $> 90$° einschließen, sind je drei linear unabhängig.}
+		
+		Sei sonst $\lambda_1 v_1 + \lambda_2 v_2 + \lambda_3 v_3 = 0$ eine nichttriviale Linearkombination. Sei OBdA $\lambda_1 \leq \lambda_2 \leq \lambda_3$. Haben alle drei Koeffizienten das gleiche Vorzeichen, so folgt aus
+		\begin{align*}
+			\scalar{\lambda_1 v_1 + \lambda_2 v_2 + \lambda_3 v_3}{v_4} = 0
+			\Leftrightarrow
+			\lambda_1\scalar{v_1}{v_4} + \lambda_2\scalar{v_2}{v_4} + \lambda_3\scalar{v_3}{v_4}= 0
+		\end{align*}
+		bereits $\lambda_1 = \lambda_2 = \lambda_3 = 0$ im Widerspruch zu unseren Annahmen, da nach Annahme auch alle $\scalar{v_i}{v_4}$ das gleiche Vorzeichen haben.
+		
+		Sei also OBdA $\lambda_1 \leq 0 \leq \lambda_2 \leq \lambda_3$. Wir haben $-\lambda_1 v_1 = \lambda_2 v_2 + \lambda_3 v_3 := w$. Es gilt 
+		\begin{align*}
+			\scalar{w}{w} 
+			&= 
+			\scalar{-\lambda_1 v_1}{\lambda_2 v_2 + \lambda_3 v_3}\\
+			&= 
+			\scalar{-\lambda_1 v_1}{\lambda_2 v_2}
+			+
+			\scalar{-\lambda_1 v_1}{\lambda_3 v_3}
+			\\
+			&= 
+			\underbrace{-\lambda_1}_{\geq 0}\underbrace{\lambda_2}_{\geq 0}\underbrace{\scalar{v_1}{v_2}}_{\leq 0}
+			+
+			(
+			\underbrace{-\lambda_1}_{\geq 0}\underbrace{\lambda_3}_{\geq 0}\underbrace{\scalar{v_1}{v_3}}_{\leq 0})
+			\\
+			&\leq 0,
+		\end{align*} 
+		also folgt durch die positive Definitheit des Skalarprodukts $w = 0$.	Somit gilt $\scalar{w}{v_4} = 0$, also
+		\begin{align*}
+			-\lambda_1\scalar{v_1}{v_4}
+			=
+			0
+			=
+			\lambda_2 \scalar{v_2}{v_4} + \lambda_3 \scalar{v_3}{v_4}
+		\end{align*}
+		Es folgt $\lambda_1 = \lambda_2 = \lambda_3 = 0$.
+		\item[1.4 - \tbf{3}] \tit{Seien $(Z,s,\epsilon)$ und $(U,t,\eta)$ zweidimensionaler reelle Vektorräume mit Skalarprodukt und Orientierung. Für einen orthogonalen Isomorphismus $\psi : Z \iso U$ erklären wir
+			\begin{align*}
+				\int \psi : SO(Z,s) \iso SO(U,t)
+			\end{align*}
+			durch $k \mapsto \psi \circ k \circ \psi^{-1}$. Man zeige, dass für je zwei $\phi, \psi : U \iso U$ gilt $\int \psi = \int \phi$.}
+		
+		Wir wollen $\psi \circ k \circ \psi^{-1} = \phi \circ k \circ \phi^{-1}$, also $\phi^{-1} \psi \circ k \circ \psi^{-1} \phi = k$. Da $\phi, \psi$ oriegntierungserhalten angenommen waren, ist auch $\psi^{-1}\phi$ orientierungserhaltend. Da $SO(Z,s)$ kommutativ ist, gilt $k \circ \psi^{-1} \phi = \psi^{-1}\phi \circ k$, also
+		\begin{align*}
+			\phi^{-1} \psi \circ k \circ \psi^{-1} \phi
+			&=
+			\phi^{-1} \psi \circ \psi^{-1} \phi \circ k\\
+			&=
+			k
+		\end{align*}
+		\item[1.3 - \tbf{1}]
+		\tit{Man bestimme alle endlichen Untergruppen von $O(2)$.}
+	\end{enumerate}
+	
+	\clearpage
+	
+	\section*{Drehspiegelgruppen}
+	\begin{definition}
+		In einem zweidimensionaler Vektorraum $Z$ heißt eine Untergruppe $D \subseteq \GL(Z)$ eine \tib{Drehspiegelgruppe auf $Z$}, wenn es für je zwei Strahlen $A,B \subseteq Z$ genau zwei Elemente $k,h \in D$ gibt mit $k(A) = h(A) = B$.
+	\end{definition}
+	\begin{definition}
+		Ein Automorphismus eines zweidimensionalen reellen Vektorraums $Z$ heißt \tib{Spiegelung}, falls seine Fixpunktmenge eine Gerade ist und sein Quadrat die Identität.
+	\end{definition}
+	\begin{lemma}
+		Die Elemente, die in einem Vektorraum mit Drehspiegelgruppe einen Strahl auf sich selbst abbilden, sind genau die Identität und die eindeutige Spiegelung am Strahl.
+	\end{lemma}
+	\begin{lemma}
+		Die orientierungsumkehrenden Elemente einer Drehspiegelgruppe sind genau die Spiegelungen.
+	\end{lemma}
+	\begin{lemma}
+		Je zwei Strahlen in $Z$ werden durch genau eine Spiegelung aus $D$ miteinander vertauscht.
+	\end{lemma}
+	\begin{lemma}
+		Jedes Element von $D$ ist entweder eine Spiegelung oder ein Produkt von zwei Spiegelungen.
+	\end{lemma}
+	\begin{lemma}
+		Jedes Element von $D$ hat Determinante $\pm 1$, und die ELemente mit Determinante $1$ ("Drehungen") bilden eine Untergruppe $D^\tn{or}$.
+	\end{lemma}
+	\begin{lemma}
+		Gegeben eine Spiegelung $r \in D$ und ein $d \in D^\tn{or}$ gilt $rdr = d^{-1}$.
+	\end{lemma}
+	\begin{lemma}
+		$D^\tn{or}$ ist kommutativ.
+	\end{lemma}
+	\begin{lemma}
+		Die Punktspiegelung am Ursprung $-\id_Z$ liegt in $D$.
+	\end{lemma}
+	\begin{lemma}
+		Es gibt genau zwei Elemente $R \in D$ mit $R^2 = -\id_Z$ (Drehungen um den rechten Winkel).
+	\end{lemma}
+	\begin{corollary}
+		Jeder Vektorraum mit Drehspiegelgruppe $(Z,D)$ besitzt ein $D$-invariantes Skalarprodukt, und jede $D$-invariante Bilinearform ist ein Vielfaches dessen. Es folgt $D = O(Z,s)$.
+	\end{corollary}
+	\begin{definition}
+		Ein Isomorphismus $\psi : (Z,D) \to (Y,C)$ von Vektorräumen heißt \tbf{drehspiegelverträglich}, wenn $k \in C \Leftrightarrow \psi \circ k \circ \psi^{-1} \in D$, also wenn $\int_\psi$ ein Gruppenisomorphismus der Drehspiegelgruppen ist.
+	\end{definition}
+	\begin{lemma}
+		Die Drehspiegelverträglichen Isomorphismen $(Z,D) \to (Z,D)$ sind genau die Skalaren Vielfachen der Elemente von $D$.
+	\end{lemma}
+	\begin{lemma}
+		Gegeben zwei Drehspiegelverträgliche orientierungstreue Isomorphismen $\Phi, \psi$ gilt $\int_\Phi = \int_\psi$. Enthält nur einer die Orientierung, gilt $\int_\Phi = \tn{inv} \circ \int_\psi$.
+	\end{lemma}
+	\begin{definition}
+		\begin{itemize}
+			\item Ein \tbf{gerichteter Winkel} $\measuredangle(A,B) = -\measuredangle(B,A)\in \bW$ ist das Element der Winkelgruppe, das $A$ auf $B$ abbildet.
+			\item 
+			 \tbf{Absoluter Winkel} $\angle(A,B) = \angle(B,A)$
+		\end{itemize}
+	\end{definition}
+	\begin{enumerate}
+		\item[1.1 - \tbf{4}] \tit{Man zeige: Die Gruppe $D \subseteq GL_\bR(\bC)$ aller $\bR$-linearen Automorphismen von $\bC$ der Gestalt $w \mapsto z \cdot w$ oder $w \mapsto z \cdot \ol w$ für $z \in \bC$ mit $\abs{z} = 1$ ist eine Drehspiegelgruppe. Man gebe dafür ein invariantes Skalarprodukt auf dem $\bR$-Vektorraum $\bC$ an.}
+		
+		Aufgrund der Vollständigkeit von $\bC$ finden auf jedem Paar von Strahlen $A,B$ ein Paar von Punkten $a,b$ auf $A,B$ mit Norm $1$. Dann gibt es genau ein $z \in S^1$ mit $(z\cdot) : A \mapsto B$, nämlich $z = \frac{b}{a}$. Bezeichnet weiter $\gamma$ die Konjugation, gibt es auch nur ein $z \in S^1$ mit $(z \cdot) \circ \gamma : A \mapsto B$, nämlich $z = \frac{b}{\ol a}$. Also gibt es für jedes Paar von Strahlen genau zwei Elemente, die den ersten auf den anderen abbilden, also ist $D$ eine Drehspiegelgruppe im Sinne der Vorlesung.
+		
+		Ein invariantes Skalarprodukt $ \bC \times \bC \to \bR$ ist etwa gegeben durch $\scalar{v}{w} = \Re(v \ol w)$.
+		\item[2.1 - \tbf{4}]
+		\tit{Man zeige, daß die orthogonale Gruppe $\bQ^2$ mit seinem Standardskalarprodukt keine Drehspiegelgruppe ist.}
+		
+		Drehen wir $\lambda(1,1)$ auf $\lambda(1,0)$, müsste $(1,1)$ auf $(\sqrt 2, 0)$ abgebildet werden.
+		\item[1.2 - \tbf{3}] \tit{Man zeige: Gegeben $(Z,D)$ ein zweidimensionaler reeller Vektorraum mit ausgezeichneter Drehspiegelgruppe wird die Drehspiegelgruppe $D$ von ihren Spiegelungen erzeugt.}
+		
+		Gegeben $d \in D$, ein Strahl $A \subseteq U$, und $s$ die Spiegelung, die $A$ festhält, müssen $d$ und $ds$ die einzeigen Elemente von $D$ sein, welche $A$ auf $d(A)$ abbilden. Je zwei Strahlen $A,B$ in $Z$ können jedoch durch eine eindeutige Spiegelung $t \in D$ vertauscht werden. Es gibt also auch eine Spiegelung $t \in D$ mit $t(A) = d(A)$. Somit gilt $\lr{d,ds} = \lr{t,ts}$. Also ist jedes Element von $d \in D$ entweder eine Spiegelung oder ein Produkt von zwei Spiegelungen.
+				\item[3.1 - \tbf{2}]
+		\tit{Gegeben ein drehspiegelverträglicher Isomorphismus von Vektorräumen mit Drehspiegelgruppe $\psi : (Z,D) \iso (Y,C)$ gibt es genau eine linear Abbildung der Längengeraden $\bL_\psi : \bL_Z \iso \bL_Y$ mit der Eigenschaft $\norm{\psi v}_Y = \bL_\psi(\norm{v}_Z)$, und dann gilt auch
+			\begin{align*}
+				\scalar{\psi v}{\psi w}_Y =
+				\bL_{\psi}^{\tensor2}(\scalar{v}{w}_Z)
+			\end{align*}
+			Hinweis: Gegeben zwei lineare Abbildungen $f : L \to L',g : M \to M'$ zwischen eindimensionalen Vektorräumen gibt es genau eine lineare Abbildung $f \tensor g : L \tensor M \to L' \tensor M'$ mit $l \tensor m \mapsto f(l) \tensor g(m)$. Es gilt außerdem per Definition $\scalar{v}{w} = \norm{v}_Y \tensor \norm{w}_Y$.
+		}
+		\item[3.2 - \tbf{3}] \tit{Gegeben Strahlenpaare $(A,B)$ und $(A', B')$ in Vektorräumen mit Drehspiegelgruppe $Z,Z'$ gibt es genau dann einen drehspiegelverträglichen Isomorphismus $\psi : Z \iso Z'$} mit $\psi(A) = A'$ und $\psi(B) = B'$, wenn gilt
+		\begin{align*}
+			\angle(A,B) = \angle(A',B')
+		\end{align*}
+		\begin{enumerate}
+			\item
+			 Angenommen, es existiert ein drehspiegelverträglicher Isomorphismus $\psi : Z \to Z'$ so, dass $\psi(A) = A'$ und $\psi(B) = B'$. 
+			 Dann gilt gemäß 1.4.10 $\measuredangle(A,B) = \measuredangle(A',B')$, also folgt auch $\angle(A,B) = \angle(A',B')$.
+			 
+			 Alternativ:
+			 Seien $v \in A$ und $w \in B$ ungleich Null. Dann gilt:
+			\begin{align*}
+				\cos (A',B') 
+				&= \frac{\scalar{\psi v}{\psi w}_{Z'}}{\norm{\psi v}_{Z'}\norm{\psi w}_{Z'}}\\
+				&=
+				\frac
+				{L_\psi^{\tensor2}(\scalar{v}{w}_Z)}
+				%
+				{L_\psi(\norm{ v}_Z)L_\psi(\norm{ w}_Z)}
+				\\
+				&=
+				\frac
+				{L_\psi^{\tensor2}(\scalar{v}{w}_Z)}
+				%
+				{L^{\tensor2}_\psi(\norm{v}_Z \tensor \norm{w}_Z)}
+				\\
+				&=
+				\frac{\scalar{v}{w}_Z}{\norm{v}_Z \norm{w}_Z}
+			\end{align*}
+			\item Sei $\angle(A,B) = \angle(A',B')$. Wähle $a \in A \neq 0$ und $v$ orthogonal zu $a$ von der selben Länge. Wähle analog $a' \in A'$ und $v'$ orthogonal so, dass $a'$ und $v'$ zueinander gleich orientiert sind wie $a$ und $v$. Definiere $\psi$ durch $a \mapsto a'$ und $v \mapsto v'$. Diese Abbildung ist per Definition Orthogonal, also Drehspiegelkompatibel. Da die Winkel gleich sind folgt dann aus $\psi(A) = A'$ auch $\psi(B) = B'$.
+		\end{enumerate}
+		\item[2.2 - \tbf{1}]
+		\tit{Die lange Aufgabe :)}
+	\end{enumerate}
+
+	\clearpage
+	
+	\section*{Kongruenzebenen}
+	\begin{theorem}
+		Kongruenzen sind genau affine Abbildungen mit Orthogonalem Richtungsanteil und damit auch genau affine Abbildungen, die Abstände bzw. Winkel erhalten.
+	\end{theorem}
+	\begin{enumerate}
+		\item[4.1.a - \tbf{4}]
+		\tit{Man zeige den Sinussatz \begin{align*}
+				\frac{\sin \alpha}{a} = \frac{\sin \beta}{b} = \frac{\sin \gamma}{c}
+		\end{align*}
+		für jedes Dreieck einer Kongruenzebene mit positiven Seitenlängen $a,b,c$.
+		}
+	
+		Wir wählen Koordinaten so, dass $C$ auf dem Ursprung und $a$ auf der positiven $x$-Achse liegt, d.h. $B = (a,0)$. Es folgt $A = (b, \cos \gamma, b \sin \gamma)$.
+		
+		Sei $h$ die Länge der zu $BC$ senkrecht stehenden Strecke nach $A$. $h$ ist genau die $x$-Koordinate von $A$, also $b \sin \gamma$. Wählen wir nun neue Koordinaten so, dass $A$ auf der positiven $x$-Achse liegt, folgt auch $h = c \sin \beta$, also $\frac{\sin \beta}{b} = \frac{\sin \gamma}{c}$, und mit erneutem Koordinatenwechsel folgt auch die letzte Gleichung.
+		
+		\item[4.1.b - \tbf{4}]
+		\tit{Man zeige den Cosinussatz \begin{align*}
+				a^2 + b^2 - 2ab \cos \gamma = c^2
+			\end{align*}
+		}
+		
+		Mit Pythagoras gilt
+		\begin{align*}
+			c^2 
+			&= h^2 + A_y^2\\
+			&= (b \sin \gamma)^2 + (a-b\cos \gamma)^2\\
+			&= b^2 \sin^2 \gamma + a^2 - 2ab\cos\gamma + b^2\cos^2 \gamma\\
+			&= a^2 + b^2 (\sin^2 \gamma + \cos^2 \gamma) - 2ab\cos\gamma\\
+			&= a^2 + b^2 - 2ab\cos\gamma
+		\end{align*}
+		\item[5.3 -  \tbf{4}] 
+		\tit{Man zeige, daß sich jedes Element der Kongruenzgruppe einer euklidischen Ebene als Verknüpfung von einer, zweier oder dreier Spiegelungen darstellen lässt.}
+		
+		Gemäß Lemma 1.5.10 sind Kongruenzen genau die affinen Endomorphismen mit orthogonalem Richtungsanteil. Orthogonale Abbildungen sind entweder Drehungen oder Spiegelungen.
+		\begin{enumerate}
+			\item Ist $\vec K = \id$, so ist $K$ eine Translation, lässt sich also mit zwei Spiegelungen darstellen.
+			\item Ist $\vec K = R$ eine Drehung, so ist auch $K$ eine Drehung, lässt sich also mit zwei Spiegelungen darstellen.
+			\item Ist $\vec K = S$ eine Spiegelung, so ist $K$ die Verkettung einer Spiegelung mit zwei Spiegelungen (oder null Spiegelungen).
+		\end{enumerate}
+		\item[4.2 - \tbf{3}] \tit{Man zeige: Je zwei angeordnete Dreiecke $(A,B,C)$ und $(A',B',C')$ einer Kongruenzebene mit zwei gleichen Seitenlängen $a = a'$ sowie $b = b'$ und gleichem eingeschlossenen Winkel $\gamma = \gamma'$ sind angeordnet kongruent. Gilt statt $\gamma = \gamma'$ eine der Gleichungen $\alpha = \alpha'$ oder $\beta = \beta'$, so brauchen unsere angeordneten Dreiecke nicht kongruent zu sein.}
+		
+		Mit Kosinussatz folgt $c = \sqrt{a^2 + b^2 - 2ab \cos \gamma}$, also wird $c$ eindeutig von $a,b,\gamma$ bestimmt. Da wir alle Seiten haben, können wir auch alle Winkel bestimmen.
+		
+		Sind nun $a,b$ und $\alpha$ gegeben, so gilt gemäß Sinussatz $\sin \beta = a \cdot {\sin \alpha}{b}$. Hierfür sind jedoch $\beta$ und $\beta' = \pi - \beta$ beides valide Möglichkeiten.
+		\item[4.3 - \tbf{3}]
+		\tit{Man zeige: Seien in einer Kongruenzebene $E$ paarweise verschiedene Punkte $p_1, \hdots, p_n$ mit $n \geq 3$ und in $\bZ / n\bZ$ verstandenen Indizes gegeben derart, daß die halboffenen Segmente $[p_{i-1}, p_i)$ paarweise disjunkt sind und $(p_{i+1} - p_i, p_{i-1} - p_i$ für alle $i$ linear unabhängig sind und als angeordnete Basen alle zur gleichen Orientierung von $\vec E$ gehören. So gilt in der Überlagerung der Winkelgruppe
+			\begin{align*}
+				\sum_{i = 1}^n \angle(p_{i+1} - p_i, p_{i-1} - p_i) = (n-2)180\tn{°}
+			\end{align*}
+			Man zeige durch ein Beispiel, dass die Orientierungsbedingung notwendig ist.
+		}	
+	
+		Sei $\theta_i = \angle(p_{i+1} - p_i, p_{i-1} - p_i)$. Seien $\phi_i = 180 - \theta_i$ die Außenwinkel. Da die Außenwinkel gleich orientiert und linear unabhängig sind, gilt $\sum_{i = 1}^n \phi_i = 360$, also
+		\begin{align*}
+			\sum_{i = 1}^n \theta_i = \sum_{i = 1}^n (180 - \phi_i) = n \cdot 180 - \sum_{i = 1}^n \phi_i = (n-2)180
+		\end{align*}
+		\item[4.4 - \tbf{3}]
+		\tit{Man zeige für den Flächeninhalt eines Dreiecks in einer Kongruenzebene die Formel}
+		\begin{align*}
+			\sin(\alpha)bc = \pm F(B-A, C-A)
+		\end{align*}
+		Es gilt:
+		\begin{align*}
+			\abs{\sin(\alpha)bc}
+			&=
+			\abs{\sin(\angle(B-A,C-A))}\norm{C-A}\norm{B-A}\\
+			&=
+			\abs{\cos(\angle(B-A,R(C-A)))}\norm{C-A}\norm{B-A}\\
+			&=
+			\abs{\frac{s(B-A, R(C-A))}{\norm{B-A}\norm{R(C-A)}}}\norm{C-A}\norm{B-A}\\
+			&=
+			\abs{\frac{s(B-A, R(C-A))}{\norm{B-A}\norm{C-A}}}\norm{C-A}\norm{B-A}\\
+			&=
+			\abs{s(B-A,R(C-A))}\\
+			&= F(B-A,C-A)
+		\end{align*}
+		
+		\item[5.2 - \tbf{2}]
+		\tit{
+			Ein Isomorphismus von einer Kongruenzebene mit sich selbst heißt eine Ähnlichkeit. Es ist klar, dass $\bC$ eine Kongruenzebene wird, wenn wir als Kongruenzen alle Abbildungen der Form $z \mapsto az + b$ oder $z \mapsto a \ol z + b$ mit $a,b \in \bC$ und $\abs{a} = 1$ nehmen. Man zeige, dass die Ähnlichkeiten der Kongruenzebene $\bC$ genau alle Abbildungen sind, die eine der beiden Gestalten $z \mapsto az + b$ oder $z \mapsto a \ol z + b$ haben mit $a,b \in \bC$ und $a \neq 0$. Man folgere, dass alle Ähnlichkeiten einer Kongruenzebene, die keine Kongruenzen sind, genau einen Fixpunkt haben müssen, und somit entweder 'Drehstreckungen' oder 'Spiegelstreckungen' sind.
+		}
+	\end{enumerate}
+
+	\clearpage
+	
+	\section*{Inzidenzgeometrie}
+	\begin{enumerate}
+		\item[5.4 - \tbf{3}] 
+		\tit{Man zeige, dass wir aus jeder Kongruenzebene $(E,K)$ eine fasteuklidische Geometrie mit Parallelenaxiom erhalten, indem wir als unsere Geraden alle affinen Geraden nehmen und als Zwischenrelation $Z$ die Menge aler kollinearen Tripel $(x,y,z) \in \vec E^3$ mit
+			\begin{align*}
+				\bR_{\geq 0}(x-y) \cap \bR_{\geq 0}(z-y) = \lr{0}.
+			\end{align*}
+		}
+	\end{enumerate}
+	
+	\pagebreak
+	
+	\section*{Möbiusgeometrie}
+	\begin{enumerate}
+		\item[6.1 - \tbf{5}] \tit{Man betrachte in der komplexen Zahlenebene die Kreisspiegelung am Kreis mit Radius $2$ und Zentrum in $i$. Was ist das Bild von $2$? Was ist das Bild des Einheitskreises?}
+		
+		Kreisspiegelungen sind per Definition gegeben durch
+		\begin{align*}
+			c + \vec v \mapsto c + \frac{r^2}{\norm{v^2}}\vec v.
+		\end{align*}
+		Somit wird $2 = i + (2 - i)$ abgebildet auf
+		\begin{align*}
+			i + \frac{2^2}{\norm{2-i}^2}(2-i)
+			&=
+			i +
+			\frac{4}{2^2 + 1^2}(2-i)
+			\\
+		\end{align*}
+	
+		Sei nun $K$ der gegebene Kreis mit Radius $2$ und Zentrum in $i$. Dann muss das Bild von $S^1$ eine erweiterte Gerade sein, da $S^1$ durch das Zentrum von $K$ geht und das Bild somit den Punkt $\infty$ enthält. Es gilt desweiteren $s(S^1) \cap K = S^1 \cap K = \lr{-i}$. Es gibt nur eine Gerade, die $S^1$ in diesem einzigen Punkt schneidet.
+		\item[6.3 - \tbf{4}] 
+		\tit{Wir betrachten den Einheitskreis $S^1$ in der Ebene $\bR^2$ und stellen darauf bei $p := (0,1)$ eine Lampe. Wir betrachten die Gerade $H$ in $\bR^2$ mit der Gleichung $y = -1$ und die Abbildung $S : S^1 \setminus \lr{p} \to H$, die jedem Punkt seinen Schatten auf $H$ zuordnet. Zeigen Sie, daß diese Abbildung die Einschränkung einer Kreisspiegelung ist.}
+		
+		Betrachte die Kreisspiegelung $s_L$ am Kreis $L$ mit Zentrum $(0,1)$ und Radius $2$. Der Kreis berührt den Einheitskreis in $(0,-1)$. Analog zu 6.1 ist das Bild also die Gerade $y = -1$. Nun liegen für jeden Punkt $p \in \bR^2 \setminus \lr{(0,1)}$ die Punkte $p, s_L(p)$ und $(0,1)$ auf einer Geraden, also ordnet $s_L$ jedem Punkt sein Bild unter der Zentralprojektion mit Zentrum $(0,1)$ zu, also seinen Schatten bei dieser Lichtquelle.
+		\item[6.4 - \tbf{2}]
+		\tit{Zeigen sie, dass die Abbildung $S : S^1 \setminus \lr{p} \to H$ aus Aufgabe 6.3 eine Bijektion zwischen Punkten mit rationalen Koordinaten auf $S^1 \setminus \lr{p}$ und auf $H$ induziert.}
+		\begin{enumerate}
+			\item $(x,y)$, $(0,1)$ und $(z,-1)$ sind genau dann kollinear, wenn $\frac{z}{2} = \frac{x}{1-y}$. Sind also $x$ und $y$ rational, so auch $z$.
+			\item Rückrichtung durch Kreisspiegelungsformel ausrechnen :)
+		\end{enumerate}
+		\item[7.2 - \tbf{4}]
+		\tit{Gegeben ein verallgemeinerter Kreis $M$ und zwei Punkte $p,q$ gibt es stets einen verallgemeinerten Kreis $L$, der durch unsere beiden Punkte geht und auf $M$ senkrecht steht. Unter der Annahme $p \neq q$, $s_M(q)$ ist $L$ eindeutig bestimmt.}
+		
+		Gilt $p,q \in M$, so gilt $s_M(M) = M$ und die Aussage ist trivial. 
+		
+		Gilt $s_M(q) \neq p = q$, wählen wir die Gerade durch $p$ und $s_M(q)$, und gilt $s_M(q) = p \neq q$ wählen wir analog die Gerade durch $p$ und $q$.
+		
+		Sei also OBdA $p \notin M$.
+
+		Aus der Schule ist bekannt, dass durch je drei nicht kolineare Punkte ein eindeutiger Kreis geht, und durch drei kolineare Punkte geht offensichtlich eine eindeutige erweiterte Gerade. Somit geht ein eindeutiger erweiterter Kreis durch $\lr{p,s_M(p),q}$.
+		
+		$s_M$ bildet Punkte auf der einen Seite von $M$ auf Punkte auf der anderen Seite ab. Somit muss unser Kreis einen Punkt $r \in M$ enthalten.  
+		
+		Die Kreisspiegelung $s_M$ lässt nun die Menge $\lr{p,s_M(p),r}$ invariant, also auch unseren eindeutigen Kreis, somit ist dieser orthogonal zu $M$.
+		\item[6.2 - \tbf{3}]
+		\tit{Sphäreninversionen an verallgemeinerten Sphären bilden verallgemeinerte Sphären auf verallgemeinerte Sphären ab.}
+		
+		Eine Sphäre im $\bR^3$ mit Zentrum $c$ und Radius $r > 0$ ist die Menge $\scalar{x-c}{x-c} = r^2$, also $$\scalar{x}{x} - 2\scalar{x}{c} + \underbrace{\scalar{c}{c} - r^2}_{:= q} = 0.$$
+		Eine affine Ebene kann hingegen dargestellt werden als
+		$$\scalar{x}{v} - q' = 0,$$
+		also äquivalent auch als
+		\begin{align*}
+			-2\scalar{x}{v} + q = 0
+		\end{align*}
+		für konstante $v,q$. In beiden Fällen gilt $\scalar{v}{v} > pq$.
+		\newpar
+		Umgekehrt ist jede Gleichung der Gestalt
+		\begin{align*}
+			p\scalar{x}{x} - 2\scalar{x}{v} + q = 0
+		\end{align*}
+		eine verallgemeinerte Sphäre - Im Fall $p = 0$ eine erweiterte Ebene und sonst eine Sphäre. 
+		
+		(TODO: Rest)
+		\item[7.3 - \tbf{3}]
+		\tit{Gegeben eine euklidische Ebene $E$ und eine offene Halbebene $H \subseteq E$ ist die Einschränkung von Möbiustransformationen eine Injektion}
+		\begin{align*}
+			\tn{Möb}_H(\hat E) \inj \Ens^\times(H)
+		\end{align*}
+		\item[7.4 - \tbf{3}]
+		\tit{Gegeben eine euklidische Ebene $E$ und eine Gerade $g \subseteq E$ und dazu eine offene Halbebene $H \subseteq E$ ist die Einschränkung von Möbiustransformationen eine Injektion}
+		\begin{align*}
+			\tn{Möb}_H(\hat E) \inj \Ens^\times(\hat g)
+		\end{align*}
+		\item[7.1 - \tbf{2}]
+		\tit{Sei $E$ eine euklidische Ebene. Man zeige: Die Möbiustransformationen von $\hat E$, die den Punkt $\infty$ festhalten, sind genau alle Fortsetzungen von Ähnlichkeiten von $E$ durch $\infty \mapsto \infty$.}
+	\end{enumerate}
+
+	\pagebreak
+	
+	\section*{Projektive Geometrie}
+	\begin{enumerate}
+		\item[8.3 - \tbf{5}] \tit{Welche Abbildung ist die Zentralprojektion mit Zentrum in $(0,0,1$ auf die $xy$-Ebene in Koordinaten?}
 		
 		Wir suchen die Abbildung, die jedem Punkt $p$ den Schnittpunkt $s$ der Gerade durch $p$ und $(0,0,1)$ mit der $xy$-Ebene $\lr{(x,y,0) \mid x,y \in \bR}$ zuordnet.
 		Sei also 
@@ -68,141 +478,10 @@
 			&= \lr(\lr(\frac{1 - p_3}{1 - p_3} + \frac{p_3}{1 - p_3})p_1, \lr(\frac{1 - p_3}{1 - p_3} + \frac{p_3}{1 - p_3})p_2, 0)\\
 			&= \lr(\frac{p_1}{1 - p_3}, \frac{p_2}{1 - p_3}, 0)
 		\end{align*}
-	\end{enumerate}
-	\section*{\centering - 4 -}
-	\begin{enumerate}
-		\item[1.1] \tit{Man zeige: Die Gruppe $D \subseteq GL_\bR(\bC)$ aller $\bR$-linearen Automorphismen von $\bC$ der Gestalt $w \mapsto z \cdot w$ oder $w \mapsto z \cdot \ol w$ für $z \in \bC$ mit $\abs{z} = 1$ ist eine Drehspiegelgruppe. Man gebe dafür ein invariantes Skalarprodukt auf dem $\bR$-Vektorraum $\bC$ an.}
-		
-		Aufgrund der Vollständigkeit von $\bC$ finden auf jedem paar von Strahlen $A,B$ ein paar von Punkten $a,b$ auf $A,B$ mit Norm $1$. Dann gibt es genau ein $z \in S^1$ mit $(z\cdot) : A \mapsto B$, nämlich $z = \frac{b}{a}$. Bezeichnet weiter $\gamma$ die Konjugation, gibt es auch nur ein $z \in S^1$ mit $(z \cdot) \circ \gamma : A \mapsto B$, nämlich $z = \frac{b}{\ol a}$. Also gibt es für jedes paar von Strahlen genau zwei Elemente, die den ersten auf den anderen Abbildgen, also ist $D$ eine Drehspiegelgruppe im Sinne der Vorlesung.
-		
-		Ein invariantes Skalarprodukt $ \bC \times \bC \to \bR$ ist etwa gegeben durch $\scalar{v}{w} = \Re(v \ol w)$.
-		\item[2.1]
-		\tit{Man zeige, daß die orthogonale Gruppe $\bQ^2$ mit seinem Standardskalarprodukt keine Drehspiegelgruppe ist.}
-		
-		Drehen wir $\lambda(1,1)$ auf $\lambda(1,0)$, müsste $(1,1)$ auf $(\sqrt 2, 0)$ abgebildet werden.
-		\item[3.3]
-		\tit{Man berechne den Arcuscosinus des Winkels, den zwei Flächen eines Tetraeders längs einer Kante einschließen. Der Winkel von Flächen ist dabei erklärt als der kleinstmögliche Winkel zwischen darauf senkrechten Strahlen.}
-		\item[3.4]
-		\tit{Man zeige: Gegeben vier von Null verschiedene Vektoren in einem Dreidimensionalen Skalarproduktraum, von denen je zwei einen Winkel $> 90$° einschließen, sind je drei linear unabhängig.}
-		
-		Sei sonst $\lambda_1 v_1 + \lambda_2 v_2 + \lambda_3 v_3 = 0$ eine nichttriviale Linearkombination. Sei OBdA $\lambda_1 \leq \lambda_2 \leq \lambda_3$. Haben alle drei Koeffizienten das gleiche Vorzeichen, so folgt aus
-		\begin{align*}
-			\scalar{\lambda_1 v_1 + \lambda_2 v_2 + \lambda_3 v_3}{v_4} = 0
-			\Leftrightarrow
-			\lambda_1\scalar{v_1}{v_4} + \lambda_2\scalar{v_2}{v_4} + \lambda_3\scalar{v_3}{v_4}
-		\end{align*}
-		bereits $\lambda_1 = \lambda_2 = \lambda_3 = 0$ im Widerspruch zu unseren Annahmen, da nach Annahme auch alle $\scalar{v_i}{v_4}$ das gleiche Vorzeichen haben.
-		
-		Sei also OBdA $\lambda_1 \leq 0 \leq \lambda_2 \leq \lambda_3$. Wir haben $-\lambda_1 v_1 = \lambda_2 v_2 + \lambda_3 v_3 := w$. Es gilt $\scalar{w}{w} \leq 0$, also folgt durch die positive Definitheit des Skalarprodukts $w = 0$.	Somit gilt $\scalar{w}{v_4} = 0$, also
-		\begin{align*}
-			-\lambda_1\scalar{v_1}{v_4}
-			=
-			0
-			=
-			\lambda_2 \scalar{v_2}{v_4} + \lambda_3 \scalar{v_3}{v_4}
-		\end{align*}
-		Es folgt $\lambda_1 = \lambda_2 = \lambda_3 = 0$.	
-		\item[4.1.a]
-		\tit{Man zeige den Cosinussatz \begin{align*}
-			a^2 + b^2 - 2ab \cos \gamma = c^2
-		\end{align*}
-		 für jedes Dreieck einer Kongruenzebene mit positiven Seitenlängen $a,b,c$.}
-		\item[4.1.b]
-		\tit{Man zeige den Sinussatz \begin{align*}
-				\frac{\sin \alpha}{a} = \frac{\sin \beta}{b} = \frac{\sin \gamma}{c}
-		\end{align*}}
-		\item[5.3] 
-		\tit{Man zeige, daß sich jedes Element der Kongruenzgruppe einer euklidischen Ebene als Verknüpfung von einer, zweier oder dreier Spiegelungen darstellen lässt.}
-		\item[6.3] 
-		\tit{Wir betrachten den Einheitskreis $S^1$ in der Ebene $\bR^2$ und stellen darauf bei $p := (0,1)$ eine Lampe. Wir betrachten die Gerade $H$ in $\bR^2$ mit der Gleichung $y = -1$ und die Abbildung $S : S^1 \setminus \lr{p} \to H$, die jedem Punkt seinen Schatten auf $H$ zuordnet. Zeigen Sie, daß diese Abbildung die Einschränkung einer Kreisspiegelung ist.}
-		\item[7.2]
-		\tit{Gegeben ein verallgemeinerter Kreis $M$ und zwei Punkte $p,q$ gibt es stets einen verallgemeinerten Kreis $L$, der durch unsere beiden Punkte geht und auf $M$ senkrecht steht. Unter der Annahme $p \neq q$, $s_M(q)$ ist $L$ eindeutig bestimmt.}
-	
-		\item[8.1]
+		\item[8.1 - \tbf{4}]
 		\tit{Man schreibe an jeden Punkt der Fano-Ebene die Koordinaten eines Punktes von $\bF_2^3$, der die zugehörige Gerade erzeugt. Wie viele verschiedene Lösungen hat diese Aufgabe?}
-		\item[8.4] \tit{Man zeige, dass die Zentralprojektion mit Zentrum in $(0,0,1)$ auf die $xy$-Ebene Kreis auf der Einheitssphäre, die $(0,0,1)$ nicht enthalten, zu Kreisen in der $xy$-Ebene macht.}
-	\end{enumerate}
-	\section*{\centering - 3 -}
-	\begin{enumerate}
-		\item[1.2] \tit{Man zeige: Gegeben $(Z,D)$ ein zweidimensionaler reeller Vektorraum mit ausgezeichneter Drehspiegelgruppe wird die Drehspiegelgruppe $D$ von ihren Spiegelungen erzeugt.}
-		
-		Gegeben $d \in D$, ein Strahl $A \subseteq U$, und $s$ die Spiegelung, die $A$ festhält, müssen $d$ und $ds$ die einzeigen Elemente von $D$ sein, welche $A$ auf $d(A)$ abbilden. Je zwei Strahlen $A,B$ in $Z$ können jedoch durch eine eindeutige Spiegelung $t \in D$ vertauscht werden. Es gibt also auch eine Spiegelung $t \in D$ mit $t(A) = d(A)$. Somit gilt $\lr{d,ds} = \lr{t,ts}$. Also ist jedes Element von $d \in D$ entweder eine Spiegelung oder ein Produkt von zwei Spiegelungen.
-		\item[1.4] \tit{Seien $(Z,s,\epsilon)$ und $(U,t,\eta)$ zweidimensionaler reelle Vektorräume mit Skalarprodukt und Orientierung. Für einen orthogonalen Isomorphismus $\psi : Z \iso U$ erklären wir
-		\begin{align*}
-			\int \psi : SO(Z,s) \iso SO(U,t)
-		\end{align*}
-		durch $k \mapsto \psi \circ k \circ \psi^{-1}$. Man zeige, dass für je zwei $\phi, \psi : U \iso U$ gilt $\int \psi = \int \phi$.}
-	
-		Wir wollen $\psi \circ k \circ \psi^{-1} = \phi \circ k \circ \phi^{-1}$, also $\phi^{-1} \psi \circ k \circ \psi^{-1} \phi = k$. Da $\phi, \psi$ oriegntierungserhalten angenommen waren, ist auch $\psi^{-1}\phi$ orientierungserhaltend. Da $SO(Z,s)$ kommutativ ist, gilt $k \circ \psi^{-1} \phi = \psi^{-1}\phi \circ k$, also
-		\begin{align*}
-			\phi^{-1} \psi \circ k \circ \psi^{-1} \phi
-			&=
-			\phi^{-1} \psi \circ \psi^{-1} \phi \circ k\\
-			&=
-			k
-		\end{align*}
-		\item[3.2] \tit{Gegeben Strahlenpaare $(A,B)$ und $(A', B')$ in Vektorräumen mit Drehspiegelgruppe $Z,Z'$ gibt es genau dann einen drehspiegelverträglichen Isomorphismus $\psi : Z \iso Z'$} mit $\psi(A) = A'$ und $\psi(B) = B'$, wenn gilt
-		\begin{align*}
-			\angle(A,B) = \angle(A',B')
-		\end{align*}
-		\item[4.2] \tit{Man zeige: Je zwei angeordnete Dreiecke $(A,B,C)$ und $(A',B',C')$ einer Kongruenzebene mit zwei gleichen Seitenlängen $a = a'$ sowie $b = b'$ und gleichem eingeschlossenen Winkel $\gamma = \gamma'$} sind angeordnet kongruent. Gilt statt $\gamma = \gamma'$ eine der Gleichungen $\alpha = \alpha'$ oder $\beta = \beta'$, so brauchen unsere angeordneten Dreiecke nicht kongruent zu sein.
-		\item[4.3]
-		\tit{Man zeige: Seien in einer Kongruenzebene $E$ paarweise verschiedene Punkte $p_1, \hdots, p_n$ mit $n \geq 3$ und in $\bZ / n\bZ$ verstandenen Indizes gegeben derart, daß die halboffenen Segmente $[p_{i-1}, p_i)$ paarweise disjunkt sind und $(p_{i+1} - p_i, p_{i-1} - p_i$ für alle $i$ linear unabhängig sind und als angeordnete Basen alle zur gleichen Orientierung von $\vec E$ gehören. So gilt in der Überlagerung der Winkelgruppe
-		\begin{align*}
-			\sum_{i = 1}^n \angle(p_{i+1} - p_i, p_{i-1} - p_i) = (n-2)180\tn{°}
-		\end{align*}
-		Man zeige durch ein Beispiel, dass die Orientierungsbedingung notwendig ist.
-		}	
-		\item[4.4]
-		\tit{Man zeige für den Flächeninhalt eines Dreiecks in einer Kongruenzebene die Formel}
-		\begin{align*}
-			\sin(\alpha)bc = \pm F(B-A, C-A)
-		\end{align*}
-		\item[5.4] 
-		\tit{Man zeige, dass wir aus jeder Kongruenzebene $(E,K)$ eine fasteuklidische Geometrie mit Parallelenaxiom erhalten, indem wir als unsere Geraden alle affinen Geraden nehmen und als Zwischenrelation $Z$ die Menge aler kollinearen Tripel $(x,y,z) \in \vec E^3$ mit
-		\begin{align*}
-			\bR_{\geq 0}(x-y) \cap \bR_{\geq 0}(z-y) = \lr{0}.
-		\end{align*}
-		}
-		\item[6.2]
-		\tit{Sphäreninversionen an verallgemeinerten Sphären bilden verallgemeinerte Sphären auf verallgemeinerte Sphären ab.}
-		\item[7.3]
-		\tit{Gegeben eine euklidische Ebene $E$ und eine offene Halbebene $H \subseteq E$ ist die Einschränkung von Möbiustransformationen eine Injektion}
-		\begin{align*}
-			\tn{Möb}_H(\hat E) \inj \Ens^\times(H)
-		\end{align*}
-		\item[7.4]
-		\tit{Gegeben eine euklidische Ebene $E$ und eine Gerade $g \subseteq E$ und dazu eine offene Halbebene $H \subseteq E$ ist die Einschränkung von Möbiustransformationen eine Injektion}
-		\begin{align*}
-			\tn{Möb}_H(\hat E) \inj \Ens^\times(\hat g)
-		\end{align*}
-	\end{enumerate}
-	\section*{\centering - 2 -}
-	\begin{enumerate}
-		\item[3.1]
-		\tit{Gegeben ein drehspiegelverträglicher Isomorphismus von Vektorräumen mit Drehspiegelgruppe $\psi : (Z,D) \iso (Y,C)$ gibt es genau eine linear Abbildung der Längengeraden $\bL_\psi : \bL_Z \iso \bL_Y$ mit der Eigenschaft $\norm{\psi v}_Y = \bL_\psi(\norm{v}_Z)$, und dann gilt auch
-		\begin{align*}
-			\scalar{\psi v}{\psi w}_Y =
-			\bL_{\psi}^{\tensor2}(\scalar{v}{w}_Z)
-		\end{align*}
-		Hinweis: Gegeben zwei lineare Abbildungen $f : L \to L',g : M \to M'$ zwischen eindimensionalen Vektorräumen gibt es genau eine lineare Abbildung $f \tensor g : L \tensor M \to L' \tensor M'$ mit $l \tensor m \mapsto f(l) \tensor g(m)$.
-		}
-		\item[5.2]
-		\tit{
-		Ein Isomorphismus von einer Kongruenzebene mit sich selbst heißt eine Ähnlichkeit. Es ist klar, dass $\bC$ eine Kongruenzebene wird, wenn wir als Kongruenzen alle Abbildungen der Form $z \mapsto az + b$ oder $z \mapsto a \ol z + b$ mit $a,b \in \bC$ und $\abs{a} = 1$ nehmen. Man zeige, dass die Ähnlichkeiten der Kongruenzebene $\bC$ genau alle Abbildungen sind, die eine der beiden Gestalten $z \mapsto az + b$ oder $z \mapsto a \ol z + b$ haben mit $a,b \in \bC$ und $a \neq 0$. Man folgere, dass alle Ähnlichkeiten einer Kongruenzebene, die keine Kongruenzen sind, genau einen Fixpunkt haben müssen, und somit entweder 'Drehstreckungen' oder 'Spiegelstreckungen' sind.
-		}
-		\item[6.4]
-		\tit{Zeigen sie, dass die Abbildung $S : S^1 \setminus \lr{p} \to H$ aus Aufgabe 6.3 eine Bijektion zwischen Punkten mit rationalen Koordinaten auf $S^1 \setminus \lr{p}$ und auf $H$ induziert.}
-		\item[7.1]
-		\tit{Sei $E$ eine euklidische Ebene. Man zeige: Die Möbiustransformationen von $\hat E$, die den Punkt $\infty$ festhalten, sind genau alle Fortsetzungen von Ähnlichkeiten von $E$ durch $\infty \mapsto \infty$.}
-		\item[8.2]
+		\item[8.4 - \tbf{4}] \tit{Man zeige, dass die Zentralprojektion mit Zentrum in $(0,0,1)$ auf die $xy$-Ebene Kreis auf der Einheitssphäre, die $(0,0,1)$ nicht enthalten, zu Kreisen in der $xy$-Ebene macht.}
+		\item[8.2 - \tbf{2}]
 		\tit{Kann man das Kartenspiel Dobble noch um weitere Karten mit acht Symbolen ergänzen, ohne neue Symbole hinzuzunehmen, so dass immer noch je zwei Karten genau ein Symbol gemeinsam haben? Kann man ein verbessertes Dobble mit denselben Symbolen, aber mehr Karten und denselben Eigenschaften konstruieren?}
-	\end{enumerate}
-	\section*{\centering - 1 -}
-	\begin{enumerate}
-		\item[1.3]
-		\tit{Man bestimme alle endlichen Untergruppen von $O(2)$.}
-		\item[2.2]
-		\tit{Die lange Aufgabe :)}
 	\end{enumerate}
 \end{document}
