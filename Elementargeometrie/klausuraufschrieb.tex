@@ -466,18 +466,21 @@
 		\end{enumerate}
 		\item[7.2 - \tbf{4}]
 		\tit{Gegeben ein verallgemeinerter Kreis $M$ und zwei Punkte $p,q$ gibt es stets einen verallgemeinerten Kreis $L$, der durch unsere beiden Punkte geht und auf $M$ senkrecht steht. Unter der Annahme $p \neq q$, $s_M(q)$ ist $L$ eindeutig bestimmt.}
+		\begin{enumerate}
+			\item Fall $1$: Gilt $s_M(q) \neq p = q$, wählen wir die Gerade durch $p$ und $s_M(q)$, und gilt $s_M(q) = p \neq q$ wählen wir analog die Gerade durch $p$ und $q$.
+			\item Fall $2$: Seien $p \neq q \in M$. Sei zuerst einmal $M$ eine Gerade. Dann existiert offensichtlich ein eindeutiger senkrechter verallgemeinerter Kreis durch $p$ und $q$ - ist einer der Punkte $\infty$, erhalten wir die zu $M$ senkrechte Gerade durch $p$, und ist keiner der Punkte $\infty$, erhalten wir den eindeutigen Kreis durch den Mittelpunkt von $p$ und $q$, der $p$ und $q$ enthält.
+			
+			Ist $M$ ein Kreis, können wir $M$ durch eine Möbiustransformation $\phi$ auf eine Gerade abbilden und dann das Urbild des eindeutigen Kreises durch $\phi(p)$ und $\phi(q)$ nehmen.
+			
+			\item Fall $3$: Sei $p \neq q$ und OBdA $p \notin M$, also $s_M(p) \neq p$. Aus der Schule ist bekannt, dass durch je drei nicht kolineare Punkte ein eindeutiger Kreis geht, und durch drei kolineare Punkte geht offensichtlich eine eindeutige erweiterte Gerade. Somit geht ein eindeutiger erweiterter Kreis durch $\lr{p,s_M(p),q}$.
+			
+			$s_M$ bildet Punkte auf der einen Seite von $M$ auf Punkte auf der anderen Seite ab. Somit muss unser Kreis einen Punkt $r \in M$ enthalten.  
+			
+			Die Kreisspiegelung $s_M$ lässt nun die Menge $\lr{p,s_M(p),r}$ invariant, also auch unseren eindeutigen Kreis, somit ist dieser orthogonal zu $M$.
+		\end{enumerate}
 		
-		Gilt $p,q \in M$, so gilt $s_M(M) = M$ und die Aussage ist trivial. 
-		
-		Gilt $s_M(q) \neq p = q$, wählen wir die Gerade durch $p$ und $s_M(q)$, und gilt $s_M(q) = p \neq q$ wählen wir analog die Gerade durch $p$ und $q$.
-		
-		Sei also OBdA $p \notin M$.
 
-		Aus der Schule ist bekannt, dass durch je drei nicht kolineare Punkte ein eindeutiger Kreis geht, und durch drei kolineare Punkte geht offensichtlich eine eindeutige erweiterte Gerade. Somit geht ein eindeutiger erweiterter Kreis durch $\lr{p,s_M(p),q}$.
 		
-		$s_M$ bildet Punkte auf der einen Seite von $M$ auf Punkte auf der anderen Seite ab. Somit muss unser Kreis einen Punkt $r \in M$ enthalten.  
-		
-		Die Kreisspiegelung $s_M$ lässt nun die Menge $\lr{p,s_M(p),r}$ invariant, also auch unseren eindeutigen Kreis, somit ist dieser orthogonal zu $M$.
 		\item[10.4 - \tbf{3}]
 		\tit{Was ist die Bahn des Punktes $2i \in \bH$ unter der Gruppe aller Kongruenzen, der oberen Halbebene, die $i$ festhalten?} 
 		
@@ -513,7 +516,11 @@
 		\begin{align*}
 			\tn{Möb}_H(\hat E) \inj \Ens^\times(\hat g)
 		\end{align*}
-		Wir wollen zeigen, dass für jeden Punkt $p \in \hat E \setminus \hat g$ außerhalb der Geraden Punkte auf der Geraden existieren, durch die wir $p$ zurückgewinnen können. Wähle die Mittelsenkrechte zu $\hat g$ durch $p$ und den analogen Senkrechten Kreis durch $p$, dessen Radius der Abstand von $p$ zu $\hat g$ ist. Der Mittelpunkt $m$ des Kreises ist dann auch der Schnittpunkt von der Gerade mit $\hat g$.
+		Wir wollen zeigen, dass für jede Möbiustransformation $\phi \in \tn{Möb}_H(\hat E)$ und jeden Punkt $p \in \hat E \setminus \hat g$ außerhalb der Geraden Punkte auf der Geraden existieren, durch deren Bilder wir auch $\phi(p)$ eindeutig bestimmen können. 
+		
+		Wir konstruieren hierfür die Mittelsenkrechte $h$ zu $\hat g$ durch $p$ und den analogen senkrechten Kreis $K$ durch $p$, dessen Radius der Abstand von $p$ zu $\hat g$ ist. Der Mittelpunkt $m$ von $K$ ist dann auch der Schnittpunkt von $h$ mit $\hat g$. Seien $s_1$, $s_2$ die Schnittpunkte von $K$ mit $\hat g$. 
+		
+		Nun sind die Bilder $\phi(h)$ und $\phi(K)$ dieser Figuren unter einer Möbiustransformation $\phi$ der eindeutige auf $\hat g$ senkrechte verallgemeinerte Kreis durch $\phi(m)$ und $\phi(\infty)$ und der eindeutige auf $\hat g$ senkrechte Kreis durch $\phi(s_1)$ und $\phi(s_2)$ - Diese Kreise sind eindeutig gemäß 7.2. Wir können nun $\phi(x)$ zurückgewinnen als denjenigen Schnittpunkt von $\phi(h)$ und $\phi(K)$, der auf der gleichen Seite von $\hat g$ liegt wie $x$.
 		\item[7.1 - \tbf{2}]
 		\tit{Sei $E$ eine euklidische Ebene. Man zeige: Die Möbiustransformationen von $\hat E$, die den Punkt $\infty$ festhalten, sind genau alle Fortsetzungen von Ähnlichkeiten von $E$ durch $\infty \mapsto \infty$.}
 		
