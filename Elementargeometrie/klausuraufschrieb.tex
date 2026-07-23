@@ -351,10 +351,20 @@
 			&= F(B-A,C-A)
 		\end{align*}
 		
+		\clearpage
+		
 		\item[5.2 - \tbf{2}]
 		\tit{
 			Ein Isomorphismus von einer Kongruenzebene mit sich selbst heißt eine Ähnlichkeit. Es ist klar, dass $\bC$ eine Kongruenzebene wird, wenn wir als Kongruenzen alle Abbildungen der Form $z \mapsto az + b$ oder $z \mapsto a \ol z + b$ mit $a,b \in \bC$ und $\abs{a} = 1$ nehmen. Man zeige, dass die Ähnlichkeiten der Kongruenzebene $\bC$ genau alle Abbildungen sind, die eine der beiden Gestalten $z \mapsto az + b$ oder $z \mapsto a \ol z + b$ haben mit $a,b \in \bC$ und $a \neq 0$. Man folgere, dass alle Ähnlichkeiten einer Kongruenzebene, die keine Kongruenzen sind, genau einen Fixpunkt haben müssen, und somit entweder 'Drehstreckungen' oder 'Spiegelstreckungen' sind.
 		}
+		\begin{enumerate}
+			\item Gemäß 1.5.24 enthalten Ähnlichkeiten die Drehspiegelgruppe, d.h. per Definition gilt $K = \phi K \phi^{-1}$ für jede Kongruenz $K$ und Ähnlichkeit $\phi$.
+			
+			Somit ist $\phi$ Drehspiegelverträglich, also gilt gemäß 1.4.2 $\vec \phi = \lambda \cdot \vec K$ mit $\lambda > 0$ und $\vec K$ orthogonal.
+			
+			Gemäß 1.5.10 sind Kongruenzen genau die affinen Automorphismen mit orthogonalem Richtungsanteil. Somit haben Ähnlichkeiten die Form $\lambda az + b$ oder $\lambda a \ol z +b$ mit $\abs{a} = 1$, oder äquivalent $\lambda a z + b$ etc. mit $a \in \bC \setminus \lr{0}$ beliebig.
+			\item Sei nun $\phi$ eine Ähnlichkeit, die keine Kongruenz ist. Dann muss $\abs{a} \neq 1$ sein, also können wir einen Fixpunkt finden. Es folgt, dass $\phi$ im orientierungserhaltenden Fall eine 'Drehstreckung' um diesen Fixpunkt ist, und im orientierungsumkehrenden Fall eine 'Streckspiegelung'.
+		\end{enumerate}	
 	\end{enumerate}
 
 	\clearpage
@@ -367,6 +377,16 @@
 				\bR_{\geq 0}(x-y) \cap \bR_{\geq 0}(z-y) = \lr{0}.
 			\end{align*}
 		}
+	
+		Fasteuklidische Geometrie mit Parallelenaxiom" heißt inzidenzgeometrie mit Zwischenrelation und Kongruenzen, in der eine Gerade existiert und die Supremumseigenschaft gilt.
+		\begin{enumerate}
+			\item Es gibt offensichtlich eine Linie und Kongruenzgruppen. Man kann nachrechnen, dass durch je zwei Punkte genau eine Gerade geht.
+			\item Anordnung:
+			\item Supremumseigenschaft: Per Definition ist $\lambda v + w \mapsto \lambda$ ein Ordnungsisomorphismus zwischen angeordneten affinen Geraden und $\bR$, also erfüllt unsere Gerade auch die Supremumseigenschaft.
+			\item Pasch: :(
+			\item Kongruenzen: Per Definition.
+			\item Parallelenaxiom: Zwei verschiedene Richtungsvektoren bilden eine Basis, dadurch finden wir einen Schnittpunkt.
+		\end{enumerate}
 	\end{enumerate}
 	
 	\pagebreak
@@ -385,10 +405,48 @@
 			&=
 			i +
 			\frac{4}{2^2 + 1^2}(2-i)
-			\\
 		\end{align*}
 	
 		Sei nun $K$ der gegebene Kreis mit Radius $2$ und Zentrum in $i$. Dann muss das Bild von $S^1$ eine erweiterte Gerade sein, da $S^1$ durch das Zentrum von $K$ geht und das Bild somit den Punkt $\infty$ enthält. Es gilt desweiteren $s(S^1) \cap K = S^1 \cap K = \lr{-i}$. Es gibt nur eine Gerade, die $S^1$ in diesem einzigen Punkt schneidet.
+		\item[10.2 - \tbf{4}]
+		\tit{Welche Matrizen von $\tn{SL}(2, \bR)$ liefern eine Kongruenz der oberen Halbebene, die die Halbgerade $\lr{3 + iy \mid y \geq 4}$ auf die Halbgerade $\lr{iy \mid y \geq 1}$ abbildet?}
+		
+		
+		Wir brauchen eine Verschiebung um drei nach Links ($3 + iy \mapsto iy$) und eine Skalierung um $\frac{1}{4}$ ($y \geq 4 \mapsto y \geq 1$).
+		
+		Ersteres ist die Abbildung $z \mapsto z - 3 = \frac{1z -3}{0z + 1}$, gegeben durch $a = 1$, $b = -3$, $c = 0$, $d = 1$, also 
+		\begin{align*}
+			\begin{pmatrix}
+				1 & -3\\
+				0 & 1
+			\end{pmatrix}
+		\end{align*}
+		Letzteres ist analog gegeben durch
+		\begin{align*}
+			\begin{pmatrix}
+				\frac{1}{2} & 0\\
+				0 & 2
+			\end{pmatrix}
+		\end{align*}
+		In beiden Fällen sind $a,b,c,d$ durch die zusätzliche Bedingung $\det M = 1$ eindeutig bestimmt.
+		\item[10.3 - \tbf{4}]
+		\tit{Welche Matrizen von $\tn{SL}(2, \bR)$ liefern Kongruenzen der oberen Halbebene, die die obere komplexe Achse stabilisieren?}
+		
+		Die Kongruenzen, die die obere komplexe Achse stabilisieren, sind Streckungen, gegeben durch
+		\begin{align*}
+			\lambda^2 z \Leftrightarrow \begin{pmatrix}
+				\lambda & 0\\
+				0 & \frac{1}{\lambda}
+			\end{pmatrix},
+		\end{align*}
+		oder Kreisspiegelungen mit Mittelpunkt am Ursprung, gegeben durch:
+		\begin{align*}
+			\frac{r^2}{z} \Leftrightarrow
+			\begin{pmatrix}
+				0 & -r\\
+				\frac{1}{r} & 0
+			\end{pmatrix}
+		\end{align*}
 		\item[6.3 - \tbf{4}] 
 		\tit{Wir betrachten den Einheitskreis $S^1$ in der Ebene $\bR^2$ und stellen darauf bei $p := (0,1)$ eine Lampe. Wir betrachten die Gerade $H$ in $\bR^2$ mit der Gleichung $y = -1$ und die Abbildung $S : S^1 \setminus \lr{p} \to H$, die jedem Punkt seinen Schatten auf $H$ zuordnet. Zeigen Sie, daß diese Abbildung die Einschränkung einer Kreisspiegelung ist.}
 		
@@ -397,7 +455,14 @@
 		\tit{Zeigen sie, dass die Abbildung $S : S^1 \setminus \lr{p} \to H$ aus Aufgabe 6.3 eine Bijektion zwischen Punkten mit rationalen Koordinaten auf $S^1 \setminus \lr{p}$ und auf $H$ induziert.}
 		\begin{enumerate}
 			\item $(x,y)$, $(0,1)$ und $(z,-1)$ sind genau dann kollinear, wenn $\frac{z}{2} = \frac{x}{1-y}$. Sind also $x$ und $y$ rational, so auch $z$.
-			\item Rückrichtung durch Kreisspiegelungsformel ausrechnen :)
+			\item 
+			Sei umgekehrt
+			\begin{align*}
+				\binom{x}{y}
+				&= \binom{0}{1} + \frac{2^2}{\norm{\binom{z}{-1} - \binom{0}{1}}^2}\binom{z}{-1- 1}\\
+				&= \binom{0}{1} + \frac{4}{z^2 + 4}\binom{z}{- 2}\\
+			\end{align*}
+			Also sind auch $x,y$ rational, wenn $z$ rational ist.
 		\end{enumerate}
 		\item[7.2 - \tbf{4}]
 		\tit{Gegeben ein verallgemeinerter Kreis $M$ und zwei Punkte $p,q$ gibt es stets einen verallgemeinerten Kreis $L$, der durch unsere beiden Punkte geht und auf $M$ senkrecht steht. Unter der Annahme $p \neq q$, $s_M(q)$ ist $L$ eindeutig bestimmt.}
@@ -413,6 +478,10 @@
 		$s_M$ bildet Punkte auf der einen Seite von $M$ auf Punkte auf der anderen Seite ab. Somit muss unser Kreis einen Punkt $r \in M$ enthalten.  
 		
 		Die Kreisspiegelung $s_M$ lässt nun die Menge $\lr{p,s_M(p),r}$ invariant, also auch unseren eindeutigen Kreis, somit ist dieser orthogonal zu $M$.
+		\item[10.4 - \tbf{3}]
+		\tit{Was ist die Bahn des Punktes $2i \in \bH$ unter der Gruppe aller Kongruenzen, der oberen Halbebene, die $i$ festhalten?} 
+		
+		Durch eine Möbiustransformation können wir $H$ mit der Einheitskreissscheibe identifizieren, wobei $i$ zum Zentrum wird. Die Kongruenzen, die dieses Zentrum festhalten, sind dann genau die Drehungen dieser Einheitskreisscheibe. Die Bahn eines beliebigen Punktes ist dann ein echter Kreis, der nicht das Zentrum enthält, dessen Urbild dann ebenfalls ein Kreis gewesen sein muss. Dieser Kreis muss unter der Sphäreninversion am Einheitskreis $z \mapsto \frac{1}{\ol z}$ stabil sein, also auch $\frac{1}{-2i} = \frac{1}{2}i$ enthalten. Es ist also der Kreis mit Radius $\frac{3}{4}$ durch $\frac{5}{4}i$.
 		\item[6.2 - \tbf{3}]
 		\tit{Sphäreninversionen an verallgemeinerten Sphären bilden verallgemeinerte Sphären auf verallgemeinerte Sphären ab.}
 		
@@ -434,6 +503,8 @@
 		(TODO: Rest)
 		\item[7.3 - \tbf{3}]
 		\tit{Gegeben eine euklidische Ebene $E$ und eine offene Halbebene $H \subseteq E$ ist die Einschränkung von Möbiustransformationen eine Injektion}
+		
+		Folgt aus 7.4
 		\begin{align*}
 			\tn{Möb}_H(\hat E) \inj \Ens^\times(H)
 		\end{align*}
@@ -442,8 +513,13 @@
 		\begin{align*}
 			\tn{Möb}_H(\hat E) \inj \Ens^\times(\hat g)
 		\end{align*}
+		Wir wollen zeigen, dass für jeden Punkt $p \in \hat E \setminus \hat g$ außerhalb der Geraden Punkte auf der Geraden existieren, durch die wir $p$ zurückgewinnen können. Wähle die Mittelsenkrechte zu $\hat g$ durch $p$ und den analogen Senkrechten Kreis durch $p$, dessen Radius der Abstand von $p$ zu $\hat g$ ist. Der Mittelpunkt $m$ des Kreises ist dann auch der Schnittpunkt von der Gerade mit $\hat g$.
 		\item[7.1 - \tbf{2}]
 		\tit{Sei $E$ eine euklidische Ebene. Man zeige: Die Möbiustransformationen von $\hat E$, die den Punkt $\infty$ festhalten, sind genau alle Fortsetzungen von Ähnlichkeiten von $E$ durch $\infty \mapsto \infty$.}
+		
+		Aus dem Skript ist bekannt, dass jede Möbiustransformation, die $\infty$ festhält, Fortsetzung einer Ähnlichkeit ist.
+		
+		Zusätzlich bildet jede Möbiustransformation, die $\infty$ auf $\infty$ abbildet, Geraden bijektiv auf Geraden ab, ist also affin. Da Möbiustransformationen außerdem Winkel erhalten, ist $\phi$ außerdem eine Ähnlichkeit.
 	\end{enumerate}
 
 	\pagebreak
@@ -478,10 +554,34 @@
 			&= \lr(\lr(\frac{1 - p_3}{1 - p_3} + \frac{p_3}{1 - p_3})p_1, \lr(\frac{1 - p_3}{1 - p_3} + \frac{p_3}{1 - p_3})p_2, 0)\\
 			&= \lr(\frac{p_1}{1 - p_3}, \frac{p_2}{1 - p_3}, 0)
 		\end{align*}
+		\item[9.1 - \tbf{4}]
+		\tit{Sei $E$ eine reelle affine Ebene. Man finde alle Kollinerationen $\bV E \cong \bV E$, die die unendlich ferne Gerade punktweise festhalten.}
+		
+		Wird die unendliche Gerade punktweise festgehalten, so zeigt das Bild jeder Gerade in die selbe Richtung. Somit ist $K(x) = \lambda x + v$
+		\item[9.3 - \tbf{4}]
+		\tit{Gegeben ein Vektorraum $V$ und im projektive Raum $\bP V$ zwei projektive Hyperbene $U,H \subseteq \bP V$ sowie ein Punkt $q \in \bP V \setminus (H \cup U)$ im Komplement ihrer Vereinigung induziert unsere Projektion eine Bijektion
+		\begin{align*}
+			\zeta_{q,H} : U \cong H
+		\end{align*}
+		}
+		Jede Gerade, die nicht in einer gegebenen projektiven Hyperebene liegt, schneidet diese in genau einem Punkt. Somit existiert eine Bijektion zwischen Punkten von $U$ und Geraden durch $q$ und zwischen Geraden durch $q$ und Punkten von $H$, gegeben durch $\zeta_{q,U} = $ und $\zeta(q,H)$.
 		\item[8.1 - \tbf{4}]
 		\tit{Man schreibe an jeden Punkt der Fano-Ebene die Koordinaten eines Punktes von $\bF_2^3$, der die zugehörige Gerade erzeugt. Wie viele verschiedene Lösungen hat diese Aufgabe?}
+		
+		Koordinaten zuordnen ist einfach. Wir haben dann $7$ Möglichkeiten, den ersten Punkt zuzuordnen, dann $6$ Möglichkeiten, die Geraden anzuordnen, dann $4$ Möglichkeiten, die Punkte auf den linken zwei Geraden anzuordnen, dann ist der Rest fest, also $7 \cdot 6 \cdot 4 = 168$ Möglichkeiten.
 		\item[8.4 - \tbf{4}] \tit{Man zeige, dass die Zentralprojektion mit Zentrum in $(0,0,1)$ auf die $xy$-Ebene Kreis auf der Einheitssphäre, die $(0,0,1)$ nicht enthalten, zu Kreisen in der $xy$-Ebene macht.}
+		
+		Die Zentralprojektion mit Zentrum in $(0,0,1)$ ist genau die Kreisspiegelung mit Zentrum in $(0,0,1)$ und Radius $1$. Nun ist jeder Kreis auf der Einheitssphäre der Schnitt einer Kugel mit der Einheitssphäre. Solange diese nicht $(0,0,1)$ enthält, wird diese auf eine weitere Sphäre abgebildet, und der Schnitt dieser Sphäre mit der Ebene ist wieder ein Kreis.
+		\item[9.4 - \tbf{3}]
+		\item[10.1 - \tbf{3}]
 		\item[8.2 - \tbf{2}]
 		\tit{Kann man das Kartenspiel Dobble noch um weitere Karten mit acht Symbolen ergänzen, ohne neue Symbole hinzuzunehmen, so dass immer noch je zwei Karten genau ein Symbol gemeinsam haben? Kann man ein verbessertes Dobble mit denselben Symbolen, aber mehr Karten und denselben Eigenschaften konstruieren?}
+		
+		\begin{enumerate}		\item Nein, denn durch je zwei Punkte geht nur genau eine Gerade, also muss jede neue Karte (Gerade) mit mindestens einer bisherigen Karte zwei Symbole (Punkte) gemeinsam haben.
+			\item 
+		\end{enumerate}
+	
+		\item[9.2 - \tbf{2}]
+		
 	\end{enumerate}
 \end{document}
