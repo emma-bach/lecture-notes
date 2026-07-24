@@ -632,7 +632,13 @@
 		
 		Die Zentralprojektion mit Zentrum in $(0,0,1)$ ist genau die Kreisspiegelung mit Zentrum in $(0,0,1)$ und Radius $1$. Nun ist jeder Kreis auf der Einheitssphäre der Schnitt einer Kugel mit der Einheitssphäre. Solange diese nicht $(0,0,1)$ enthält, wird diese auf eine weitere Sphäre abgebildet, und der Schnitt dieser Sphäre mit der Ebene ist wieder ein Kreis.
 		\item[9.4 - \tbf{3}]
+		\tit{Sei $K$ ein Körper. Die Gruppe $\GL(2,K)$ operiert auf $K^2$ und überführt Teilräume in Teilräume der selben Dimension und operiert folglich auch auf $\bP^1K$. Man zeige, dass es für je zwei Tripel $(q_1, q_2, q_3)$ und $p_1, p_2, p_3)$ aus drei paarweise verschiedenen Punkten $G \in \GL(2,K)$ gibt mit $Gq_i = p_i$. Man zeige, daß jede weitere mögliche Wahl $G'$ ein skalares Vielfaches von $G$ ist.}
+		
+		Unsere Punkte $p_i, q_i$ entsprechen eindimensionalen Teilräumen in $K^2$.
+		
+		Wir brauchen also eine invertierbare Matrix, welche drei verschiedene Ursprungsgeraden auf sich selbst abbildet. Vektoren aus je zwei der Geraden bilden eine Basis, also gibt uns die Vorschrift "bilde $q_1$ auf $p_1$ und $q_2$ auf $p_2$ ab" schonmal eine Bijektion $\phi$, welche zwei der Geraden korrekt abbildet. Sei nun $(a,b) \in \phi(q_3) \setminus 0$ und $(c,d) \in p_3 \setminus 0$. Wir können die Bilder von $q_1$ und $q_2$ beliebig skalieren, also insbesondere auch so, dass $(a,b) = (c,d)$.
 		\item[10.1 - \tbf{3}]
+		Die invertierbaren Abbildungen, die die Gerade durch $(1,0)$ festhalten, sind genau die invertierbaren Abbildungen, die $e_1 = (1,0)$ auf ein Vielfaches von sich selbst abbilden und $e_2 = (0,1)$ auf einen beliebigen Vektor. Dies sind genau die invertierbaren oberen Dreiecksmatrizen.
 		\item[8.2 - \tbf{2}]
 		\tit{Kann man das Kartenspiel Dobble noch um weitere Karten mit acht Symbolen ergänzen, ohne neue Symbole hinzuzunehmen, so dass immer noch je zwei Karten genau ein Symbol gemeinsam haben? Kann man ein verbessertes Dobble mit denselben Symbolen, aber mehr Karten und denselben Eigenschaften konstruieren?}
 		
@@ -640,7 +646,6 @@
 			\item 
 		\end{enumerate}
 	
-		\item[9.2 - \tbf{2}]
-		
+		\item[9.2 - \tbf{2}] 
 	\end{enumerate}
 \end{document}
