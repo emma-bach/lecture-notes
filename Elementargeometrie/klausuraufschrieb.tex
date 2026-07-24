@@ -488,22 +488,74 @@
 		\item[6.2 - \tbf{3}]
 		\tit{Sphäreninversionen an verallgemeinerten Sphären bilden verallgemeinerte Sphären auf verallgemeinerte Sphären ab.}
 		
-		Eine Sphäre im $\bR^3$ mit Zentrum $c$ und Radius $r > 0$ ist die Menge $\scalar{x-c}{x-c} = r^2$, also $$\scalar{x}{x} - 2\scalar{x}{c} + \underbrace{\scalar{c}{c} - r^2}_{:= q} = 0.$$
-		Eine affine Ebene kann hingegen dargestellt werden als
-		$$\scalar{x}{v} - q' = 0,$$
-		also äquivalent auch als
+		Wir wollen zuerst zeigen, dass jede verallgemeinerte Sphäre im $\bR^3$ analog zum Fall $\bR^2$ gegeben ist durch eine Gleichung der Form
 		\begin{align*}
-			-2\scalar{x}{v} + q = 0
-		\end{align*}
-		für konstante $v,q$. In beiden Fällen gilt $\scalar{v}{v} > pq$.
-		\newpar
-		Umgekehrt ist jede Gleichung der Gestalt
-		\begin{align*}
+			x \in S \Leftrightarrow
 			p\scalar{x}{x} - 2\scalar{x}{v} + q = 0
 		\end{align*}
-		eine verallgemeinerte Sphäre - Im Fall $p = 0$ eine erweiterte Ebene und sonst eine Sphäre. 
+		mit $v \in \bR^3$, $p,q \in \bR$ $\scalar{v}{v} > pq$.
+		\begin{itemize}
+			\item Eine Ebene im $\bR^3$ ist in Hesse-Normalform gegeben als eine Nullstellenmenge
+			\begin{align*}
+				\scalar{x}{v} - d = 0
+			\end{align*}
+			mit $v \neq 0$. Formen wir um zu
+			\begin{align*}
+				-2\scalar{x}{v} + 2d = 0
+			\end{align*}
+			erhalten wir mit $q = 2d$ und $p = 0$ eine Gleichung in der Gewünschten Form, wobei $\scalar{v}{v} > pq$ aus der positiven Definitheit des Skalarprodukts folgt.
+			\item Analog ist eine Sphäre mit Mittelpunkt $v$ und Radius $r > 0$ die Nullstellenmenge
+			\begin{align*}
+				\norm{x-v} - r = 0.
+			\end{align*}
+			Da beide Terme nichtnegativ sind, entspricht dies der Nullstellenmenge
+			\begin{align*}
+				\norm{x-v}^2 - r^2 =  \scalar{x-v}{x-v} - r^2 = 0.
+			\end{align*}
+			Wir formen um zu:
+			\begin{align*}
+				\scalar{x-v}{x-v} - r^2 
+				&=
+				\scalar{x}{v} - 2\scalar{x}{v} + \scalar{v}{v} - r^2
+			\end{align*}
+			und erhalten mit $p = 1$, $q = \scalar{v}{v} - r^2$ eine Gleichung in der gewünschten Form.
+			\item Wir wollen nun zeigen, dass jede solche Nullstellenmenge eine verallgemeinerte Sphäre ist. Sei also $$p\scalar{x}{x} - 2\scalar{x}{v} + q = 0$$. Im Fall $p = 0$ erhalten wir trivial wie zuvor eine Ebene in Hesse-Normalform.
+			
+			Sei also $p \neq 0$. Dann teilen wir durch $p$ und erhalten
+			\begin{align*}
+				\scalar{x}{x} - \frac{2}{p}\scalar{x}{v} + \frac{p}{q} = 0\\
+				\implies
+				\scalar{x}{x} - 2\scalar{x}{\frac{v}{p}} + \frac{p}{q} = 0
+			\end{align*}
+		\end{itemize}
+		Aus $\scalar{v}{v} > pq$ folgt $\scalar{\frac{v}{p}}{\frac{v}{p}} > \frac{q}{p}$, also existiert ein $r > 0$ mit $\frac{q}{p} = \scalar{\frac{v}{p}}{\frac{v}{p}} - r^2$. Setzen wir dies in die gegebene Gleichung ein, ergibt sich nach etwas Umformen 
+		$$\norm{x - \frac{v}{p}} - r = 0,$$
+		also eine Sphäre.
+		\item 
+		Wir können nun mit dem tatsächlichen Beweis anfangen. Wir betrachten nur das Bild an der Einheitsphäre, da das Ergebnis für Geraden trivial ist und da Spiegelungen an anderen Sphären durch Verkettungen mit Translation und Skalierungen folgen.
 		
-		(TODO: Rest)
+		Für $x \neq 0$ ist das Bild von $x$ unter Spiegelung an der Einheitssphäre gegeben durch $s(x) := \frac{x}{\scalar{x}{x}}$. Dann folgt:
+		\begin{enumerate}
+			\item
+			\begin{align*}
+				&p\scalar{x}{x} - 2\scalar{x}{v} + q = 0\\
+				\Leftrightarrow
+				&\frac{p}{\scalar{x}{x}}\scalar{x}{x} - \frac{2}{\scalar{x}{x}}\scalar{x}{v} + \frac{q}{\scalar{x}{x}} = 0\\
+				\Leftrightarrow
+				&p\scalar{x}{x}\scalar{\frac{x}{\scalar{x}{x}}}{\frac{x}{\scalar{x}{x}}} - 2 \scalar{\frac{x}{\scalar{x}{x}}}{v} + \frac{q}{\scalar{x}{x}} = 0
+			\end{align*}
+			Diese Gleichung hat die gewünschte Form, also ist das Bild jeder Sphäre eine verallgemeinerte Sphäre.
+			\item Analog folgt:
+			\begin{align*}
+				&p\scalar{\frac{x}{\scalar{x}x}}{\frac{x}{\scalar{x}x}} - 2 \scalar{\frac{x}{\scalar{x}x}}{v} + q = 0\\
+				\Leftrightarrow
+				&\frac{q}{\scalar{x}{x}^2}\scalar{x}{x} - \frac{2}{\scalar{x}{x}}\scalar{x}{v} + p = 0\\
+				\Leftrightarrow
+				&\frac{q}{\scalar{x}{x}}\scalar{x}{x} - 2\scalar{x}{v} + p\scalar{x}{x} = 0,
+			\end{align*}	
+			also ist auch das Bild jeder verallgemeinerten Sphäre einer verallgemeinerte Sphäre.
+		\end{enumerate}
+		
 		\item[7.3 - \tbf{3}]
 		\tit{Gegeben eine euklidische Ebene $E$ und eine offene Halbebene $H \subseteq E$ ist die Einschränkung von Möbiustransformationen eine Injektion}
 		
